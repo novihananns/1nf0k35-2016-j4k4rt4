@@ -113,8 +113,13 @@
     </div>
   </div>
 </div>
+
 <script>
 $(function () { 
+
+  	<?php if ($action=="detail") {?>
+			$("input[name^=berencana]").prop("disabled", true);			
+    <?php } ?>
     $("#btn-kb-simpan").click(function(){
         $.get('<?php echo base_url()?>eform/data_kepala_keluarga/tab/3/{id_data_keluarga}', function (data) {
             $('#content3').html(data);

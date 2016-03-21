@@ -20,7 +20,12 @@
 	      <div class="box-footer">
 	      	<div class="row">
 	      		<div class="col-md-12">
+	      		<?php if(isset($unlock) && $unlock!=1){
+	      		?>
 				 	<button type="button" class="btn btn-primary" onclick="document.location.href='<?php echo base_url()?>eform/data_kepala_keluarga/add'"><i class='fa fa-plus-square-o'></i> &nbsp; Tambah</button>
+				<?php
+						}
+				?>
 				 	<button type="button" class="btn btn-warning" id="btn-refresh"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
 				 	<button type="button" class="btn btn-success" id="btn-export"><i class='fa fa-file-excel-o'></i> &nbsp; Export</button>
 				 </div>
@@ -37,10 +42,11 @@
 			     	</select>-->
 				 </div>
 				 <div class="col-md-3">
-				 	<label> Kecamatan </label>
+				 	<label> Kecamatan </label> <?php echo $this->session->userdata('filter_code_kecamatan');?>
 				 	<select name="kecamatan" id="kecamatan" class="form-control">
+				 		<option value="">Seluruh Kecamatan</option>
 						<?php foreach ($datakecamatan as $kec ) { ;?>
-						<?php $select = $kec->code == substr($this->session->userdata('puskesmas'), 0,7)  ? 'selected=selected' : '' ?>
+						<?php $select = $kec->code == $this->session->userdata('filter_code_kecamatan')  ? 'selected=selected' : '' ?>
 							<option value="<?php echo $kec->code; ?>" <?php echo $select ?>><?php echo $kec->nama; ?></option>
 						<?php	} ;?>
 			     	</select>
@@ -98,6 +104,7 @@
 			{ name: 'nama_komunitas', type: 'string'},
 			{ name: 'notlp', type: 'string'},
 			{ name: 'edit', type: 'number'},
+			{ name: 'detail', type: 'number'},
 			{ name: 'delete', type: 'number'}
         ],
 		url: "<?php echo site_url('eform/data_kepala_keluarga/json'); ?>",
@@ -138,6 +145,8 @@
 				return obj.data;    
 			},
 			columns: [
+				<?php if(isset($unlock) && $unlock!=1){
+	      		?>
 				{ text: 'Edit', align: 'center', filtertype: 'none', sortable: false, width: '4%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
 				    if(dataRecord.edit==1){
@@ -156,6 +165,17 @@
 					}
                  }
                 },
+                <?php }else{ ?>
+                { text: 'Detail', align: 'center', filtertype: 'none', sortable: false, width: '8%', cellsrenderer: function (row) {
+				    var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+				    if(dataRecord.detail==1){
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='detail(\""+dataRecord.id_data_keluarga+"\");'></a></div>";
+					}else{
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
+					}
+                 }
+                },
+                <?php } ?>
 				{ text: 'No. Urut', datafield: 'nourutkel', columntype: 'textbox', align:'center', cellsalign:'center', filtertype: 'textbox', width: '6%' },
                 { text: 'Tgl Pengisian', datafield: 'tanggal_pengisian', columntype: 'textbox', align:'center', cellsalign:'center', filtertype: 'date',cellsformat: 'dd-MM-yyyy', width: '10%' },
 				{ text: 'Kepala Keluarga', datafield: 'namakepalakeluarga', columntype: 'textbox', filtertype: 'textbox', width: '16%' },
@@ -169,6 +189,9 @@
 
 	function edit(id){
 		document.location.href="<?php echo base_url().'eform/data_kepala_keluarga/edit';?>/" + id;
+	}
+	function detail(id){
+		document.location.href="<?php echo base_url().'eform/data_kepala_keluarga/detail';?>/" + id;
 	}
 
 	function del(id){

@@ -15,7 +15,7 @@
       <span class="info-box-icon bg-blue"><i class="fa fa-bank"></i></span>
       <div class="info-box-content">
         <span class="info-box-text">Kelurahan </span>
-        <span class="info-box-number" style="font-size:14px;">{j_kelurahan}<br>Desa / Kelurahan</span>
+        <span class="info-box-number" style="font-size:14px;">{j_kecamatan}<br>Kecamatan</span>
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->
   </div><!-- /.col -->
@@ -47,7 +47,7 @@
   <div class="col-md-7">
     <div class="box">
       <div class="box-header with-border">
-        <h3 class="box-title">Data per Kelurahan </h3>
+        <h3 class="box-title">Data per Kecamatan</h3>
         <br><br>
         <div class="box-tools pull-right">
           <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -104,7 +104,7 @@
   </div><!-- /.col -->
 </div><!-- /.row -->
 
-
+<?php //print_r($bar); ?>
 <script>
   $(function () { 
     $("#menu_dashboard").addClass("active");
@@ -115,7 +115,7 @@
         $i=0;
         foreach ($bar as $row ) { 
           if($i>0) echo ",";
-            echo "\"".$row['kelurahan']."\"";
+            echo "\"".$row['kecamatan']."\"";
           $i++;
         } ?>],
         datasets: [

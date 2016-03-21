@@ -212,6 +212,10 @@
 </div>
 <script>
 $(function () { 
+	
+  	<?php if ($action=="detail") {?>
+			$("input[name^=pembangunan]").prop("disabled", true);			
+    <?php } ?>
 	$("input[name^=pembangunan]").change(function(){
 			//alert($(this).attr('name')+' ' +$(this).val());
 			var id_data_keluarga = "<?php echo $id_data_keluarga; ?>";

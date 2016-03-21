@@ -247,6 +247,7 @@ class Data_kepala_keluarga extends CI_Controller {
 				'id_pkk'				=> $act->id_pkk,
 				'nama_komunitas'		=> $act->nama_komunitas,
 				'edit'					=> 1,
+				'detail'				=> 1,
 				'delete'				=> 1
 			);
 		}
@@ -327,7 +328,8 @@ class Data_kepala_keluarga extends CI_Controller {
 				'suku'					=> $act->suku,
 				'no_hp'					=> $act->no_hp,
 				'edit'					=> 1,
-				'delete'				=> 1
+				'delete'				=> 1,
+				'detail'				=> 1
 			);
 		}
 
@@ -349,7 +351,13 @@ class Data_kepala_keluarga extends CI_Controller {
 		$this->session->set_userdata('filter_code_rukunwarga','');
 		$this->session->set_userdata('filter_code_cl_rukunrumahtangga','');
 		$kode_sess = $this->session->userdata("puskesmas");
-		$data['datakecamatan'] = $this->datakeluarga_model->get_datawhere(substr($kode_sess, 0,7),"code","cl_kec");
+		$data['datakecamatan'] = $this->datakeluarga_model->get_datawhere($kode_sess,"code","cl_kec");
+		$unlock= $this->datakeluarga_model->get_datawhere($kode_sess,"code","cl_district");
+		if($unlock!=0){
+			$data['unlock']=1;
+		}else{
+			$data['unlock']=0;
+		}
 		$data['content'] = $this->parser->parse("eform/datakeluarga/show",$data,true);
 		$this->template->show($data,"home");
 	}
@@ -448,6 +456,53 @@ class Data_kepala_keluarga extends CI_Controller {
 			redirect(base_url()."eform/data_kepala_keluarga/edit/".$id_data_keluarga);
 		}
 	}
+	function detail($id_data_keluarga=0){
+		$this->authentication->verify('eform','edit');
+
+        $this->form_validation->set_rules('alamat', 'Alamat', 'trim|required');
+        $this->form_validation->set_rules('dusun', 'Dusun / RW', 'trim|required');
+        $this->form_validation->set_rules('rt', 'RT', 'trim|required');
+        $this->form_validation->set_rules('norumah', 'No Rumah', 'trim|required');
+        $this->form_validation->set_rules('namakomunitas', 'Nama Komunitas', 'trim|required');
+        $this->form_validation->set_rules('namakepalakeluarga', 'Nama Kepala Keluarga', 'trim|required');
+        $this->form_validation->set_rules('notlp', 'No. HP / Telepon', 'trim|required');
+        $this->form_validation->set_rules('namadesawisma', 'Nama Desa Wisma', 'trim|required');
+        $this->form_validation->set_rules('jabatanstuktural', '', 'trim');
+        $this->form_validation->set_rules('kelurahan', '', 'trim');
+        $this->form_validation->set_rules('kodepos', '', 'trim');
+        $this->form_validation->set_rules('nama_koordinator', '', 'trim');
+        $this->form_validation->set_rules('nama_pendata', '', 'trim');
+        $this->form_validation->set_rules('jam_selesai', '', 'trim');
+
+		if($this->form_validation->run()== FALSE){
+			$data = $this->datakeluarga_model->get_data_row($id_data_keluarga); 
+
+			$data['title_group'] = "eForm - Ketuk Pintu";
+			$data['title_form']="Ubah Data Keluarga";
+			$data['action']="detail";
+			$data['id_data_keluarga'] = $id_data_keluarga;
+          	$data['data_provinsi'] = $this->datakeluarga_model->get_provinsi();
+          	$data['data_kotakab'] = $this->datakeluarga_model->get_kotakab();
+          	$data['data_kecamatan'] = $this->datakeluarga_model->get_kecamatan();
+          	$data['data_desa'] = $this->datakeluarga_model->get_desa();
+          	$data['data_pos'] = $this->datakeluarga_model->get_pos();
+          	$data['data_pkk'] = $this->datakeluarga_model->get_pkk();
+            $data['jabatan_pkk'] = $this->datakeluarga_model->get_pkk_value($data['id_pkk']);
+
+			$data['data_profile']  = $this->datakeluarga_model->get_data_profile($id_data_keluarga); 
+            //$data['data_print'] = $this->parser->parse("eform/datakeluarga/print", $data, true);
+
+			$data['content'] = $this->parser->parse("eform/datakeluarga/form_detail",$data,true);
+			$this->template->show($data,"home");
+		}elseif($this->datakeluarga_model->update_entry($id_data_keluarga)){
+			$this->session->set_flashdata('alert_form', 'Save data successful...');
+			redirect(base_url()."eform/data_kepala_keluarga/edit/".$id_data_keluarga);
+		}else{
+			$this->session->set_flashdata('alert_form', 'Save data failed...');
+			redirect(base_url()."eform/data_kepala_keluarga/edit/".$id_data_keluarga);
+		}
+	}
+
 
 	function tab($pageIndex,$id_data_keluarga){
 		$data = array();
@@ -500,7 +555,13 @@ class Data_kepala_keluarga extends CI_Controller {
 	{
 		$this->authentication->verify('eform','edit');
 
-		$data['action']="edit";
+		$kode_sess = $this->session->userdata("puskesmas");
+		$unlock= $this->datakeluarga_model->get_datawhere($kode_sess,"code","cl_district");
+		if($unlock!=0){
+			$data['action']="detail";
+		}else{
+			$data['action']="edit";
+		}
 		$data['id_data_keluarga'] = $kode;
 
 		die($this->parser->parse("eform/datakeluarga/form_anggota",$data));
@@ -578,6 +639,40 @@ class Data_kepala_keluarga extends CI_Controller {
 			
 		//}
 	}
+	function anggota_detail($idkeluarga=0,$noanggota=0)
+	{
+		$this->authentication->verify('eform','edit');
+		$data = $this->datakeluarga_model->get_data_row_anggota($idkeluarga,$noanggota);
+		
+        $data['action']="detail";
+		$data['id_data_keluarga'] = $idkeluarga;
+		$data['noanggota'] = $noanggota;
+		$data['alert_form'] = "";
+
+        $data['data_pilihan_hubungan'] = $this->datakeluarga_model->get_pilihan("hubungan");
+      	$data['data_pilihan_kelamin'] = $this->datakeluarga_model->get_pilihan("jk");
+      	$data['data_pilihan_agama'] = $this->datakeluarga_model->get_pilihan("agama");
+      	$data['data_pilihan_pendidikan'] = $this->datakeluarga_model->get_pilihan("pendidikan");
+      	$data['data_pilihan_pekerjaan'] = $this->datakeluarga_model->get_pilihan("pekerjaan");
+      	$data['data_pilihan_kawin'] = $this->datakeluarga_model->get_pilihan("kawin");
+      	$data['data_pilihan_jkn'] = $this->datakeluarga_model->get_pilihan("jkn");
+
+      	$data['alert_form'] = '';
+
+       $data['data_profile_anggota'] = $this->datakeluarga_model->get_data_anggotaprofile($idkeluarga,$noanggota);
+		die($this->parser->parse("eform/datakeluarga/form_anggota_form",$data));
+		/*}elseif($noanggota=$this->datakeluarga_model->insert_dataAnggotaKeluarga($idkeluarga)){
+			die($this->parser->parse("eform/datakeluarga/form_anggota_form",$data));
+		}else{
+			$data['alert_form'] = 'Save data failed...';
+			die($this->parser->parse("eform/datakeluarga/form_anggota_form",$data));
+		}*/
+			
+
+			
+		//}
+	}
+
 	function update_kepala(){
 		$this->datakeluarga_model->update_kepala();
 	}
@@ -590,8 +685,15 @@ class Data_kepala_keluarga extends CI_Controller {
 
 		if($this->form_validation->run()== FALSE){
 			//$data = $this->anggota_keluarga_kb_model->get_data_row($kode); 
+			$kode_sess = $this->session->userdata("puskesmas");
+			$data['datakecamatan'] = $this->datakeluarga_model->get_datawhere($kode_sess,"code","cl_kec");
+			$unlock= $this->datakeluarga_model->get_datawhere($kode_sess,"code","cl_district");
+			if($unlock!=0){
+				$data['action']="detail";
+			}else{
+				$data['action']="edit";
+			}
 
-			$data['action']="edit";
 			$data['id_data_keluarga'] = $kode;
 			//$data['data_keluarga_kb']  = $this->anggota_keluarga_kb_model->get_data_profile($kode); 
 			$data['alert_form'] = "";
@@ -614,7 +716,13 @@ class Data_kepala_keluarga extends CI_Controller {
 		if($this->form_validation->run()== FALSE){
 			$data = $this->anggota_keluarga_kb_model->get_data_row($kode); 
 
-			$data['action']="edit";
+			$kode_sess = $this->session->userdata("puskesmas");
+			$unlock= $this->datakeluarga_model->get_datawhere($kode_sess,"code","cl_district");
+			if($unlock!=0){
+				$data['action']="detail";
+			}else{
+				$data['action']="edit";
+			}
 			$data['id_data_keluarga'] = $kode;
 			$data['data_keluarga_kb']  = $this->anggota_keluarga_kb_model->get_data_keluargaberencana($kode); 
 			$data['alert_form'] = "";
@@ -639,7 +747,13 @@ class Data_kepala_keluarga extends CI_Controller {
 		if($this->form_validation->run()== FALSE){
 			$data = $this->pembangunan_keluarga_model->get_data_row($kode); 
 
-			$data['action']="edit";
+			$kode_sess = $this->session->userdata("puskesmas");
+			$unlock= $this->datakeluarga_model->get_datawhere($kode_sess,"code","cl_district");
+			if($unlock!=0){
+				$data['action']="detail";
+			}else{
+				$data['action']="edit";
+			}
 			$data['id_data_keluarga'] = $kode;
 			$data['data_pembangunan']  = $this->pembangunan_keluarga_model->get_data_pembangunan ($kode); 
 			$data['alert_form'] = "";
@@ -661,13 +775,17 @@ class Data_kepala_keluarga extends CI_Controller {
 		if($this->input->is_ajax_request()) {
 			$kecamatan = $this->input->post('kecamatan');
 			$this->session->set_userdata('filter_code_kecamatan',$this->input->post('kecamatan'));
-			$kode 	= $this->datakeluarga_model->get_datawhere($kecamatan,"code","cl_village");
+			if ($kecamatan=='' || empty($kecamatan)) {
+				echo '<option value="">Pilih Keluarahan</option>';
+			}else{
+				$kode 	= $this->datakeluarga_model->get_datawhere($kecamatan,"code","cl_village");
 
 				echo '<option value="">Pilih Keluarahan</option>';
-			foreach($kode as $kode) :
-				echo $select = $kode->code == set_value('kelurahan') ? 'selected' : '';
-				echo '<option value="'.$kode->code.'" '.$select.'>' . $kode->value . '</option>';
-			endforeach;
+				foreach($kode as $kode) :
+					echo $select = $kode->code == set_value('kelurahan') ? 'selected' : '';
+					echo '<option value="'.$kode->code.'" '.$select.'>' . $kode->value . '</option>';
+				endforeach;
+			}
 
 			return FALSE;
 		}
@@ -679,14 +797,19 @@ class Data_kepala_keluarga extends CI_Controller {
 	if ($this->input->post('kelurahan')!="null") {
 		if($this->input->is_ajax_request()) {
 			$kelurahan = $this->input->post('kelurahan');
-			$this->session->set_userdata('filter_code_kelurahan',$this->input->post('kelurahan'));
-			$kode 	= $this->datakeluarga_model->get_datawhere($kelurahan,"id_desa","data_keluarga");
+			if ($kelurahan=='' || empty($kelurahan)) {
+				echo '<option value="">Pilih RW</option>';
+			}else{
+				$this->session->set_userdata('filter_code_kelurahan',$this->input->post('kelurahan'));
+				$this->db->group_by("rw");
+				$kode 	= $this->datakeluarga_model->get_datawhere($kelurahan,"id_desa","data_keluarga");
 
-				echo '<option value="">Pilih Keluarahan</option>';
-			foreach($kode as $kode) :
-				echo $select = $kode->rw == set_value('rukuwarga') ? 'selected' : '';
-				echo '<option value="'.$kode->rw.'" '.$select.'>' . $kode->rw . '</option>';
-			endforeach;
+					echo '<option value="">Pilih RW</option>';
+				foreach($kode as $kode) :
+					echo $select = $kode->rw == set_value('rukuwarga') ? 'selected' : '';
+					echo '<option value="'.$kode->rw.'" '.$select.'>' . $kode->rw . '</option>';
+				endforeach;
+			}
 
 			return FALSE;
 		}

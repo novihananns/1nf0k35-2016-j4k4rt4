@@ -12,12 +12,17 @@
       }
       if($jam_selesai=="") $jam_selesai = time();
       ?>
-
+      <?php
+        if ($action=="detail") {?>
+          var disabled = "disabled:true";
+      <?php }else{ ?>
+          var disabled = "";
+      <?php }?>
       var date = new Date();
       date.setHours(<?php echo date("H", $jam_selesai)?>);
       date.setMinutes(<?php echo date("i", $jam_selesai)?>);
       date.setSeconds(<?php echo date("s", $jam_selesai)?>);
-      $("#jam_selesai").jqxDateTimeInput({ height: '30px', theme: theme, formatString: 'HH:mm:ss', showTimeButton: true, showCalendarButton: false});
+      $("#jam_selesai").jqxDateTimeInput({ height: '30px', theme: theme, formatString: 'HH:mm:ss', showTimeButton: true, showCalendarButton: false,disabled});
       $("#jam_selesai").jqxDateTimeInput('setDate', date);
 
 	});
@@ -107,6 +112,11 @@
       <div class="row" style="margin: 5px">
         <div class="col-md-4 col-xs-4" style="padding: 5px">Dusun / RW</div>
         <div class="col-md-8 col-xs-8">
+        <?php
+        if ($action=="detail") {
+            echo $rw;
+        }else{
+        ?>
           <input type="number" name="dusun"  id="dusun" placeholder="RW" value="<?php 
             if(set_value('dusun')=="" && isset($rw)){
               echo $rw;
@@ -114,12 +124,20 @@
               echo  set_value('dusun');
             }
             ?>" class="form-control">
+        <?php 
+        }
+        ?>
         </div>
       </div>
 
       <div class="row" style="margin: 5px">
         <div class="col-md-4 col-xs-4" style="padding: 5px">RT</div>
         <div class="col-md-8 col-xs-8">
+        <?php
+        if ($action=="detail") {
+            echo $rt;
+        }else{
+        ?>
           <input type="number" name="rt" id="rt" placeholder="RT" value="<?php 
             if(set_value('rt')=="" && isset($rt)){
               echo $rt;
@@ -127,12 +145,20 @@
               echo  set_value('rt');
             }
             ?>" class="form-control">
+        <?php 
+        }
+        ?>
         </div>
       </div>
 
       <div class="row" style="margin: 5px">
         <div class="col-md-4 col-xs-4" style="padding: 5px">Nomor Rumah</div>
         <div class="col-md-8 col-xs-8">
+        <?php
+        if ($action=="detail") {
+            echo $rt;
+        }else{
+        ?>
           <input type="text" name="norumah" id="norumah" placeholder="Nomor Rumah" value="<?php 
             if(set_value('norumah')=="" && isset($norumah)){
               echo $norumah;
@@ -140,12 +166,22 @@
               echo  set_value('norumah');
             }
             ?>" class="form-control">
+        <?php 
+        }
+        ?>
         </div>
       </div>
  
       <div class="row" style="margin: 5px">
         <div class="col-md-4 col-xs-4" style="padding: 5px">Kode Pos</div>
         <div class="col-md-8 col-xs-8">
+        <?php
+        if ($action=="detail") {
+           foreach($data_pos as $row_pos){
+             echo ($row_pos->pos == $id_kodepos) ?  chunk_split($row_pos->pos, 1, ' ') : '' ;
+           }
+        }else{
+        ?>
           <select  name="kodepos" id="kodepos" class="form-control">
             <?php
             foreach($data_pos as $row_pos){
@@ -156,6 +192,9 @@
             }    
             ?>
           </select>
+        <?php 
+        }
+        ?>
         </div>
       </div>
 
@@ -170,19 +209,32 @@
       <div class="row" style="margin: 5px">
         <div class="col-md-4" style="padding: 5px">Alamat</div>
         <div class="col-md-8">
-          <textarea name="alamat" id="alamat" class="form-control" placeholder="Alamat"><?php 
-			if(set_value('alamat')=="" && isset($alamat)){
-				echo $alamat;
-			}else{
-				echo  set_value('alamat');
-			}
-			?></textarea>
+        <?php
+        if ($action=="detail") {
+            echo $alamat;
+        }else{
+        ?>
+            <textarea name="alamat" id="alamat" class="form-control" placeholder="Alamat"><?php 
+      			if(set_value('alamat')=="" && isset($alamat)){
+      				echo $alamat;
+      			}else{
+      				echo  set_value('alamat');
+      			}
+  			?></textarea>
+        <?php 
+        }
+        ?>
         </div>
       </div>
        
       <div class="row" style="margin: 5px">
         <div class="col-md-5" style="padding: 5px">Nama Komunitas</div>
         <div class="col-md-7">
+        <?php
+        if ($action=="detail") {
+           echo $nama_komunitas;
+        }else{
+        ?>
           <input type="text" name="namakomunitas" id="namakomunitas" value="<?php 
       			if(set_value('namakomunitas')=="" && isset($nama_komunitas)){
       				echo $nama_komunitas;
@@ -190,12 +242,20 @@
       				echo  set_value('namakomunitas');
       			}
       			?>" class="form-control">
+        <?php 
+        }
+        ?>
         </div>
       </div>
         
       <div class="row" style="margin: 5px">
         <div class="col-md-5" style="padding: 5px">Nama Kepala Rumah Tangga</div>
         <div class="col-md-7">
+        <?php
+        if ($action=="detail") {
+           echo $namakepalakeluarga;
+        }else{
+        ?>
           <input type="text" name="namakepalakeluarga" id="namakepalakeluarga" value="<?php 
       			if(set_value('namakepalakeluarga')=="" && isset($namakepalakeluarga)){
       				echo $namakepalakeluarga;
@@ -203,12 +263,20 @@
       				echo  set_value('namakepalakeluarga');
       			}
       			?>" class="form-control">
+        <?php 
+        }
+        ?>
         </div>
       </div>
         
       <div class="row" style="margin: 5px">
         <div class="col-md-5" style="padding: 5px">No. HP / Telepon</div>
         <div class="col-md-7">
+        <?php
+        if ($action=="detail") {
+           echo $notlp;
+        }else{
+        ?>
           <input type="text" name="notlp" id="notlp" value="<?php 
       			if(set_value('notlp')=="" && isset($notlp)){
       				echo $notlp;
@@ -216,12 +284,20 @@
       				echo  set_value('notlp');
       			}
       			?>" class="form-control">
+        <?php 
+        }
+        ?>
         </div>
       </div>
         
       <div class="row" style="margin: 5px">
         <div class="col-md-5" style="padding: 5px">Nama Dasa Wisma</div>
         <div class="col-md-7">
+        <?php
+        if ($action=="detail") {
+           echo $namadesawisma;
+        }else{
+        ?>
           <input type="text" name="namadesawisma" id="namadesawisma" value="<?php 
       			if(set_value('namadesawisma')=="" && isset($namadesawisma)){
       				echo $namadesawisma;
@@ -229,12 +305,22 @@
       				echo  set_value('namadesawisma');
       			}
       			?>" class="form-control">
+        <?php 
+        }
+        ?>
         </div>
       </div>
         
       <div class="row" style="margin: 5px">
         <div class="col-md-5" style="padding: 5px">Jabatan Stuktural TP PKK</div>
         <div class="col-md-7">
+        <?php
+        if ($action=="detail") {
+          foreach($data_pkk as $row_pkk){
+            echo ($row_pkk->id_pkk == $id_pkk) ? $row_pkk->value : '' ;
+          }
+        }else{
+        ?>
           <select  name="jabatanstuktural" id="jabatanstuktural" class="form-control">
           	<?php
             foreach($data_pkk as $row_pkk){
@@ -245,6 +331,9 @@
             }    
           	?>
 		      </select>
+        <?php 
+        }
+        ?>
         </div>
       </div>
 
@@ -258,6 +347,11 @@
       <div class="row" style="margin: 5px">
         <div class="col-md-5" style="padding: 5px">Nama Koordinator</div>
         <div class="col-md-7">
+        <?php
+        if ($action=="detail") {
+           echo $nama_koordinator;
+        }else{
+        ?>
           <input type="text" name="nama_koordinator" id="nama_koordinator" value="<?php 
             if(set_value('nama_koordinator')=="" && isset($nama_koordinator)){
               echo $nama_koordinator;
@@ -265,12 +359,20 @@
               echo  set_value('nama_koordinator');
             }
             ?>" class="form-control">
+        <?php 
+        }
+        ?>
         </div>
       </div>
         
       <div class="row" style="margin: 5px">
         <div class="col-md-5" style="padding: 5px">Nama Pendata</div>
         <div class="col-md-7">
+        <?php
+        if ($action=="detail") {
+           echo $nama_pendata;
+        }else{
+        ?>
           <input type="text" name="nama_pendata" id="nama_pendata" value="<?php 
             if(set_value('nama_pendata')=="" && isset($nama_pendata)){
               echo $nama_pendata;
@@ -278,11 +380,21 @@
               echo  set_value('nama_pendata');
             }
             ?>" class="form-control">
+        <?php 
+        }
+        ?>
         </div>
       </div>
         
       <div class="box-footer" style="float: right">
+      <?php
+      if ($action=="detail") {
+      }else{
+      ?>
         <button type="submit" class="btn btn-warning"><i class='fa fa-save'></i> &nbsp; Simpan Data Keluarga</button>
+      <?php 
+      }
+      ?>
         <!--<button type="submit" class="btn btn-primary"><i class='fa fa-print'></i> &nbsp; Cetak</button>-->
         <button type="button" id="btn-kembali" class="btn btn-success"><i class='fa fa-arrow-circle-left'></i> &nbsp;Kembali</button>
       </div>

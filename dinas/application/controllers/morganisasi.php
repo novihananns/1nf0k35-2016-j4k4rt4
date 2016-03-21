@@ -23,8 +23,8 @@ class Morganisasi extends CI_Controller {
 
 		$kk 		= $this->morganisasi_model->get_data_kk();
 		$penduduk 	= $this->morganisasi_model->get_data_penduduk();
-		$data['kelurahan'] 	= $this->morganisasi_model->get_data_kelurahan();
-		$data['j_kelurahan']= count($data['kelurahan']);
+		$data['kecamatan'] 	= $this->morganisasi_model->get_data_kecamatan();
+		$data['j_kecamatan']= count($data['kecamatan']);
 		$data['j_penduduk'] = count($penduduk);
 		$data['j_kk'] 		= count($kk);
 
@@ -35,8 +35,8 @@ class Morganisasi extends CI_Controller {
 		$pie['j_perempuan']['label'] = 'Perempuan';
 		$pie['j_perempuan']['jml'] = 0;
 		$color = array('#20ad3a','#ffb400','#f39c12','#00c0ef','#8d16c5','#d2d6de','#3c8dbc','#69d856','#eb75e4');
-		foreach ($data['kelurahan'] as $row) {
-			$bar[$row['code']]['kelurahan'] = $row['value'];
+		foreach ($data['kecamatan'] as $row) {
+			$bar[$row['code']]['kecamatan'] = $row['nama'];
 			$bar[$row['code']]['j_lakilaki'] = $this->morganisasi_model->get_data_kel($row['code'],5);
 			$bar[$row['code']]['j_perempuan'] = $this->morganisasi_model->get_data_kel($row['code'],6);
 			$pie['j_lakilaki']['jml'] += $bar[$row['code']]['j_lakilaki'];

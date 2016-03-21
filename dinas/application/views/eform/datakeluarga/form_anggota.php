@@ -55,7 +55,8 @@
 			{ name: 'suku', type: 'string'},
 			{ name: 'no_hp', type: 'string'},
 			{ name: 'edit', type: 'number'},
-			{ name: 'delete', type: 'number'}
+			{ name: 'delete', type: 'number'},
+			{ name: 'detail', type: 'number'}
         ],
 		url: "<?php echo site_url('eform/data_kepala_keluarga/json_anggotaKeluarga/{id_data_keluarga}'); ?>",
 		cache: false,
@@ -95,6 +96,8 @@
 				return obj.data;    
 			},
 			columns: [
+				<?php if(isset($action) && $action!="detail"){
+	      		?>
 				{ text: 'Edit', align: 'center', filtertype: 'none', sortable: false, width: '4%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
 				    if(dataRecord.edit==1){
@@ -113,6 +116,17 @@
 					}
                  }
                 },
+                <?php }else{ ?>
+                { text: 'Detail', align: 'center', filtertype: 'none', sortable: false, width: '8%', cellsrenderer: function (row) {
+				    var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+				    if(dataRecord.detail==1){
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='detail(\""+dataRecord.no_anggota+"\");'></a></div>";
+					}else{
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
+					}
+                 }
+                },
+                <?php } ?>
 				{ text: 'Nik', datafield: 'nik', columntype: 'textbox', align:'center', cellsalign:'center', filtertype: 'textbox', width: '20%' },
 				{ text: 'Nama', datafield: 'nama', columntype: 'textbox', filtertype: 'textbox', width: '24%',align:'center', cellsalign:'left' },
                 { text: 'Tgl Lahir', datafield: 'tgl_lahir', columntype: 'textbox', align:'center', cellsalign:'center', filtertype: 'date',cellsformat: 'dd-MM-yyyy', width: '10%' },
@@ -124,6 +138,11 @@
 
 	function edit(noanggota){
         $.get('<?php echo base_url()?>eform/data_kepala_keluarga/anggota_edit/{id_data_keluarga}/'+noanggota, function (data) {
+            $('#content2').html(data);
+        });
+	}
+	function detail(noanggota){
+        $.get('<?php echo base_url()?>eform/data_kepala_keluarga/anggota_detail/{id_data_keluarga}/'+noanggota, function (data) {
             $('#content2').html(data);
         });
 	}

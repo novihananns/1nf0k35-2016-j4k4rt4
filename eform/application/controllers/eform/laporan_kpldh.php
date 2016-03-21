@@ -12,7 +12,7 @@ class Laporan_kpldh extends CI_Controller {
 	}
 
 	function index(){
-		$this->authentication->verify('eform','edit');
+		$this->authentication->verify('eform','show');
 		$data['title_group'] 	= "Laporan";
 		$data['title_form'] 	= "Ketuk Pintu Layani Dengan Hati";;
 
@@ -29,7 +29,7 @@ class Laporan_kpldh extends CI_Controller {
 			$kecamatan = $this->input->post('kecamatan');
 			$kode 	= $this->datakeluarga_model->get_datawhere($kecamatan,"code","cl_village");
 
-				echo '<option value="">Pilih Keluarahan</option>';
+				echo '<option value="">Seluruh Keluarahan</option>';
 			foreach($kode as $kode) :
 				echo $select = $kode->code == set_value('kelurahan') ? 'selected' : '';
 				echo '<option value="'.$kode->code.'" '.$select.'>' . $kode->value . '</option>';
@@ -44,14 +44,17 @@ class Laporan_kpldh extends CI_Controller {
 	if ($this->input->post('kelurahan')!="null") {
 		if($this->input->is_ajax_request()) {
 			$kelurahan = $this->input->post('kelurahan');
+			$this->db->group_by("rw");
 			$kode 	= $this->datakeluarga_model->get_datawhere($kelurahan,"id_desa","data_keluarga");
-
-				echo '<option value="">Pilih Keluarahan</option>';
+			if ($kelurahan="") {
+				echo '<option value="">Pilih RW</option>';
+			}else{
+				echo '<option value="">Pilih RW</option>';
 			foreach($kode as $kode) :
 				echo $select = $kode->rw == set_value('rukuwarga') ? 'selected' : '';
 				echo '<option value="'.$kode->rw.'" '.$select.'>' . $kode->rw . '</option>';
 			endforeach;
-
+			}
 			return FALSE;
 		}
 
@@ -895,7 +898,7 @@ class Laporan_kpldh extends CI_Controller {
 			$temp6=0;
 		}*/
 		$kode_sess = $this->session->userdata("puskesmas");
-		$bar['puskesmas'] = $this->inv_barang_model->get_nama('nama','cl_kec','code',substr($kode_sess, 0,7));
+		$bar['puskesmas'] = $this->datakeluarga_model->get_nama('nama','cl_kec','code',substr($kode_sess, 0,7));
 		$bar['totalorang'] = $this->laporan_kpldh_model->get_data_anggotaprofile($kecamatan,$kelurahan,$rw);//$temp1+$temp2+$temp3+$temp4+$temp5+$temp6;
 		die($this->parser->parse("eform/laporan/chartcucitangan",$bar));
 
@@ -976,7 +979,7 @@ class Laporan_kpldh extends CI_Controller {
 			$temp6=0;
 		}*/
 		$kode_sess = $this->session->userdata("puskesmas");
-		$bar['puskesmas'] = $this->inv_barang_model->get_nama('nama','cl_kec','code',substr($kode_sess, 0,7));
+		$bar['puskesmas'] = $this->datakeluarga_model->get_nama('nama','cl_kec','code',substr($kode_sess, 0,7));
 		$bar['totalorang'] = $this->laporan_kpldh_model->get_data_anggotaprofile($kecamatan,$kelurahan,$rw);//$temp1+$temp2+$temp3+$temp4+$temp5+$temp6;
 		die($this->parser->parse("eform/laporan/chartsikatgigi",$bar));
 	}
@@ -1014,7 +1017,7 @@ class Laporan_kpldh extends CI_Controller {
 			$temp5=0;
 		}
 		$kode_sess = $this->session->userdata("puskesmas");
-		$bar['puskesmas'] = $this->inv_barang_model->get_nama('nama','cl_kec','code',substr($kode_sess, 0,7));
+		$bar['puskesmas'] = $this->datakeluarga_model->get_nama('nama','cl_kec','code',substr($kode_sess, 0,7));
 		$bar['totalorang'] = $temp1+$temp2+$temp3+$temp4+$temp5;
 		die($this->parser->parse("eform/laporan/chartkebiasaanmerokok",$bar));
 	}

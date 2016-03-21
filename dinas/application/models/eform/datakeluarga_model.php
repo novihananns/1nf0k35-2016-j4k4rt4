@@ -409,7 +409,7 @@ class Datakeluarga_model extends CI_Model {
         $this->db->where('id_data_keluarga', $idkeluarga);
         $this->db->where('no_anggota', $noanggota);
         $query = $this->db->get();
-        if($query->num_rows() >= 1){
+        if($query->num_rows() >0){
             return $query->result(); 
          }else{
             return 'salah';
@@ -418,6 +418,11 @@ class Datakeluarga_model extends CI_Model {
      function get_datawhere ($code,$condition,$table){
         $this->db->select("*");
         $this->db->like($condition,$code);
-        return $this->db->get($table)->result();
+        $query= $this->db->get($table);
+        if($query->num_rows() > 0){
+            return $query->result(); 
+         }else{
+            return 0;
+         }
     }
 }

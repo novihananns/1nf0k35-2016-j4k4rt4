@@ -15,6 +15,13 @@ class Morganisasi_model extends CI_Model {
 
 		return $data;
     }
+    function get_data_kecamatan(){
+    	$kode_kecamatan = substr($this->session->userdata('puskesmas'),0,4);
+		$query = $this->db->like('code',$kode_kecamatan);
+		$data = $query->get('cl_kec')->result_array();
+
+		return $data;
+    }
     
     function get_data_kk(){
 		$data = $this->db->get('data_keluarga')->result_array();

@@ -257,6 +257,9 @@
 </div>
 <script>
 $(function () { 
+	<?php if ($action=="detail") {?>
+			$("input[name^=profile]").prop("disabled", true);			
+    <?php } ?>
 	$("input[name^=profile]").change(function(){
 		//	alert($(this).attr('name')+' ' +$(this).val());
 			var id_data_keluarga = "<?php echo $id_data_keluarga; ?>";
@@ -291,5 +294,7 @@ $(function () {
   	$('#btn-up1').click(function(){
       	window.scrollTo(0, 600);
   	});
+
+	
 });
 </script>

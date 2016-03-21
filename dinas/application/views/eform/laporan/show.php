@@ -80,7 +80,7 @@
 				  	</div>
 				  	<div class="col-md-12">
 						<div class="form-group pull-right">
-							<button id="btn-export" type="button"  class="btn btn-success"><i class='fa fa-file-excel-o'></i> &nbsp; Export</button>
+						<!--	<button id="btn-export" type="button"  class="btn btn-success"><i class='fa fa-file-excel-o'></i> &nbsp; Export</button>-->
             				<button id="btn-preview" type="button"  class="btn btn-warning"><i class='fa fa-bar-chart-o'></i> &nbsp; Tampilkan Laporan & Chart</button>
 						</div>
 				  	</div>
@@ -91,9 +91,9 @@
 </div><!-- /.box -->
 <div class="row">
   <div class="col-md-12">
-    <div class="box">
+    <div class="box" id="hilang">
       <div class="box-header with-border">
-        <h3 class="box-title" id="judul">Distribusi Penduduk Berdasarkan Jenis Kelamin </h3>
+        <h3 class="box-title" id="judul">Tunggu, sedang proses...</h3>
         <br><br>
         <div class="box-tools pull-right">
           <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -117,37 +117,30 @@
 		$("#menu_ketuk_pintu").addClass("active");
 		$("#menu_eform_laporan_kpldh").addClass("active");
 
+		$("#hilang").hide(); 
       	$('#btn-preview').click(function(){
-      		$('#judul').html($('[name=laporan] :selected').text());
-      		//$('#isi').html($('[name=laporan] :selected').text());
       		var judul = $('[name=laporan] :selected').text();
       		var kecamatanbar = $("#kecamatan").val();
       		var kelurahanbar = $("#kelurahan").val();
       		var id_judul = $("#laporan").val();
       		var rw = $("#rw").val();
+	      		if ($("#laporan").val()=="") {
+	      			$("#hilang").hide();
+	      			alert("Silahkan Pilih Laporan Terlebih Dahulu");
+	      		}else{
+	      			$("#hilang").show(); 
+	      		}
       		$.ajax({
-	        url : '<?php echo site_url('eform/laporan_kpldh/pilihchart/') ?>',
-	        type : 'POST',
-	        data : 'judul=' + judul+'&kecamatan=' + kecamatanbar+'&kelurahan=' + kelurahanbar+'&rw=' + rw+'&id_judul=' + id_judul,
-	        success : function(data) {
-	          $('#tampilchart').html(data);
-	        }
-	      });
+		        url : '<?php echo site_url('eform/laporan_kpldh/pilihchart/') ?>',
+		        type : 'POST',
+		        data : 'judul=' + judul+'&kecamatan=' + kecamatanbar+'&kelurahan=' + kelurahanbar+'&rw=' + rw+'&id_judul=' + id_judul,
+		        success : function(data) {
+		        	$('#judul').html($('[name=laporan] :selected').text());
+		          	$('#tampilchart').html(data);
+		        }
+	     	});
 
 	      return false;
-      		/*var rwbar = $("#rw").val();
-      		if (judul=="Pilih Laporan"){
-      			$('#row_umur').hide(); 
-      			$('#row_kelamin').hide();
-      		}else if (judul=="Distribusi Penduduk Berdasarkan Jenis Kelamin") {
-      			//alert('hai');
-      			kelaminbar();
-      			 $('#row_kelamin').show(); 
-      			$('#row_umur').hide(); 
-      		}else{
-      			$('#row_kelamin').hide(); 
-      			$('#row_umur').show(); 
-      		}*/
 
       	});
       	

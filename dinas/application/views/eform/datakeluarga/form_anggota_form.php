@@ -1,5 +1,11 @@
 <script>
   	$(function () { 
+      <?php if ($action=="detail") {?>
+        $("input[name^=keluarga6]").prop("disabled", true);     
+        $("input[name^=kesehatan]").prop("disabled", true); 
+        $("select").prop("disabled", true); 
+        $("#keluarga6_tgl_lahir").prop("disabled", true); 
+  <?php    } ?>
       <?php
       if(isset($data_profile_anggota) and $data_profile_anggota!="salah"){
         foreach($data_profile_anggota as $row){ ?>
@@ -84,14 +90,21 @@
           window.scrollTo(0, 600);
           $('#content2' ).scrollTop(0);
       });
-
-      $("#keluarga6_tgl_lahir").jqxDateTimeInput({ formatString: 'dd-MM-yyyy', theme: theme, height: '30px'});
+      <?php
+        if ($action=="detail") {?>
+          var disabled = "disabled:true";
+      <?php }else{ ?>
+          var disabled = "";
+      <?php }?>
+      $("#keluarga6_tgl_lahir").jqxDateTimeInput({ formatString: 'dd-MM-yyyy', theme: theme, height: '30px',disabled});
       $("#keluarga6_tgl_lahir").on('change', function (event) { 
         var noanggota = "<?php echo $noanggota;?>";
         var id_data_keluarga = "<?php echo $id_data_keluarga; ?>";
           $.post("<?php echo base_url()?>eform/data_kepala_keluarga/update_kepala",{kode:$(this).attr('name'),id_data_keluarga:id_data_keluarga,value:$(this).val(),noanggota:noanggota},function(data,status){;
           });
       }); 
+
+  
 	});
 </script>
 

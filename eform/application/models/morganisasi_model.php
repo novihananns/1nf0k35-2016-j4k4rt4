@@ -17,12 +17,17 @@ class Morganisasi_model extends CI_Model {
     }
     
     function get_data_kk(){
+    	$kode_kecamatan = substr($this->session->userdata('puskesmas'),0,7);
+    	$this->db->where('id_kecamatan',$kode_kecamatan);
 		$data = $this->db->get('data_keluarga')->result_array();
 
 		return $data;
     }
     
     function get_data_penduduk(){
+    	$kode_kecamatan = substr($this->session->userdata('puskesmas'),0,7);
+    	$this->db->where('data_keluarga.id_kecamatan',$kode_kecamatan);
+		$this->db->join('data_keluarga','data_keluarga.id_data_keluarga=data_keluarga_anggota.id_data_keluarga');
 		$data = $this->db->get('data_keluarga_anggota')->result_array();
 
 		return $data;

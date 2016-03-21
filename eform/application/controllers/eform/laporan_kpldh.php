@@ -46,14 +46,14 @@ class Laporan_kpldh extends CI_Controller {
 			$kelurahan = $this->input->post('kelurahan');
 			$this->db->group_by("rw");
 			$kode 	= $this->datakeluarga_model->get_datawhere($kelurahan,"id_desa","data_keluarga");
-			if ($kelurahan="") {
+			if ($kelurahan=="") {
 				echo '<option value="">Pilih RW</option>';
 			}else{
 				echo '<option value="">Pilih RW</option>';
-			foreach($kode as $kode) :
-				echo $select = $kode->rw == set_value('rukuwarga') ? 'selected' : '';
-				echo '<option value="'.$kode->rw.'" '.$select.'>' . $kode->rw . '</option>';
-			endforeach;
+				foreach($kode as $kode) :
+					echo $select = $kode->rw == set_value('rukuwarga') ? 'selected' : '';
+					echo '<option value="'.$kode->rw.'" '.$select.'>' . $kode->rw . '</option>';
+				endforeach;
 			}
 			return FALSE;
 		}

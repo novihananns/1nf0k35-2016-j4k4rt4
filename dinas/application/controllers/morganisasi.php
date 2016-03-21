@@ -395,7 +395,8 @@ class Morganisasi extends CI_Controller {
 			// redirect(base_url()."sik/profile");
 		}else{
 			if($this->morganisasi_model->check_password()){
-				if(!$this->morganisasi_model->update_password()) {
+    			$username =$this->session->userdata('username');
+				if(!$this->morganisasi_model->update_password($username)) {
 					// $this->session->set_flashdata('alert', 'Save data failed...');
 					echo "Save data failed...";
 				} else {

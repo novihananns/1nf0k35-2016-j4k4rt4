@@ -110,10 +110,11 @@ class Admin_user extends CI_Controller {
 		$data['level']			= "";
 		$data['level_option']	= "
 		<option value='administrator' ".($data['level']=="administrator" ? "selected" : "").">Administrator</option>
-		<option value='guest' ".($data['level']=="guest" ? "selected" : "").">Guest</option>
-		<option value='inventory' ".($data['level']=="inventory" ? "selected" : "").">Inventory</option>
-		<option value='kepegawaian' ".($data['level']=="kepegewaian" ? "selected" : "").">Kepegawaian</option>
-		<option value='keuangan' ".($data['level']=="keuangan" ? "selected" : "").">Keuangan</option>
+		<option value='ketukpintu' ".($data['level']=="ketukpintu" ? "selected" : "").">Ketukpintu</option>
+		<option value='guest' disabled ".($data['level']=="guest" ? "selected" : "").">Guest</option>
+		<option value='inventory' disabled ".($data['level']=="inventory" ? "selected" : "").">Inventory</option>
+		<option value='kepegawaian' disabled ".($data['level']=="kepegewaian" ? "selected" : "").">Kepegawaian</option>
+		<option value='keuangan' disabled ".($data['level']=="keuangan" ? "selected" : "").">Keuangan</option>
 		";
         
         $data['content'] = $this->parser->parse("admin/users/user_profile",$data,true);

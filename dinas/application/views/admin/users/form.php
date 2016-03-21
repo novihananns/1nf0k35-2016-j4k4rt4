@@ -73,13 +73,22 @@
           <option value="administrator" <?php 
                 if(isset($level) && $level=="administrator")  echo "selected";
                 ?>>Administrator</option>
-          <option value="guest" <?php 
+          <option value="ketukpintu" <?php 
+                if(isset($level) && $level=="ketukpintu")  echo "selected";
+                ?>>Ketukpintu</option>
+          <option value="guest" disabled <?php 
                 if(isset($level) && $level=="guest")  echo "selected";
                 ?>>Guest</option>
-          <option value="inventory" <?php 
+          <option value="inventory" disabled <?php 
                 if(isset($level) && $level=="inventory")  echo "selected";
                 ?>>Inventory</option>
-          <option value="sms" <?php 
+          <option value="kepegawaian" disabled <?php 
+                if(isset($level) && $level=="kepegawaian")  echo "selected";
+                ?>>Kepegawaian</option>
+          <option value="keuangan" disabled <?php 
+                if(isset($level) && $level=="keuangan")  echo "selected";
+                ?>>Keuangan</option>
+          <option value="sms" disabled <?php 
                 if(isset($level) && $level=="sms")  echo "selected";
                 ?>>Sms</option>
         </select>

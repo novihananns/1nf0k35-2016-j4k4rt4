@@ -8,7 +8,14 @@ class Datakeluarga_model extends CI_Model {
         parent::__construct();
         $this->lang   = $this->config->item('language');
     }
-    
+    function get_nama($kolom_sl,$tabel,$kolom_wh,$kond){
+       $this->db->where($kolom_wh,$kond);
+        $this->db->select($kolom_sl);
+        $query = $this->db->get($tabel)->result();
+        foreach ($query as $key) {
+            return $key->$kolom_sl;
+        }
+    }
     function get_data($start=0,$limit=999999,$options=array()){
         $this->db->select("$this->tabel.*,cl_village.value");
 		$this->db->join('cl_village', "data_keluarga.id_desa = cl_village.code",'inner');

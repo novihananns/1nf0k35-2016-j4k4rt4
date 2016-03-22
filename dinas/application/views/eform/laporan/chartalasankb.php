@@ -152,6 +152,7 @@
         float: left;
       }
     </style>
+    
 <script>
 $(function(){
 	var areaChartData = {

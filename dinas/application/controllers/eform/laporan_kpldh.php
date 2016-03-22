@@ -195,7 +195,7 @@ class Laporan_kpldh extends CI_Controller {
 		foreach ($datapuskesmas as $row) {
 			$bar[$row->code]['puskesmas'] = $row->nama;
 		}*/
-		$kecamatan = substr($this->session->userdata("puskesmas"), 0,7);
+	//	$kecamatan = substr($this->session->userdata("puskesmas"), 0,7);
 		$totalorang = $this->laporan_kpldh_model->totaljumlah($kecamatan,$kelurahan,$rw);
 		if ($totalorang!=0) {
 			foreach ($totalorang as $row) {
@@ -451,7 +451,7 @@ class Laporan_kpldh extends CI_Controller {
 		$bar = array();
 		$color = array('#f56954','#00a65a','#f39c12','#00c0ef','#8d16c5','#d2d6de','#3c8dbc','#69d856','#eb75e4');
 		
-		$kecamatan = substr($this->session->userdata("puskesmas"), 0,7);
+		//$kecamatan = substr($this->session->userdata("puskesmas"), 0,7);
 		
 		$data['tdkposyandu'] = $this->laporan_kpldh_model->get_data_posyandu('1',$kecamatan,$kelurahan,$rw);
 		$data['ikutposyandu']= $this->laporan_kpldh_model->get_data_posyandu('0',$kecamatan,$kelurahan,$rw);
@@ -470,7 +470,7 @@ class Laporan_kpldh extends CI_Controller {
 		$bar = array();
 		$color = array('#f56954','#00a65a','#f39c12','#00c0ef','#8d16c5','#d2d6de','#3c8dbc','#69d856','#eb75e4');
 		
-		$kecamatan = substr($this->session->userdata("puskesmas"), 0,7);
+		//$kecamatan = substr($this->session->userdata("puskesmas"), 0,7);
 		
 		$data['tdkdisabilitas'] = $this->laporan_kpldh_model->get_data_disabilitas('1',$kecamatan,$kelurahan,$rw);
 		$data['disabilitas']= $this->laporan_kpldh_model->get_data_disabilitas('0',$kecamatan,$kelurahan,$rw);
@@ -504,7 +504,7 @@ class Laporan_kpldh extends CI_Controller {
 		$bar = array();
 		$color = array('#f56954','#00a65a','#f39c12','#00c0ef','#8d16c5','#d2d6de','#3c8dbc','#69d856','#eb75e4');
 		
-		$kecamatan = substr($this->session->userdata("puskesmas"), 0,7);
+		//$kecamatan = substr($this->session->userdata("puskesmas"), 0,7);
 		
 		$data['sedang'] = $this->laporan_kpldh_model->get_data_ikutkb('0',$kecamatan,$kelurahan,$rw);
 		$data['pernah']= $this->laporan_kpldh_model->get_data_ikutkb('1',$kecamatan,$kelurahan,$rw);
@@ -602,7 +602,7 @@ class Laporan_kpldh extends CI_Controller {
 				$temp8=0;
 			}
 		}
-		$kecamatan = substr($this->session->userdata("puskesmas"), 0,7);
+	//	$kecamatan = substr($this->session->userdata("puskesmas"), 0,7);
 		$totalorang = $this->laporan_kpldh_model->totalorang($kecamatan,$kelurahan,$rw);
 		if ($totalorang!=0) {
 			foreach ($totalorang as $row) {
@@ -612,6 +612,7 @@ class Laporan_kpldh extends CI_Controller {
 		}
 		$data['jumlahorang'] = $this->laporan_kpldh_model->jumlahorang($kecamatan,$kelurahan,$rw);
 		$data['bar']	= $bar;
+		
 		$data['color']	= $color;
 		die($this->parser->parse("eform/laporan/chartalasankb",$data));
 	}
@@ -897,8 +898,8 @@ class Laporan_kpldh extends CI_Controller {
 		}else{
 			$temp6=0;
 		}*/
-		$kode_sess = $this->session->userdata("puskesmas");
-		$bar['puskesmas'] = $this->datakeluarga_model->get_nama('nama','cl_kec','code',substr($kode_sess, 0,7));
+	//	$kode_sess = $this->session->userdata("puskesmas");
+		$bar['puskesmas'] = $this->datakeluarga_model->get_nama('nama','cl_kec','code',$kecamatan);
 		$bar['totalorang'] = $this->laporan_kpldh_model->get_data_anggotaprofile($kecamatan,$kelurahan,$rw);//$temp1+$temp2+$temp3+$temp4+$temp5+$temp6;
 		die($this->parser->parse("eform/laporan/chartcucitangan",$bar));
 
@@ -978,8 +979,8 @@ class Laporan_kpldh extends CI_Controller {
 		}else{
 			$temp6=0;
 		}*/
-		$kode_sess = $this->session->userdata("puskesmas");
-		$bar['puskesmas'] = $this->datakeluarga_model->get_nama('nama','cl_kec','code',substr($kode_sess, 0,7));
+		//$kode_sess = $this->session->userdata("puskesmas");
+		$bar['puskesmas'] = $this->datakeluarga_model->get_nama('nama','cl_kec','code',$kecamatan);
 		$bar['totalorang'] = $this->laporan_kpldh_model->get_data_anggotaprofile($kecamatan,$kelurahan,$rw);//$temp1+$temp2+$temp3+$temp4+$temp5+$temp6;
 		die($this->parser->parse("eform/laporan/chartsikatgigi",$bar));
 	}
@@ -1016,8 +1017,8 @@ class Laporan_kpldh extends CI_Controller {
 		}else{
 			$temp5=0;
 		}
-		$kode_sess = $this->session->userdata("puskesmas");
-		$bar['puskesmas'] = $this->datakeluarga_model->get_nama('nama','cl_kec','code',substr($kode_sess, 0,7));
+	//	$kode_sess = $this->session->userdata("puskesmas");
+		$bar['puskesmas'] = $this->datakeluarga_model->get_nama('nama','cl_kec','code',$kecamatan);
 		$bar['totalorang'] = $temp1+$temp2+$temp3+$temp4+$temp5;
 		die($this->parser->parse("eform/laporan/chartkebiasaanmerokok",$bar));
 	}

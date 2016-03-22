@@ -56,7 +56,7 @@
 				     		<select name="kecamatan" class="form-control" id="kecamatan">
 				     			<!--<option value="">Pilih Kecamatan</option>-->
 				     			<?php foreach ($datakecamatan as $kec ) { ;?>
-								<?php $select = $kec->code == substr($this->session->userdata('puskesmas'), 0,7)  ? 'selected=selected' : '' ?>
+								<?php $select = $kec->code == set_value('kecamatan')  ? 'selected=selected' : '' ?>
 									<option value="<?php echo $kec->code; ?>" <?php echo $select ?>><?php echo $kec->nama; ?></option>
 								<?php	} ;?>
 				     		</select>

@@ -91,6 +91,11 @@
 </div><!-- /.box -->
 <div class="row">
   <div class="col-md-12">
+  	<div class="box" id="loading">
+	    <div class="box-header with-border">
+	    	<h3 class="box-title" id="judulloading" align="center">Mohon tunggu, sedang proses...</h3>
+	    </div>
+    </div>
     <div class="box" id="hilang">
       <div class="box-header with-border">
         <h3 class="box-title" id="judul">Tunggu, sedang proses...</h3>
@@ -117,8 +122,11 @@
 		$("#menu_ketuk_pintu").addClass("active");
 		$("#menu_eform_laporan_kpldh").addClass("active");
 
+		$("#loading").hide();
 		$("#hilang").hide(); 
       	$('#btn-preview').click(function(){
+			$("#hilang").hide();
+			$("#loading").show();
       		var judul = $('[name=laporan] :selected').text();
       		var kecamatanbar = $("#kecamatan").val();
       		var kelurahanbar = $("#kelurahan").val();
@@ -128,13 +136,14 @@
 	      			$("#hilang").hide();
 	      			alert("Silahkan Pilih Laporan Terlebih Dahulu");
 	      		}else{
-	      			$("#hilang").show(); 
 	      		}
       		$.ajax({
 		        url : '<?php echo site_url('eform/laporan_kpldh/pilihchart/') ?>',
 		        type : 'POST',
 		        data : 'judul=' + judul+'&kecamatan=' + kecamatanbar+'&kelurahan=' + kelurahanbar+'&rw=' + rw+'&id_judul=' + id_judul,
 		        success : function(data) {
+		        	$("#loading").hide();
+		        	$("#hilang").show(); 
 		        	$('#judul').html($('[name=laporan] :selected').text());
 		          	$('#tampilchart').html(data);
 		        }

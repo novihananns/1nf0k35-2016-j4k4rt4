@@ -5,6 +5,8 @@
 	    });
 
       <?php
+      $jam_data = strtotime($jam_data);
+
       if(set_value('jam_selesai')=="" && isset($jam_selesai)){
         $jam_selesai = strtotime($jam_selesai);
       }else{
@@ -12,6 +14,15 @@
       }
       if($jam_selesai=="") $jam_selesai = time();
       ?>
+
+      $("#tgl_pengisian").jqxDateTimeInput({ formatString: 'dd-MM-yyyy', theme: theme, height: '30px'});
+      
+      var date = new Date();
+      date.setHours(<?php echo date("H", $jam_data)?>);
+      date.setMinutes(<?php echo date("i", $jam_data)?>);
+      date.setSeconds(<?php echo date("s", $jam_data)?>);
+      $("#jam_data").jqxDateTimeInput({ height: '30px', theme: theme, formatString: 'HH:mm:ss', showTimeButton: true, showCalendarButton: false});
+      $("#jam_data").jqxDateTimeInput('setDate', date);
 
       var date = new Date();
       date.setHours(<?php echo date("H", $jam_selesai)?>);
@@ -51,12 +62,20 @@
 
       <div class="row" style="margin: 5px">
         <div class="col-md-4 col-xs-4" style="padding: 5px">Tanggal Pengisian</div>
-        <div class="col-md-8 col-xs-8"> : <?php echo date("d-m-Y", strtotime($tanggal_pengisian));?></div>
+        <div class="col-md-8 col-xs-8">
+          <div id='tgl_pengisian' name="tgl_pengisian" value="<?php
+            $tgl_pengisian = strtotime($tanggal_pengisian);
+            echo date("Y-m-d",$tgl_pengisian);
+          ?>" >
+          </div>         
+        </div>
       </div>
       
       <div class="row" style="margin: 5px">
         <div class="col-md-4 col-xs-4" style="padding: 5px">Jam Mulai Mendata</div>
-        <div class="col-md-8 col-xs-8">: {jam_data} </div>
+        <div class="col-md-8 col-xs-8">
+          <div id='jam_data' name="jam_data"></div>
+        </div>
       </div>
         
       <div class="row" style="margin: 5px">

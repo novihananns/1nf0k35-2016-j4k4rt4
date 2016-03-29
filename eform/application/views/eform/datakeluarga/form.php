@@ -1,25 +1,25 @@
 <script>
   	$(function () { 
 
-		<?php
+		  <?php
         if(set_value('jam_data')=="" && isset($jam_data)){
           $jam_data = strtotime($jam_data);
         }else{
           $jam_data = strtotime(set_value('jam_data'));
         }
         if($jam_data=="") $jam_data = time();
-      	?>
+    	?>
 
-		var date = new Date();
-	      	date.setHours(<?php echo date("H", $jam_data)?>);
+		  var date = new Date();
+	    date.setHours(<?php echo date("H", $jam_data)?>);
 			date.setMinutes(<?php echo date("i", $jam_data)?>);
 			date.setSeconds(<?php echo date("s", $jam_data)?>);
-		$("#jam_data").jqxDateTimeInput({ height: '30px', theme: theme, formatString: 'HH:mm:ss', showTimeButton: true, showCalendarButton: false});
-		$("#jam_data").jqxDateTimeInput('setDate', date);
+		  $("#jam_data").jqxDateTimeInput({ height: '30px', theme: theme, formatString: 'HH:mm:ss', showTimeButton: true, showCalendarButton: false});
+		  $("#jam_data").jqxDateTimeInput('setDate', date);
 		
     	$("#tgl_pengisian").jqxDateTimeInput({ formatString: 'dd-MM-yyyy', theme: theme, height: '30px'});
 
-       	$('#btn-kembali').click(function(){
+      $('#btn-kembali').click(function(){
 	        window.location.href="<?php echo base_url()?>eform/data_kepala_keluarga";
 	    });
 	});

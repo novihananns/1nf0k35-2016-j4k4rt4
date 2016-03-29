@@ -217,7 +217,9 @@ class Datakeluarga_model extends CI_Model {
             'id_pkk'            => $this->input->post('jabatanstuktural'),
             'nama_koordinator'  => $this->input->post('nama_koordinator'),
             'nama_pendata'      => $this->input->post('nama_pendata'),
-            'jam_selesai'       => $this->input->post('jam_selesai')
+            'jam_selesai'       => $this->input->post('jam_selesai'),
+            'jam_data'          => $this->input->post('jam_data'),
+            'tanggal_pengisian' => date("Y-m-d", strtotime($this->input->post('tgl_pengisian')))
         );
         if($this->db->update('data_keluarga',$data,array('id_data_keluarga' => $id_data_keluarga))){
             return true;

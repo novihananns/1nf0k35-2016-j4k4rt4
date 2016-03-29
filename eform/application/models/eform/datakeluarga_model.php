@@ -57,6 +57,50 @@ class Datakeluarga_model extends CI_Model {
         
         return $query->result();
     }
+    function get_urut_available($keluarga){
+        $data = array();
+        $reserved = array();
+        $vacant = array();
+
+        $this->db->select('nourutkel');
+        $this->db->where('id_desa',$keluarga['id_desa']);
+        $this->db->order_by('nourutkel','asc');
+        $query = $this->db->get($this->tabel);
+        if ($query->num_rows() > 0){
+            $data = $query->result_array();
+            foreach ($data as $key ) {
+                $reserved[$key['nourutkel']]='reserved';
+            }
+        }
+
+
+        $this->db->select('MAX(nourutkel) as nourutkel');
+        $this->db->where('id_desa',$keluarga['id_desa']);
+        $query = $this->db->get($this->tabel);
+        $max = $query->row_array();
+        $max = intval($max['nourutkel'])+1;
+
+
+        for($i=1;$i<$max;$i++){
+            $key = str_repeat("0", (3-strlen($i))).$i;
+            if(!isset($reserved[$key])){
+                $vacant[] = $key;
+            }
+        }
+
+        $max = str_repeat("0", (3-strlen($max))).$max;
+        $vacant[] = $max;
+
+        return $vacant;
+    }
+
+    function nomor($keluarga,$nomor){
+        $this->db->where('id_data_keluarga',$keluarga);
+        $data = array('nourutkel' => $nomor);
+
+        return $this->db->update($this->tabel,$data);
+    }
+
     function get_data_row($id){
         $data = array();
         $options = array('id_data_keluarga' => $id);

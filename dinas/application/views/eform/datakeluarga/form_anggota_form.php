@@ -548,7 +548,7 @@
           </div>
 
           <div class="row" style="margin: 5px;border-bottom:1px solid #EEEEEE;">
-            <div class="col-xs-11" style="padding: 5px 5px 5px 24px">a. Selalu mencuci tangan pakai sabun?</div>
+            <div class="col-xs-11" style="padding: 5px 5px 5px 24px">a. Sebelum menyiapkan Makanan?</div>
             <div class="col-xs-1">
               <input type="checkbox" name="kesehatan_1_g_1_a_cebox" id="kesehatan_1_g_1_a_cebox" value="1">
             </div>

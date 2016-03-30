@@ -700,6 +700,7 @@ class Data_kepala_keluarga extends CI_Controller {
 		if($this->input->is_ajax_request()) {
 			$kelurahan = $this->input->post('kelurahan');
 			$this->session->set_userdata('filter_code_kelurahan',$this->input->post('kelurahan'));
+			$this->db->group_by("rw");
 			$kode 	= $this->datakeluarga_model->get_datawhere($kelurahan,"id_desa","data_keluarga");
 
 				echo '<option value="">Pilih Keluarahan</option>';

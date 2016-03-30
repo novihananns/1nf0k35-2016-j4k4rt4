@@ -5,7 +5,7 @@
     <th>Persentase</th>
   </tr>
   <tr>
-    <td><?php echo "Selalu mencuci tangan pakai sabun"; ?></td>
+    <td><?php echo "Sebelum menyiapkan makanan"; ?></td>
     <td><?php echo (isset($pakaisabun)) ? $pakaisabun:0;?></td>
     <td><?php echo ($pakaisabun>0) ? number_format($pakaisabun/$totalorang*100,2) : 0;?></td>
   </tr>
@@ -46,7 +46,7 @@
 </div>
 <div class="row">
   <div class="col-md-2">
-      <div class="bux"></div> &nbsp; <label>Selalu mencuci tangan pakai sabun</label>
+      <div class="bux"></div> &nbsp; <label>Sebelum menyiapkan makanan</label>
   </div>
   <div class="col-md-2">
       <div class="bux1"></div> &nbsp; <label>Setiap kali tangan kotor (pegang uang, binatang, berkebun)</label>
@@ -119,7 +119,7 @@ $(function(){
             ?>],
         datasets: [
           {
-            label: "Selalu mencuci tangan pakai sabun",
+            label: "Sebelum menyiapkan makanan",
             fillColor: "#20ad3a",
             strokeColor: "#20ad3a",
             pointColor: "#20ad3a",

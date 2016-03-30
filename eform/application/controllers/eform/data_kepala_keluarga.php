@@ -585,7 +585,7 @@ class Data_kepala_keluarga extends CI_Controller {
 
       	$data['alert_form'] = '';
 
-       $data['data_profile_anggota'] = $this->datakeluarga_model->get_data_anggotaprofile($idkeluarga,$noanggota);
+        $data['data_profile_anggota'] = $this->datakeluarga_model->get_data_anggotaprofile($idkeluarga,$noanggota);
 		die($this->parser->parse("eform/datakeluarga/form_anggota_form",$data));
 		/*}elseif($noanggota=$this->datakeluarga_model->insert_dataAnggotaKeluarga($idkeluarga)){
 			die($this->parser->parse("eform/datakeluarga/form_anggota_form",$data));

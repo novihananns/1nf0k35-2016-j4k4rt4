@@ -14,6 +14,26 @@ class Data_kepala_keluarga extends CI_Controller {
 		$this->load->model('eform/anggota_keluarga_kb_model');
 		$this->load->model('eform/dataform_model');
 	}
+
+	function urut($id_data_keluarga=0){
+		$this->authentication->verify('eform','edit');
+
+		$data 			= $this->datakeluarga_model->get_data_row($id_data_keluarga); 
+		$data['vacant']	= $this->datakeluarga_model->get_urut_available($data); 
+
+		die($this->parser->parse("eform/datakeluarga/urut",$data));
+	}
+
+	function nomor($id_data_keluarga=0,$nomor="000"){
+		$this->authentication->verify('eform','edit');
+		if($this->datakeluarga_model->nomor($id_data_keluarga,$nomor)){
+			echo "OK";
+		}else{
+			echo "FAILED";
+		}
+
+	}
+
     function datakepalakeluaraexport(){
     	$TBS = new clsTinyButStrong;		
 		$TBS->Plugin(TBS_INSTALL, OPENTBS_PLUGIN);
@@ -565,7 +585,7 @@ class Data_kepala_keluarga extends CI_Controller {
 
       	$data['alert_form'] = '';
 
-       $data['data_profile_anggota'] = $this->datakeluarga_model->get_data_anggotaprofile($idkeluarga,$noanggota);
+        $data['data_profile_anggota'] = $this->datakeluarga_model->get_data_anggotaprofile($idkeluarga,$noanggota);
 		die($this->parser->parse("eform/datakeluarga/form_anggota_form",$data));
 		/*}elseif($noanggota=$this->datakeluarga_model->insert_dataAnggotaKeluarga($idkeluarga)){
 			die($this->parser->parse("eform/datakeluarga/form_anggota_form",$data));

@@ -9,9 +9,7 @@
 <section class="content">
 <form action="<?php echo base_url()?>mst/data_keluarga/dodel_multi" method="POST" name="">
   <div class="row">
-    <!-- left column -->
     <div class="col-md-12">
-      <!-- general form elements -->
       <div class="box box-primary">
         <div class="box-header">
           <h3 class="box-title">{title_form}</h3>
@@ -26,16 +24,7 @@
 				 </div>
 			</div>
 			<div class="box-body">
-			<?php
-			//	echo $this->session->userdata("filter_code_kecamatan")." || kel";
-			//	echo $this->session->userdata("filter_code_kelurahan");
-			?>
 			<div class="row">
-				<div class="col-md-3">
-				 <!--<<label> Rukun Rumah Tangga </label>
-				 	select name="rukunrumahtangga" id="rukunrumahtangga" class="form-control">
-			     	</select>-->
-				 </div>
 				 <div class="col-md-3">
 				 	<label> Kecamatan </label>
 				 	<select name="kecamatan" id="kecamatan" class="form-control">
@@ -68,6 +57,11 @@
   </div>
 </form>
 </section>
+
+<div id="popup_kpldh" style="display:none">
+	<div id="popup_title">Nomor Urut Keluarga</div>
+	<div id="popup_content">&nbsp;</div>
+</div>
 
 <script type="text/javascript">
 	$(function () {	
@@ -156,7 +150,11 @@
 					}
                  }
                 },
-				{ text: 'No. Urut', datafield: 'nourutkel', columntype: 'textbox', align:'center', cellsalign:'center', filtertype: 'textbox', width: '6%' },
+				{ text: 'No. Urut', datafield: 'nourutkel', align: 'center', columntype: 'textbox', filtertype: 'textbox', width: '6%', cellsrenderer: function (row) {
+				    var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+					return "<div style='width:100%;padding-top:6px;text-align:center;font-weight:bold;'><a href='javascript:void(0);' style='cursor:pointer;color:#a31919' onclick='urut(\""+dataRecord.id_data_keluarga+"\");'>"+dataRecord.nourutkel+"</a></div>";
+                 }
+                },
                 { text: 'Tgl Pengisian', datafield: 'tanggal_pengisian', columntype: 'textbox', align:'center', cellsalign:'center', filtertype: 'date',cellsformat: 'dd-MM-yyyy', width: '10%' },
 				{ text: 'Kepala Keluarga', datafield: 'namakepalakeluarga', columntype: 'textbox', filtertype: 'textbox', width: '16%' },
 				{ text: 'Desa', datafield: 'value', columntype: 'textbox', filtertype: 'textbox', width: '19%' },
@@ -166,6 +164,20 @@
 				{ text: 'Alamat', datafield: 'alamat', columntype: 'textbox', filtertype: 'textbox', width: '21%' }
 			]
 		});
+
+	function urut(id){
+		$("#popup_kpldh #popup_content").html("<div style='text-align:center'><br><br><br><br><img src='<?php echo base_url();?>media/images/indicator.gif' alt='loading content.. '><br>loading</div>");
+		$.get("<?php echo base_url().'eform/data_kepala_keluarga/urut/';?>"+id, function(data) {
+			$("#popup_content").html(data);
+		});
+		$("#popup_kpldh").jqxWindow({
+			theme: theme, resizable: false,
+			width: 460,
+			height: 460,
+			isModal: true, autoOpen: false, modalOpacity: 0.2
+		});
+		$("#popup_kpldh").jqxWindow('open');
+	}
 
 	function edit(id){
 		document.location.href="<?php echo base_url().'eform/data_kepala_keluarga/edit';?>/" + id;
@@ -179,9 +191,14 @@
 			});
 		}
 	}
+
+	function close_popup(){
+        $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
+		$("#popup_kpldh").jqxWindow('close');
+	}
+
 	$('#kecamatan').change(function(){
       var kecamatan = $(this).val();
-     // var id_mst_inv_ruangan = '<?php echo set_value('ruangan')?>';
       $.ajax({
         url : '<?php echo site_url('eform/data_kepala_keluarga/get_kecamatanfilter') ?>',
         type : 'POST',
@@ -196,7 +213,6 @@
     }).change();
     $('#kelurahan').change(function(){
       var kelurahan = $(this).val();
-     // var id_mst_inv_ruangan = '<?php echo set_value('ruangan')?>';
       $.ajax({
         url : '<?php echo site_url('eform/data_kepala_keluarga/get_kelurahanfilter') ?>',
         type : 'POST',
@@ -242,7 +258,7 @@
 				value = year+'-'+month+'-'+day;
 				
 			}
-			//alert(value);
+
 			post = post+'&filtervalue'+i+'='+value;
 			post = post+'&filtercondition'+i+'='+condition;
 			post = post+'&filteroperation'+i+'='+filteroperation;
@@ -263,7 +279,6 @@
 		post = post+'&kecamatan='+$("#kecamatan option:selected").text()+'&kelurahan='+$("#kelurahan option:selected").text()+'&rukunwarga='+$("#rukunwarga option:selected").text()+'&rukunrumahtangga='+$("#rukunrumahtangga option:selected").text();
 		
 		$.post("<?php echo base_url()?>eform/data_kepala_keluarga/datakepalakeluaraexport",post,function(response	){
-			//alert(response);
 			window.location.href=response;
 		});
 	});

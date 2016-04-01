@@ -14,7 +14,7 @@
     <div class="info-box">
       <span class="info-box-icon bg-blue"><i class="fa fa-bank"></i></span>
       <div class="info-box-content">
-        <span class="info-box-text">Kelurahan </span>
+        <span class="info-box-text">Kecamatan </span>
         <span class="info-box-number" style="font-size:14px;">{j_kecamatan}<br>Kecamatan</span>
       </div><!-- /.info-box-content -->
     </div><!-- /.info-box -->

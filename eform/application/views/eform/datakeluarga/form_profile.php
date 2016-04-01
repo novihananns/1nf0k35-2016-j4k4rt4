@@ -92,7 +92,7 @@
 						</tr>
 						<tr>
 							<td align='center' valign='top'>3</td>
-							<td>Jembatan Keluarga</td>
+							<td>Jamban Keluarga</td>
 							<td align='center'><input type="radio" name="profile_a_3_a_radio" id="profile_a_3_a_radio_ya" value="1"></td>
 							<td align='center'><input type="radio" name="profile_a_3_a_radio" id="profile_a_3_a_radio_tidak" value="0"></td>
 							<td><input type="number" name="profile_a_3_a_jumlah" id="profile_a_3_a_jumlah" class="form-control" style="border:0;background:#dde4ff"></td>

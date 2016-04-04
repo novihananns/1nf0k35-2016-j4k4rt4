@@ -22,7 +22,7 @@ class Datakeluarga_model extends CI_Model {
 
         //$kec = substr($this->session->userdata('puskesmas'), 0,7);
         //this->db->like('id_kecamatan',$kec);
-		$this->db->order_by('zdata_keluarga.tanggal_pengisian','asc');
+		$this->db->order_by('data_keluarga.tanggal_pengisian','asc');
 		$query =$this->db->get($this->tabel,$limit,$start);
         
         return $query->result();

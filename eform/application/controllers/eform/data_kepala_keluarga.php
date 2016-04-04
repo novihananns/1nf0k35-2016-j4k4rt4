@@ -703,7 +703,7 @@ class Data_kepala_keluarga extends CI_Controller {
 			$this->db->group_by("rw");
 			$kode 	= $this->datakeluarga_model->get_datawhere($kelurahan,"id_desa","data_keluarga");
 
-				echo '<option value="">Pilih Keluarahan</option>';
+				echo '<option value="">Pilih Rukun Warga</option>';
 			foreach($kode as $kode) :
 				echo $select = $kode->rw == set_value('rukuwarga') ? 'selected' : '';
 				echo '<option value="'.$kode->rw.'" '.$select.'>' . $kode->rw . '</option>';

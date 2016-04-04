@@ -1666,49 +1666,56 @@ darah tinggi oleh tenaga kesehatan (dokter/ perawat/ bidan)?</div>
               <input type="checkbox" name="kesehatan_5_g_15_kk_cebox" id="kesehatan_5_g_15_kk_cebox" value="1">
             </div>
           </div>
-
+<!--
           <div class="row" style="margin: 5px;border-bottom:1px solid #EEEEEE;">
             <div class="col-xs-11" style="padding: 5px">16. Sering menderita sakit kepala?</div>
             <div class="col-xs-1">
               <input type="checkbox" name="kesehatan_5_g_16_kk_cebox" id="kesehatan_5_g_16_kk_cebox" value="1">
             </div>
           </div>
-
+-->
           <div class="row" style="margin: 5px;border-bottom:1px solid #EEEEEE;">
-            <div class="col-xs-11" style="padding: 5px">17. Merasa tidak berharga?</div>
+            <div class="col-xs-11" style="padding: 5px">16. Merasa tidak berharga?</div>
             <div class="col-xs-1">
               <input type="checkbox" name="kesehatan_5_g_17_kk_cebox" id="kesehatan_5_g_17_kk_cebox" value="1">
             </div>
           </div>
 
           <div class="row" style="margin: 5px;border-bottom:1px solid #EEEEEE;">
-            <div class="col-xs-11" style="padding: 5px">18. Mempunya pikiran untuk mengakhiri hidup?</div>
+            <div class="col-xs-11" style="padding: 5px">17. Mempunya pikiran untuk mengakhiri hidup?</div>
             <div class="col-xs-1">
               <input type="checkbox" name="kesehatan_5_g_18_kk_cebox" id="kesehatan_5_g_18_kk_cebox" value="1">
             </div>
           </div>
 
           <div class="row" style="margin: 5px;border-bottom:1px solid #EEEEEE;">
-            <div class="col-xs-11" style="padding: 5px">19. Merasa lelah sepanjang waktu?</div>
+            <div class="col-xs-11" style="padding: 5px">18. Merasa lelah sepanjang waktu?</div>
             <div class="col-xs-1">
               <input type="checkbox" name="kesehatan_5_g_19_kk_cebox" id="kesehatan_5_g_19_kk_cebox" value="1">
             </div>
           </div>
 
           <div class="row" style="margin: 5px;border-bottom:1px solid #EEEEEE;">
-            <div class="col-xs-11" style="padding: 5px">20. Mengalami rasa tidak enak di perut?</div>
+            <div class="col-xs-11" style="padding: 5px">19. Mengalami rasa tidak enak di perut?</div>
             <div class="col-xs-1">
               <input type="checkbox" name="kesehatan_5_g_20_kk_cebox" id="kesehatan_5_g_20_kk_cebox" value="1">
             </div>
           </div>
 
           <div class="row" style="margin: 5px;border-bottom:1px solid #EEEEEE;">
+            <div class="col-xs-11" style="padding: 5px">20. Mudah lelah?</div>
+            <div class="col-xs-1">
+              <input type="checkbox" name="kesehatan_5_g_23_kk_cebox" id="kesehatan_5_g_23_kk_cebox" value="1">
+            </div>
+          </div>
+<!--
+          <div class="row" style="margin: 5px;border-bottom:1px solid #EEEEEE;">
             <div class="col-xs-11" style="padding: 5px">21. Sering menderita sakit kepala?</div>
             <div class="col-xs-1">
               <input type="checkbox" name="kesehatan_5_g_21_kk_cebox" id="kesehatan_5_g_21_kk_cebox" value="1">
             </div>
           </div>
-
+-->
           <div class="col-md-12" style="padding: 5px">21. Untuk semua keluhan 1 s/d 20, pernah melakukan pengobatan ke fasilitas kesehatan/ tenaga kesehatan?</div>
           <div class="row" style="margin: 5px;border-bottom:1px solid #EEEEEE;">
             <div class="col-xs-3" style="padding: 5px 5px 5px 24px">a. Ya?</div>

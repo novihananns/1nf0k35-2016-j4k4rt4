@@ -777,6 +777,9 @@ class Data_kepala_keluarga extends CI_Controller {
 	
 	if ($this->input->post('kecamatan')!="null") {
 		if($this->input->is_ajax_request()) {
+			if ($this->session->set_userdata('filter_code_kecamatan')!=null) {
+				$this->session->set_userdata('filter_code_kecamatan','');
+			}
 			if ($this->session->set_userdata('filter_code_kelurahan')!=null) {
 				$this->session->set_userdata('filter_code_kelurahan','');
 			}
@@ -785,14 +788,14 @@ class Data_kepala_keluarga extends CI_Controller {
 			}
 			$kecamatan = $this->input->post('kecamatan');
 			$this->session->set_userdata('filter_code_kecamatan',$this->input->post('kecamatan'));
-			if ($kecamatan=='' || empty($kecamatan)) {
+			if ($kecamatan=="" || empty($kecamatan)) {
 				echo '<option value="">Pilih Keluarahan</option>';
 			}else{
 				$kode 	= $this->datakeluarga_model->get_datawhere($kecamatan,"code","cl_village");
 
 				echo '<option value="">Pilih Keluarahan</option>';
 				foreach($kode as $kode) :
-					echo $select = $kode->code == set_value('kelurahan') ? 'selected' : '';
+					echo $select = $kode->code == $this->session->userdata('filter_code_kecamatan') ? 'selected' : '';
 					echo '<option value="'.$kode->code.'" '.$select.'>' . $kode->value . '</option>';
 				endforeach;
 			}
@@ -809,6 +812,12 @@ class Data_kepala_keluarga extends CI_Controller {
 			$kelurahan = $this->input->post('kelurahan');
 			if ($kelurahan=='' || empty($kelurahan)) {
 				echo '<option value="">Pilih RW</option>';
+				if ($this->session->set_userdata('filter_code_kelurahan')!=null) {
+					$this->session->set_userdata('filter_code_kelurahan','');
+				}
+				if ($this->session->set_userdata('filter_code_rukunwarga')!=null) {
+					$this->session->set_userdata('filter_code_rukunwarga','');
+				}
 			}else{
 				$this->session->set_userdata('filter_code_kelurahan',$this->input->post('kelurahan'));
 				$this->db->group_by("rw");
@@ -816,7 +825,7 @@ class Data_kepala_keluarga extends CI_Controller {
 
 					echo '<option value="">Pilih RW</option>';
 				foreach($kode as $kode) :
-					echo $select = $kode->rw == set_value('rukunwarga') ? 'selected' : '';
+					echo $select = $kode->rw == $this->session->userdata('filter_code_kelurahan') ? 'selected' : '';
 					echo '<option value="'.$kode->rw.'" '.$select.'>' . $kode->rw . '</option>';
 				endforeach;
 			}

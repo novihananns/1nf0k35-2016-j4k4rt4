@@ -778,7 +778,7 @@ Halaman?</div>
           <div class="row" style="margin: 5px;border-bottom:1px solid #EEEEEE;">
             <div class="col-md-8 col-xs-11" style="padding: 5px 5px 5px 24px">e. Teh Manis</div>
             <div class="col-md-4 col-xs-1">
-              <input type="number" placeholder="Gelas" class="form-control" name="kesehatan_3_1_etext" id="kesehatan_3_1_e_text">
+              <input type="number" placeholder="Gelas" class="form-control" name="kesehatan_3_1_e_text" id="kesehatan_3_1_e_text">
             </div>
           </div>
 
@@ -942,7 +942,7 @@ sakit selama 3 bulan berturut-turut) oleh dokter?</div>
           <div class="row" style="margin: 5px;border-bottom:1px solid #EEEEEE;">
             <div class="col-xs-3" style="padding: 5px 5px 5px 24px">a. Ya?</div>
             <div class="col-xs-3">
-              <input type="radio" name="kesehatan_2_g_2_radio" id="kesehatan_2_g_2_radio_ya" value="1">
+              <input type="radio" name="kesehatan_2_g_2_radio" id="kesehatan_2_g_2_radio_ya" value="0">
             </div>
             <div class="col-xs-3" style="padding: 5px 5px 5px 24px">b. Tidak?</div>
             <div class="col-xs-3">

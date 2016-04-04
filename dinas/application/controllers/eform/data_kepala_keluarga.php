@@ -487,7 +487,7 @@ class Data_kepala_keluarga extends CI_Controller {
 			$data['id_data_keluarga'] = $id_data_keluarga;
           	$data['data_provinsi'] = $this->datakeluarga_model->get_provinsi();
           	$data['data_kotakab'] = $this->datakeluarga_model->get_kotakab();
-          	$data['data_kecamatan'] = $this->datakeluarga_model->get_kecamatan();
+          	$data['data_kecamatan'] = $this->datakeluarga_model->get_kecamatan(substr($id_data_keluarga, 0,7));
           	$data['data_desa'] = $this->datakeluarga_model->get_desa();
           	$data['data_pos'] = $this->datakeluarga_model->get_pos();
           	$data['data_pkk'] = $this->datakeluarga_model->get_pkk();

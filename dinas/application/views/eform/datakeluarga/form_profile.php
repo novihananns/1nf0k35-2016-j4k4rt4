@@ -18,7 +18,7 @@
 							<td align='center' width='5%'>Tidak</td>
 						</tr>
 						<tr>
-							<td rowspan="6" align='center' valign='top'>1</td>
+							<td rowspan="13" align='center' valign='top'>1</td>
 							<td>Makanan pokok sehari-hari</td>
 							<td>&nbsp;</td>
 							<td>&nbsp;</td>
@@ -53,6 +53,55 @@
 							<td align='center'><input type="radio" name="profile_a_1_pilihan3_radio" id="profile_a_1_pilihan3_radio_ya" value="1"></td>
 							<td align='center'><input type="radio" name="profile_a_1_pilihan3_radio" id="profile_a_1_pilihan3_radio_tidak" value="0"></td>
 							<td colspan="2"><input type="text" name="profile_a_1_pilihan3_catatan" id="profile_a_1_pilihan3_catatan"  class="form-control" style="border:0;background:#dde4ff"></td>
+						</tr>
+						<tr>
+							<td align='center' valign='top'>&nbsp;</td>
+							<td style="background:#00a65a;color: white;font-weight: bold" align='center'>Iya</td>
+							<td style="background:#00a65a;color: white;font-weight: bold" align='center'>Tidak</td>
+							<td style="background:#00a65a;color: white;font-weight: bold" align='center'>Jumlah / Hari</td>
+							<td style="background:#00a65a;color: white;font-weight: bold" align='center'>Jumlah / Minggu</td>
+						</tr>
+						<tr>
+							<td>c. Mie instan</td>
+							<td align='center'><input type="radio" name="profile_a_1_c_radio" id="profile_a_1_c_radio_ya" value="1" ></td>
+							<td align='center'><input type="radio" name="profile_a_1_c_radio" id="profile_a_1_c_radio_tidak" value="0"></td>
+							<td><input type="number" name="profile_a_1_c_hari" id="profile_a_1_c_hari" class="form-control" style="border:0;background:#dde4ff" ></td>
+							<td><input type="number" name="profile_a_1_c_minggu" id="profile_a_1_c_minggu" class="form-control" style="border:0;background:#dde4ff" ></td>
+						</tr>
+						<tr>
+							<td>d. Makanan cepat saji / fast food</td>
+							<td align='center'><input type="radio" name="profile_a_1_d_radio" id="profile_a_1_d_radio_ya" value="1" ></td>
+							<td align='center'><input type="radio" name="profile_a_1_d_radio" id="profile_a_1_d_radio_tidak" value="0"></td>
+							<td><input type="number" name="profile_a_1_d_hari" id="profile_a_1_d_hari" class="form-control" style="border:0;background:#dde4ff" ></td>
+							<td><input type="number" name="profile_a_1_d_minggu" id="profile_a_1_d_minggu" class="form-control" style="border:0;background:#dde4ff" ></td>
+						</tr>
+						<tr>
+							<td>e. Donut dan sejenisnya</td>
+							<td align='center'><input type="radio" name="profile_a_1_e_radio" id="profile_a_1_e_radio_ya" value="1" ></td>
+							<td align='center'><input type="radio" name="profile_a_1_e_radio" id="profile_a_1_e_radio_tidak" value="0"></td>
+							<td><input type="number" name="profile_a_1_e_hari" id="profile_a_1_e_hari" class="form-control" style="border:0;background:#dde4ff" ></td>
+							<td><input type="number" name="profile_a_1_e_minggu" id="profile_a_1_e_minggu" class="form-control" style="border:0;background:#dde4ff" ></td>
+						</tr>
+						<tr>
+							<td>f. Biskuit kering dan sejenisnya</td>
+							<td align='center'><input type="radio" name="profile_a_1_f_radio" id="profile_a_1_f_radio_ya" value="1" ></td>
+							<td align='center'><input type="radio" name="profile_a_1_f_radio" id="profile_a_1_f_radio_tidak" value="0"></td>
+							<td><input type="number" name="profile_a_1_f_hari" id="profile_a_1_f_hari" class="form-control" style="border:0;background:#dde4ff" ></td>
+							<td><input type="number" name="profile_a_1_f_minggu" id="profile_a_1_f_minggu" class="form-control" style="border:0;background:#dde4ff" ></td>
+						</tr>
+						<tr>
+							<td>g. Gorengan dan sejenisnya</td>
+							<td align='center'><input type="radio" name="profile_a_1_g_radio" id="profile_a_1_g_radio_ya" value="1" ></td>
+							<td align='center'><input type="radio" name="profile_a_1_g_radio" id="profile_a_1_g_radio_tidak" value="0"></td>
+							<td><input type="number" name="profile_a_1_g_hari" id="profile_a_1_g_hari" class="form-control" style="border:0;background:#dde4ff" ></td>
+							<td><input type="number" name="profile_a_1_g_minggu" id="profile_a_1_g_minggu" class="form-control" style="border:0;background:#dde4ff" ></td>
+						</tr>
+						<tr>
+							<td><table width='100%'><tr><td>h. Lainnya:</td><td><input type="text" name="profile_a_1_h"  id="profile_a_1_h"  class="form-control" style="border:0;background:#dde4ff"></td></tr></table></td>
+							<td align='center'><input type="radio" name="profile_a_1_h_radio" id="profile_a_1_h_radio_ya" value="1" ></td>
+							<td align='center'><input type="radio" name="profile_a_1_h_radio" id="profile_a_1_h_radio_tidak" value="0"></td>
+							<td><input type="number" name="profile_a_1_h_hari" id="profile_a_1_h_hari" class="form-control" style="border:0;background:#dde4ff" ></td>
+							<td><input type="number" name="profile_a_1_h_minggu" id="profile_a_1_h_minggu" class="form-control" style="border:0;background:#dde4ff" ></td>
 						</tr>
 						<tr>
 							<td rowspan="5" align='center' valign='top'>2</td>

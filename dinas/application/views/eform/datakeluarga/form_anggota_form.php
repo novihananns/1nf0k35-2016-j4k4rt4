@@ -759,67 +759,67 @@ Halaman?</div>
           </div>
 
           <div class="row" style="margin: 5px;border-bottom:1px solid #EEEEEE;">
-            <div class="col-md-8 col-xs-11" style="padding: 5px 5px 5px 24px">a. Air putih</div>
-            <div class="col-md-4 col-xs-1">
+            <div class="col-md-8 col-xs-8" style="padding: 5px 5px 5px 24px">a. Air putih</div>
+            <div class="col-md-4 col-xs-4">
               <input type="number" placeholder="Gelas" class="form-control" name="kesehatan_3_1_a_text" id="kesehatan_3_1_a_text">
             </div>
           </div>
 
           <div class="row" style="margin: 5px;border-bottom:1px solid #EEEEEE;">
-            <div class="col-md-8 col-xs-11" style="padding: 5px 5px 5px 24px">b. Susu</div>
-            <div class="col-md-4 col-xs-1">
+            <div class="col-md-8 col-xs-8" style="padding: 5px 5px 5px 24px">b. Susu</div>
+            <div class="col-md-4 col-xs-4">
               <input type="number" placeholder="Gelas" class="form-control" name="kesehatan_3_1_b_text" id="kesehatan_3_1_b_text">
             </div>
           </div>
 
           <div class="row" style="margin: 5px;border-bottom:1px solid #EEEEEE;">
-            <div class="col-md-8 col-xs-11" style="padding: 5px 5px 5px 24px">c. Kopi</div>
-            <div class="col-md-4 col-xs-1">
+            <div class="col-md-8 col-xs-8" style="padding: 5px 5px 5px 24px">c. Kopi</div>
+            <div class="col-md-4 col-xs-4">
               <input type="number" placeholder="Gelas" class="form-control" name="kesehatan_3_1_c_text" id="kesehatan_3_1_c_text">
             </div>
           </div>
 
           <div class="row" style="margin: 5px;border-bottom:1px solid #EEEEEE;">
-            <div class="col-md-8 col-xs-11" style="padding: 5px 5px 5px 24px">d. Teh Tawar</div>
-            <div class="col-md-4 col-xs-1">
+            <div class="col-md-8 col-xs-8" style="padding: 5px 5px 5px 24px">d. Teh Tawar</div>
+            <div class="col-md-4 col-xs-4">
               <input type="number" placeholder="Gelas" class="form-control" name="kesehatan_3_1_d_text" id="kesehatan_3_1_d_text">
             </div>
           </div>
 
           <div class="row" style="margin: 5px;border-bottom:1px solid #EEEEEE;">
-            <div class="col-md-8 col-xs-11" style="padding: 5px 5px 5px 24px">e. Teh Manis</div>
-            <div class="col-md-4 col-xs-1">
+            <div class="col-md-8 col-xs-8" style="padding: 5px 5px 5px 24px">e. Teh Manis</div>
+            <div class="col-md-4 col-xs-4">
               <input type="number" placeholder="Gelas" class="form-control" name="kesehatan_3_1_e_text" id="kesehatan_3_1_e_text">
             </div>
           </div>
 
           <div class="row" style="margin: 5px;border-bottom:1px solid #EEEEEE;">
-            <div class="col-md-8 col-xs-11" style="padding: 5px 5px 5px 24px">f. Juice buah</div>
-            <div class="col-md-4 col-xs-1">
+            <div class="col-md-8 col-xs-8" style="padding: 5px 5px 5px 24px">f. Juice buah</div>
+            <div class="col-md-4 col-xs-4">
               <input type="number" placeholder="Gelas" class="form-control" name="kesehatan_3_1_f_text" id="kesehatan_3_1_f_text">
             </div>
           </div>
 
           <div class="row" style="margin: 5px;border-bottom:1px solid #EEEEEE;">
-            <div class="col-md-8 col-xs-11" style="padding: 5px 5px 5px 24px">g. Minuman ber-soda</div>
-            <div class="col-md-4 col-xs-1">
+            <div class="col-md-8 col-xs-8" style="padding: 5px 5px 5px 24px">g. Minuman ber-soda</div>
+            <div class="col-md-4 col-xs-4">
               <input type="number" placeholder="Gelas" class="form-control" name="kesehatan_3_1_g_text" id="kesehatan_3_1_g_text">
             </div>
           </div>
 
           <div class="row" style="margin: 5px;border-bottom:1px solid #EEEEEE;">
-            <div class="col-md-8 col-xs-11" style="padding: 5px 5px 5px 24px">h. Minuman ber-alkohol</div>
-            <div class="col-md-4 col-xs-1">
+            <div class="col-md-8 col-xs-8" style="padding: 5px 5px 5px 24px">h. Minuman ber-alkohol</div>
+            <div class="col-md-4 col-xs-4">
               <input type="number" placeholder="Gelas" class="form-control" name="kesehatan_3_1_h_text" id="kesehatan_3_1_h_text">
             </div>
           </div>
 
           <div class="row" style="margin: 5px;border-bottom:1px solid #EEEEEE;">
-            <div class="col-md-1 col-xs-11" style="padding: 5px 5px 5px 24px">i.</div>
-            <div class="col-md-7 col-xs-1">
+            <div class="col-md-1 col-xs-1" style="padding: 5px 5px 5px 24px">i.</div>
+            <div class="col-md-7 col-xs-7">
               <input type="text" placeholder="Lainnya" class="form-control" name="kesehatan_3_1_lain_text" id="kesehatan_3_1_lain_text">
             </div>
-            <div class="col-md-4 col-xs-1">
+            <div class="col-md-4 col-xs-4">
               <input type="number" placeholder="Gelas" class="form-control" name="kesehatan_3_1_i_text" id="kesehatan_3_1_i_text">
             </div>
           </div>

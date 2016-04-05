@@ -156,7 +156,7 @@
         <div class="col-md-8 col-xs-8">
         <?php
         if ($action=="detail") {
-            echo $rt;
+            echo $norumah;
         }else{
         ?>
           <input type="text" name="norumah" id="norumah" placeholder="Nomor Rumah" value="<?php 

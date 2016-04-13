@@ -66,7 +66,7 @@ class Laporan_kpldh extends CI_Controller {
 		$bar = array();
 		$color = array('#f56954','#00a65a','#f39c12','#00c0ef','#8d16c5','#d2d6de','#3c8dbc','#69d856','#eb75e4');
 
-		$jmlkelamin = $this->Laporan_kpldh_model->get_jum_kelamin();
+		$jmlkelamin = $this->laporan_kpldh_model->get_jum_kelamin();
 		foreach ($jmlkelamin as $row) {
 			$bar[$row->nama_kecamatan]['kelamin'] = $row->kelamin;
 			$bar[$row->nama_kecamatan]['jumlah'] = $row->jumlah;
@@ -173,8 +173,8 @@ class Laporan_kpldh extends CI_Controller {
 		//$total = 0;
 		foreach ($jmlkelamin as $row) {
 			//$total = $total+$row->jumlah;
-			$bar[$row->nama_kecamatan]['kelamin'] = $row->kelamin;
-			$bar[$row->nama_kecamatan]['jumlah'] = $row->jumlah;
+			$bar[$row->id_kecamatan]['kelamin'] = $row->kelamin;
+			$bar[$row->id_kecamatan]['jumlah'] = $row->jumlah;
 		//	$bar[$row->nama_kecamatan]['totalkel'] = $row->jumlah/$total*100;
 		}
 		$data['jumlahorang'] = $this->laporan_kpldh_model->jumlahorang($kecamatan,$kelurahan,$rw);
@@ -195,12 +195,13 @@ class Laporan_kpldh extends CI_Controller {
 		foreach ($datapuskesmas as $row) {
 			$bar[$row->code]['puskesmas'] = $row->nama;
 		}*/
+
 		$kecamatan = substr($this->session->userdata("puskesmas"), 0,7);
 		$totalorang = $this->laporan_kpldh_model->totaljumlah($kecamatan,$kelurahan,$rw);
 		if ($totalorang!=0) {
 			foreach ($totalorang as $row) {
 				$bar[/*$row->id_kecamatan*/$kecamatan]['total'] = $row->totalorang;
-				$bar[/*$row->id_kecamatan*/$kecamatan]['puskesmas'] = $row->nama_kecamatan;
+				$bar[/*$row->id_kecamatan*/$kecamatan]['puskesmas'] = $this->laporan_kpldh_model->get_nama('nama','cl_kec','code',$kecamatan);
 			}
 		}
 		
@@ -268,7 +269,7 @@ class Laporan_kpldh extends CI_Controller {
 		if ($totalorang!=0) {
 			foreach ($totalorang as $row) {
 				$bar[$row->id_kecamatan]['totalorang'] = $row->totalorang;
-				$bar[$row->id_kecamatan]['puskesmas'] = $row->nama_kecamatan;
+				$bar[$row->id_kecamatan]['puskesmas'] = $this->laporan_kpldh_model->get_nama('nama','cl_kec','code',$kecamatan);
 			}
 		}
 
@@ -359,7 +360,7 @@ class Laporan_kpldh extends CI_Controller {
 		if ($totalorang!=0) {
 			foreach ($totalorang as $row) {
 				$bar[$row->id_kecamatan]['totalorang'] = $row->totalorang;
-				$bar[$row->id_kecamatan]['puskesmas'] = $row->nama_kecamatan;
+				$bar[$row->id_kecamatan]['puskesmas'] = $this->laporan_kpldh_model->get_nama('nama','cl_kec','code',$kecamatan);
 			}
 		}
 
@@ -490,8 +491,8 @@ class Laporan_kpldh extends CI_Controller {
 		$jmljkn = $this->laporan_kpldh_model->get_data_kesehatan($kecamatan,$kelurahan,$rw);
 		//$total = 0;
 		foreach ($jmljkn as $row) {
-			$bar[$row->nama_kecamatan]['jkn'] = $row->jkn;
-			$bar[$row->nama_kecamatan]['jumlah'] = $row->jumlah;
+			$bar[$row->id_kecamatan]['jkn'] = $row->jkn;
+			$bar[$row->id_kecamatan]['jumlah'] = $row->jumlah;
 		}
 		$data['jumlahorang'] = $this->laporan_kpldh_model->jumlahorang($kecamatan,$kelurahan,$rw);
 		$data['showjkn'] = $jmljkn;
@@ -529,7 +530,6 @@ class Laporan_kpldh extends CI_Controller {
 				$temp1=0;
 			}
 		}
-
 		$tidak_setuju = $this->laporan_kpldh_model->get_data_alasankb('berencana_II_7_berkb_tidaksetuju_cebox',$kecamatan,$kelurahan,$rw);
 		foreach ($tidak_setuju as $row) {
 			$bar[$kecamatan]['tidaksetuju'] = $row->jumlah;
@@ -539,7 +539,6 @@ class Laporan_kpldh extends CI_Controller {
 				$temp2=0;
 			}
 		}
-
 
 		$tidak_tahu = $this->laporan_kpldh_model->get_data_alasankb('berencana_II_7_berkb_tidaktahu_cebox',$kecamatan,$kelurahan,$rw);
 		foreach ($tidak_tahu as $row) {
@@ -561,7 +560,6 @@ class Laporan_kpldh extends CI_Controller {
 			}
 		}
 
-
 		$pelayanan_kb = $this->laporan_kpldh_model->get_data_alasankb('berencana_II_7_berkb_pelayanan_cebox',$kecamatan,$kelurahan,$rw);
 		foreach ($pelayanan_kb as $row) {
 			$bar[$kecamatan]['pelayanankb'] = $row->jumlah;
@@ -571,7 +569,6 @@ class Laporan_kpldh extends CI_Controller {
 				$temp5=0;
 			}
 		}
-
 		$mahal_kb = $this->laporan_kpldh_model->get_data_alasankb('berencana_II_7_berkb_tidakmampu_cebox',$kecamatan,$kelurahan,$rw);
 		foreach ($mahal_kb as $row) {
 			$bar[$kecamatan]['mahalkb'] = $row->jumlah;
@@ -592,7 +589,6 @@ class Laporan_kpldh extends CI_Controller {
 			}
 		}
 
-
 		$lainnya_kb = $this->laporan_kpldh_model->get_data_alasankb('berencana_II_7_berkb_lainya_cebox',$kecamatan,$kelurahan,$rw);
 		foreach ($lainnya_kb as $row) {
 			$bar[$kecamatan]['lainnyakb'] = $row->jumlah;
@@ -606,8 +602,8 @@ class Laporan_kpldh extends CI_Controller {
 		$totalorang = $this->laporan_kpldh_model->totalorang($kecamatan,$kelurahan,$rw);
 		if ($totalorang!=0) {
 			foreach ($totalorang as $row) {
-				$bar[$kecamatan]['total'] = $temp1+$temp2+$temp3+$temp4+$temp5+$temp6+$temp7+$temp8;
-				$bar[$kecamatan]['puskesmas'] = $row->nama_kecamatan;
+				$bar[$kecamatan]['total'] = '509';//$temp1+$temp2+$temp3+$temp4+$temp5+$temp6+$temp7+$temp8;
+				$bar[$kecamatan]['puskesmas'] = $this->laporan_kpldh_model->get_nama('nama','cl_kec','code',$kecamatan);//$row->nama_kecamatan;
 			}
 		}
 		$data['jumlahorang'] = $this->laporan_kpldh_model->jumlahorang($kecamatan,$kelurahan,$rw);

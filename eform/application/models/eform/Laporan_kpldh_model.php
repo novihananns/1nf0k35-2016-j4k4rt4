@@ -9,6 +9,26 @@ class Laporan_kpldh_model extends CI_Model {
         $this->lang   = $this->config->item('language');
     }
     
+    /*public function get_jum_kelamin($kecamatan=0,$kelurahan=0,$rw=0)
+    {
+        if ($kecamatan!=0) {
+            $this->db->where("id_kecamatan",$kecamatan);
+        }
+        if ($kelurahan!=0) {
+            $this->db->where("id_desa",$kelurahan);
+        }
+        if ($rw!=0) {
+            $this->db->where("rw",$rw);
+        }
+        $this->db->group_by("data_keluarga_anggota.id_pilihan_kelamin");
+        $this->db->select("mst_keluarga_pilihan.value as kelamin, COUNT(data_keluarga_anggota.id_pilihan_kelamin) as jumlah,
+            (SELECT COUNT(a.id_pilihan_kelamin) AS jumlah FROM  data_keluarga_anggota a where a.id_data_keluarga = data_keluarga_anggota.id_data_keluarga) AS total,id_kecamatan");
+        $this->db->join("data_keluarga","data_keluarga_anggota.id_data_keluarga = data_keluarga.id_data_keluarga");
+        $this->db->join("mst_keluarga_pilihan",'data_keluarga_anggota.id_pilihan_kelamin = mst_keluarga_pilihan.id_pilihan AND tipe="jk"');
+        $query = $this->db->get('data_keluarga_anggota');
+        return $query->result();
+        
+    }*/
     public function get_jum_kelamin($kecamatan=0,$kelurahan=0,$rw=0)
     {
         if ($kecamatan!=0) {
@@ -21,11 +41,10 @@ class Laporan_kpldh_model extends CI_Model {
             $this->db->where("rw",$rw);
         }
         $this->db->group_by("data_keluarga_anggota.id_pilihan_kelamin");
-        $this->db->select("cl_kec.nama as nama_kecamatan,mst_keluarga_pilihan.value as kelamin, COUNT(data_keluarga_anggota.id_pilihan_kelamin) as jumlah,
-            (SELECT COUNT(a.id_pilihan_kelamin) AS jumlah FROM  data_keluarga_anggota a where a.id_data_keluarga = data_keluarga_anggota.id_data_keluarga) AS total");
+        $this->db->select("mst_keluarga_pilihan.value as kelamin, COUNT(data_keluarga_anggota.id_pilihan_kelamin) as jumlah,
+            (SELECT COUNT(a.id_pilihan_kelamin) AS jumlah FROM  data_keluarga_anggota a where a.id_data_keluarga = data_keluarga_anggota.id_data_keluarga) AS total,id_kecamatan");
         $this->db->join("data_keluarga","data_keluarga_anggota.id_data_keluarga = data_keluarga.id_data_keluarga");
         $this->db->join("mst_keluarga_pilihan",'data_keluarga_anggota.id_pilihan_kelamin = mst_keluarga_pilihan.id_pilihan AND tipe="jk"');
-        $this->db->join("cl_kec",'data_keluarga.id_kecamatan = cl_kec.code');
         $query = $this->db->get('data_keluarga_anggota');
         return $query->result();
         
@@ -42,10 +61,9 @@ class Laporan_kpldh_model extends CI_Model {
             $this->db->where("rw",$rw);
         }
         $this->db->where("TIMESTAMPDIFF(MONTH,tgl_lahir,CURDATE()) <=12");
-        $this->db->select("data_keluarga.id_kecamatan,cl_kec.nama as nama_kecamatan,COUNT(data_keluarga_anggota.id_pilihan_kelamin) as jumlah,
+        $this->db->select("data_keluarga.id_kecamatan,COUNT(data_keluarga_anggota.id_pilihan_kelamin) as jumlah,
             (SELECT COUNT(a.id_pilihan_kelamin) AS jumlah FROM  data_keluarga_anggota a WHERE a.id_data_keluarga = data_keluarga_anggota.id_data_keluarga) AS total");
          $this->db->join("data_keluarga","data_keluarga_anggota.id_data_keluarga = data_keluarga.id_data_keluarga");
-        $this->db->join("cl_kec",'data_keluarga.id_kecamatan = cl_kec.code');
         $query = $this->db->get('data_keluarga_anggota');
         return $query->result();
     }
@@ -62,10 +80,9 @@ class Laporan_kpldh_model extends CI_Model {
         }
         $this->db->where("(YEAR(CURDATE())-YEAR(tgl_lahir)) >=".'"'.$usia1.'"'."");
         $this->db->where("(YEAR(CURDATE())-YEAR(tgl_lahir)) <=".'"'.$usia2.'"'."");
-        $this->db->select("data_keluarga.id_kecamatan,cl_kec.nama as nama_kecamatan,COUNT(data_keluarga_anggota.id_pilihan_kelamin) as jumlah,
+        $this->db->select("data_keluarga.id_kecamatan,COUNT(data_keluarga_anggota.id_pilihan_kelamin) as jumlah,
             (SELECT COUNT(a.id_pilihan_kelamin) AS jumlah FROM  data_keluarga_anggota a WHERE a.id_data_keluarga = data_keluarga_anggota.id_data_keluarga) AS total");
          $this->db->join("data_keluarga","data_keluarga_anggota.id_data_keluarga = data_keluarga.id_data_keluarga");
-        $this->db->join("cl_kec",'data_keluarga.id_kecamatan = cl_kec.code');
         $query = $this->db->get('data_keluarga_anggota');
         return $query->result();
     }
@@ -81,10 +98,9 @@ class Laporan_kpldh_model extends CI_Model {
             $this->db->where("rw",$rw);
         }
         $this->db->where("(YEAR(CURDATE())-YEAR(tgl_lahir)) >=".'"'.$usia.'"'."");
-        $this->db->select("data_keluarga.id_kecamatan,cl_kec.nama as nama_kecamatan,COUNT(data_keluarga_anggota.id_pilihan_kelamin) as jumlah,
+        $this->db->select("data_keluarga.id_kecamatan,COUNT(data_keluarga_anggota.id_pilihan_kelamin) as jumlah,
             (SELECT COUNT(a.id_pilihan_kelamin) AS jumlah FROM  data_keluarga_anggota a WHERE a.id_data_keluarga = data_keluarga_anggota.id_data_keluarga) AS total");
          $this->db->join("data_keluarga","data_keluarga_anggota.id_data_keluarga = data_keluarga.id_data_keluarga");
-        $this->db->join("cl_kec",'data_keluarga.id_kecamatan = cl_kec.code');
         $query = $this->db->get('data_keluarga_anggota');
         return $query->result();
     }
@@ -104,7 +120,6 @@ class Laporan_kpldh_model extends CI_Model {
         $this->db->select("data_keluarga.id_kecamatan,COUNT(id_pilihan_pendidikan) AS jumlah,mst_keluarga_pilihan.value, (SELECT COUNT(a.id_pilihan_pendidikan) AS jumlah FROM data_keluarga_anggota a  WHERE a.id_data_keluarga = data_keluarga_anggota.id_data_keluarga) AS total");
          $this->db->join("data_keluarga","data_keluarga_anggota.id_data_keluarga = data_keluarga.id_data_keluarga");
          $this->db->join("mst_keluarga_pilihan",'data_keluarga_anggota.id_pilihan_pendidikan = mst_keluarga_pilihan.id_pilihan AND tipe="pendidikan"');
-        $this->db->join("cl_kec",'data_keluarga.id_kecamatan = cl_kec.code');
         $query = $this->db->get('data_keluarga_anggota');
         return $query->result();
     }
@@ -124,7 +139,6 @@ class Laporan_kpldh_model extends CI_Model {
         $this->db->select("data_keluarga.id_kecamatan,COUNT(id_pilihan_pekerjaan) AS jumlah,mst_keluarga_pilihan.value, (SELECT COUNT(a.id_pilihan_pekerjaan) AS jumlah FROM data_keluarga_anggota a  WHERE a.id_data_keluarga = data_keluarga_anggota.id_data_keluarga) AS total");
          $this->db->join("data_keluarga","data_keluarga_anggota.id_data_keluarga = data_keluarga.id_data_keluarga");
          $this->db->join("mst_keluarga_pilihan",'data_keluarga_anggota.id_pilihan_pekerjaan = mst_keluarga_pilihan.id_pilihan AND tipe="pekerjaan"');
-        $this->db->join("cl_kec",'data_keluarga.id_kecamatan = cl_kec.code');
         $query = $this->db->get('data_keluarga_anggota');
         return $query->result();
     }
@@ -642,10 +656,9 @@ class Laporan_kpldh_model extends CI_Model {
             $this->db->where("rw",$rw);
         }
         $this->db->group_by("data_keluarga_anggota.id_pilihan_jkn");
-        $this->db->select("cl_kec.nama as nama_kecamatan,mst_keluarga_pilihan.value as jkn, COUNT(data_keluarga_anggota.id_pilihan_jkn) as jumlah,
+        $this->db->select("id_kecamatan,mst_keluarga_pilihan.value as jkn, COUNT(data_keluarga_anggota.id_pilihan_jkn) as jumlah,
             (SELECT COUNT(a.id_pilihan_jkn) AS jumlah FROM  data_keluarga_anggota a where a.id_data_keluarga = data_keluarga_anggota.id_data_keluarga) AS total");
         $this->db->join("data_keluarga","data_keluarga_anggota.id_data_keluarga = data_keluarga.id_data_keluarga");
-        $this->db->join("cl_kec","cl_kec.code = data_keluarga.id_kecamatan");
         $this->db->join("mst_keluarga_pilihan",'data_keluarga_anggota.id_pilihan_jkn = mst_keluarga_pilihan.id_pilihan AND tipe="jkn"');
         $query = $this->db->get('data_keluarga_anggota');
         return $query->result();
@@ -1116,9 +1129,8 @@ class Laporan_kpldh_model extends CI_Model {
         if ($rw!=0) {
             $this->db->where("rw",$rw);
         }
-        $this->db->select("data_keluarga.id_kecamatan,cl_kec.nama as nama_kecamatan,COUNT(data_keluarga_anggota.id_data_keluarga) as totalorang");
+        $this->db->select("data_keluarga.id_kecamatan,COUNT(data_keluarga_anggota.id_data_keluarga) as totalorang");
         $this->db->join("data_keluarga","data_keluarga_anggota.id_data_keluarga = data_keluarga.id_data_keluarga");
-        $this->db->join("cl_kec",'data_keluarga.id_kecamatan = cl_kec.code');
         $query = $this->db->get('data_keluarga_anggota');
         if ($query->num_rows()>0) {
             return $query->result();
@@ -1137,9 +1149,8 @@ class Laporan_kpldh_model extends CI_Model {
         if ($rw!=0) {
             $this->db->where("rw",$rw);
         }
-        $this->db->select("data_keluarga.id_kecamatan,cl_kec.nama as nama_kecamatan,COUNT(data_keluarga_anggota.id_data_keluarga) as totalorang");
+        $this->db->select("data_keluarga.id_kecamatan,COUNT(data_keluarga_anggota.id_data_keluarga) as totalorang");
         $this->db->join("data_keluarga","data_keluarga_anggota.id_data_keluarga = data_keluarga.id_data_keluarga");
-        $this->db->join("cl_kec",'data_keluarga.id_kecamatan = cl_kec.code');
         $query = $this->db->get('data_keluarga_anggota');
         if ($query->num_rows()>0) {
             return $query->result();
@@ -1147,6 +1158,14 @@ class Laporan_kpldh_model extends CI_Model {
             return 0;
         }
         
+    }
+    function get_nama($kolom_sl,$tabel,$kolom_wh,$kond){
+       $this->db->where($kolom_wh,$kond);
+        $this->db->select($kolom_sl);
+        $query = $this->db->get($tabel)->result();
+        foreach ($query as $key) {
+            return $key->$kolom_sl;
+        }
     }
 
     function jumlahorang($kecamatan=0,$kelurahan=0,$rw=0){
@@ -1159,9 +1178,8 @@ class Laporan_kpldh_model extends CI_Model {
         if ($rw!=0) {
             $this->db->where("rw",$rw);
         }
-        $this->db->select("data_keluarga.id_kecamatan,cl_kec.nama as nama_kecamatan,COUNT(data_keluarga_anggota.id_data_keluarga) as totalorang");
+        $this->db->select("data_keluarga.id_kecamatan,COUNT(data_keluarga_anggota.id_data_keluarga) as totalorang");
         $this->db->join("data_keluarga","data_keluarga_anggota.id_data_keluarga = data_keluarga.id_data_keluarga");
-        $this->db->join("cl_kec",'data_keluarga.id_kecamatan = cl_kec.code');
         $query = $this->db->get('data_keluarga_anggota');
         if ($query->num_rows()>0) {
             foreach ($query->result() as $key) {

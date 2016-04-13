@@ -14,6 +14,14 @@ class Data_kepala_keluarga extends CI_Controller {
 		$this->load->model('eform/anggota_keluarga_kb_model');
 		$this->load->model('eform/dataform_model');
 	}
+	function get_nama($kolom_sl,$tabel,$kolom_wh,$kond){
+       $this->db->where($kolom_wh,$kond);
+        $this->db->select($kolom_sl);
+        $query = $this->db->get($tabel)->result();
+        foreach ($query as $key) {
+            return $key->$kolom_sl;
+        }
+    }
     function datakepalakeluaraexport(){
     	$TBS = new clsTinyButStrong;		
 		$TBS->Plugin(TBS_INSTALL, OPENTBS_PLUGIN);

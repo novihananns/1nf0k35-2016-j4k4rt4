@@ -34,7 +34,6 @@
     <th><?php echo (isset($totalorang)) ? $totalorang : 0;?></th>
     <th><?php echo ($totalorang>0) ? number_format($totalorang/$totalorang*100,2): 0;echo " %";?></th>
   </tr>
-  <?php echo $puskesmas.'hai';?>
 </table>
 <div class="chart">
   <canvas id="barChart" height="400" width="511" style="width: 511px; height: 240px;"></canvas>

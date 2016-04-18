@@ -430,6 +430,7 @@ class Data_kepala_keluarga extends CI_Controller {
 		$this->authentication->verify('eform','edit');
 
         $this->form_validation->set_rules('alamat', 'Alamat', 'trim|required');
+        $this->form_validation->set_rules('kelurahan', 'Kelurahan / Desa', 'trim|required');
         $this->form_validation->set_rules('dusun', 'Dusun / RW', 'trim|required');
         $this->form_validation->set_rules('rt', 'RT', 'trim|required');
         $this->form_validation->set_rules('norumah', 'No Rumah', 'trim|required');
@@ -464,7 +465,7 @@ class Data_kepala_keluarga extends CI_Controller {
 
 			$data['content'] = $this->parser->parse("eform/datakeluarga/form_detail",$data,true);
 			$this->template->show($data,"home");
-		}elseif($this->datakeluarga_model->update_entry($id_data_keluarga)){
+		}elseif($id_data_keluarga = $this->datakeluarga_model->update_entry($id_data_keluarga)){
 			$this->session->set_flashdata('alert_form', 'Save data successful...');
 			redirect(base_url()."eform/data_kepala_keluarga/edit/".$id_data_keluarga);
 		}else{

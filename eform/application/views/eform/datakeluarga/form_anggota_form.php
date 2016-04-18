@@ -1118,7 +1118,7 @@ menegakkan diagnosa TB?</div>
           <div class="row" style="margin: 5px;border-bottom:1px solid #EEEEEE;">
             <div class="col-md-8" style="padding: 5px">2. Didiagnosa kanker pertama kali pada tahun?</div>
             <div class="col-md-4">
-              <input type="number" placeholder="Tahun" class="form-control" name="kesehatan_3_g_2_kk_text" id="kesehatan_3_g_2_kk_text" value="1">
+              <input type="number" placeholder="Tahun" class="form-control" name="kesehatan_3_g_2_kk_text" id="kesehatan_3_g_2_kk_text">
             </div>
           </div>
 
@@ -1822,13 +1822,22 @@ darah tinggi oleh tenaga kesehatan (dokter/ perawat/ bidan)?</div>
         <div class="box box-warning">
           <div class="box-body">
           <label>Profile Kesehatan Anggota Keluarga (6)</label>
-          <div class="row" style="margin: 5px;border-bottom:1px solid #EEEEEE;">
-            <div class="col-md-7" style="padding: 5px">1. Status Imunisasi ?</div>
-            <div class="col-md-2">
-              <input type="radio" name="kesehatan_6_g_1_radio" id="kesehatan_6_g_1_radio_ya" value="0"> Ya
+          <div class="row" style="margin: 5px;">
+            <div class="col-md-4" style="padding: 5px">1. Status Imunisasi ?</div>
+            <div class="col-md-4">
+              <input type="radio" name="kesehatan_6_g_1_radi4" id="kesehatan_6_g_1_radi4_a" value="0"> Lengkap
             </div>
-            <div class="col-md-3">
-              <input type="radio" name="kesehatan_6_g_1_radio" id="kesehatan_6_g_1_radio_tidak" value="1"> Tidak
+            <div class="col-md-4">
+              <input type="radio" name="kesehatan_6_g_1_radi4" id="kesehatan_6_g_1_radi4_b" value="1"> Tidak tahu
+            </div>
+          </div>
+          <div class="row" style="margin: 5px;border-bottom:1px solid #EEEEEE;">
+            <div class="col-md-3 hidden-xs">&nbsp;</div>
+            <div class="col-md-5">
+              <input type="radio" name="kesehatan_6_g_1_radi4" id="kesehatan_6_g_1_radi4_c" value="2"> Lengkap sesuai umur
+            </div>
+            <div class="col-md-4">
+              <input type="radio" name="kesehatan_6_g_1_radi4" id="kesehatan_6_g_1_radi4_d" value="3"> Tidak lengkap
             </div>
           </div>
 

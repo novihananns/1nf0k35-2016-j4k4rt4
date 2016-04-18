@@ -248,9 +248,42 @@ class Datakeluarga_model extends CI_Model {
         }
     }
     function update_entry($id_data_keluarga){
+        $this->db->where('id_data_keluarga', $id_data_keluarga);
+        $data1 = $this->db->get('data_keluarga')->row();
+        if($data1->id_desa == $this->input->post('kelurahan')){
+            $ID = $id_data_keluarga;
+        }else{
+            $id = $this->getNourutkel($this->input->post('kelurahan'));
+            $ID = $id['id_data_keluarga'];
+            $URUT = $id['nourutkel'];
+
+            $data = array();
+            $data['id_data_keluarga'] = $ID;
+            $this->db->where('id_data_keluarga', $id_data_keluarga);
+            $this->db->update('data_keluarga_anggota',$data);
+
+            $this->db->where('id_data_keluarga', $id_data_keluarga);
+            $this->db->update('data_keluarga_anggota_profile',$data);
+
+            $this->db->where('id_data_keluarga', $id_data_keluarga);
+            $this->db->update('data_keluarga_kb',$data);
+
+            $this->db->where('id_data_keluarga', $id_data_keluarga);
+            $this->db->update('data_keluarga_pembangunan',$data);
+
+            $this->db->where('id_data_keluarga', $id_data_keluarga);
+            $this->db->update('data_keluarga_profile',$data);
+
+            $data['nourutkel'] = $URUT;
+            $this->db->where('id_data_keluarga', $id_data_keluarga);
+            $this->db->update('data_keluarga',$data);
+        }
+
+
         $data=array(
             'alamat'            => $this->input->post('alamat'),
             'id_kodepos'        => $this->input->post('kodepos'),
+            'id_desa'           => $this->input->post('kelurahan'),
             'rw'                => $this->input->post('dusun'),
             'rt'                => $this->input->post('rt'),
             'norumah'           => $this->input->post('norumah'),
@@ -265,8 +298,8 @@ class Datakeluarga_model extends CI_Model {
             'jam_data'          => $this->input->post('jam_data'),
             'tanggal_pengisian' => date("Y-m-d", strtotime($this->input->post('tgl_pengisian')))
         );
-        if($this->db->update('data_keluarga',$data,array('id_data_keluarga' => $id_data_keluarga))){
-            return true;
+        if($this->db->update('data_keluarga',$data,array('id_data_keluarga' => $ID))){
+            return $ID;
         }else{
             return mysql_error();
         }

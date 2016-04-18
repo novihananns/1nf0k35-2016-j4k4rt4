@@ -113,13 +113,17 @@
 
       <div class="row" style="margin: 5px">
         <div class="col-md-4 col-xs-4" style="padding: 5px">Desa / Kelurahan</div>
-        <div class="col-md-8 col-xs-8"> : 
-          	<?php
+        <div class="col-md-8 col-xs-8">
+          <select  name="kelurahan" id="kelurahan" class="form-control">
+            <?php
             foreach($data_desa as $row_desa){
-	 	           if($row_desa->code == $id_desa) echo ucwords(strtolower($row_desa->value));
+                $select = $row_desa->code == $id_desa ? 'selected' : '' ;
+            ?>
+                <option value="<?php echo $row_desa->code; ?>" <?php echo $select; ?>><?php echo ucwords(strtolower($row_desa->value)); ?></option>
+            <?php
             }    
-          	?>
-	      </select>
+            ?>
+        </select>
         </div>
       </div>
 

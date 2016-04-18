@@ -157,6 +157,10 @@ class Laporan_kpldh extends CI_Controller {
 			$this->mengakhirihidup($kecamatan,$kelurahan,$rw);
 		}else if($id_judul=="37"){
 			$this->hilangminat($kecamatan,$kelurahan,$rw);
+		}else if($id_judul=="38"){
+			$this->iva($kecamatan,$kelurahan,$rw);
+		}else if($id_judul=="39"){
+			$this->smear($kecamatan,$kelurahan,$rw);
 		}else{
 			return $judul;
 		}
@@ -1230,5 +1234,39 @@ class Laporan_kpldh extends CI_Controller {
 		$data['tidak']= $this->laporan_kpldh_model->get_data_anggotaprofile($kecamatan,$kelurahan,$rw)-$this->laporan_kpldh_model->get_data_mengakhirihidup('kesehatan_5_g_18_kk_cebox',$kecamatan,$kelurahan,$rw);
 		$data['jumlahorang'] =$this->laporan_kpldh_model->get_data_anggotaprofile($kecamatan,$kelurahan,$rw);
 		die($this->parser->parse("eform/laporan/charthidup",$data));
+	}
+	function iva($kecamatan=0,$kelurahan=0,$rw=0){
+		$data = array();
+		$data['ya'] = $this->laporan_kpldh_model->get_data_radioyatidak('kesehatan_3_g_4_radio','0',$kecamatan,$kelurahan,$rw);
+		$data['tidak']= $this->laporan_kpldh_model->get_data_radioyatidak('kesehatan_3_g_4_radio','1',$kecamatan,$kelurahan,$rw);
+		if ($data['ya']!=0) {
+			$temp1=$data['ya'];
+		}else{
+			$temp1=0;
+		}
+		if ($data['tidak']!=0) {
+			$temp2=$data['tidak'];
+		}else{
+			$temp2=0;
+		}
+		$data['jumlahorang'] = $temp1+$temp2;
+		die($this->parser->parse("eform/laporan/chartiva",$data));
+	}
+	function smear($kecamatan=0,$kelurahan=0,$rw=0){
+		$data = array();
+		$data['ya'] = $this->laporan_kpldh_model->get_data_radioyatidak('kesehatan_3_g_6_radio','0',$kecamatan,$kelurahan,$rw);
+		$data['tidak']= $this->laporan_kpldh_model->get_data_radioyatidak('kesehatan_3_g_6_radio','1',$kecamatan,$kelurahan,$rw);
+		if ($data['ya']!=0) {
+			$temp1=$data['ya'];
+		}else{
+			$temp1=0;
+		}
+		if ($data['tidak']!=0) {
+			$temp2=$data['tidak'];
+		}else{
+			$temp2=0;
+		}
+		$data['jumlahorang'] = $temp1+$temp2;
+		die($this->parser->parse("eform/laporan/chartsmear",$data));
 	}
 }

@@ -47,6 +47,8 @@
 				     			<option value="35">Distribusi Penduduk Menagis Lebih Sering</option>
 				     			<option value="36">Distribusi Penduduk Mempunyai Pikiran untuk Mengakhiri Hidup</option>
 				     			<option value="37">Distribusi Penduduk Hilang Minat</option>
+				     			<option value="38">Distribusi Penduduk Berdasarkan Test IVA</option>
+				     			<option value="39">Distribusi Penduduk Berdasarkan Test PAP SMEAR</option>
 				     		</select>
 				  		</div>
 				  	</div>				  	

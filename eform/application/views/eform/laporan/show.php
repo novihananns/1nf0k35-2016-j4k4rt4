@@ -49,6 +49,7 @@
 				     			<option value="37">Distribusi Penduduk Hilang Minat</option>
 				     			<option value="38">Distribusi Penduduk Berdasarkan Test IVA</option>
 				     			<option value="39">Distribusi Penduduk Berdasarkan Test PAP SMEAR</option>
+				     			<option value="40">Distribusi Penduduk Berdasarkan Status Imunisasi</option>
 				     		</select>
 				  		</div>
 				  	</div>				  	

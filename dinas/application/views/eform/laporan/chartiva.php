@@ -2,7 +2,7 @@
   <div class="col-md-6">
     <table class="table table-bordered table-hover">
       <tr>
-        <th>Penderita Penyakit Asma</th>
+        <th>Penduduk Berdasarkan Test IVA</th>
         <th>Jumlah</th>
         <th>Persentase</th>
       </tr>

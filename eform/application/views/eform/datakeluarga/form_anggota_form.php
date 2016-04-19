@@ -5,47 +5,51 @@
         foreach($data_profile_anggota as $row){ ?>
           var kode = "<?php echo $row->kode;?>";
           var value= "<?php echo $row->value; ?>";
-          if(kode.slice(-5)=="radio"){
-            if(value=="0"){
-              document.getElementById("<?php echo $row->kode.'_ya';?>").checked = true; 
-            }else if(value=="1"){
-              document.getElementById("<?php echo $row->kode.'_tidak';?>").checked = true;
-            }
-          }else if(kode.slice(-5)=="radi3"){
-            if(value=="0"){
-              document.getElementById("<?php echo $row->kode.'_a';?>").checked = true; 
-            }else if(value=="1"){
-              document.getElementById("<?php echo $row->kode.'_b';?>").checked = true;
-            }else{
-              document.getElementById("<?php echo $row->kode.'_c';?>").checked = true;
-            }
-          }else if(kode.slice(-5)=="radi4"){
-            if(value=="0"){
-              document.getElementById("<?php echo $row->kode.'_a';?>").checked = true; 
-            }else if(value=="1"){
-              document.getElementById("<?php echo $row->kode.'_b';?>").checked = true;
-            }else if(value=="2"){
-              document.getElementById("<?php echo $row->kode.'_c';?>").checked = true;
-            }else{
-              document.getElementById("<?php echo $row->kode.'_d';?>").checked = true;
-            }
-          }else if(kode.slice(-5)=="radi5"){
-            if(value=="0"){
-              document.getElementById("<?php echo $row->kode.'_a';?>").checked = true; 
-            }else if(value=="1"){
-              document.getElementById("<?php echo $row->kode.'_b';?>").checked = true;
-            }else if(value=="2"){
-              document.getElementById("<?php echo $row->kode.'_c';?>").checked = true;
-            }else if(value=="3"){
-              document.getElementById("<?php echo $row->kode.'_d';?>").checked = true;
-            }else{
-              document.getElementById("<?php echo $row->kode.'_e';?>").checked = true;
-            }
-          }else if(kode.slice(-5)=="cebox"){
-            document.getElementById("<?php echo $row->kode;?>").checked = true;
-          }else{
-            document.getElementById("<?php echo $row->kode;?>").value = "<?php echo $row->value; ?>";
-          }
+          if($("[name="+"<?php echo $row->kode;?>"+"]").length == 0) {
+			  
+		  }else{
+	          if(kode.slice(-5)=="radio"){
+	            if(value=="0"){
+	              document.getElementById("<?php echo $row->kode.'_ya';?>").checked = true; 
+	            }else if(value=="1"){
+	              document.getElementById("<?php echo $row->kode.'_tidak';?>").checked = true;
+	            }
+	          }else if(kode.slice(-5)=="radi3"){
+	            if(value=="0"){
+	              document.getElementById("<?php echo $row->kode.'_a';?>").checked = true; 
+	            }else if(value=="1"){
+	              document.getElementById("<?php echo $row->kode.'_b';?>").checked = true;
+	            }else{
+	              document.getElementById("<?php echo $row->kode.'_c';?>").checked = true;
+	            }
+	          }else if(kode.slice(-5)=="radi4"){
+	            if(value=="0"){
+	              document.getElementById("<?php echo $row->kode.'_a';?>").checked = true; 
+	            }else if(value=="1"){
+	              document.getElementById("<?php echo $row->kode.'_b';?>").checked = true;
+	            }else if(value=="2"){
+	              document.getElementById("<?php echo $row->kode.'_c';?>").checked = true;
+	            }else{
+	              document.getElementById("<?php echo $row->kode.'_d';?>").checked = true;
+	            }
+	          }else if(kode.slice(-5)=="radi5"){
+	            if(value=="0"){
+	              document.getElementById("<?php echo $row->kode.'_a';?>").checked = true; 
+	            }else if(value=="1"){
+	              document.getElementById("<?php echo $row->kode.'_b';?>").checked = true;
+	            }else if(value=="2"){
+	              document.getElementById("<?php echo $row->kode.'_c';?>").checked = true;
+	            }else if(value=="3"){
+	              document.getElementById("<?php echo $row->kode.'_d';?>").checked = true;
+	            }else{
+	              document.getElementById("<?php echo $row->kode.'_e';?>").checked = true;
+	            }
+	          }else if(kode.slice(-5)=="cebox"){
+	            document.getElementById("<?php echo $row->kode;?>").checked = true;
+	          }else{
+	            document.getElementById("<?php echo $row->kode;?>").value = "<?php echo $row->value; ?>";
+	          }
+	    }
       <?php
         }
       }

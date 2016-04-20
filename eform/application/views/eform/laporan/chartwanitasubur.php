@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-12">
     <table class="table table-bordered table-hover">
       <tr>
         <th>Desa</th>
@@ -21,7 +21,7 @@
       
     </table>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-12">
     <div class="row" id="row1">
       <div class="chart">
         <canvas id="barChart" height="240" width="511" style="width: 511px; height: 240px;"></canvas>
@@ -33,17 +33,18 @@
 <script>
   $(function () { 
     
-    var areaChartData = {
+      var areaChartData = {
         labels: [<?php 
         $i=0;
+       // print_r($bar);  
         foreach ($bar as $row ) { 
           if($i>0) echo ",";
-            echo "\"".$row['id_desa']."\"";
+            echo "\"".$row['value']."\"";
           $i++;
         } ?>],
         datasets: [
           {
-            label: "Laki-laki",
+            label: "Belum Sekolah",
             fillColor: "#20ad3a",
             strokeColor: "#20ad3a",
             pointColor: "#20ad3a",
@@ -53,16 +54,15 @@
             data: [<?php 
             $i=0;
             foreach ($bar as $row ) { 
-              if(isset($row['jumlah']))  $x = ($row['jumlah']);
-              else                           $x = 0;
+              if(isset($row['blmsekolah']))  $x = number_format(($row['blmsekolah']/$row['totalorang']*100),2);
+              else                              $x = 0;
 
               if($i>0) echo ",";
               echo "\"".$x."\"";
               $i++;
             } ?>]
-          },
-          {
-            label: "Perempuan",
+          },{
+            label: "Tidak Sekolah",
             fillColor: "#ffb400",
             strokeColor: "#ffb400",
             pointColor: "#ffb400",
@@ -72,35 +72,188 @@
             data: [<?php 
             $i=0;
             foreach ($bar as $row ) { 
-              if(isset($row['jumlah']))  $x = ($row['jumlah']);
-              else                            $x = 0;
+              if(isset($row['tidaksekolah']))  $x = number_format(($row['tidaksekolah']/$row['totalorang']*100),2);
+              else                              $x = 0;
 
               if($i>0) echo ",";
               echo "\"".$x."\"";
               $i++;
             } ?>]
           },
+          {
+            label: "Tidak Tamat SD",
+            fillColor: "#e02a11",
+            strokeColor: "#e02a11",
+            pointColor: "#e02a11",
+            pointStrokeColor: "#c1c7d1",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [<?php 
+            $i=0;
+            foreach ($bar as $row ) { 
+              if(isset($row['tdktamatsd']))  $x = number_format(($row['tdktamatsd']/$row['totalorang']*100),2);
+              else                              $x = 0;
+
+              if($i>0) echo ",";
+              echo "\"".$x."\"";
+              $i++;
+            } ?>]
+          },
+          {
+            label: "Masih SD",
+            fillColor: "#00BFFF",
+            strokeColor: "#00BFFF",
+            pointColor: "#00BFFF",
+            pointStrokeColor: "#c1c7d1",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [<?php 
+            $i=0;
+            foreach ($bar as $row ) { 
+              if(isset($row['masihsd']))  $x = number_format(($row['masihsd']/$row['totalorang']*100),2);
+              else                              $x = 0;
+
+              if($i>0) echo ",";
+              echo "\"".$x."\"";
+              $i++;
+            } ?>]
+          },
+          {
+            label: "Tamat SD",
+            fillColor: "#00FF7F",
+            strokeColor: "#00FF7F",
+            pointColor: "#00FF7F",
+            pointStrokeColor: "#c1c7d1",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [<?php 
+            $i=0;
+            foreach ($bar as $row ) { 
+              if(isset($row['tamatsd']))  $x = number_format(($row['tamatsd']/$row['totalorang']*100),2);
+              else                              $x = 0;
+
+              if($i>0) echo ",";
+              echo "\"".$x."\"";
+              $i++;
+            } ?>]
+          },
+          {
+            label: "Masih SMP",
+            fillColor: "#FFA072",
+            strokeColor: "#FFA072",
+            pointColor: "#FFA072",
+            pointStrokeColor: "#c1c7d1",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [<?php 
+            $i=0;
+            foreach ($bar as $row ) { 
+              if(isset($row['masihsmp']))  $x = number_format(($row['masihsmp']/$row['totalorang']*100),2);
+              else                              $x = 0;
+
+              if($i>0) echo ",";
+              echo "\"".$x."\"";
+              $i++;
+            } ?>]
+          },
+          {
+            label: "Tamat SMP",
+            fillColor: "#CD853F",
+            strokeColor: "#CD853F",
+            pointColor: "#CD853F",
+            pointStrokeColor: "#c1c7d1",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [<?php 
+            $i=0;
+            foreach ($bar as $row ) { 
+              if(isset($row['tamatsmp']))  $x = number_format(($row['tamatsmp']/$row['totalorang']*100),2);
+              else                              $x = 0;
+
+              if($i>0) echo ",";
+              echo "\"".$x."\"";
+              $i++;
+            } ?>]
+          },
+          {
+            label: "Masih SMA",
+            fillColor: "#800080",
+            strokeColor: "#800080",
+            pointColor: "#800080",
+            pointStrokeColor: "#c1c7d1",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [<?php 
+            $i=0;
+            foreach ($bar as $row ) { 
+              if(isset($row['masihsma']))  $x = number_format(($row['masihsma']/$row['totalorang']*100),2);
+              else                              $x = 0;
+
+              if($i>0) echo ",";
+              echo "\"".$x."\"";
+              $i++;
+            } ?>]
+          },
+          {
+            label: "Tamat SMA",
+            fillColor: "#9ACD32",
+            strokeColor: "#9ACD32",
+            pointColor: "#9ACD32",
+            pointStrokeColor: "#c1c7d1",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [<?php 
+            $i=0;
+            foreach ($bar as $row ) { 
+              if(isset($row['tamatsma']))  $x = number_format(($row['tamatsma']/$row['totalorang']*100),2);
+              else                              $x = 0;
+
+              if($i>0) echo ",";
+              echo "\"".$x."\"";
+              $i++;
+            } ?>]
+          },
+          {
+            label: "Masih PT/Akademi",
+            fillColor: "#708090",
+            strokeColor: "#708090",
+            pointColor: "#708090",
+            pointStrokeColor: "#c1c7d1",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [<?php 
+            $i=0;
+            foreach ($bar as $row ) { 
+              if(isset($row['masihpt']))  $x = number_format(($row['masihpt']/$row['totalorang']*100),2);
+              else                              $x = 0;
+
+              if($i>0) echo ",";
+              echo "\"".$x."\"";
+              $i++;
+            } ?>]
+          },
+          {
+            label: "Tamat PT/Akademi",
+            fillColor: "#FF6347",
+            strokeColor: "#FF6347",
+            pointColor: "#FF6347",
+            pointStrokeColor: "#c1c7d1",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [<?php 
+            $i=0;
+            foreach ($bar as $row ) { 
+              if(isset($row['tamatpt']))  $x = number_format(($row['tamatpt']/$row['totalorang']*100),2);
+              else                              $x = 0;
+
+              if($i>0) echo ",";
+              echo "\"".$x."\"";
+              $i++;
+            } ?>]
+          }
         ]
-       /* datasets: [
-        <?php /*
-          $i=0;
-          foreach ($bar as $row ) { 
-            echo "
-            {
-              label: 'Laki-laki',
-              fillColor: '#20ad3a',
-              strokeColor: '#20ad3a',
-              pointColor: '#20ad3a',
-              pointStrokeColor: '#c1c7d1',
-              pointHighlightFill: '#fff',
-              pointHighlightStroke: 'rgba(220,220,220,1)',
-              data: [3]
-            },";
-          }*/
-          ?>
-        ]*/
       };
-//-------------
+  //-------------
         //- BAR CHART -
         //-------------
         var barChartCanvas = $("#barChart").get(0).getContext("2d");

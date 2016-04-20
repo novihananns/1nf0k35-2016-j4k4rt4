@@ -1342,9 +1342,9 @@ class Laporan_kpldh extends CI_Controller {
 		$jmlwanitadesa = $this->laporan_kpldh_model->get_jum_wanitasubur($kecamatan,$kelurahan,$rw);
 		
 		foreach ($jmlwanitadesa as $row) {
-			$bar[$row->id_desa]['id_desa'] = $row->id_desa;
-			$bar[$row->id_desa]['jumlah'] = $row->jumlah;
-			$bar[$row->id_desa]['value'] = $row->value;
+			$bar[$row->value]['id_desa'] = $row->id_desa;
+			$bar[$row->value]['jumlah'] = $row->jumlah;
+			$bar[$row->value]['value'] = $row->value;
 		}
 		$data['jumlahorang'] = $this->laporan_kpldh_model->jumlahorang($kecamatan,$kelurahan,$rw);
 		$data['showkelamin'] = $jmlwanitadesa;

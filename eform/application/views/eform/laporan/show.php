@@ -51,7 +51,7 @@
 				     			<option value="39">Distribusi Penduduk Berdasarkan Test PAP SMEAR</option>
 				     			<option value="40">Distribusi Penduduk Berdasarkan Status Imunisasi</option>
 				     			<option value="41">Distribusi Balita Berdasarkan Status Imunisasi</option>
-				     			
+				     			<option value="42">Distribusi Wanita Berdasarkan Tingkat Kesuburan</option>
 				     		</select>
 				  		</div>
 				  	</div>				  	

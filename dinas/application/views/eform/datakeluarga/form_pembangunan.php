@@ -38,7 +38,7 @@
 	 				<td colspan="2"><input type="radio" name="pembangunan_III_4_radio" id="pembangunan_III_4_radio_tidakberlaku" value="2"></td>
 	 			</tr>
 	 			<tr>
-	 				<td>5. Seluruh anggota keluarga memiliki pakaian yang berbeda untuk dirumah, bekerja/sekolah dan bepergian</td>
+	 				<td>5. Seluruh anggota keluarga makan daging/ikan/telur minimal 1 minggu 1 kali</td>
 	 				<td ><input type="radio" name="pembangunan_III_5_radio" id="pembangunan_III_5_radio_ya" value="0"></td>
 	 				<td ><input type="radio" name="pembangunan_III_5_radio" id="pembangunan_III_5_radio_tidak" value="1"></td>
 	 				<td colspan="2"><input type="radio" name="pembangunan_III_5_radio" id="pembangunan_III_5_radio_tidakberlaku" value="2"></td>

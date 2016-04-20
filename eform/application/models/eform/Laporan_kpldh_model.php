@@ -1215,4 +1215,53 @@ class Laporan_kpldh_model extends CI_Model {
             return 0;
         }
     } 
+    function get_data_imunisasibalita($kode=0,$value=7,$kecamatan=0,$kelurahan=0,$rw=0)
+    {
+        if ($kecamatan!=0) {
+            $this->db->where("data_keluarga.id_kecamatan",$kecamatan);
+        }
+        if ($kelurahan!=0) {
+            $this->db->where("data_keluarga.id_desa",$kelurahan);
+        }
+        if ($rw!=0) {
+            $this->db->where("data_keluarga.rw",$rw);
+        }
+        $this->db->where("kode",$kode);
+        $this->db->where("value",$value);
+        $this->db->where("YEAR(CURDATE())-YEAR(data_keluarga_anggota.tgl_lahir) <= 5");
+        $this->db->select("COUNT(*) AS jumlah");
+        $this->db->join("data_keluarga","data_keluarga.id_data_keluarga=data_keluarga_anggota_profile.id_data_keluarga");
+        $this->db->join("data_keluarga_anggota","data_keluarga_anggota.id_data_keluarga = data_keluarga_anggota_profile.id_data_keluarga AND data_keluarga_anggota.no_anggota = data_keluarga_anggota_profile.no_anggota");
+        $query = $this->db->get('data_keluarga_anggota_profile');
+        if ($query->num_rows()>0) {
+            foreach ($query->result() as $key) {
+                return $key->jumlah;
+             } 
+
+        }else{
+            return 0;
+        }
+    } 
+    public function get_jum_wanitasubur($kecamatan=0,$kelurahan=0,$rw=0)
+    {
+        if ($kecamatan!=0) {
+            $this->db->where("id_kecamatan",$kecamatan);
+        }
+        if ($kelurahan!=0) {
+            $this->db->where("id_desa",$kelurahan);
+        }
+        if ($rw!=0) {
+            $this->db->where("rw",$rw);
+        }
+        $this->db->group_by("id_desa");
+        $this->db->where('id_pilihan_kelamin','6');
+        $this->db->where("(YEAR(CURDATE()) - YEAR(tgl_lahir)) >= '16'");
+        $this->db->where("(YEAR(CURDATE()) - YEAR(tgl_lahir)) <= '49'");
+        $this->db->select("id_desa,COUNT(*) AS jumlah,cl_village.value ");
+        $this->db->join("data_keluarga","data_keluarga.id_data_keluarga=data_keluarga_anggota.id_data_keluarga",'left');
+        $this->db->join("cl_village","cl_village.code = id_desa",'left');
+        $this->db->join("mst_keluarga_pilihan",'data_keluarga_anggota.id_pilihan_kelamin = mst_keluarga_pilihan.id_pilihan AND tipe="jk"');
+        $query = $this->db->get('data_keluarga_anggota');
+        return $query->result();   
+    }
 }

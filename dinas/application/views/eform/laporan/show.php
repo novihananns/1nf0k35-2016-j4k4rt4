@@ -50,6 +50,7 @@
 				     			<option value="38">Distribusi Penduduk Berdasarkan Tes IVA</option>
 				     			<option value="39">Distribusi Penduduk Berdasarkan Tes PAP SMEAR</option>
 				     			<option value="40">Distribusi Penduduk Berdasarkan Status Imunisasi</option>
+				     			<option value="41">Distribusi Balita Berdasarkan Status Imunisasi</option>
 				     		</select>
 				  		</div>
 				  	</div>				  	

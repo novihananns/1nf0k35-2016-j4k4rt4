@@ -163,6 +163,10 @@ class Laporan_kpldh extends CI_Controller {
 			$this->smear($kecamatan,$kelurahan,$rw);
 		}else if($id_judul=="40"){
 			$this->statusimunisasi($kecamatan,$kelurahan,$rw);
+		}else if($id_judul=="41"){
+			$this->balitaimunisasi($kecamatan,$kelurahan,$rw);
+		}else if($id_judul=="42"){
+			$this->wanitasubur($kecamatan,$kelurahan,$rw);
 		}else{
 			return $judul;
 		}
@@ -1299,5 +1303,54 @@ class Laporan_kpldh extends CI_Controller {
 		}
 		$data['jumlahorang'] = $temp1+$temp2+$temp3+$temp4;
 		die($this->parser->parse("eform/laporan/chartimunisasi",$data));
+	}
+	function balitaimunisasi($kecamatan=0,$kelurahan=0,$rw=0){
+		$data = array();
+		$data['lengkap'] = $this->laporan_kpldh_model->get_data_imunisasibalita('kesehatan_6_g_1_radi4','0',$kecamatan,$kelurahan,$rw);
+		$data['tidaktahu']= $this->laporan_kpldh_model->get_data_imunisasibalita('kesehatan_6_g_1_radi4','1',$kecamatan,$kelurahan,$rw);
+		$data['lengkapsesuaiumur']= $this->laporan_kpldh_model->get_data_imunisasibalita('kesehatan_6_g_1_radi4','2',$kecamatan,$kelurahan,$rw);
+		$data['tidaklengkap']= $this->laporan_kpldh_model->get_data_imunisasibalita('kesehatan_6_g_1_radi4','3',$kecamatan,$kelurahan,$rw);
+		if ($data['lengkap']!=0) {
+			$temp1=$data['lengkap'];
+		}else{
+			$temp1=0;
+		}
+		if ($data['tidaktahu']!=0) {
+			$temp2=$data['tidaktahu'];
+		}else{
+			$temp2=0;
+		}
+		if ($data['lengkapsesuaiumur']!=0) {
+			$temp3=$data['lengkapsesuaiumur'];
+		}else{
+			$temp3=0;
+		}
+		if ($data['tidaklengkap']!=0) {
+			$temp4=$data['tidaklengkap'];
+		}else{
+			$temp4=0;
+		}
+		$data['jumlahorang'] = $temp1+$temp2+$temp3+$temp4;
+		die($this->parser->parse("eform/laporan/chartbalitaimunisasi",$data));
+	}
+	public function wanitasubur($kecamatan=0,$kelurahan=0,$rw=0)
+	{
+		
+		$bar = array();
+		$color = array('#f56954','#00a65a','#f39c12','#00c0ef','#8d16c5','#d2d6de','#3c8dbc','#69d856','#eb75e4');
+
+		$jmlwanitadesa = $this->laporan_kpldh_model->get_jum_wanitasubur($kecamatan,$kelurahan,$rw);
+		
+		foreach ($jmlwanitadesa as $row) {
+			$bar[$row->id_desa]['id_desa'] = $row->id_desa;
+			$bar[$row->id_desa]['jumlah'] = $row->jumlah;
+			$bar[$row->id_desa]['value'] = $row->value;
+		}
+		$data['jumlahorang'] = $this->laporan_kpldh_model->jumlahorang($kecamatan,$kelurahan,$rw);
+		$data['showkelamin'] = $jmlwanitadesa;
+		$data['bar']	= $bar;
+
+		$data['color']	= $color;
+		die($this->parser->parse("eform/laporan/chartwanitasubur",$data));
 	}
 }

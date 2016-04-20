@@ -34,7 +34,7 @@ class Morganisasi_model extends CI_Model {
     }
     
     function get_data_kel($id_data_keluarga, $jk){
-    	$this->db->like('id_data_keluarga',$id_data_keluarga);
+    	$this->db->where('id_data_keluarga like "'.$id_data_keluarga.'%"');
     	$this->db->where('id_pilihan_kelamin',$jk);
 		$data = $this->db->get('data_keluarga_anggota')->result_array();
 

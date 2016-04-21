@@ -6,11 +6,11 @@
         <th>Jumlah</th>
       </tr>
       <?php 
-      if (isset($showkelamin)) {
-        foreach ($showkelamin as $key) { ?>
+      if (isset($bar)) {
+        foreach ($bar as $key) { ?>
         <tr>
-          <td><?php echo $key->value; ?></td>
-          <td><?php echo $key->jumlah;?></td>
+          <td><?php echo $key['nama']; ?></td>
+          <td><?php echo $key['jumlah'];?></td>
         </tr>
       <?php    
         }
@@ -45,7 +45,7 @@
        // print_r($bar);  
         foreach ($bar as $row ) { 
           if($i>0) echo ",";
-            echo "\"".$row['value']."\"";
+            echo "\"".$row['nama']."\"";
           $i++;
         } ?>],
         datasets: [
@@ -59,7 +59,7 @@
             data: [<?php 
             $i=0;
             foreach ($bar as $row ) { 
-              if(isset($row['jumlah']))  $x = number_format(($row['jumlah']),0);
+              if(isset($row['jumlah']))  $x =$row['jumlah'];
               else                              $x = 0;
 
               if($i>0) echo ",";

@@ -51,12 +51,13 @@
 				     			<option value="39">Distribusi Penduduk Berdasarkan Tes PAP SMEAR</option>
 				     			<option value="40">Distribusi Penduduk Berdasarkan Status Imunisasi</option>
 				     			<option value="41">Distribusi Balita Berdasarkan Status Imunisasi</option>
+				     			<option value="42">Distribusi Wanita Berdasarkan Tingkat Kesuburan</option>
 				     		</select>
 				  		</div>
 				  	</div>				  	
 				  	<div class="col-md-6">
 						<div class="form-group">
-							<label>Kecamatan</label>
+							<label id="labelkecamatan">Kecamatan</label>
 				     		<select name="kecamatan" class="form-control" id="kecamatan">
 				     			<!--<option value="">Pilih Kecamatan</option>-->
 				     			<?php foreach ($datakecamatan as $kec ) { ;?>
@@ -68,7 +69,7 @@
 				  	</div>
 				  	<div class="col-md-6">
 						<div class="form-group">
-							<label>Kelurahan</label>
+							<label id="labelkelurahan">Kelurahan</label>
 				     		<select name="kelurahan" class="form-control" id="kelurahan">
 				     			<option value="">Pilih Kelurahan</option>
 				     		</select>
@@ -76,7 +77,7 @@
 				  	</div>
 				  	<div class="col-md-6">
 						<div class="form-group">
-							<label>RW</label>
+							<label id="labelrw">RW</label>
 				     		<select name="rw" class="form-control" id="rw">
 				     			<option value="">Pilih RW</option>
 				     		</select>
@@ -128,7 +129,18 @@
 		$("#menu_eform_laporan_kpldh").addClass("active");
 		$("#loading").hide();
 		$("#hilang").hide(); 
+		$("#laporan").change(function(){
+			if($(this).val()=='42'){
+      			$("#kecamatan").hide();
+      			$("#kelurahan").hide();
+      			$("#rw").hide();
+      			$("#labelrw").hide();
+      			$("#labelkelurahan").hide();
+      			$("#labelkecamatan").hide();
+      		}
+		})
       	$('#btn-preview').click(function(){
+
       		$("#hilang").hide();
       		$("#loading").show();
       		$('#judulloading').html("Mohon Tunggu, sedang proses ...");

@@ -1214,4 +1214,18 @@ class Laporan_kpldh_model extends CI_Model {
             return 0;
         }
     } 
+    public function get_jum_wanitasubur($kecamatan=0,$kelurahan=0,$rw=0)
+    {
+        
+        $this->db->group_by("id_kecamatan");
+        $this->db->where('id_pilihan_kelamin','6');
+        $this->db->where("(YEAR(CURDATE()) - YEAR(tgl_lahir)) >= '16'");
+        $this->db->where("(YEAR(CURDATE()) - YEAR(tgl_lahir)) <= '49'");
+        $this->db->select("id_kecamatan,COUNT(*) AS jumlah,cl_kec.nama ");
+        $this->db->join("data_keluarga","data_keluarga.id_data_keluarga=data_keluarga_anggota.id_data_keluarga",'left');
+        $this->db->join("cl_kec","cl_kec.code = id_kecamatan",'left');
+        $this->db->join("mst_keluarga_pilihan",'data_keluarga_anggota.id_pilihan_kelamin = mst_keluarga_pilihan.id_pilihan AND tipe="jk"');
+        $query = $this->db->get('data_keluarga_anggota');
+        return $query->result();   
+    }
 }

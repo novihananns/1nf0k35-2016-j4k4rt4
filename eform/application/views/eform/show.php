@@ -104,7 +104,6 @@
   </div><!-- /.col -->
 </div><!-- /.row -->
 
-
 <script>
   $(function () { 
     $("#menu_dashboard").addClass("active");

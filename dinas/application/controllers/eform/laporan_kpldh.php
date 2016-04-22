@@ -1342,7 +1342,7 @@ class Laporan_kpldh extends CI_Controller {
 	{
 		
 		$bar = array();
-		$color = array('#f56954','#00a65a','#f39c12','#00c0ef','#8d16c5','#d2d6de','#3c8dbc','#69d856','#eb75e4');
+		$color = array('#f56954','#00a65a','#f39c12','#00c0ef','#8d16c5','#d2d6de','#3c8dbc','#69d856','#eb75e4','#9ACD32');
 
 		$i=0;
 		/*foreach ($jmlwanitadesa as $row) {
@@ -1355,9 +1355,9 @@ class Laporan_kpldh extends CI_Controller {
 		}*/
 		$data['kecamatan'] 	= $this->laporan_kpldh_model->get_data_kecamatan();
 		foreach ($data['kecamatan'] as $row) {
-			$bar['datawanitasubur']['nama'] = "Wanita Subur (16-49)";
-			$bar['datawanitasubur']['code'] = $row['code'];
-			$bar['datawanitasubur'][$row['code']] = $this->laporan_kpldh_model->get_data_kel($row['code'],6);
+			$bar[$row['code']]['code'] = $row['code'];
+			$bar[$row['code']][$row['code']] = $this->laporan_kpldh_model->get_data_kel($row['code'],6);
+			$bar[$row['code']]['nama'] = $row['nama'];
 		}
 
 		$data['bar']	= $bar;

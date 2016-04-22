@@ -129,6 +129,14 @@
 		$("#menu_eform_laporan_kpldh").addClass("active");
 		$("#loading").hide();
 		$("#hilang").hide(); 
+		if($("#laporan").val()==42){
+			$("#kecamatan").hide();
+  			$("#kelurahan").hide();
+  			$("#rw").hide();
+  			$("#labelrw").hide();
+  			$("#labelkelurahan").hide();
+  			$("#labelkecamatan").hide();
+		}
 		$("#laporan").change(function(){
 			if($(this).val()=='42'){
       			$("#kecamatan").hide();

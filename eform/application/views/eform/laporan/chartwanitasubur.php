@@ -6,11 +6,11 @@
         <th>Jumlah</th>
       </tr>
       <?php 
-      if (isset($showkelamin)) {
-        foreach ($showkelamin as $key) { ?>
+      if (isset($bar)) {
+        foreach ($bar as $key) { ?>
         <tr>
-          <td><?php echo $key->value; ?></td>
-          <td><?php echo $key->jumlah;?></td>
+          <td><?php echo $key['value']; ?></td>
+          <td><?php echo $key[$key['id_desa']];?></td>
         </tr>
       <?php    
         }
@@ -27,6 +27,41 @@
     </div>
   </div>
 </div>
+<?php 
+  $i=0;
+  foreach ($bar as $row ) { 
+?>
+  <div class="col-md-2">
+      <div class="box<?php echo $i;?>"></div> &nbsp; <label><?php echo $row['value'];?></label>
+  </div>
+  
+<?php 
+  $i++;
+  } 
+?>
+<style type="text/css">
+<?php 
+  $i=0;
+  foreach ($bar as $row ) { 
+?>
+    .box<?php echo $i;?>{
+      width: 10px;
+      padding: 10px; 
+      margin-right: 40%;
+      background-color:<?php echo $color[$i];?>;
+      margin: 0;
+      float: left;
+    }
+<?php 
+    $i++;
+    if ($i==5) {
+       echo "<br/>";
+     } 
+  } 
+?>
+  }
+</style>
+
 <script>
   $(function () { 
     var safeColors = ['00','33','66','99','cc','ff'];
@@ -40,33 +75,26 @@
         return "#"+r+g+b;
     };
       var areaChartData = {
-        labels: [<?php 
-        $i=0;
-       // print_r($bar);  
-        foreach ($bar as $row ) { 
-          if($i>0) echo ",";
-            echo "\"".$row['value']."\"";
-          $i++;
-        } ?>],
+        labels: ['Wanita Subur (16-49)'],
         datasets: [
+        <?php 
+        $i=0;
+        foreach ($bar as $row ) { 
+        ?>
           {
-            fillColor:randomColor(),
-            strokeColor: randomColor(),
-            pointColor: randomColor(),
+            label: "<?php echo $row['value'];?>",
+            fillColor:"<?php echo $color[$i];?>",
+            strokeColor: "<?php echo $color[$i];?>",
+            pointColor: "<?php echo $color[$i];?>",
             pointStrokeColor: "#c1c7d1",
             pointHighlightFill: "#fff",
             pointHighlightStroke: "rgba(220,220,220,1)",
-            data: [<?php 
-            $i=0;
-            foreach ($bar as $row ) { 
-              if(isset($row['jumlah']))  $x = number_format(($row['jumlah']),0);
-              else                              $x = 0;
-
-              if($i>0) echo ",";
-              echo "\"".$x."\"";
-              $i++;
-            } ?>]
+            data: [<?php echo $row[$row['id_desa']];?>]
           },
+        <?php 
+        $i++;
+        } 
+        ?>
         ]
       };
   //-------------

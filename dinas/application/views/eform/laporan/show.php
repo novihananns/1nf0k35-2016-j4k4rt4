@@ -137,6 +137,13 @@
       			$("#labelrw").hide();
       			$("#labelkelurahan").hide();
       			$("#labelkecamatan").hide();
+      		}else{
+      			$("#kecamatan").show();
+      			$("#kelurahan").show();
+      			$("#rw").show();
+      			$("#labelrw").show();
+      			$("#labelkelurahan").show();
+      			$("#labelkecamatan").show();
       		}
 		})
       	$('#btn-preview').click(function(){

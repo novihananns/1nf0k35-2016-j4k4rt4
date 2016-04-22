@@ -1228,4 +1228,21 @@ class Laporan_kpldh_model extends CI_Model {
         $query = $this->db->get('data_keluarga_anggota');
         return $query->result();   
     }
+    function get_data_kecamatan(){
+        $kode_kecamatan = substr($this->session->userdata('puskesmas'),0,4);
+        $query = $this->db->like('code',$kode_kecamatan);
+        $data = $query->get('cl_kec')->result_array();
+
+        return $data;
+    }
+
+    function get_data_kel($id_data_keluarga, $jk){
+        $this->db->like('id_data_keluarga',$id_data_keluarga);
+         $this->db->where("(YEAR(CURDATE()) - YEAR(tgl_lahir)) >= '16'");
+        $this->db->where("(YEAR(CURDATE()) - YEAR(tgl_lahir)) <= '49'");
+        $this->db->where('id_pilihan_kelamin',$jk);
+        $data = $this->db->get('data_keluarga_anggota')->result_array();
+
+        return count($data);
+    }
 }

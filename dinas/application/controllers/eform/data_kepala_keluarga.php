@@ -844,11 +844,16 @@ class Data_kepala_keluarga extends CI_Controller {
 	}
 	}
 	function get_rukunwargafilter(){
-	if ($this->input->post('rukunwarga')!="null" || $this->input->post('kelurahan')!="null") {	
+	if ($this->input->post('rukunwarga')!="null" || $this->input->post('kelurahan')!="null") {
 		if($this->input->is_ajax_request()) {
+			if($this->input->post('rukunwarga') != '') {
+				$this->session->set_userdata('filter_code_rukunwarga',$this->input->post('rukunwarga'));
+			}else{
+				$this->session->set_userdata('filter_code_rukunwarga','');
+			}
+			$this->session->set_userdata('filter_code_cl_rukunrumahtangga','');
 			$rukunwarga = $this->input->post('rukunwarga');
 			$kelurahan = $this->input->post('kelurahan');
-			$this->session->set_userdata('filter_code_rukunwarga',$this->input->post('rukunwarga'));
 
 			$this->db->where("rw",$rukunwarga);
 			$this->db->group_by("rt");
@@ -872,6 +877,8 @@ class Data_kepala_keluarga extends CI_Controller {
 		if($_POST) {
 			if($this->input->post('rukunrumahtangga') != '') {
 				$this->session->set_userdata('filter_code_cl_rukunrumahtangga',$this->input->post('rukunrumahtangga'));
+			}else{
+				$this->session->set_userdata('filter_code_cl_rukunrumahtangga','');
 			}
 		}
 	}

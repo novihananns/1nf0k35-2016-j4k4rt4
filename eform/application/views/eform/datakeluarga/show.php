@@ -44,6 +44,11 @@
 				 	<select name="rukunwarga" id="rukunwarga" class="form-control">
 			     	</select>
 				 </div>
+				 <div class="col-md-3">
+				 <label> Rukun Tetangga </label>
+				 	<select name="rukunrumahtangga" id="rukunrumahtangga" class="form-control">
+			     	</select>
+				 </div>
 		 	</div>
 		 </div>	
 		 </div>
@@ -234,6 +239,21 @@
         data : 'rukunwarga=' + rukunwarga +'&kelurahan='+kelurahan,
         success : function(data) {
           $('#rukunrumahtangga').html(data);
+          $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
+        }
+      });
+
+      return false;
+    }).change();
+    $('#rukunrumahtangga').change(function(){
+      var rukunwarga = $('#rukunwarga').val();
+      var kelurahan = $("#kelurahan").val();
+      var rukunrumahtangga = $(this).val();
+      $.ajax({
+        url : '<?php echo site_url('eform/data_kepala_keluarga/get_rukunrumahtanggafilter') ?>',
+        type : 'POST',
+        data : 'rukunrumahtangga='+rukunrumahtangga,
+        success : function(data) {
           $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
         }
       });

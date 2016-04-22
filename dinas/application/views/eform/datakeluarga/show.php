@@ -36,11 +36,6 @@
 			//	echo $this->session->userdata("filter_code_kelurahan");
 			?>
 			<div class="row">
-				<div class="col-md-3">
-				 <!--<<label> Rukun Rumah Tangga </label>
-				 	select name="rukunrumahtangga" id="rukunrumahtangga" class="form-control">
-			     	</select>-->
-				 </div>
 				 <div class="col-md-3">
 				 	<label> Kecamatan </label> <?php echo $this->session->userdata('filter_code_kecamatan');?>
 				 	<select name="kecamatan" id="kecamatan" class="form-control">
@@ -59,6 +54,11 @@
 				 <div class="col-md-3">
 				 <label> Rukun Warga </label>
 				 	<select name="rukunwarga" id="rukunwarga" class="form-control">
+			     	</select>
+				 </div>
+				 <div class="col-md-3">
+				 <label> Rukun Tetangga </label>
+				 	<select name="rukunrumahtangga" id="rukunrumahtangga" class="form-control">
 			     	</select>
 				 </div>
 		 	</div>
@@ -241,6 +241,21 @@
         data : 'rukunwarga=' + rukunwarga +'&kelurahan='+kelurahan,
         success : function(data) {
           $('#rukunrumahtangga').html(data);
+          $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
+        }
+      });
+
+      return false;
+    }).change();
+    $('#rukunrumahtangga').change(function(){
+      var rukunwarga = $('#rukunwarga').val();
+      var kelurahan = $("#kelurahan").val();
+      var rukunrumahtangga = $(this).val();
+      $.ajax({
+        url : '<?php echo site_url('eform/data_kepala_keluarga/get_rukunrumahtanggafilter') ?>',
+        type : 'POST',
+        data : 'rukunrumahtangga='+rukunrumahtangga,
+        success : function(data) {
           $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
         }
       });

@@ -137,7 +137,7 @@
 				return obj.data;    
 			},
 			columns: [
-				{ text: 'Edit', align: 'center', filtertype: 'none', sortable: false, width: '4%', cellsrenderer: function (row) {
+				{ text: 'Edit', align: 'center', filtertype: 'none', sortable: false, width: '8%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
 				    if(dataRecord.edit==1){
 						return "<div style='width:100%;padding:4px;text-align:center' onclick='edit(\""+dataRecord.id_data_keluarga+"\");'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' ></a></div>";
@@ -162,11 +162,11 @@
                 },
                 { text: 'Tgl Pengisian', datafield: 'tanggal_pengisian', columntype: 'textbox', align:'center', cellsalign:'center', filtertype: 'date',cellsformat: 'dd-MM-yyyy', width: '10%' },
 				{ text: 'Kepala Keluarga', datafield: 'namakepalakeluarga', columntype: 'textbox', filtertype: 'textbox', width: '16%' },
-				{ text: 'Desa', datafield: 'value', columntype: 'textbox', filtertype: 'textbox', width: '19%' },
+				{ text: 'Desa', datafield: 'value', columntype: 'textbox', filtertype: 'textbox', width: '16%' },
 				{ text: 'RT', datafield: 'rt', columntype: 'textbox', filtertype: 'textbox', width: '6%' },
 				{ text: 'RW', datafield: 'rw', columntype: 'textbox', filtertype: 'textbox', width: '6%' },
 				{ text: 'No. Rumah', datafield: 'norumah', columntype: 'textbox', filtertype: 'textbox', width: '8%' },
-				{ text: 'Alamat', datafield: 'alamat', columntype: 'textbox', filtertype: 'textbox', width: '21%' }
+				{ text: 'Alamat', datafield: 'alamat', columntype: 'textbox', filtertype: 'textbox', width: '20%' }
 			]
 		});
 

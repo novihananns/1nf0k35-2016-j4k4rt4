@@ -838,7 +838,7 @@ Halaman?</div>
           <label>Profile Kesehatan Anggota Keluarga (2)</label>
           <br>
           <br>
-          <label>Kondisi & Riwayat Kesehatan Diri<br>Tuberkulosis Paru (TB Paru)</label>
+          <label>Kondisi & Riwayat Kesehatan Diri<br>Pneumonia/ Radang Paru</label>
 
           <div class="row" style="margin: 5px;border-bottom:1px solid #EEEEEE;">
             <div class="col-md-12" style="padding: 5px">1. Pernah didiagnosa dengan atau tanpa foto dada (rontgen) oleh tenaga kesehatan (dokter/ perawat/ bidan)?</div>

@@ -95,21 +95,21 @@
 				return obj.data;    
 			},
 			columns: [
-				{ text: 'Edit', align: 'center', filtertype: 'none', sortable: false, width: '4%', cellsrenderer: function (row) {
+				{ text: 'Edit', align: 'center', filtertype: 'none', sortable: false, width: '8%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
 				    if(dataRecord.edit==1){
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit(\""+dataRecord.no_anggota+"\");'></a></div>";
+						return "<div style='width:100%;padding:4px;text-align:center' onclick='edit(\""+dataRecord.no_anggota+"\");'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif'></a></div>";
 					}else{
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
+						return "<div style='width:100%;padding:4px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
 					}
                  }
                 },
 				{ text: 'Del', align: 'center', filtertype: 'none', sortable: false, width: '4%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
 				    if(dataRecord.delete==1){
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_del.gif' onclick='del(\""+dataRecord.no_anggota+"\");'></a></div>";
+						return "<div style='width:100%;padding:4px;text-align:center' onclick='del(\""+dataRecord.no_anggota+"\");'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_del.gif'></a></div>";
 					}else{
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
+						return "<div style='width:100%;padding:4px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
 					}
                  }
                 },
@@ -117,8 +117,8 @@
 				{ text: 'Nama', datafield: 'nama', columntype: 'textbox', filtertype: 'textbox', width: '24%',align:'center', cellsalign:'left' },
                 { text: 'Tgl Lahir', datafield: 'tgl_lahir', columntype: 'textbox', align:'center', cellsalign:'center', filtertype: 'date',cellsformat: 'dd-MM-yyyy', width: '10%' },
 				{ text: 'Usia', datafield: 'usia', columntype: 'textbox', filtertype: 'textbox',align:'center', cellsalign:'right', width: '8%' },
-				{ text: 'Jenis Kelamin', datafield: 'jeniskelamin', columntype: 'textbox', filtertype: 'textbox', width: '15%',align:'center', cellsalign:'left' },
-				{ text: 'status', datafield: 'hubungan', columntype: 'textbox', filtertype: 'textbox', width: '15%',align:'center', cellsalign:'left' },
+				{ text: 'Jenis Kelamin', datafield: 'jeniskelamin', columntype: 'textbox', filtertype: 'textbox', width: '12%',align:'center', cellsalign:'left' },
+				{ text: 'status', datafield: 'hubungan', columntype: 'textbox', filtertype: 'textbox', width: '14%',align:'center', cellsalign:'left' },
 			]
 		});
 

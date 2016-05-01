@@ -59,7 +59,7 @@
 						<div class="form-group">
 							<label id="labelkecamatan">Kecamatan</label>
 				     		<select name="kecamatan" class="form-control" id="kecamatan">
-				     			<!--<option value="">Pilih Kecamatan</option>-->
+				     			<option value="all">Seluruh Kecamatan</option>
 				     			<?php foreach ($datakecamatan as $kec ) { ;?>
 								<?php $select = $kec->code == set_value('kecamatan')  ? 'selected=selected' : '' ?>
 									<option value="<?php echo $kec->code; ?>" <?php echo $select ?>><?php echo $kec->nama; ?></option>

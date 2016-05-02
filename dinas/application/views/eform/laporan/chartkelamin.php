@@ -32,7 +32,7 @@
         <canvas id="pieChart" height="240" width="511" style="width: 511px; height: 240px;"></canvas>
       </div>
     </div>
-  <<div class="row"> 
+  <div class="row"> 
       <div class="col-md-3">
           
       </div>

@@ -177,7 +177,7 @@ class Laporan_kpldh extends CI_Controller {
 		
 		//$data['data_formprofile']  = $this->dataform_model->get_data_formprofile($kode); 
 		$bar = array();
-		$color = array('#f56954','#00a65a','#f39c12','#00c0ef','#8d16c5','#d2d6de','#3c8dbc','#69d856','#eb75e4');
+		$color = array('#00a65a','#f56954','#f39c12','#00c0ef','#8d16c5','#d2d6de','#3c8dbc','#69d856','#eb75e4');
 
 		$jmlkelamin = $this->laporan_kpldh_model->get_jum_kelamin($kecamatan,$kelurahan,$rw);
 		//$total = 0;

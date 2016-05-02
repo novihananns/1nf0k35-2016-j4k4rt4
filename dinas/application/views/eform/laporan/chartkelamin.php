@@ -32,8 +32,37 @@
         <canvas id="pieChart" height="240" width="511" style="width: 511px; height: 240px;"></canvas>
       </div>
     </div>
+  <<div class="row"> 
+      <div class="col-md-3">
+          
+      </div>
+      <div class="col-md-4">
+          <div class="bux1"></div> &nbsp; <label>Laki-Laki</label>
+      </div>
+      <div class="col-md-5">
+          <div class="bux"></div> &nbsp; <label>Perempuan</label>
+      </div>
+    </div>
   </div>
 </div>
+<style type="text/css">
+
+      .bux{
+        width: 10px;
+        padding: 10px; 
+        margin-right: 40%;
+        background-color: #f56954;
+        margin: 0;
+        float: left;
+      }
+      .bux1{
+        width: 10px;
+        padding: 10px;
+        background-color: #20ad3a;
+        margin: 0;
+        float: left;
+      }
+</style>
 <?php // print_r($bar);?>
 <script>
   $(function () { 

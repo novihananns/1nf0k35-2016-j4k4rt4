@@ -31,7 +31,37 @@
       </div>
     </div>
   </div>
-</div>
+  </div>
+  <div class="row"> 
+    <div class="col-md-7"></div>
+    <div class="col-md-5">
+      <div class="col-md-6">
+          <div class="bux"></div> &nbsp; <label>Ya</label>
+      </div>
+      <div class="col-md-6">
+          <div class="bux1"></div> &nbsp; <label>Tidak</label>
+      </div>
+    </div>
+  </div>    
+<style type="text/css">
+
+      .bux{
+        width: 10px;
+        padding: 10px; 
+        margin-right: 40%;
+        background-color: #e02a11;
+        margin: 0;
+        float: left;
+      }
+      .bux1{
+        width: 10px;
+        padding: 10px;
+        background-color: #800080;
+        margin: 0;
+        float: left;
+      }
+      
+</style>
 <?php // print_r($bar);?>
 <script>
   $(function () { 

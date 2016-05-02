@@ -40,8 +40,57 @@
         <canvas id="pieChart" height="240" width="511" style="width: 511px; height: 240px;"></canvas>
       </div>
     </div>
+    </div>
   </div>
-</div>
+  <div class="row"> 
+    <div class="col-md-5"></div>
+    <div class="col-md-7">
+      <div class="col-md-3">
+          <div class="bux"></div> &nbsp; <label>Listrik</label>
+      </div>
+      <div class="col-md-3">
+          <div class="bux1"></div> &nbsp; <label>Genset / Diesel</label>
+      </div>
+      <div class="col-md-3">
+          <div class="bux2"></div> &nbsp; <label>Lampu Minyak</label>
+      </div>
+      <div class="col-md-3">
+          <div class="bux3"></div> &nbsp; <label>Lainnya</label>
+      </div>
+    </div>
+  </div>    
+<style type="text/css">
+
+      .bux{
+        width: 10px;
+        padding: 10px; 
+        margin-right: 40%;
+        background-color: #e02a11;
+        margin: 0;
+        float: left;
+      }
+      .bux1{
+        width: 10px;
+        padding: 10px;
+        background-color: #00BFFF;
+        margin: 0;
+        float: left;
+      }
+      .bux2{
+        width: 10px;
+        padding: 10px;
+        background-color: #800080;
+        margin: 0;
+        float: left;
+      }
+      .bux3{
+        width: 10px;
+        padding: 10px;
+        background-color: #20ad3a;
+        margin: 0;
+        float: left;
+      }
+</style>
 <?php // print_r($bar);?>
 <script>
   $(function () { 

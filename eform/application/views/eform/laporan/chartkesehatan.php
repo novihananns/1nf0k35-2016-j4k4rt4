@@ -34,6 +34,55 @@
     </div>
   </div>
 </div>
+<div class="row"> 
+  <div class="col-md-4"></div>
+  <div class="col-md-8">
+    <div class="col-md-3">
+        <div class="bux"></div> &nbsp; <label>BPJS-PBI</label>
+    </div>
+    <div class="col-md-3">
+        <div class="bux1"></div> &nbsp; <label>BPJS-NonPBI</label>
+    </div>
+    <div class="col-md-3">
+        <div class="bux2"></div> &nbsp; <label>Non BPJS</label>
+    </div>
+    <div class="col-md-3">
+        <div class="bux3"></div> &nbsp; <label>Tidak Memiliki</label>
+    </div>
+  </div>
+</div>
+<style type="text/css">
+
+      .bux{
+        width: 10px;
+        padding: 10px; 
+        margin-right: 40%;
+        background-color: #f56954;
+        margin: 0;
+        float: left;
+      }
+      .bux1{
+        width: 10px;
+        padding: 10px;
+        background-color: #00a65a;
+        margin: 0;
+        float: left;
+      }
+      .bux2{
+        width: 10px;
+        padding: 10px;
+        background-color: #f39c12;
+        margin: 0;
+        float: left;
+      }
+      .bux3{
+        width: 10px;
+        padding: 10px;
+        background-color: #00c0ef;
+        margin: 0;
+        float: left;
+      }
+</style>
 <?php // print_r($bar);?>
 <script>
   $(function () { 

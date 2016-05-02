@@ -260,6 +260,7 @@ class Laporan_kpldh extends CI_Controller {
 		foreach ($lansia as $row) {
 			$bar[/*$row->id_kecamatan*/$kecamatan]['jmllansia'] = $row->jumlah;
 		}
+		//print_r($bar);
 		$data['jumlahorang'] = $this->laporan_kpldh_model->jumlahorang($kecamatan,$kelurahan,$rw);
 		$data['bar']	= $bar;
 		$data['color']	= $color;
@@ -277,80 +278,80 @@ class Laporan_kpldh extends CI_Controller {
 		$totalorang = $this->laporan_kpldh_model->totaljumlah($kecamatan,$kelurahan,$rw);
 		if ($totalorang!=0) {
 			foreach ($totalorang as $row) {
-				$bar[$row->id_kecamatan]['totalorang'] = $row->totalorang;
-				$bar[$row->id_kecamatan]['puskesmas'] = $this->datakeluarga_model->get_nama('nama','cl_kec','code',$kecamatan);
+				$bar[/*$row->id_kecamatan*/$kecamatan]['totalorang'] = $row->totalorang;
+				$bar[/*$row->id_kecamatan*/$kecamatan]['puskesmas'] = $this->datakeluarga_model->get_nama('nama','cl_kec','code',$kecamatan);
 			}
 		}
 
 
 		$blm_sekolah = $this->laporan_kpldh_model->get_jml_pendidikan('40',$kecamatan,$kelurahan,$rw);
 		foreach ($blm_sekolah as $row) {
-			$bar[$row->id_kecamatan]['blmsekolah'] = $row->jumlah;
-			$bar[$row->id_kecamatan]['totalblmsekolah'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['blmsekolah'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totalblmsekolah'] = $row->total;
 		}
 
 		$tidak_sekolah = $this->laporan_kpldh_model->get_jml_pendidikan('41',$kecamatan,$kelurahan,$rw);
 		foreach ($tidak_sekolah as $row) {
-			$bar[$row->id_kecamatan]['tidaksekolah'] = $row->jumlah;
-			$bar[$row->id_kecamatan]['totaltidaksekolah'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['tidaksekolah'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totaltidaksekolah'] = $row->total;
 		}
 
 		$tdk_tamatsd = $this->laporan_kpldh_model->get_jml_pendidikan('14',$kecamatan,$kelurahan,$rw);
 		foreach ($tdk_tamatsd as $row) {
-			$bar[$row->id_kecamatan]['tdktamatsd'] = $row->jumlah;
-			$bar[$row->id_kecamatan]['totaltdktamatsd'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['tdktamatsd'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totaltdktamatsd'] = $row->total;
 		}
 
 
 		$masih_sd = $this->laporan_kpldh_model->get_jml_pendidikan('15',$kecamatan,$kelurahan,$rw);
 		foreach ($masih_sd as $row) {
-			$bar[$row->id_kecamatan]['masihsd'] = $row->jumlah;
-			$bar[$row->id_kecamatan]['totalmasihsd'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['masihsd'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totalmasihsd'] = $row->total;
 		}
 
 		$tamat_sd = $this->laporan_kpldh_model->get_jml_pendidikan('16',$kecamatan,$kelurahan,$rw);
 		foreach ($tamat_sd as $row) {
-			$bar[$row->id_kecamatan]['tamatsd'] = $row->jumlah;
-			$bar[$row->id_kecamatan]['totaltamatsd'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['tamatsd'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totaltamatsd'] = $row->total;
 		}
 
 
 		$masih_smp = $this->laporan_kpldh_model->get_jml_pendidikan('17',$kecamatan,$kelurahan,$rw);
 		foreach ($masih_smp as $row) {
-			$bar[$row->id_kecamatan]['masihsmp'] = $row->jumlah;
-			$bar[$row->id_kecamatan]['totalmasihsmp'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['masihsmp'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totalmasihsmp'] = $row->total;
 		}
 
 		$tamat_smp = $this->laporan_kpldh_model->get_jml_pendidikan('18',$kecamatan,$kelurahan,$rw);
 		foreach ($tamat_smp as $row) {
-			$bar[$row->id_kecamatan]['tamatsmp'] = $row->jumlah;
-			$bar[$row->id_kecamatan]['totaltamatsmp'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['tamatsmp'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totaltamatsmp'] = $row->total;
 		}
 
 
 		$masih_sma = $this->laporan_kpldh_model->get_jml_pendidikan('19',$kecamatan,$kelurahan,$rw);
 		foreach ($masih_sma as $row) {
-			$bar[$row->id_kecamatan]['masihsma'] = $row->jumlah;
-			$bar[$row->id_kecamatan]['totalmasihsma'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['masihsma'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totalmasihsma'] = $row->total;
 		}
 
 		$tamat_sma = $this->laporan_kpldh_model->get_jml_pendidikan('20',$kecamatan,$kelurahan,$rw);
 		foreach ($tamat_sma as $row) {
-			$bar[$row->id_kecamatan]['tamatsma'] = $row->jumlah;
-			$bar[$row->id_kecamatan]['totaltamatsma'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['tamatsma'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totaltamatsma'] = $row->total;
 		}
 
 		$masih_pt = $this->laporan_kpldh_model->get_jml_pendidikan('21',$kecamatan,$kelurahan,$rw);
 		foreach ($masih_pt as $row) {
-			$bar[$row->id_kecamatan]['masihpt'] = $row->jumlah;
-			$bar[$row->id_kecamatan]['totalmasihpt'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['masihpt'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totalmasihpt'] = $row->total;
 		}
 		$tamat_pt = $this->laporan_kpldh_model->get_jml_pendidikan('22',$kecamatan,$kelurahan,$rw);
 		foreach ($tamat_pt as $row) {
-			$bar[$row->id_kecamatan]['tamatpt'] = $row->jumlah;
-			$bar[$row->id_kecamatan]['totaltamatpt'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['tamatpt'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totaltamatpt'] = $row->total;
 		}
-		
+		//print_r($bar);
 		$data['bar']	= $bar;
 		$data['color']	= $color;
 		die($this->parser->parse("eform/laporan/chartpendidikan",$data));
@@ -368,87 +369,87 @@ class Laporan_kpldh extends CI_Controller {
 		$totalorang = $this->laporan_kpldh_model->totaljumlah($kecamatan,$kelurahan,$rw);
 		if ($totalorang!=0) {
 			foreach ($totalorang as $row) {
-				$bar[$row->id_kecamatan]['totalorang'] = $row->totalorang;
-				$bar[$row->id_kecamatan]['puskesmas'] = $this->datakeluarga_model->get_nama('nama','cl_kec','code',$kecamatan);
+				$bar[/*$row->id_kecamatan*/$kecamatan]['totalorang'] = $row->totalorang;
+				$bar[/*$row->id_kecamatan*/$kecamatan]['puskesmas'] = $this->datakeluarga_model->get_nama('nama','cl_kec','code',$kecamatan);
 			}
 		}
 
 		$blm_sekolah = $this->laporan_kpldh_model->get_jml_pekerjaan('24',$kecamatan,$kelurahan,$rw);
 		foreach ($blm_sekolah as $row) {
-			$bar[$row->id_kecamatan]['petani'] = $row->jumlah;
-			$bar[$row->id_kecamatan]['totalpetani'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['petani'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totalpetani'] = $row->total;
 		}
 
 		$tidak_sekolah = $this->laporan_kpldh_model->get_jml_pekerjaan('25',$kecamatan,$kelurahan,$rw);
 		foreach ($tidak_sekolah as $row) {
-			$bar[$row->id_kecamatan]['nelayan'] = $row->jumlah;
-			$bar[$row->id_kecamatan]['totalnelayan'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['nelayan'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totalnelayan'] = $row->total;
 		}
 
 		$tdk_tamatsd = $this->laporan_kpldh_model->get_jml_pekerjaan('26',$kecamatan,$kelurahan,$rw);
 		foreach ($tdk_tamatsd as $row) {
-			$bar[$row->id_kecamatan]['pnstniporli'] = $row->jumlah;
-			$bar[$row->id_kecamatan]['totalpnstniporli'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['pnstniporli'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totalpnstniporli'] = $row->total;
 		}
 
 
 		$masih_sd = $this->laporan_kpldh_model->get_jml_pekerjaan('27',$kecamatan,$kelurahan,$rw);
 		foreach ($masih_sd as $row) {
-			$bar[$row->id_kecamatan]['swasta'] = $row->jumlah;
-			$bar[$row->id_kecamatan]['totalswasta'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['swasta'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totalswasta'] = $row->total;
 		}
 
 		$tamat_sd = $this->laporan_kpldh_model->get_jml_pekerjaan('28',$kecamatan,$kelurahan,$rw);
 		foreach ($tamat_sd as $row) {
-			$bar[$row->id_kecamatan]['wiraswasta'] = $row->jumlah;
-			$bar[$row->id_kecamatan]['totalwiraswasta'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['wiraswasta'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totalwiraswasta'] = $row->total;
 		}
 
 
 		$masih_smp = $this->laporan_kpldh_model->get_jml_pekerjaan('29',$kecamatan,$kelurahan,$rw);
 		foreach ($masih_smp as $row) {
-			$bar[$row->id_kecamatan]['pensiunan'] = $row->jumlah;
-			$bar[$row->id_kecamatan]['totalpensiunan'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['pensiunan'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totalpensiunan'] = $row->total;
 		}
 
 		$tamat_smp = $this->laporan_kpldh_model->get_jml_pekerjaan('30',$kecamatan,$kelurahan,$rw);
 		foreach ($tamat_smp as $row) {
-			$bar[$row->id_kecamatan]['pekerjalepas'] = $row->jumlah;
-			$bar[$row->id_kecamatan]['totalpekerjalepas'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['pekerjalepas'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totalpekerjalepas'] = $row->total;
 		}
 
 
 		$masih_sma = $this->laporan_kpldh_model->get_jml_pekerjaan('31',$kecamatan,$kelurahan,$rw);
 		foreach ($masih_sma as $row) {
-			$bar[$row->id_kecamatan]['lainnya'] = $row->jumlah;
-			$bar[$row->id_kecamatan]['totallainnya'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['lainnya'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totallainnya'] = $row->total;
 		}
 
 		$tamat_sma = $this->laporan_kpldh_model->get_jml_pekerjaan('32',$kecamatan,$kelurahan,$rw);
 		foreach ($tamat_sma as $row) {
-			$bar[$row->id_kecamatan]['tidakbelumkerja'] = $row->jumlah;
-			$bar[$row->id_kecamatan]['totaltidakbelumkerja'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['tidakbelumkerja'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totaltidakbelumkerja'] = $row->total;
 		}
 
 		$masih_pt = $this->laporan_kpldh_model->get_jml_pekerjaan('42',$kecamatan,$kelurahan,$rw);
 		foreach ($masih_pt as $row) {
-			$bar[$row->id_kecamatan]['bekerja'] = $row->jumlah;
-			$bar[$row->id_kecamatan]['totalbekerja'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['bekerja'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totalbekerja'] = $row->total;
 		}
 		$tamat_pt = $this->laporan_kpldh_model->get_jml_pekerjaan('43',$kecamatan,$kelurahan,$rw);
 		foreach ($tamat_pt as $row) {
-			$bar[$row->id_kecamatan]['belumkerja'] = $row->jumlah;
-			$bar[$row->id_kecamatan]['totalbelumkerja'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['belumkerja'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totalbelumkerja'] = $row->total;
 		}
 		$tamat_pt = $this->laporan_kpldh_model->get_jml_pekerjaan('44',$kecamatan,$kelurahan,$rw);
 		foreach ($tamat_pt as $row) {
-			$bar[$row->id_kecamatan]['tidakkerja'] = $row->jumlah;
-			$bar[$row->id_kecamatan]['totaltidakkerja'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['tidakkerja'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totaltidakkerja'] = $row->total;
 		}
 		$tamat_pt = $this->laporan_kpldh_model->get_jml_pekerjaan('45',$kecamatan,$kelurahan,$rw);
 		foreach ($tamat_pt as $row) {
-			$bar[$row->id_kecamatan]['irt'] = $row->jumlah;
-			$bar[$row->id_kecamatan]['irt'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['irt'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['irt'] = $row->total;
 		}
 		
 		

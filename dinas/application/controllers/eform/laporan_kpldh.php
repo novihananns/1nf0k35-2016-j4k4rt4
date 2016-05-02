@@ -471,7 +471,7 @@ class Laporan_kpldh extends CI_Controller {
 		$data['bar']	= $bar;
 		//print_r($data);
 		//die();
-	//	print_r($bar);
+		//print_r($bar);
 	//	die();
 		$data['color']	= $color;
 		die($this->parser->parse("eform/laporan/chartposyandu",$data));

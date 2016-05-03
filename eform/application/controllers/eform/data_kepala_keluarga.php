@@ -8,6 +8,7 @@ class Data_kepala_keluarga extends CI_Controller {
 		require_once(APPPATH.'third_party/tbs_plugin_opentbs_1.8.0/tbs_plugin_opentbs.php');
 
 
+		$this->load->model('bpjs');
 		$this->load->model('morganisasi_model');
 		$this->load->model('eform/datakeluarga_model');
 		$this->load->model('eform/pembangunan_keluarga_model');
@@ -587,21 +588,20 @@ class Data_kepala_keluarga extends CI_Controller {
       	$data['data_pilihan_kawin'] = $this->datakeluarga_model->get_pilihan("kawin");
       	$data['data_pilihan_jkn'] = $this->datakeluarga_model->get_pilihan("jkn");
 
+      	//$data['kdPoli'] = $this->bpjs->bpjs_option('poli');
+
       	$data['alert_form'] = '';
 
         $data['data_profile_anggota'] = $this->datakeluarga_model->get_data_anggotaprofile($idkeluarga,$noanggota);
 		die($this->parser->parse("eform/datakeluarga/form_anggota_form",$data));
-		/*}elseif($noanggota=$this->datakeluarga_model->insert_dataAnggotaKeluarga($idkeluarga)){
-			die($this->parser->parse("eform/datakeluarga/form_anggota_form",$data));
-		}else{
-			$data['alert_form'] = 'Save data failed...';
-			die($this->parser->parse("eform/datakeluarga/form_anggota_form",$data));
-		}*/
-			
-
-			
-		//}
 	}
+
+	function bpjs_search($by = 'nik',$no){
+      	$data = $this->bpjs->bpjs_search($by,$no);
+
+      	echo json_encode($data);
+	}
+
 	function update_kepala(){
 		$this->datakeluarga_model->update_kepala();
 	}

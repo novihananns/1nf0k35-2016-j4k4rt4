@@ -54,6 +54,54 @@
         }
       }
       ?>
+
+      $("input[name='keluarga6_nik']").keyup(function(){
+        var nik = $("input[name='keluarga6_nik']").val();
+        if(nik.length==16){
+          $.get("<?php echo base_url()?>eform/data_kepala_keluarga/bpjs_search/nik/"+nik,function(res){
+              if(res.metaData.code=="200"){
+                if(confirm("Anggota keluarga terdaftar sebagai peserta BPJS, gunakan data?")){
+                  $("#keluarga6_bpjs").val(res.response.noKartu).change();
+                  $("#keluarga6_nama").val(res.response.nama).change();
+                  $("#keluarga6_tgl_lahir").val(res.response.tglLahir);
+                  $("#keluarga6_no_hp").val(res.response.noHP).change();
+                  if(res.response.sex=="P"){
+                    $("#keluarga6_id_pilihan_kelamin").val(6).change();
+                  }else{
+                    $("#keluarga6_id_pilihan_kelamin").val(5).change();
+                  }
+                }
+                $("#keluarga6_tmpt_lahir").focus();
+              }
+          },"json");
+        }
+
+        return false;
+      });
+
+      $("#keluarga6_bpjs").keyup(function(){
+        var bpjs = $("#keluarga6_bpjs").val();
+        if(bpjs.length==13){
+          $.get("<?php echo base_url()?>eform/data_kepala_keluarga/bpjs_search/bpjs/"+bpjs,function(res){
+              if(res.metaData.code=="200"){
+                if(confirm("Nomor BPJS terdaftar, gunakan data?")){
+                  $("input[name='keluarga6_nik']").val(res.response.noKTP).change();
+                  $("#keluarga6_nama").val(res.response.nama).change();
+                  $("#keluarga6_tgl_lahir").val(res.response.tglLahir);
+                  $("#keluarga6_no_hp").val(res.response.noHP).change();
+                  if(res.response.sex=="P"){
+                    $("#keluarga6_id_pilihan_kelamin").val(6).change();
+                  }else{
+                    $("#keluarga6_id_pilihan_kelamin").val(5).change();
+                  }
+                }
+                $("#keluarga6_tmpt_lahir").focus();
+              }
+          },"json");
+        }
+
+      });
+
       $("input[name^=keluarga6]").change(function(){
         //alert($(this).attr('name')+' ' +$(this).val());
         var noanggota = "<?php echo $noanggota;?>";
@@ -121,13 +169,28 @@
           <div class="row" style="margin: 5px">
             <div class="col-md-4" style="padding: 5px">NIK</div>
             <div class="col-md-8">
-              <input type="text" name="keluarga6_nik" id="keluarga6_nik" placeholder="Nomor Induk Keluarga" value="<?php 
+              <input style="background:#dde4ff" type="text" name="keluarga6_nik" id="keluarga6_nik" placeholder="Nomor Induk Keluarga" value="<?php 
                 if(set_value('keluarga6_nik')=="" && isset($nik)){
                   echo $nik;
                 }else{
                   echo  set_value('keluarga6_nik');
                 }
                 ?>" class="form-control">
+            </div>
+          </div>
+
+          <div class="row" style="margin: 5px">
+            <div class="col-md-4" style="padding: 5px">Nomor BPJS</div>
+            <div class="col-md-8">
+              <input style="background:#dde4ff" type="text" name="keluarga6_bpjs "id="keluarga6_bpjs" placeholder="Nomor BPJS" value="<?php 
+                if(set_value('bpjs')=="" && isset($bpjs)){
+                  echo $bpjs;
+                }else{
+                  echo  set_value('bpjs');
+                }
+                ?>" class="form-control">
+            </div>
+            <div class="col-md-8">
             </div>
           </div>
 
@@ -328,21 +391,6 @@
           </div>
 
           <div class="row" style="margin: 5px">
-            <div class="col-md-4" style="padding: 5px">Nomor BPJS</div>
-            <div class="col-md-8">
-              <input type="text" name="keluarga6_bpjs "id="keluarga6_bpjs" placeholder="Nomor BPJS" value="<?php 
-                if(set_value('bpjs')=="" && isset($bpjs)){
-                  echo $bpjs;
-                }else{
-                  echo  set_value('bpjs');
-                }
-                ?>" class="form-control">
-            </div>
-            <div class="col-md-8">
-            </div>
-          </div>
-
-          <div class="row" style="margin: 5px">
             <div class="col-md-4" style="padding: 5px">Suku</div>
             <div class="col-md-8">
               <input type="text" name="keluarga6_suku" id="keluarga6_suku" placeholder="Suku" value="<?php 
@@ -367,7 +415,38 @@
                 ?>" class="form-control">
             </div>
           </div>
+          <!--
+          <div class="row" style="margin: 5px">
+            <div class="col-md-4 col-xs-12" style="padding: 5px">Jenis Kunjungan</div>
+            <div class="col-md-4 col-xs-6">
+              <input type="radio" name="bpjs_kunjSakit" id="bpjs_kunjSakit" value="true"> Sakit
+            </div>
+            <div class="col-md-4 col-xs-6">
+              <input type="radio" name="bpjs_kunjSakit" id="bpjs_kunjSakit" value="false"> Sehat
+            </div>
+          </div>
 
+          <div class="row" style="margin: 5px">
+            <div class="col-md-4 col-xs-12" style="padding: 5px">Kegiatan</div>
+            <div class="col-md-8">
+              <select  name="bpjs_kdPoli" id="bpjs_kdPoli" class="form-control">
+                <?php
+                /*if(set_value('bpjs_kdPoli')=="" && isset($bpjs_kdPoli)){
+                  $bpjs_kdPoli = $bpjs_kdPoli;
+                }else{
+                  $bpjs_kdPoli = set_value('bpjs_kdPoli');
+                }
+                foreach($kdPoli as $row_kdPoli){
+                $select = $row_kdPoli['kdPoli'] == $bpjs_kdPoli ? 'selected' : '' ;
+                ?>
+                    <option value="<?php echo $row_kdPoli['kdPoli']; ?>" <?php echo $select; ?>><?php echo ucwords(strtolower($row_kdPoli['nmPoli'])); ?></option>
+                <?php
+                }*/
+                ?>
+              </select>
+            </div>
+          </div>
+          -->
           </div>
         </div><!-- /.form-box -->
       </div><!-- /.form-box -->

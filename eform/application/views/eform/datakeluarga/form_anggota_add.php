@@ -45,6 +45,49 @@
         return false;
       });
      
+      $("input[name='nik']").keyup(function(){
+        var nik = $("input[name='nik']").val();
+        if(nik.length==16){
+          $.get("<?php echo base_url()?>eform/data_kepala_keluarga/bpjs_search/nik/"+nik,function(res){
+              if(res.metaData.code=="200"){
+                if(confirm("Anggota keluarga terdaftar sebagai peserta BPJS, gunakan data?")){
+                  $("#bpjs").val(res.response.noKartu);
+                  $("#nama").val(res.response.nama);
+                  $("#tgl_lahir").val(res.response.tglLahir);
+                  $("#no_hp").val(res.response.noHP);
+                  if(res.response.sex=="P"){
+                    $("#id_pilihan_kelamin").val(6);
+                  }else{
+                    $("#id_pilihan_kelamin").val(5);
+                  }
+                  $("#tmpt_lahir").focus();
+                }
+              }
+          },"json");
+        }
+      });
+
+      $("#bpjs").keyup(function(){
+        var bpjs = $("#bpjs").val();
+        if(bpjs.length==13){
+          $.get("<?php echo base_url()?>eform/data_kepala_keluarga/bpjs_search/bpjs/"+bpjs,function(res){
+              if(res.metaData.code=="200"){
+                if(confirm("Nomor BPJS terdaftar, gunakan data?")){
+                  $("input[name='nik']").val(res.response.noKTP);
+                  $("#nama").val(res.response.nama);
+                  $("#tgl_lahir").val(res.response.tglLahir);
+                  $("#no_hp").val(res.response.noHP);
+                  if(res.response.sex=="P"){
+                    $("#id_pilihan_kelamin").val(6);
+                  }else{
+                    $("#id_pilihan_kelamin").val(5);
+                  }
+                  $("#tmpt_lahir").focus();
+                }
+              }
+          },"json");
+        }
+      });
 
       $("#tgl_lahir").jqxDateTimeInput({ formatString: 'dd-MM-yyyy', theme: theme, height: '30px'});
 	});
@@ -86,13 +129,28 @@
           <div class="row" style="margin: 5px">
             <div class="col-md-4" style="padding: 5px">NIK</div>
             <div class="col-md-8">
-              <input type="text" name="nik" id="nik" placeholder="Nomor Induk Keluarga" value="<?php 
+              <input style="background:#dde4ff" type="text" name="nik" id="nik" placeholder="Nomor Induk Keluarga" value="<?php 
                 if(set_value('nik')=="" && isset($nik)){
                   echo $nik;
                 }else{
                   echo  set_value('nik');
                 }
                 ?>" class="form-control">
+            </div>
+          </div>
+
+          <div class="row" style="margin: 5px">
+            <div class="col-md-4" style="padding: 5px">Nomor BPJS</div>
+            <div class="col-md-8">
+              <input style="background:#dde4ff" type="text" name="bpjs" id="bpjs" placeholder="Nomor BPJS" value="<?php 
+                if(set_value('bpjs')=="" && isset($bpjs)){
+                  echo $bpjs;
+                }else{
+                  echo  set_value('bpjs');
+                }
+                ?>" class="form-control">
+            </div>
+            <div class="col-md-8">
             </div>
           </div>
 
@@ -289,21 +347,6 @@
                 }    
                 ?>
             </select>
-            </div>
-          </div>
-
-          <div class="row" style="margin: 5px">
-            <div class="col-md-4" style="padding: 5px">Nomor BPJS</div>
-            <div class="col-md-8">
-              <input type="text" name="bpjs" id="bpjs" placeholder="Nomor BPJS" value="<?php 
-                if(set_value('bpjs')=="" && isset($bpjs)){
-                  echo $bpjs;
-                }else{
-                  echo  set_value('bpjs');
-                }
-                ?>" class="form-control">
-            </div>
-            <div class="col-md-8">
             </div>
           </div>
 

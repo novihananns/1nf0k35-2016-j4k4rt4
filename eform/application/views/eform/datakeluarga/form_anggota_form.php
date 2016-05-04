@@ -64,7 +64,7 @@
                   $("#keluarga6_bpjs").val(res.response.noKartu).change();
                   $("#keluarga6_nama").val(res.response.nama).change();
                   $("#keluarga6_tgl_lahir").val(res.response.tglLahir);
-                  $("#keluarga6_no_hp").val(res.response.noHP).change();
+                  if(res.response.noHP!=" " && res.response.noHP!="") $("#keluarga6_no_hp").val(res.response.noHP).change();
                   if(res.response.sex=="P"){
                     $("#keluarga6_id_pilihan_kelamin").val(6).change();
                   }else{
@@ -88,7 +88,7 @@
                   $("input[name='keluarga6_nik']").val(res.response.noKTP).change();
                   $("#keluarga6_nama").val(res.response.nama).change();
                   $("#keluarga6_tgl_lahir").val(res.response.tglLahir);
-                  $("#keluarga6_no_hp").val(res.response.noHP).change();
+                  if(res.response.noHP!=" " && res.response.noHP!="") $("#keluarga6_no_hp").val(res.response.noHP).change();
                   if(res.response.sex=="P"){
                     $("#keluarga6_id_pilihan_kelamin").val(6).change();
                   }else{

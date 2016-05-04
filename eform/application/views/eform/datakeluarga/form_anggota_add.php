@@ -54,7 +54,7 @@
                   $("#bpjs").val(res.response.noKartu);
                   $("#nama").val(res.response.nama);
                   $("#tgl_lahir").val(res.response.tglLahir);
-                  $("#no_hp").val(res.response.noHP);
+                  if(res.response.noHP!=" " && res.response.noHP!="") $("#no_hp").val(res.response.noHP);
                   if(res.response.sex=="P"){
                     $("#id_pilihan_kelamin").val(6);
                   }else{
@@ -76,7 +76,7 @@
                   $("input[name='nik']").val(res.response.noKTP);
                   $("#nama").val(res.response.nama);
                   $("#tgl_lahir").val(res.response.tglLahir);
-                  $("#no_hp").val(res.response.noHP);
+                  if(res.response.noHP!=" " && res.response.noHP!="") $("#no_hp").val(res.response.noHP);
                   if(res.response.sex=="P"){
                     $("#id_pilihan_kelamin").val(6);
                   }else{

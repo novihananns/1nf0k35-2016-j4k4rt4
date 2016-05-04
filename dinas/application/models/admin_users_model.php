@@ -17,12 +17,12 @@ class Admin_users_model extends CI_Model {
 
     function get_data($start=0,$limit=999999,$options=array())
     {
-          $sql="SELECT cl_phc.value, app_users_list.*, app_users_profile.*
-        FROM  app_users_list 
-        INNER JOIN cl_phc
-        ON SUBSTR(cl_phc.code,2)=app_users_list.code
-        INNER JOIN app_users_profile
-        ON app_users_profile.code = app_users_list.code";
+        $sql="SELECT cl_phc.value, app_users_list.*, app_users_profile.*
+            FROM app_users_list 
+            INNER JOIN cl_phc 
+                ON SUBSTR(cl_phc.code,2)=app_users_list.code
+            INNER JOIN app_users_profile
+                ON app_users_profile.code = app_users_list.code AND app_users_list.username=app_users_profile.username";
         return $this->db->query($sql)->result();
 
     }

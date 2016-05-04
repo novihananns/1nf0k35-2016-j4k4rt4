@@ -6,9 +6,15 @@
 	<?php echo $this->session->flashdata('alert_form')?>
 </div>
 <?php } ?>
-
+<?php if(validation_errors()!=""){ ?>
+<div class="alert alert-warning alert-dismissable">
+  <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+  <h4>  <i class="icon fa fa-check"></i> Information!</h4>
+  <?php echo validation_errors()?>
+</div>
+<?php } ?>
 <section class="content">
-<form action="<?php echo base_url()?>admin_config/doupdate" method="POST" name="frmUsers">
+<form method="POST" name="frmUsers">
   <div class="row">
     <!-- left column -->
     <div class="col-md-6">
@@ -47,7 +53,7 @@
             </div>
           </div><!-- /.box-body -->
           <div class="box-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" id="btn-add" class="btn btn-primary">Submit</button>
             <button type="reset" class="btn btn-warning">Reset</button>
           </div>
       </div><!-- /.box -->
@@ -78,7 +84,7 @@
             </div>
           </div><!-- /.box-body -->
           <div class="box-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button id="btn-save-add" type="button" class="btn btn-primary">Submit</button>
             <button type="reset" class="btn btn-warning">Reset</button>
           </div>
       </div><!-- /.box -->
@@ -106,5 +112,40 @@
             alert(data);                
         })
     });
+    function save (){
+      var data = new FormData();
+        $('#biodata_notice-content').html('<div class="alert">Mohon tunggu, proses simpan data....</div>');
+        $('#biodata_notice').show();
+
+        data.append('title', $("[name='title']").val());
+        data.append('description', $("[name='description']").val());
+        data.append('keywords', $("[name='keywords']").val());
+        data.append('theme_default', $("[name='theme_default']").val());
+        data.append('theme_offline', $("[name='theme_offline']").val());
+        data.append('online', $("[name='online']").val());
+        data.append('epuskesmas_server', $("[name='epuskesmas_server']").val());
+        data.append('epuskesmas_user', $("[name='epuskesmas_user']").val());
+        data.append('epuskesmas_password', $("[name='epuskesmas_password']").val());
+
+        $.ajax({
+            cache : false,
+            contentType : false,
+            processData : false,
+            type : 'POST',
+            url : '<?php echo base_url()?>admin_config/doupdate',
+            data : data,
+            success : function(response){
+                $('#content2').html(response);
+            }
+        });
+
+        return false;
+    }
+  $('#btn-save-add').click(function(){
+     save();
+  });
+  $('#btn-add').click(function(){
+     save();
+  });
 	});
 </script>

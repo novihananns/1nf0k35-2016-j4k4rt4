@@ -25,21 +25,35 @@ class Bpjs extends CI_Model {
 
 	   require_once(APPPATH.'third_party/httpful.phar');
 
-	   $this->server 	= "http://api.bpjs-kesehatan.go.id/pcare-rest/v1/";
-	   $this->username 	= "09030200";
-	   $this->password 	= "123456";
-	   $this->consid 	= "28381";
-	   $this->secretKey = "0kT81E2A7F";
+
+	   $cnf = $this->get_data_bpjs();
+	   $this->server 	= $cnf['server'];
+	   $this->username 	= $cnf['username'];
+	   $this->password 	= $cnf['password'];
+	   $this->consid 	= $cnf['consid'];
+	   $this->secretKey = $cnf['secretKey'];
 	   $this->xtime = time();
 	   $this->maxxtimeget 	= 15;
 	   $this->maxxtimepost 	= 120;
-
+	   
 	   $this->xauth = base64_encode($this->username.':'.$this->password.':095');
 	   $this->data = $this->consid."&".time();
 	   $this->signature = hash_hmac('sha256', $this->data, $this->secretKey, true);
 	   $this->xsign = base64_encode($this->signature);
 	}
-
+	function get_data_bpjs()
+    {
+    	$data = array();
+    	$id='P'.$this->session->userdata('puskesmas');
+    	$this->db->where('code',$id);
+    	$this->db->select("*");
+    	$data = $this->db->get('cl_phc_bpjs')->row_array();
+        if (!empty($data['server'])){
+            return $data;
+        }else{
+        	return $data;
+        }	
+    }
 	function getApi($url=""){
 	   try
 	    {

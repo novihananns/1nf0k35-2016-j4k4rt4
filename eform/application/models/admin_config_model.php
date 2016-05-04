@@ -6,7 +6,51 @@ class Admin_config_model extends CI_Model {
     function __construct() {
         parent::__construct();
     }
-    
+    function get_data_bpjs()
+    {
+    	$data = array();
+    	$id='P'.$this->session->userdata('puskesmas');
+    	$this->db->where('code',$id);
+    	$query = $this->db->get('cl_phc_bpjs');
+        if ($query->num_rows() > 0){
+            $data = $query->row_array();
+        }
+        $query->free_result();    
+        return $data;
+    }
+    function insert_databpjs($value=0)
+    {
+    	$id='P'.$this->session->userdata('puskesmas');
+    	$this->db->where('code',$id);
+    	$query = $this->db->get('cl_phc_bpjs');
+        if ($query->num_rows() > 0){
+            $dataup = array(
+            	'server' => $this->input->post('serverbpjs'),
+            	'username' => $this->input->post('usernamebpjs'),
+            	'password' => $this->input->post('passwordbpjs'),
+            	'consid' => $this->input->post('considbpjs'),
+            	'secretkey' => $this->input->post('keybpjs'),
+            );
+            $this->db->where('code',$id);
+            $this->db->update("cl_phc_bpjs",$dataup);
+        }else{
+        	$data = array(
+            	'server' => $this->input->post('serverbpjs'),
+            	'username' => $this->input->post('usernamebpjs'),
+            	'password' => $this->input->post('passwordbpjs'),
+            	'consid' => $this->input->post('considbpjs'),
+            	'secretkey' => $this->input->post('keybpjs'),
+            	'code' => $id,
+            );
+            $this->db->insert('cl_phc_bpjs',$data);
+        }
+    }
+    function get_data_puskes()
+    {
+    	$id='P'.$this->session->userdata('puskesmas');
+    	$this->db->where('code',$id);
+    	return $this->db->get('cl_phc')->result();
+    }
 
     function get_data()
     {

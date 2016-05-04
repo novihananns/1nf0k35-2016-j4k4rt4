@@ -29,14 +29,15 @@
                 <thead>
                   <tr>
 					<th>&nbsp;</th>
-					<th>NO</font></th>
-					<th>Email / Name</font></th>
+					<th>Ubah</th>
+	                <th>Hapus</th>
+					<th>Nama Puskesmas</font></th>
+					<th>Name</font></th>
 					<th>Level</th>
-					<th>Last Login / Las Activity</th>
+					<th>Last Login</th>
+					<th>Last Activity</th>
 					<th>Active</th>
 					<th>Online</th>
-	                <th>Ubah</th>
-	                <th>Hapus</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -52,14 +53,8 @@
 		                <?php
 		                	}else{
 		                ?>
-		                <td><input type="checkbox" name="id[]" value="<?php  echo $row->username?>" /></td>
+		                <td><input type="checkbox" name="id[]" value="<?php  echo $row->code?>" /></td>
 		                <?php } ?>
-						<td><?php  echo $start++?>&nbsp;</td>
-						<td><?php  echo $row->username?>&nbsp;</td>
-						<td><?php  echo ucwords($row->level)?>&nbsp;</td>
-						<td><?php  echo date("d-m-Y h:i:s",$row->last_login)?><br><?php  echo date("d-m-Y h:i:s",$row->last_active)?></td>
-						<td align="center"><img src="<?php  echo base_url()?>media/images/status_<?php  echo intval($row->status_active)?>.gif"></td>
-						<td align="center"><img src="<?php  echo base_url()?>media/images/status_<?php  echo intval($row->online)?>.gif"></td>
 						<td align="center"><a href="<?php  echo base_url()?>index.php/admin_user/edit/<?php  echo $row->username?>/<?php  echo $row->code?>" title="Detail Account"><img src="<?php  echo base_url()?>media/images/16_edit.gif" /></a></td>
 		                <?php 
 		                	if(($row->username=="puskesmas")||($row->username=="sms")||($row->username=="inventory")||($row->username=="keuangan")||($row->username=="kepegawaian")){
@@ -71,22 +66,17 @@
 		                ?>
 		                <td align="center"><a href="<?php  echo base_url()?>index.php/admin_user/dodel/<?php  echo $row->username?>/<?php  echo $row->code?>" title="Delete Account" onclick="return confirm_delete()" ><img src="<?php  echo base_url()?>media/images/16_del.gif"></a></td>
 		                <?php } ?>
+						<td><?php  echo $row->value?>&nbsp;</td>
+						<td><?php  echo $row->username?>&nbsp;</td>
+						<td><?php  echo ucwords($row->level)?>&nbsp;</td>
+						<td><?php  echo date("d-m-Y||h:i:s",$row->last_login)?></td>
+						<td><?php  echo date("d-m-Y||h:i:s",$row->last_active)?></td>
+						<td align="center"><img src="<?php  echo base_url()?>media/images/status_<?php  echo intval($row->status_active)?>.gif"></td>
+						<td align="center"><img src="<?php  echo base_url()?>media/images/status_<?php  echo intval($row->online)?>.gif"></td>
+
 					</tr>
 				<?php endforeach;?>                   
 				</tbody>
-                <tfoot>
-                  <tr>
-					<th>&nbsp;</th>
-					<th>NO</font></th>
-					<th>Email / Name</font></th>
-					<th>Level</th>
-					<th>Last Login / Las Activity</th>
-					<th>Active</th>
-					<th>Online</th>
-	                <th>Ubah</th>
-	                <th>Hapus</th>
-                  </tr>
-                </tfoot>
               </table>
 	    </div>
 	  </div>

@@ -12,7 +12,7 @@
           $('#notification').hide();
           $.ajax({ 
             type: "POST",
-            url: "<?php echo base_url()?>admin_user/update_password/{username}",
+            url: "<?php echo base_url()?>admin_user/update_password/{username}/{code}",
             data: $('#updatePassword').serialize(),
             success: function(response){
               console.log(response);
@@ -45,7 +45,7 @@
           $('#notification').hide();
           $.ajax({ 
             type: "POST",
-            url: "<?php echo base_url()?>admin_user/update_profile/{username}",
+            url: "<?php echo base_url()?>admin_user/update_profile/{code}",
             data: $('#updateProfile').serialize(),
             success: function(response){
               $('#notification').html('<div id="information" class="alert alert-warning alert-dismissable"><button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button><h4>  <i class="icon fa fa-check"></i> Information!</h4><span></span></div>');
@@ -100,13 +100,6 @@
             <br>
             <div class="input-group">
               <span class="input-group-addon">
-                <div style="width:90px"><b>Level Akses</b></div>
-              </span>
-              <select class="form-control" name="level"/>{level_option}</select>
-            </div>
-            <br>
-            <div class="input-group">
-              <span class="input-group-addon">
                 <div style="width:90px">Password Lama</div>
               </span>
               <input type="password" class="form-control" placeholder="Password Lama" name="password" id="password"/>
@@ -139,24 +132,38 @@
 
 
       <div class="tab-pane active" id="tab_1">    
-        <!-- <form action="<?php echo base_url()?>disbun/profile_doupdate" method="post"> -->
+                <!-- <form action="<?php echo base_url()?>disbun/profile_dopasswd" method="post"> -->
         <form name="updateProfile" id="updateProfile">
         <div class="row">
         <div class="col-md-6 col-md-offset-1">
-             <div class="input-group">
+             <!--<div class="input-group">
               <span class="input-group-addon">
                 <i class="fa fa-qrcode" style="width:20px"></i>
               </span>
-              <input type="text" class="form-control" placeholder="** Kode" name="code" readonly value="<?php 
+              <input type="text" class="form-control" placeholder="** Nama Puskesmas" name="code" readonly value="<?php 
                       if(set_value('code')=="" && isset($code)){
                         echo $code;
-                      }else{
-                        echo  set_value('code');
+                      }
+                      else
+                      {
+                        echo set_value("code");
                       }
                       ?>"/>
             </div>
+            <br>-->
+              <div class="input-group">
+              <span class="input-group-addon">
+                <i class="fa fa-road" style="width:20px"></i>
+              </span>
+              <input type="text" class="form-control" placeholder="Puskesmas" name="value" readonly value="<?php 
+            foreach($data_puskesmas as $row_puskesmas){
+                echo ucwords(strtolower($row_puskesmas->value));
+            }    
+            ?>">
+            </div>
             <br>
-             <div class="input-group">
+
+              <div class="input-group">
               <span class="input-group-addon">
                 <i class="fa fa-envelope" style="width:20px"></i>
               </span>
@@ -169,6 +176,7 @@
                       ?>"/>
             </div>
             <br>
+
             <div class="input-group">
               <span class="input-group-addon">
                 <i class="fa fa-user" style="width:20px"></i>

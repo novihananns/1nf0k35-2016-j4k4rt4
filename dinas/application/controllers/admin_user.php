@@ -100,6 +100,8 @@ class Admin_user extends CI_Controller {
         $this->form_validation->set_rules('name','Full Name','trim|required');
 
         $data = $this->admin_users_model->get_user_id($username,$code);
+
+
         // var_dump($data);
         // exit();
         // $data = $this->admin_users_model->get_user_profile($username);
@@ -107,59 +109,75 @@ class Admin_user extends CI_Controller {
         $data['username']		= $username;
 		$data['title_group']	= "Admin Panel";
 		$data['title_form']		= "User Profile";
-		$data['level']			= "";
-		$data['level_option']	= "
-		<option value='administrator' ".($data['level']=="administrator" ? "selected" : "").">Administrator</option>
-		<option value='ketukpintu' ".($data['level']=="ketukpintu" ? "selected" : "").">Ketukpintu</option>
-		<option value='guest' disabled ".($data['level']=="guest" ? "selected" : "").">Guest</option>
-		<option value='inventory' disabled ".($data['level']=="inventory" ? "selected" : "").">Inventory</option>
-		<option value='kepegawaian' disabled ".($data['level']=="kepegewaian" ? "selected" : "").">Kepegawaian</option>
-		<option value='keuangan' disabled ".($data['level']=="keuangan" ? "selected" : "").">Keuangan</option>
-		";
-        
+		$data['action']="edit";
+          	$data['data_puskesmas'] = $this->admin_users_model->get_pus($code);
         $data['content'] = $this->parser->parse("admin/users/user_profile",$data,true);
         $this->template->show($data,"home");
     }
 
-    function update_profile($username){
-    	$this->load->model('morganisasi_model');
+    function update_profile($code){
+    		$this->authentication->verify('admin','edit');    	
+    
+	$this->load->model('morganisasi_model');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|callback_check_email2');
+        $this->form_validation->set_rules('phone_number', 'Phone Number', 'trim|required');
         $this->form_validation->set_rules('nama', 'Nama Lengkap', 'trim|required');
-        $this->form_validation->set_rules('phone_number', 'Nama Pendaftar', 'trim');
 	    $this->form_validation->set_rules('code', 'code', 'trim');
 
 		if($this->form_validation->run()== FALSE){
 			echo validation_errors();
-		}elseif($username=$this->admin_users_model->update_profile($username)){
+		}
+    	elseif($this->admin_users_model->update_profile($code)){
 			echo "Data berhasil disimpan";
+			
 		}else{
 			echo "Penyimpanan data gagal dilakukan";
 		}
     }
-
-    function update_password($username=""){
-
-    	$this->load->model('morganisasi_model');
-        $this->form_validation->set_rules('level', 'Level', 'trim|required');
-        $this->form_validation->set_rules('password', 'Password Lama', 'trim|required');
-		$this->form_validation->set_rules('npassword','Password Baru','trim|required|min_length[5]|matches[cpassword]|callback_check_pass2');
+function check_pass2($str){
+		$regex1=preg_match('/[A-Z]/', $str);
+		$regex2=preg_match('/[a-z]/', $str);
+		$regex3=preg_match('/[0-9]/', $str);
+		
+		
+		 if (!$regex1 || !$regex2 || !$regex3){
+			if(!$regex1==true)
+			{
+				$this->form_validation->set_message('check_pass2', 'Format password harus kombinasi huruf besar');
+			}
+			else if(!$regex2==true)
+			{
+				$this->form_validation->set_message('check_pass2', 'Format password harus kombinasi huruf kecil');
+			}
+			else
+			{
+				$this->form_validation->set_message('check_pass2', 'Format password harus kombinasi angka');
+			}
+			return FALSE;
+		 }
+		 else{
+			return TRUE;
+ 		 }
+  	}
+    function update_password($username,$code){
+    		$this->authentication->verify('admin','edit');    	
+    	$this->form_validation->set_rules('npassword','Password Baru','trim|required|min_length[5]|matches[cpassword]|callback_check_pass2');
 		$this->form_validation->set_rules('cpassword', 'Konfirmasi Password', 'trim|required');
         
 		if($this->form_validation->run()== FALSE){
 			echo validation_errors();
 		}else{
-			if($this->morganisasi_model->check_password()){
-				if(!$this->admin_users_model->update_account($username)) {
+			if($this->admin_users_model->check_password($username,$code)){
+				if(!$this->admin_users_model->update_password($username, $code)) {
 					echo "Save data failed...";
-				} elseif($username=$this->morganisasi_model->update_password($username))
-				{
-					echo "password berhasil diubah";
+				} else {
+						echo "Save data successful";
 				}
 			}else{
 				echo "Password lama salah...";
 			}
 		}
-    }
+	}    
 	
     function update_set_account($id=0){
         $this->authentication->verify('admin','edit');
@@ -322,8 +340,8 @@ class Admin_user extends CI_Controller {
 		$this->authentication->verify('admin','del');
 
 		if(is_array($this->input->post('id'))){
-			foreach($this->input->post('id') as $data){
-				$this->admin_users_model->delete_entry($data);
+			foreach($this->input->post('id') as $kode){
+				$this->admin_users_model->delete_entry1($kode);
 			}
 			$this->session->set_flashdata('alert', 'Delete ('.count($this->input->post('id')).') data successful...');
 		}else{

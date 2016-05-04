@@ -53,7 +53,11 @@
                 if(confirm("Anggota keluarga terdaftar sebagai peserta BPJS, gunakan data?")){
                   $("#bpjs").val(res.response.noKartu);
                   $("#nama").val(res.response.nama);
-                  $("#tgl_lahir").val(res.response.tglLahir);
+
+                  var tgl = res.response.tglLahir.split("-");
+                  var date = new Date(tgl[2], (tgl[1]-1), tgl[0]);
+                  $("#tgl_lahir").jqxDateTimeInput('setDate', date);
+
                   if(res.response.noHP!=" " && res.response.noHP!="") $("#no_hp").val(res.response.noHP);
                   if(res.response.sex=="P"){
                     $("#id_pilihan_kelamin").val(6);
@@ -75,7 +79,11 @@
                 if(confirm("Nomor BPJS terdaftar, gunakan data?")){
                   $("input[name='nik']").val(res.response.noKTP);
                   $("#nama").val(res.response.nama);
-                  $("#tgl_lahir").val(res.response.tglLahir);
+
+                  var tgl = res.response.tglLahir.split("-");
+                  var date = new Date(tgl[2], (tgl[1]-1), tgl[0]);
+                  $("#tgl_lahir").jqxDateTimeInput('setDate', date);
+
                   if(res.response.noHP!=" " && res.response.noHP!="") $("#no_hp").val(res.response.noHP);
                   if(res.response.sex=="P"){
                     $("#id_pilihan_kelamin").val(6);

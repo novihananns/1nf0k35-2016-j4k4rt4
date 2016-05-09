@@ -5,6 +5,7 @@ class Admin_config_model extends CI_Model {
 
     function __construct() {
         parent::__construct();
+        $this->load->dbutil();
     }
     function get_data_bpjs()
     {
@@ -19,28 +20,36 @@ class Admin_config_model extends CI_Model {
         return $data;
     }
     function checkBPJS($code=""){
-        $this->load->database("epuskesmas_live_jaktim_".$code, FALSE, TRUE);
-        
-        $row = array();
-        $data = $this->db->get('bpjs_setting')->result_array();
-        foreach ($data as $dt) {
-            $row[$dt['name']] = $dt['value'];
-        }
+        if ($this->dbutil->database_exists("epuskesmas_live_jaktim_.$code"))
+        {
+            $this->load->database("epuskesmas_live_jaktim_".$code, FALSE, TRUE);
 
-        $data = array(
-            'code' => $code,
-            'server'    => $row['bpjs_server'],
-            'username'  => $row['bpjs_username'],
-            'password'  => $row['bpjs_password'],
-            'consid'    => $row['bpjs_consid'],
-            'secretkey' => $row['bpjs_secret']
+            $row = array();
+            $data = $this->db->get('bpjs_setting')->result_array();
+            foreach ($data as $dt) {
+                $row[$dt['name']] = $dt['value'];
+            }
+
+            $data = array(
+                'code' => $code,
+                'server'    => $row['bpjs_server'],
+                'username'  => $row['bpjs_username'],
+                'password'  => $row['bpjs_password'],
+                'consid'    => $row['bpjs_consid'],
+                'secretkey' => $row['bpjs_secret']
             );
 
-        $this->load->database("default", FALSE, TRUE);
-        $this->db->delete('cl_phc_bpjs', array('code' => $code));
-        $this->db->insert('cl_phc_bpjs', $data);
+            $this->load->database("default", FALSE, TRUE);
+            $this->db->delete('cl_phc_bpjs', array('code' => $code));
+            $this->db->insert('cl_phc_bpjs', $data);
 
-        return $data;
+            return $data;
+        }else{
+            $data = array(
+                'code' => "kosong",
+            );
+            return $data;
+        }
     }
     function insert_databpjs($value=0)
     {

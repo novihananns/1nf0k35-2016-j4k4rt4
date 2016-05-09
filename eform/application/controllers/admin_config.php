@@ -45,7 +45,7 @@ class Admin_config extends CI_Controller {
 
         if($this->form_validation->run()== FALSE){
 			die($this->parser->parse("admin/config/bpjs",$data));
-		}elseif($noanggota=$this->admin_config_model->insert_databpjs($kode)){
+		}elseif($this->admin_config_model->insert_databpjs($kode)){
 			$data['alert_form'] = 'Save data successful...';
 			die($this->parser->parse("admin/config/bpjs",$data));
 		}else{

@@ -140,11 +140,15 @@
     var code = "<?php echo 'P'.$this->session->userdata('puskesmas');?>";
       if(confirm("Mengambil setting BPJS ?")){
         $.post("<?php echo base_url().'admin_config/checkBPJS' ?>/" + code,  function(res){
-          $("#serverbpjs").val(res.server);
-          $("#usernamebpjs").val(res.username);
-          $("#passwordbpjs").val(res.password);
-          $("#considbpjs").val(res.consid);
-          $("#keybpjs").val(res.secretkey);
+          if (res.code!='kosong') {
+              $("#serverbpjs").val(res.server);
+              $("#usernamebpjs").val(res.username);
+              $("#passwordbpjs").val(res.password);
+              $("#considbpjs").val(res.consid);
+              $("#keybpjs").val(res.secretkey);
+          }else{
+            alert('Maaf! data tidak tersedia');
+          }
         },"json");
       }
   });

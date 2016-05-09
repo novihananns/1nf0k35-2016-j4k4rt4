@@ -6,7 +6,7 @@
                     <label>Puskesmas</label>  
                 </div>
                 <div class="col-md-7">
-                    <label>: Pembangunan</label>
+                    <label>: {namapuskes}</label>
                 </div>
             </div>
             <div class="row">
@@ -51,7 +51,9 @@
             </div>
           </div>
         <div class="box-footer">
-            <button type="button" id="btn-close" class="btn btn-warning">Batal</button>
+          <div style="float: right;">
+            <button type="button" id="btn-close" class="btn btn-warning">Close</button>
+          </div>
         </div>
         </div>
 </div>

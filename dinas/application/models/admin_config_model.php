@@ -7,60 +7,48 @@ class Admin_config_model extends CI_Model {
         parent::__construct();
     }
     
-
-    function get_data()
-    {
-        $query = $this->db->get($this->tabel);
-		foreach($query->result_array() as $key=>$value){
-			if($value['key']!='district') $data[$value['key']]=$value['value'];
+	function checkBPJS($code=""){
+		$this->load->database("epuskesmas_live_jaktim_".$code, FALSE, TRUE);
+		
+		$row = array();
+		$data = $this->db->get('bpjs_setting')->result_array();
+		foreach ($data as $dt) {
+			$row[$dt['name']] = $dt['value'];
 		}
-        return $data;
-    }
 
-    function get_theme()
-    {
-        $query = $this->db->get('app_theme');
-        foreach($query->result_array() as $key=>$dt){
-			$data[$dt['id_theme']]=$dt['name']." :: ".$dt['folder'];
-		}
-		$query->free_result();    
+		$data = array(
+			'code' => $code,
+			'server' 	=> $row['bpjs_server'],
+			'username' 	=> $row['bpjs_username'],
+			'password' 	=> $row['bpjs_password'],
+			'consid' 	=> $row['bpjs_consid'],
+			'secretkey' => $row['bpjs_secret']
+			);
+
+		$this->load->database("default", FALSE, TRUE);
+		$this->db->delete('cl_phc_bpjs', array('code' => $code));
+		$this->db->insert('cl_phc_bpjs', $data);
+
 		return $data;
     }
-	
-    function update_entry()
-    {
-		$theme_default['value']=$this->input->post('theme_default');
-		$this->db->update($this->tabel, $theme_default, array('key' => 'theme_default'));
 
-		$theme_offline['value']=$this->input->post('theme_offline');
-		$this->db->update($this->tabel, $theme_offline, array('key' => 'theme_offline'));
+    function get_data($start=0,$limit=999999,$options=array()){
+        $this->db->select("cl_phc.*,cl_phc_bpjs.server,cl_phc_bpjs.username,cl_phc_bpjs.password,cl_phc_bpjs.consid,cl_phc_bpjs.secretkey");
+        $this->db->join("cl_phc_bpjs","cl_phc_bpjs.code=cl_phc.code","left");
 
-		$title['value']=$this->input->post('title');
-		$this->db->update($this->tabel, $title, array('key' => 'title'));
-
-		if($this->input->post('online')){
-			$online['value']=1;
-		}else{
-			$online['value']=0;
-		}
-		$this->db->update($this->tabel, $online, array('key' => 'online'));
-
-		$description['value']=$this->input->post('description');
-		$this->db->update($this->tabel, $description, array('key' => 'description'));
-
-		$keywords['value']=$this->input->post('keywords');
-		$this->db->update($this->tabel, $keywords, array('key' => 'keywords'));
-
-		$epuskesmas_server['value']=$this->input->post('epuskesmas_server');
-		$this->db->update($this->tabel, $epuskesmas_server, array('key' => 'epuskesmas_server'));
-
-		$epuskesmas_user['value']=$this->input->post('epuskesmas_user');
-		$this->db->update($this->tabel, $epuskesmas_user, array('key' => 'epuskesmas_user'));
-
-		$epuskesmas_password['value']=$this->input->post('epuskesmas_password');
-		$this->db->update($this->tabel, $epuskesmas_password, array('key' => 'epuskesmas_password'));
-
-		return true;
+		$query =$this->db->get('cl_phc',$limit,$start);
+        return $query->result();
     }
+
+	function get_datawhere ($code,$condition,$table){
+        $this->db->select("*");
+        $query= $this->db->get($table);
+        if($query->num_rows() > 0){
+            return $query->result(); 
+         }else{
+            return 0;
+         }
+    }
+
 	
 }

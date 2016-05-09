@@ -405,10 +405,10 @@ class Puskesmas extends CI_Controller {
 				echo '<option value="">Pilih Kota/Distric</option>';
 			}else{
 				$this->db->like('left(code,2)',$provinsi);
-				$kode = $this->puskesmas_model->get_datawhere($provinsi,"left(code,2)","cl_district");
+				$kode = $this->puskesmas_model->get_datawhere($provinsi,"left(code,4)","cl_district");
 				echo '<option value="">Pilih Kota/Distric</option>';
 				foreach($kode as $kode) :
-					echo $select = $kode->code == $this->session->userdata('filter_code_provinsi') ? 'selected' : '';
+					echo $select = $kode->code == $this->session->userdata('filter_code_kota') ? 'selected' : '';
 					echo '<option value="'.$kode->code.'" '.$select.'>' . $kode->value . '</option>';
 				endforeach;
 				}
@@ -422,12 +422,12 @@ class Puskesmas extends CI_Controller {
 	function get_kotafilter(){
 	if ($this->input->post('kota')!="null") {
 		if($this->input->is_ajax_request()) {
-				if ($this->session->set_userdata('filter_code_kota')!=null) {
-					$this->session->set_userdata('filter_code_kota','');
-				}
-				if ($this->session->set_userdata('filter_code_kecamatan')!=null) {
-					$this->session->set_userdata('filter_code_kecamatan','');
-				}
+			if ($this->session->set_userdata('filter_code_kota')!=null) {
+				$this->session->set_userdata('filter_code_kota','');
+			}
+			if ($this->session->set_userdata('filter_code_kecamatan')!=null) {
+				$this->session->set_userdata('filter_code_kecamatan','');
+			}
 			$kota = $this->input->post('kota');
 			$this->session->set_userdata('filter_code_kota',$this->input->post('kota'));
 			if ($kota=='' || empty($kota)) {

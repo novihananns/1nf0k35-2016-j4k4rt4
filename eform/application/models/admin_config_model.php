@@ -18,6 +18,30 @@ class Admin_config_model extends CI_Model {
         $query->free_result();    
         return $data;
     }
+    function checkBPJS($code=""){
+        $this->load->database("epuskesmas_live_jaktim_".$code, FALSE, TRUE);
+        
+        $row = array();
+        $data = $this->db->get('bpjs_setting')->result_array();
+        foreach ($data as $dt) {
+            $row[$dt['name']] = $dt['value'];
+        }
+
+        $data = array(
+            'code' => $code,
+            'server'    => $row['bpjs_server'],
+            'username'  => $row['bpjs_username'],
+            'password'  => $row['bpjs_password'],
+            'consid'    => $row['bpjs_consid'],
+            'secretkey' => $row['bpjs_secret']
+            );
+
+        $this->load->database("default", FALSE, TRUE);
+        $this->db->delete('cl_phc_bpjs', array('code' => $code));
+        $this->db->insert('cl_phc_bpjs', $data);
+
+        return $data;
+    }
     function insert_databpjs($value=0)
     {
     	$id='P'.$this->session->userdata('puskesmas');

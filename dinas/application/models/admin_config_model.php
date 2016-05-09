@@ -31,6 +31,38 @@ class Admin_config_model extends CI_Model {
 
 		return $data;
     }
+    function get_detail($code='')
+    {
+    	$data = array();
+    	$this->db->where('code',"$code");
+    	$query = $this->db->get('cl_phc_bpjs');
+    	if ($query->num_rows() > 0){
+			$data = $query->row_array();
+		}else{
+			$data['server'] ='';
+			$data['username'] ='';
+			$data['password'] ='';
+			$data['consid'] ='';
+			$data['secretkey'] ='';
+		}
+
+		$query->free_result();    
+		return $data;
+    }
+    function get_nama($code=0,$select='')
+    {
+    	$data = array();
+    	$this->db->select("$select");
+    	$this->db->where('code',"$code");
+    	$query = $this->db->get('cl_phc');
+    	if ($query->num_rows() > 0){
+    		foreach ($query->result() as $key) {
+    			return $key->$select;
+    		}
+		}else{
+			return $select;
+		}
+    }
 
     function get_data($start=0,$limit=999999,$options=array()){
         $this->db->select("cl_phc.*,cl_phc_bpjs.server,cl_phc_bpjs.username,cl_phc_bpjs.password,cl_phc_bpjs.consid,cl_phc_bpjs.secretkey");

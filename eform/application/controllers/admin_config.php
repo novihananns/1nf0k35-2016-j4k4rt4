@@ -22,6 +22,11 @@ class Admin_config extends CI_Controller {
 
 		$this->template->show($data,"home");
 	}
+	function checkBPJS($code=""){
+		$data = $this->admin_config_model->checkBPJS($code); 
+
+		echo json_encode($data);
+	}
 	function insertdata($kode=0)
 	{
 		//$this->authentication->verify('admin','add');

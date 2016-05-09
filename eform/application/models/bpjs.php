@@ -11,7 +11,7 @@ class Bpjs extends CI_Model {
 
 	var $server;
 	var $consid;
-	var $secretKey;
+	var $secretkey;
 	var $username; 
 	var $password;
 	var $xtime;
@@ -31,14 +31,14 @@ class Bpjs extends CI_Model {
 	   $this->username 	= $cnf['username'];
 	   $this->password 	= $cnf['password'];
 	   $this->consid 	= $cnf['consid'];
-	   $this->secretKey = $cnf['secretKey'];
+	   $this->secretkey = $cnf['secretkey'];
 	   $this->xtime = time();
 	   $this->maxxtimeget 	= 15;
 	   $this->maxxtimepost 	= 120;
 	   
 	   $this->xauth = base64_encode($this->username.':'.$this->password.':095');
 	   $this->data = $this->consid."&".time();
-	   $this->signature = hash_hmac('sha256', $this->data, $this->secretKey, true);
+	   $this->signature = hash_hmac('sha256', $this->data, $this->secretkey, true);
 	   $this->xsign = base64_encode($this->signature);
 	}
 	function get_data_bpjs()
@@ -51,6 +51,11 @@ class Bpjs extends CI_Model {
         if (!empty($data['server'])){
             return $data;
         }else{
+        	$data['server'] ='';
+        	$data['username'] ='';
+        	$data['password'] ='';
+        	$data['consid'] ='';
+        	$data['secretkey'] ='';
         	return $data;
         }	
     }

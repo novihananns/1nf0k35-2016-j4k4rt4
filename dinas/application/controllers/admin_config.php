@@ -118,4 +118,11 @@ class Admin_config extends CI_Controller {
 
 		echo json_encode($data);
 	}
+	function detailbpjs($kode=0)
+	{
+		$data['action']			= "add";
+		$data 					= $this->admin_config_model->get_detail($kode);
+		$data['namapuskes']		= $this->admin_config_model->get_nama($kode,'value');
+		die($this->parser->parse('admin/config/form_detail_bpjs', $data));
+	}
 }

@@ -37,7 +37,10 @@
   </div>
 </form>
 </section>
-
+<div id="popup_barang" style="display:none">
+  <div id="popup_title">Detil Configurasi BPJS</div>
+  <div id="popup_content">&nbsp;</div>
+</div>
 <script type="text/javascript">
     var source = {
       datatype: "json",
@@ -95,10 +98,10 @@
           return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/return.png' onclick='getsetting(\""+dataRecord.code+"\");'></a></div>";
          }
         },
-        { text: 'Edit', align: 'center', filtertype: 'none', sortable: false, width: '8%', cellsrenderer: function (row) {
+        { text: 'Detail', align: 'center', filtertype: 'none', sortable: false, width: '8%', cellsrenderer: function (row) {
           var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
           if(dataRecord.edit==1){
-          return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit(\""+dataRecord.code+"\");'></a></div>";
+          return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit(\""+dataRecord.code+"\");'></a></div>";
           }else{
             return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
           }
@@ -129,10 +132,21 @@
 
       ]
     });
-
+  function close_popup(){
+    $("#popup_barang").jqxWindow('close');
+  }
   function edit(code){
-
-
+    $("#popup_barang #popup_content").html("<div style='text-align:center'><br><br><br><br><img src='<?php echo base_url();?>media/images/indicator.gif' alt='loading content.. '><br>loading</div>");
+    $.get("<?php echo base_url().'admin_config/detailbpjs/'; ?>"+code , function(data) {
+      $("#popup_content").html(data);
+    });
+    $("#popup_barang").jqxWindow({
+      theme: theme, resizable: false,
+      width: 400,
+      height: 300,
+      isModal: true, autoOpen: false, modalOpacity: 0.2
+    });
+    $("#popup_barang").jqxWindow('open');
   }
 
   function getsetting(code){

@@ -49,7 +49,7 @@ class Admin_config extends CI_Controller {
 			$data['alert_form'] = 'Save data successful...';
 			die($this->parser->parse("admin/config/bpjs",$data));
 		}else{
-			$data['alert_form'] = 'Save data failed...';
+			$data['alert_form'] = 'Save data successful...';
 			die($this->parser->parse("admin/config/bpjs",$data));
 		}
 

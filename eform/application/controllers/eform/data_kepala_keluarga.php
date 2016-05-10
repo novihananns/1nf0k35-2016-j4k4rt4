@@ -6,7 +6,7 @@ class Data_kepala_keluarga extends CI_Controller {
 		$this->load->add_package_path(APPPATH.'third_party/tbs_plugin_opentbs_1.8.0/');
 		require_once(APPPATH.'third_party/tbs_plugin_opentbs_1.8.0/demo/tbs_class.php');
 		require_once(APPPATH.'third_party/tbs_plugin_opentbs_1.8.0/tbs_plugin_opentbs.php');
-
+		require_once(APPPATH.'third_party/tbs_plugin_opentbs_1.8.0/tbs_plugin_opentbs.php');
 
 		$this->load->model('bpjs');
 		$this->load->model('morganisasi_model');
@@ -540,6 +540,7 @@ class Data_kepala_keluarga extends CI_Controller {
         $this->form_validation->set_rules('tmpt_lahir', 'Tempat Lahir', 'trim|required');
         $this->form_validation->set_rules('suku', 'Suku', 'trim|required');
         $this->form_validation->set_rules('no_hp', 'No HP', 'trim|required');
+        $this->form_validation->set_rules('bpjs', 'bpjs', 'trim');
 
         $data['action']="add";
 		$data['id_data_keluarga'] = $kode;
@@ -554,11 +555,17 @@ class Data_kepala_keluarga extends CI_Controller {
       	$data['data_pilihan_jkn'] = $this->datakeluarga_model->get_pilihan("jkn");
 
       	$data['alert_form'] = '';
-
         if($this->form_validation->run()== FALSE){
+        	$data['alert_form'] = '';
 			die($this->parser->parse("eform/datakeluarga/form_anggota_add",$data));
 		}elseif($noanggota=$this->datakeluarga_model->insert_dataAnggotaKeluarga($kode)){
-			$this->anggota_edit($this->input->post('id_data_keluarga'),$noanggota);
+			if($noanggota=='bpjserror'){
+				$data['alert_form'] ='bpjserror';
+				die($this->parser->parse("eform/datakeluarga/form_anggota_add",$data));
+			}else{
+				$this->anggota_edit($this->input->post('id_data_keluarga'),$noanggota);	
+			}
+			
 		}else{
 			$data['alert_form'] = 'Save data failed...';
 			die($this->parser->parse("eform/datakeluarga/form_anggota_add",$data));

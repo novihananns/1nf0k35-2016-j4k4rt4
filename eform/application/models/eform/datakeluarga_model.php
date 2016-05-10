@@ -7,6 +7,7 @@ class Datakeluarga_model extends CI_Model {
     function __construct() {
         parent::__construct();
         $this->lang   = $this->config->item('language');
+        require_once(APPPATH.'third_party/httpful.phar');
     }
     function get_nama($kolom_sl,$tabel,$kolom_wh,$kond){
        $this->db->where($kolom_wh,$kond);
@@ -221,6 +222,105 @@ class Datakeluarga_model extends CI_Model {
         }
         return $kd;
     }
+    
+    function homevisit($kode=0){
+
+       //$server = "http://api.bpjs-kesehatan.go.id/pcare-rest/v1/";
+       $server = "http://dvlp.bpjs-kesehatan.go.id:9080/pcare-rest-dev/v1/";
+       $xtime = time();
+       $consid = "23921";
+
+       $secretKey = "0pMBE6D40F";
+       $username = "pkmbangko";
+       $password = "05050101";
+
+       $xauth = base64_encode($username.':'.$password.':095');
+       $data = $consid."&".time();
+       $signature = hash_hmac('sha256', $data, $secretKey, true);
+       $xsign = base64_encode($signature);
+       
+       $tampildata = $this->dataorang($kode);
+      // die(print_r($tampildata));
+       if ($tampildata['res']=='error') {
+           return  $tampildata;
+       }else{
+
+           $tanggalskr  = date('d-m-Y');
+            $data_kunjungan = array(
+              "kdProviderPeserta" => $tampildata['response']['kdProviderPst']['kdProvider'],
+              "tglDaftar" => $tanggalskr,
+              "noKartu" => $tampildata['response']['noKartu'],
+              "kdPoli" => "020",
+              "keluhan" => null,
+              "kunjSakit" => false,
+              "sistole" => 0,
+              "diastole" => 0,
+              "beratBadan" => 0,
+              "tinggiBadan" => 0,
+              "respRate" => 0,
+              "heartRate" => 0,
+              "rujukBalik" => 0,
+              "rawatInap" => false
+            ); 
+
+            try
+            {
+              $response = \Httpful\Request::post($server.'pendaftaran')
+              ->xConsId($consid)
+              ->xTimestamp($xtime)
+              ->xSignature($xsign)
+              ->xAuthorization("Basic ".$xauth)
+                ->body($data_kunjungan)
+                ->sendsJson()
+              ->send();
+              $data = json_decode($response,true);
+            }
+            catch(Exception $E)
+            {
+              $reflector = new \ReflectionClass($E);
+              $classProperty = $reflector->getProperty('message');
+              $classProperty->setAccessible(true);
+              $datas = $classProperty->getValue($E);
+              $datas = "Tidak dapat terkoneksi ke server BPJS, silakan dicoba lagi";
+              $data  = array("res"=>"error","msg"=>$data);
+            }
+            return $data;
+        }
+    }
+    function dataorang($kode=0){
+       $server = "http://dvlp.bpjs-kesehatan.go.id:9080/pcare-rest-dev/v1/";
+       $xtime = time();
+       $consid = "23921";
+
+       $secretKey = "0pMBE6D40F";
+       $username = "pkmbangko";
+       $password = "05050101";
+
+       $xauth = base64_encode($username.':'.$password.':095');
+       $data = $consid."&".time();
+       $signature = hash_hmac('sha256', $data, $secretKey, true);
+       $xsign = base64_encode($signature);
+        try
+        {
+          $response = \Httpful\Request::get($server."/peserta/$kode")
+          ->xConsId($consid)
+          ->xTimestamp($xtime)
+          ->xSignature($xsign)
+          ->xAuthorization("Basic ".$xauth)
+          ->send();
+          $data = json_decode($response,true);
+        }
+        catch(Exception $E)
+        {
+          $reflector = new \ReflectionClass($E);
+          $classProperty = $reflector->getProperty('message');
+          $classProperty->setAccessible(true);
+          $datas = $classProperty->getValue($E);
+          $datas = "Tidak dapat terkoneksi ke server BPJS, silakan dicoba lagi";
+          $data = array("res"=>"error","msg"=>$datas);
+        }
+        return $data;
+    }
     function insert_dataAnggotaKeluarga(){
 
         $data=array(
@@ -241,11 +341,28 @@ class Datakeluarga_model extends CI_Model {
             'suku'                  => $this->input->post('suku'),
             'no_hp'                 => $this->input->post('no_hp')
         );
-        if($this->db->insert('data_keluarga_anggota',$data)){
-            return $data['no_anggota'];
-        }else{
-            return mysql_error();
+        if (($this->input->post('bpjs')!='') && ($this->input->post('bpjs')!='simpanbiasa')) {
+            $datavisit = $this->homevisit($this->input->post('bpjs'));
+            if ($datavisit['res'] == 'error') {
+                return 'bpjserror';
+            }
+            if (($datavisit['metaData']['message']=='CREATED')&&($datavisit['metaData']['code']=='201')) {
+                if($this->db->insert('data_keluarga_anggota',$data)){
+                    return $data['no_anggota'];
+                }else{
+                    return mysql_error();
+                }
+            }else{
+                return 'bpjserror';
+            }
+        }else if($this->input->post('bpjs')=='simpanbiasa'){
+            if($this->db->insert('data_keluarga_anggota',$data)){
+                return $data['no_anggota'];
+            }else{
+                return mysql_error();
+            }
         }
+
     }
     function update_entry($id_data_keluarga){
         $this->db->where('id_data_keluarga', $id_data_keluarga);

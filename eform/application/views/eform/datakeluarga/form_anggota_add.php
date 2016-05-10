@@ -1,3 +1,4 @@
+<?php echo $alert_form.'alertbar';?>
 <script>
   	$(function () { 
      	$('#btn-up,#btn-up2').click(function(){
@@ -5,15 +6,15 @@
             $('#content2').html(data);
         });
 	    });
-
-      $('#btn-save-add').click(function(){
-        /*$.get('<?php echo base_url()?>eform/data_kepala_keluarga/anggota_{action}/{id_data_keluarga}/'+id, function (data) {
-            $('#content2').html(data);
-        });*/
+      function simpandata(bpjs) {
         var data = new FormData();
         $('#biodata_notice-content').html('<div class="alert">Mohon tunggu, proses simpan data....</div>');
         $('#biodata_notice').show();
-
+        if (bpjs !='') {
+            data.append('bpjs', bpjs);  
+        }else{
+            data.append('bpjs', '');  
+        }
         data.append('id_data_keluarga', $("[name='id_data_keluarga']").val());
         data.append('nik', $("[name='nik']").val());
         data.append('nama', $("[name='nama']").val());
@@ -26,7 +27,6 @@
         data.append('id_pilihan_pekerjaan', $("[name='id_pilihan_pekerjaan']").val());
         data.append('id_pilihan_kawin', $("[name='id_pilihan_kawin']").val());
         data.append('id_pilihan_jkn', $("[name='id_pilihan_jkn']").val());
-        data.append('bpjs', $("[name='bpjs']").val());
         data.append('suku', $("[name='suku']").val());
         data.append('no_hp', $("[name='no_hp']").val());
 
@@ -43,6 +43,28 @@
         });
 
         return false;
+      }
+      $('#btn-save-add').click(function(){
+        /*$.get('<?php echo base_url()?>eform/data_kepala_keluarga/anggota_{action}/{id_data_keluarga}/'+id, function (data) {
+            $('#content2').html(data);
+        });*/
+        if (($("#bpjs").val() != '')) {
+            if (confirm("Daftar sebagai Home Visit ? ")) {
+                simpandata($("[name='bpjs']").val());
+                
+                alert("<?php echo $alert_form; ?>");
+                if("<?php echo $alert_form; ?>"=='bpjserror'){
+                  if (confirm("Terhubung ke BPJS gagal! Apakah tetap ingin disimpan?")) {
+                    simpandata('simpanbiasa');
+                  }
+                }
+            }else{
+                simpandata('simpanbiasa');
+            }
+        }else{
+                
+        }
+        
       });
      
       $("input[name='nik']").keyup(function(){
@@ -53,7 +75,6 @@
                 if(confirm("Anggota keluarga terdaftar sebagai peserta BPJS, gunakan data?")){
                   $("#bpjs").val(res.response.noKartu);
                   $("#nama").val(res.response.nama);
-
                   var tgl = res.response.tglLahir.split("-");
                   var date = new Date(tgl[2], (tgl[1]-1), tgl[0]);
                   $("#tgl_lahir").jqxDateTimeInput('setDate', date);

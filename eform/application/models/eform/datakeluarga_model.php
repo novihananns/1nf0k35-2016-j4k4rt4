@@ -294,7 +294,7 @@ class Datakeluarga_model extends CI_Model {
         if (($tampildata['metaData']['message']=='error')&&($tampildata['metaData']['code']=='500')) {
            return  $tampildata;
        }else{
-            print_r($data);
+           // print_r($data);
             $tgl = date("d-m-Y");
             $data = array(
             'no_kartu'  => $kartu,
@@ -320,7 +320,7 @@ class Datakeluarga_model extends CI_Model {
        $signature = hash_hmac('sha256', $data, $secretKey, true);
        $xsign = base64_encode($signature);
        $tampildata = $this->keluargaanggotabpjs($kode);
-      // echo "/pendaftaran/peserta/$tampildata[no_kartu]/tglDaftar/$tampildata[tgl_daftar]/noUrut/$tampildata[no_urut]";
+      echo "/pendaftaran/peserta/$tampildata[no_kartu]/tglDaftar/$tampildata[tgl_daftar]/noUrut/$tampildata[no_urut]";
        try
         {
           $response = \Httpful\Request::delete($server."/pendaftaran/peserta/$tampildata[no_kartu]/tglDaftar/$tampildata[tgl_daftar]/noUrut/$tampildata[no_urut]")

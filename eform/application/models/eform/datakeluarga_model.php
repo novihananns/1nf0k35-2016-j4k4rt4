@@ -363,7 +363,7 @@ class Datakeluarga_model extends CI_Model {
     }
 
     function deletebpjs($kode){
-        $datavisit = $this->deletevisit($this->input->post('bpjs'));
+        $datavisit = $this->deletevisit($kode);
         if (($datavisit['metaData']['message']=='OK')&&($datavisit['metaData']['code']=='200')) {
             return 'datatersimpan';
         }else{

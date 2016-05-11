@@ -76,7 +76,8 @@
       });
         
       });
-     
+  $.get("<?php echo base_url()?>eform/data_kepala_keluarga/cekkonek/",function(response){
+    if(response=='konek'){ 
       $("input[name='nik']").keyup(function(){
         var nik = $("input[name='nik']").val();
         if(nik.length==16){
@@ -127,6 +128,8 @@
           },"json");
         }
       });
+    }
+  });
 
       $("#tgl_lahir").jqxDateTimeInput({ formatString: 'dd-MM-yyyy', theme: theme, height: '30px'});
 	});

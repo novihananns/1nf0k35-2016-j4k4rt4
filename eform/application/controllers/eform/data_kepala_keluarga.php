@@ -568,6 +568,14 @@ class Data_kepala_keluarga extends CI_Controller {
 
 		
 	}
+	function cekkonek(){
+		$data = $this->bpjs->get_data_bpjs();
+		if (($data['code']=='') || ($data['server']=='') || ($data['username']=='') || ($data['password']=='') || ($data['consid']=='')|| ($data['secretkey']=='')) {
+			die('tidakkonek');
+		}else{
+			die('konek');
+		}
+	}
 	function simpanbpjs($kode=0){
 		$data = $this->bpjs->inserbpjs($kode);
 		//die(print_r($data));

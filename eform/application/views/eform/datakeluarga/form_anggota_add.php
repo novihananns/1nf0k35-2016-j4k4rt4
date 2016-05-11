@@ -41,32 +41,39 @@
         return false;
       }
       $('#btn-save-add').click(function(){
-        if (($("#bpjs").val() != '')) {
-            if (confirm("Daftar sebagai Home Visit ? ")) {
-              $.get("<?php echo base_url()?>eform/data_kepala_keluarga/simpanbpjs/"+$("#bpjs").val(),function(res){
-                //alert(res);
-                if (res=='bpjserror') {
-                  if (confirm("Tidak bisa terhubung ke server BPJS! Apakah tetap ingin disimpan ?")) {
-                    simpandata();
+        $.get("<?php echo base_url()?>eform/data_kepala_keluarga/cekkonek/",function(response){
+          //alert(response);
+          if(response=='konek'){
+              if (($("#bpjs").val() != '')) {
+                if (confirm("Daftar sebagai Home Visit ? ")) {
+                    $.get("<?php echo base_url()?>eform/data_kepala_keluarga/simpanbpjs/"+$("#bpjs").val(),function(res){
+                      //alert(res);
+                      if (res=='bpjserror') {
+                        if (confirm("Tidak bisa terhubung ke server BPJS! Apakah tetap ingin disimpan ?")) {
+                          simpandata();
+                        }
+                      }else if (res=='dataada') {
+                        if (confirm("Peserta sudah terdaftar di BPJS hari ini. Apakah data ingin tetap disimpan ?")) {
+                          simpandata();
+                        }
+                      }else if (res=='datatidakada') {
+                        if (confirm("Peserta Tidak Terdaftar dibpjs. Apakah data ingin tetap disimpan ?")) {
+                          simpandata();
+                        }
+                      }else{
+                        simpandata();
+                      }
+                    });
+                  }else{
+                      simpandata();
                   }
-                }else if (res=='dataada') {
-                  if (confirm("Peserta sudah terdaftar di BPJS hari ini. Apakah data ingin tetap disimpan ?")) {
-                    simpandata();
-                  }
-                }else if (res=='datatidakada') {
-                  if (confirm("Peserta Tidak Terdaftar dibpjs. Apakah data ingin tetap disimpan ?")) {
-                    simpandata();
-                  }
-                }else{
-                  simpandata();
-                }
-              });
-            }else{
-                simpandata();
-            }
-        }else{
-                
-        }
+              }else{
+                      
+              }
+          }else{
+            simpandata();
+          }
+      });
         
       });
      

@@ -20,7 +20,8 @@ class Admin_config_model extends CI_Model {
         return $data;
     }
     function checkBPJS($code=""){
-        if ($this->dbutil->database_exists("epuskesmas_live_jaktim_.$code"))
+        $kode = lcfirst($code);
+        if ($this->dbutil->database_exists("epuskesmas_live_jaktim_$kode"))
         {
             $this->load->database("epuskesmas_live_jaktim_".$code, FALSE, TRUE);
 

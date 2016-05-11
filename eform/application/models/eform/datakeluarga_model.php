@@ -371,7 +371,8 @@ class Datakeluarga_model extends CI_Model {
         }
     }
     function inserbpjs($kode){
-        $datavisit = $this->homevisit($this->input->post('bpjs'));
+        $datavisit = $this->homevisit($kode);
+        //die($datavisit);
         if (($datavisit['metaData']['message']=='CREATED')&&($datavisit['metaData']['code']=='201')) {
             return 'datatersimpan';
         }else{

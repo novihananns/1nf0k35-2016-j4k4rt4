@@ -569,11 +569,12 @@ class Data_kepala_keluarga extends CI_Controller {
 		
 	}
 	function simpanbpjs($kode=0){
-		$data = $this->datakeluarga_model->inserbpjs($kode);
+		$data = $this->bpjs->inserbpjs($kode);
+		//die(print_r($data));
 		die("$data");
 	}
 	function hapusbpjs($kode=0){
-		$data = $this->datakeluarga_model->deletebpjs($kode);
+		$data = $this->bpjs->deletebpjs($kode);
 		die("$data");
 	}
 	public function addanggotaprofile()

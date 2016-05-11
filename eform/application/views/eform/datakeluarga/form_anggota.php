@@ -133,8 +133,8 @@
 		var confirms = confirm("Hapus Data termasuk yang di bpjs?");
 		if(confirms == true){
 			$.get("<?php echo base_url()?>eform/data_kepala_keluarga/hapusbpjs/"+bpjs,function(res){
-				alert(res);
-                /*if (res=='bpjserror') {
+				//alert(res);
+                if (res=='bpjserror') {
                   if (confirm("Tidak bisa terhubung ke server BPJS! Apakah tetap ingin disimpan ?")) {
                     $.post("<?php echo base_url().'eform/data_kepala_keluarga/anggota_dodel/'.$id_data_keluarga ?>/" + noanggota,  function(){
 						$("#jqxgrid").jqxGrid('updatebounddata', 'cells');
@@ -144,7 +144,7 @@
                   	$.post("<?php echo base_url().'eform/data_kepala_keluarga/anggota_dodel/'.$id_data_keluarga ?>/" + noanggota,  function(){
 						$("#jqxgrid").jqxGrid('updatebounddata', 'cells');
 					});
-                }*/
+                }
               });
 		}else{
 			$.post("<?php echo base_url().'eform/data_kepala_keluarga/anggota_dodel/'.$id_data_keluarga ?>/" + noanggota,  function(){

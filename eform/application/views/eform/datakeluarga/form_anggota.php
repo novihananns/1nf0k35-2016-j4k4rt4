@@ -45,6 +45,7 @@
 			{ name: 'id_pilihan_hubungan', type: 'string'},
 			{ name: 'usia', type: 'string'},
 			{ name: 'jeniskelamin', type: 'string'},
+			{ name: 'bpjs', type: 'string'},
 			{ name: 'hubungan', type: 'string'},
 			{ name: 'id_pilihan_kelamin', type: 'string'},
 			{ name: 'id_pilihan_agama', type: 'string'},
@@ -107,7 +108,7 @@
 				{ text: 'Del', align: 'center', filtertype: 'none', sortable: false, width: '4%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
 				    if(dataRecord.delete==1){
-						return "<div style='width:100%;padding:4px;text-align:center' onclick='del(\""+dataRecord.no_anggota+"\");'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_del.gif'></a></div>";
+						return "<div style='width:100%;padding:4px;text-align:center' onclick='del(\""+dataRecord.no_anggota+"\",\""+dataRecord.bpjs+"\");'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_del.gif'></a></div>";
 					}else{
 						return "<div style='width:100%;padding:4px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
 					}
@@ -128,11 +129,12 @@
         });
 	}
 
-	function del(noanggota){
+	function del(noanggota,bpjs){
 		var confirms = confirm("Hapus Data termasuk yang di bpjs?");
 		if(confirms == true){
-			$.get("<?php echo base_url()?>eform/data_kepala_keluarga/hapusbpjs/"+$("#bpjs").val(),function(res){
-                if (res=='bpjserror') {
+			$.get("<?php echo base_url()?>eform/data_kepala_keluarga/hapusbpjs/"+bpjs,function(res){
+				alert(res);
+                /*if (res=='bpjserror') {
                   if (confirm("Tidak bisa terhubung ke server BPJS! Apakah tetap ingin disimpan ?")) {
                     $.post("<?php echo base_url().'eform/data_kepala_keluarga/anggota_dodel/'.$id_data_keluarga ?>/" + noanggota,  function(){
 						$("#jqxgrid").jqxGrid('updatebounddata', 'cells');
@@ -142,7 +144,7 @@
                   	$.post("<?php echo base_url().'eform/data_kepala_keluarga/anggota_dodel/'.$id_data_keluarga ?>/" + noanggota,  function(){
 						$("#jqxgrid").jqxGrid('updatebounddata', 'cells');
 					});
-                }
+                }*/
               });
 		}else{
 			$.post("<?php echo base_url().'eform/data_kepala_keluarga/anggota_dodel/'.$id_data_keluarga ?>/" + noanggota,  function(){

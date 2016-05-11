@@ -347,6 +347,7 @@ class Data_kepala_keluarga extends CI_Controller {
 				'id_pilihan_jkn'		=> $act->id_pilihan_jkn,
 				'jeniskelamin'			=> $act->jeniskelamin,
 				'hubungan'				=> $act->hubungan,
+				'bpjs'					=> $act->bpjs,
 				'usia'					=> $act->usia,
 				'suku'					=> $act->suku,
 				'no_hp'					=> $act->no_hp,
@@ -513,7 +514,7 @@ class Data_kepala_keluarga extends CI_Controller {
 		$this->authentication->verify('eform','del');
 
 		if($this->datakeluarga_model->delete_Anggotakeluarga($idkeluarga,$noanggota)){
-			$data['alert_form'] = 'Delete data ('.$kode.')';
+			$data['alert_form'] = 'Delete data ('.$idkeluarga.')';
 			die($this->parser->parse("eform/datakeluarga/form_anggota_form",$data));
 		}else{
 			$data['alert_form'] = 'Delete data error';

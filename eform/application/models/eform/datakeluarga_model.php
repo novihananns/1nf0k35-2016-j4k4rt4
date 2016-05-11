@@ -283,7 +283,26 @@ class Datakeluarga_model extends CI_Model {
               $datas = "Tidak dapat terkoneksi ke server BPJS, silakan dicoba lagi";
               $data = array("metaData"=>array("message" =>'error',"code"=>500));
             }
+            if (($data['metaData']['message']=='CREATED')&&($data['metaData']['code']=='201')) {
+                $this->simpandatabpjs($data['response']['message'],$kode);
+            }
             return $data;
+        }
+    }
+    function simpandatabpjs($nourut=0,$kartu=0){
+        $tampildata = $this->dataorang($kode);
+        if (($tampildata['metaData']['message']=='error')&&($tampildata['metaData']['code']=='500')) {
+           return  $tampildata;
+       }else{
+            print_r($data);
+            $tgl = date("d-m-Y");
+            $data = array(
+            'no_kartu'  => $kartu,
+            'tgl_daftar'  =>  $tgl,
+            'kd_provider_peserta'  =>  $tampildata['response']['kdProviderPst']['kdProvider'],
+            'no_urut'  =>  $nourut
+            );
+            $this->db->insert('keluarga_anggota_bpjs',$data);
         }
     }
     function deletevisit($kode=0){
@@ -300,32 +319,77 @@ class Datakeluarga_model extends CI_Model {
        $data = $consid."&".time();
        $signature = hash_hmac('sha256', $data, $secretKey, true);
        $xsign = base64_encode($signature);
-       $tampildata = $this->dataorang($kode);
-      //die(print_r($tampildata));
-       if (($tampildata['metaData']['message']=='error')&&($tampildata['metaData']['code']=='500')) {
-           return  $tampildata;
-       }else{
-
-           try
-            {
-              $response = \Httpful\Request::delete($server."/pendaftaran/peserta/$tampildata[response][noKartu]/tglDaftar/$tampildata[response][tglMulaiAktif]/noUrut/2")
-              ->xConsId($consid)
-              ->xTimestamp($xtime)
-              ->xSignature($xsign)
-              ->xAuthorization("Basic ".$xauth)
-              ->send();
-            }
-            catch(Exception $E)
-            {
-              $reflector = new \ReflectionClass($E);
-              $classProperty = $reflector->getProperty('message');
-              $classProperty->setAccessible(true);
-              $data = $classProperty->getValue($E);
-              $data = "Tidak dapat terkoneksi ke server BPJS, silakan dicoba lagi";
-              die(json_encode(array("res"=>"error","msg"=>$data)));
-            }
-            return $data;
+       $tampildata = $this->keluargaanggotabpjs($kode);
+      // echo "/pendaftaran/peserta/$tampildata[no_kartu]/tglDaftar/$tampildata[tgl_daftar]/noUrut/$tampildata[no_urut]";
+       try
+        {
+          $response = \Httpful\Request::delete($server."/pendaftaran/peserta/$tampildata[no_kartu]/tglDaftar/$tampildata[tgl_daftar]/noUrut/$tampildata[no_urut]")
+          ->xConsId($consid)
+          ->xTimestamp($xtime)
+          ->xSignature($xsign)
+          ->xAuthorization("Basic ".$xauth)
+          ->send();
+          $data = json_decode($response,true);
         }
+        catch(Exception $E)
+        {
+          $reflector = new \ReflectionClass($E);
+          $classProperty = $reflector->getProperty('message');
+          $classProperty->setAccessible(true);
+          $data = $classProperty->getValue($E);
+          $data = "Tidak dapat terkoneksi ke server BPJS, silakan dicoba lagi";
+          $data = array("metaData"=>array("message" =>'error',"code"=>500));
+        }
+        return $data;
+    }
+    function keluargaanggotabpjs($kode=0){
+        $this->db->where('no_kartu',$kode);
+        $query = $this->db->get('keluarga_anggota_bpjs');
+        if ($query->num_rows() > 0) {
+            $data = $query->row_array();
+        }else{
+            $data['no_kartu'] = '';
+            $data['tgl_daftar'] = '';
+            $data['no_urut'] = '';
+            $data['kd_provider_peserta'] = '';
+        }
+        $query->free_result();
+        return $data;
+    }
+    function datadaftar($kode=0){
+       $server = "http://dvlp.bpjs-kesehatan.go.id:9080/pcare-rest-dev/v1/";
+       $xtime = time();
+       $consid = "23921";
+
+       $secretKey = "0pMBE6D40F";
+       $username = "pkmbangko";
+       $password = "05050101";
+
+       $xauth = base64_encode($username.':'.$password.':095');
+       $data = $consid."&".time();
+       $signature = hash_hmac('sha256', $data, $secretKey, true);
+       $xsign = base64_encode($signature);
+       $databpjs = $this->keluargaanggotabpjs($kode);
+        try
+        {
+          $response = \Httpful\Request::get($server."pendaftaran/noUrut/$databpjs[no_urut]/tglDaftar/$databpjs[tgl_daftar]")
+          ->xConsId($consid)
+          ->xTimestamp($xtime)
+          ->xSignature($xsign)
+          ->xAuthorization("Basic ".$xauth)
+          ->send();
+          $data = json_decode($response,true);
+        }
+        catch(Exception $E)
+        {
+          $reflector = new \ReflectionClass($E);
+          $classProperty = $reflector->getProperty('message');
+          $classProperty->setAccessible(true);
+          $datas = $classProperty->getValue($E);
+          $datas = "Tidak dapat terkoneksi ke server BPJS, silakan dicoba lagi";
+          $data = array("metaData"=>array("message" =>'error',"code"=>500));
+        }
+        return $data;
     }
     function dataorang($kode=0){
        $server = "http://dvlp.bpjs-kesehatan.go.id:9080/pcare-rest-dev/v1/";
@@ -364,6 +428,7 @@ class Datakeluarga_model extends CI_Model {
 
     function deletebpjs($kode){
         $datavisit = $this->deletevisit($kode);
+        die(print_r($datavisit));
         if (($datavisit['metaData']['message']=='OK')&&($datavisit['metaData']['code']=='200')) {
             return 'datatersimpan';
         }else{
@@ -372,9 +437,11 @@ class Datakeluarga_model extends CI_Model {
     }
     function inserbpjs($kode){
         $datavisit = $this->homevisit($kode);
-        //die($datavisit);
+        //die(print_r($datavisit));
         if (($datavisit['metaData']['message']=='CREATED')&&($datavisit['metaData']['code']=='201')) {
             return 'datatersimpan';
+        }else if (($datavisit['metaData']['message']=='NOT_MODIFIED')&&($datavisit['metaData']['code']=='304')) {
+            return 'dataada';
         }else{
             return 'bpjserror';
         }

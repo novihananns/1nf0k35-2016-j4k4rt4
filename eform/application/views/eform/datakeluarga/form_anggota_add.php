@@ -48,6 +48,10 @@
                   if (confirm("Tidak bisa terhubung ke server BPJS! Apakah tetap ingin disimpan ?")) {
                     simpandata();
                   }
+                }else if (res=='dataada') {
+                  if (confirm("Peserta sudah terdaftar diserver BPJS. Apakah data ingin tetap disimpan ?")) {
+                    simpandata();
+                  }
                 }else{
                   simpandata();
                 }

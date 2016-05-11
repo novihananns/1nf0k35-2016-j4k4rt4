@@ -290,7 +290,7 @@ class Datakeluarga_model extends CI_Model {
         }
     }
     function simpandatabpjs($nourut=0,$kartu=0){
-        $tampildata = $this->dataorang($kode);
+        $tampildata = $this->dataorang($kartu);
         if (($tampildata['metaData']['message']=='error')&&($tampildata['metaData']['code']=='500')) {
            return  $tampildata;
        }else{

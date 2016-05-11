@@ -5,8 +5,9 @@
 	  		<h4><i class="icon fa fa-group" ></i> Daftar Anggota Keluarga</h4>
 	  	</div>
 	  	<div class="col-md-6" style="text-align: right">
+	  		<button type="button" class="btn btn-success" id="btn-refresh"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
 		 	<button type="button" class="btn btn-primary" id="btn-tambah-anggota"><i class='fa fa-plus-square-o'></i> &nbsp; Tambah Anggota Keluarga</button>
-		 	<button type="button" class="btn btn-success" id="btn-refresh"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
+		 	<button type="button" class="btn btn-warning" id="btn-export-anggota"><i class='fa fa-plus-square-o'></i> &nbsp; Export</button>
 		 </div>
 	  </div>
 	  <div class="box box-primary">
@@ -161,4 +162,48 @@
 			});
 		}
 	}
+	$("#btn-export-anggota").click(function(){
+		
+		var post = "";
+		var filter = $("#jqxgrid").jqxGrid('getfilterinformation');
+		for(i=0; i < filter.length; i++){
+			var fltr 	= filter[i];
+			var value	= fltr.filter.getfilters()[0].value;
+			var condition	= fltr.filter.getfilters()[0].condition;
+			var filteroperation	= fltr.filter.getfilters()[0].operation;
+			var filterdatafield	= fltr.filtercolumn;
+			if(filterdatafield=="tgl_lahir"){
+				var d = new Date(value);
+				var day = d.getDate();
+				var month = d.getMonth();
+				var year = d.getFullYear();
+				value = year+'-'+month+'-'+day;
+				
+			}
+
+			post = post+'&filtervalue'+i+'='+value;
+			post = post+'&filtercondition'+i+'='+condition;
+			post = post+'&filteroperation'+i+'='+filteroperation;
+			post = post+'&filterdatafield'+i+'='+filterdatafield;
+			post = post+'&'+filterdatafield+'operator=and';
+		}
+		post = post+'&filterscount='+i;
+		
+		var sortdatafield = $("#jqxgrid").jqxGrid('getsortcolumn');
+		if(sortdatafield != "" && sortdatafield != null){
+			post = post + '&sortdatafield='+sortdatafield;
+		}
+		if(sortdatafield != null){
+			var sortorder = $("#jqxgrid").jqxGrid('getsortinformation').sortdirection.ascending ? "asc" : ($("#jqxgrid").jqxGrid('getsortinformation').sortdirection.descending ? "desc" : "");
+			post = post+'&sortorder='+sortorder;
+			
+		}
+		var angg = "";
+		post = post+'&id_data_keluarga='+angg;
+		
+		$.post("<?php echo base_url()?>eform/data_kepala_keluarga/json_anggotaKeluargaexport/<?php echo $id_data_keluarga;?>",post,function(response){
+			window.location.href=response;
+			//alert(response);
+		});
+	});
 </script>

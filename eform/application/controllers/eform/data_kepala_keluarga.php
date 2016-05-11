@@ -559,19 +559,21 @@ class Data_kepala_keluarga extends CI_Controller {
         	$data['alert_form'] = '';
 			die($this->parser->parse("eform/datakeluarga/form_anggota_add",$data));
 		}elseif($noanggota=$this->datakeluarga_model->insert_dataAnggotaKeluarga($kode)){
-			if($noanggota=='bpjserror'){
-				$data['alert_form'] ='bpjserror';
-				die($this->parser->parse("eform/datakeluarga/form_anggota_add",$data));
-			}else{
-				$this->anggota_edit($this->input->post('id_data_keluarga'),$noanggota);	
-			}
-			
+			$this->anggota_edit($this->input->post('id_data_keluarga'),$noanggota);	
 		}else{
 			$data['alert_form'] = 'Save data failed...';
 			die($this->parser->parse("eform/datakeluarga/form_anggota_add",$data));
 		}
 
 		
+	}
+	function simpanbpjs($kode=0){
+		$data = $this->datakeluarga_model->inserbpjs($kode);
+		die("$data");
+	}
+	function hapusbpjs($kode=0){
+		$data = $this->datakeluarga_model->deletebpjs($kode);
+		die("$data");
 	}
 	public function addanggotaprofile()
 	 {

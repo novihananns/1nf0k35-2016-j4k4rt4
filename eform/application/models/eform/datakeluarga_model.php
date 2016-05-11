@@ -238,10 +238,9 @@ class Datakeluarga_model extends CI_Model {
        $data = $consid."&".time();
        $signature = hash_hmac('sha256', $data, $secretKey, true);
        $xsign = base64_encode($signature);
-       
        $tampildata = $this->dataorang($kode);
-      // die(print_r($tampildata));
-       if ($tampildata['res']=='error') {
+      //die(print_r($tampildata));
+       if (($tampildata['metaData']['message']=='error')&&($tampildata['metaData']['code']=='500')) {
            return  $tampildata;
        }else{
 
@@ -282,7 +281,48 @@ class Datakeluarga_model extends CI_Model {
               $classProperty->setAccessible(true);
               $datas = $classProperty->getValue($E);
               $datas = "Tidak dapat terkoneksi ke server BPJS, silakan dicoba lagi";
-              $data  = array("res"=>"error","msg"=>$data);
+              $data = array("metaData"=>array("message" =>'error',"code"=>500));
+            }
+            return $data;
+        }
+    }
+    function deletevisit($kode=0){
+        //$server = "http://api.bpjs-kesehatan.go.id/pcare-rest/v1/";
+       $server = "http://dvlp.bpjs-kesehatan.go.id:9080/pcare-rest-dev/v1/";
+       $xtime = time();
+       $consid = "23921";
+
+       $secretKey = "0pMBE6D40F";
+       $username = "pkmbangko";
+       $password = "05050101";
+
+       $xauth = base64_encode($username.':'.$password.':095');
+       $data = $consid."&".time();
+       $signature = hash_hmac('sha256', $data, $secretKey, true);
+       $xsign = base64_encode($signature);
+       $tampildata = $this->dataorang($kode);
+      //die(print_r($tampildata));
+       if (($tampildata['metaData']['message']=='error')&&($tampildata['metaData']['code']=='500')) {
+           return  $tampildata;
+       }else{
+
+           try
+            {
+              $response = \Httpful\Request::delete($server."/pendaftaran/peserta/$tampildata[response][noKartu]/tglDaftar/$tampildata[response][tglMulaiAktif]/noUrut/2")
+              ->xConsId($consid)
+              ->xTimestamp($xtime)
+              ->xSignature($xsign)
+              ->xAuthorization("Basic ".$xauth)
+              ->send();
+            }
+            catch(Exception $E)
+            {
+              $reflector = new \ReflectionClass($E);
+              $classProperty = $reflector->getProperty('message');
+              $classProperty->setAccessible(true);
+              $data = $classProperty->getValue($E);
+              $data = "Tidak dapat terkoneksi ke server BPJS, silakan dicoba lagi";
+              die(json_encode(array("res"=>"error","msg"=>$data)));
             }
             return $data;
         }
@@ -317,9 +357,26 @@ class Datakeluarga_model extends CI_Model {
           $classProperty->setAccessible(true);
           $datas = $classProperty->getValue($E);
           $datas = "Tidak dapat terkoneksi ke server BPJS, silakan dicoba lagi";
-          $data = array("res"=>"error","msg"=>$datas);
+          $data = array("metaData"=>array("message" =>'error',"code"=>500));
         }
         return $data;
+    }
+
+    function deletebpjs($kode){
+        $datavisit = $this->deletevisit($this->input->post('bpjs'));
+        if (($datavisit['metaData']['message']=='OK')&&($datavisit['metaData']['code']=='200')) {
+            return 'datatersimpan';
+        }else{
+            return 'bpjserror';
+        }
+    }
+    function inserbpjs($kode){
+        $datavisit = $this->homevisit($this->input->post('bpjs'));
+        if (($datavisit['metaData']['message']=='CREATED')&&($datavisit['metaData']['code']=='201')) {
+            return 'datatersimpan';
+        }else{
+            return 'bpjserror';
+        }
     }
     function insert_dataAnggotaKeluarga(){
 
@@ -341,26 +398,10 @@ class Datakeluarga_model extends CI_Model {
             'suku'                  => $this->input->post('suku'),
             'no_hp'                 => $this->input->post('no_hp')
         );
-        if (($this->input->post('bpjs')!='') && ($this->input->post('bpjs')!='simpanbiasa')) {
-            $datavisit = $this->homevisit($this->input->post('bpjs'));
-            if ($datavisit['res'] == 'error') {
-                return 'bpjserror';
-            }
-            if (($datavisit['metaData']['message']=='CREATED')&&($datavisit['metaData']['code']=='201')) {
-                if($this->db->insert('data_keluarga_anggota',$data)){
-                    return $data['no_anggota'];
-                }else{
-                    return mysql_error();
-                }
-            }else{
-                return 'bpjserror';
-            }
-        }else if($this->input->post('bpjs')=='simpanbiasa'){
-            if($this->db->insert('data_keluarga_anggota',$data)){
-                return $data['no_anggota'];
-            }else{
-                return mysql_error();
-            }
+        if($this->db->insert('data_keluarga_anggota',$data)){
+            return $data['no_anggota'];
+        }else{
+            return mysql_error();
         }
 
     }

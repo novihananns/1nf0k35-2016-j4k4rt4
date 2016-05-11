@@ -1,4 +1,4 @@
-<?php echo $alert_form.'alertbar';?>
+
 <script>
   	$(function () { 
      	$('#btn-up,#btn-up2').click(function(){
@@ -6,17 +6,13 @@
             $('#content2').html(data);
         });
 	    });
-      function simpandata(bpjs) {
+      function simpandata() {
         var data = new FormData();
         $('#biodata_notice-content').html('<div class="alert">Mohon tunggu, proses simpan data....</div>');
         $('#biodata_notice').show();
-        if (bpjs !='') {
-            data.append('bpjs', bpjs);  
-        }else{
-            data.append('bpjs', '');  
-        }
         data.append('id_data_keluarga', $("[name='id_data_keluarga']").val());
         data.append('nik', $("[name='nik']").val());
+        data.append('bpjs', $("[name='bpjs']").val());
         data.append('nama', $("[name='nama']").val());
         data.append('tmpt_lahir', $("[name='tmpt_lahir']").val());
         data.append('tgl_lahir', $("[name='tgl_lahir']").val());
@@ -45,21 +41,19 @@
         return false;
       }
       $('#btn-save-add').click(function(){
-        /*$.get('<?php echo base_url()?>eform/data_kepala_keluarga/anggota_{action}/{id_data_keluarga}/'+id, function (data) {
-            $('#content2').html(data);
-        });*/
         if (($("#bpjs").val() != '')) {
             if (confirm("Daftar sebagai Home Visit ? ")) {
-                simpandata($("[name='bpjs']").val());
-                
-                alert("<?php echo $alert_form; ?>");
-                if("<?php echo $alert_form; ?>"=='bpjserror'){
-                  if (confirm("Terhubung ke BPJS gagal! Apakah tetap ingin disimpan?")) {
-                    simpandata('simpanbiasa');
+              $.get("<?php echo base_url()?>eform/data_kepala_keluarga/simpanbpjs/"+$("#bpjs").val(),function(res){
+                if (res=='bpjserror') {
+                  if (confirm("Tidak bisa terhubung ke server BPJS! Apakah tetap ingin disimpan ?")) {
+                    simpandata();
                   }
+                }else{
+                  simpandata();
                 }
+              });
             }else{
-                simpandata('simpanbiasa');
+                simpandata();
             }
         }else{
                 

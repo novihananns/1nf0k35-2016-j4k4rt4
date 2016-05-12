@@ -22,6 +22,118 @@ class Data_kepala_keluarga extends CI_Controller {
             return $key->$kolom_sl;
         }
     }
+    function json_anggotaKeluargaexport($anggota){
+		$TBS = new clsTinyButStrong;		
+		$TBS->Plugin(TBS_INSTALL, OPENTBS_PLUGIN);
+		$this->authentication->verify('eform','show');
+
+		if($_POST) {
+			$fil = $this->input->post('filterscount');
+			$ord = $this->input->post('sortdatafield');
+
+			for($i=0;$i<$fil;$i++) {
+				$field = $this->input->post('filterdatafield'.$i);
+				$value = $this->input->post('filtervalue'.$i);
+				if($field=="tgl_lahir"){
+					$this->db->like("tgl_lahir",date("Y-m-d",strtotime($value)));
+				}else{
+					$this->db->like($field,$value);	
+				}
+				
+			}
+
+			if(!empty($ord)) {
+				$this->db->order_by($ord, $this->input->post('sortorder'));
+			}
+		}
+		$this->db->where("data_keluarga_anggota.id_data_keluarga",$anggota);
+		$rows_all = $this->datakeluarga_model->get_data_anggotaKeluarga();
+
+    	if($_POST) {
+			$fil = $this->input->post('filterscount');
+			$ord = $this->input->post('sortdatafield');
+
+			for($i=0;$i<$fil;$i++) {
+				$field = $this->input->post('filterdatafield'.$i);
+				$value = $this->input->post('filtervalue'.$i);
+
+				if($field=="tgl_lahir"){
+					$this->db->like("tgl_lahir",date("Y-m-d",strtotime($value)));
+				}else{
+					$this->db->like($field,$value);	
+				}
+			}
+
+			if(!empty($ord)) {
+				$this->db->order_by($ord, $this->input->post('sortorder'));
+			}
+		}
+		$this->db->where("data_keluarga_anggota.id_data_keluarga",$anggota);
+		$rows = $this->datakeluarga_model->get_data_anggotaKeluarga();
+		$no=1;
+		$data_tabel = array();
+		foreach($rows as $act) {
+			$data_tabel[] = array(
+				'no'					=> $no++,
+				'id_data_keluarga'		=> $act->id_data_keluarga,
+				'no_anggota'			=> $act->no_anggota,
+				'nama'					=> $act->nama,
+				'nik'					=> $act->nik,
+				'tmpt_lahir'			=> $act->tmpt_lahir,
+				'tgl_lahir'				=> $act->tgl_lahir,
+				'id_pilihan_hubungan'	=> $act->id_pilihan_hubungan,
+				'id_pilihan_kelamin'	=> $act->id_pilihan_kelamin,
+				'id_pilihan_agama'		=> $act->id_pilihan_agama,
+				'id_pilihan_pendidikan'	=> $act->id_pilihan_pendidikan,
+				'id_pilihan_pekerjaan'	=> $act->id_pilihan_pekerjaan,
+				'id_pilihan_kawin'		=> $act->id_pilihan_kawin,
+				'id_pilihan_jkn'		=> $act->id_pilihan_jkn,
+				'jeniskelamin'			=> $act->jeniskelamin,
+				'hubungan'				=> $act->hubungan,
+				'bpjs'					=> $act->bpjs,
+				'usia'					=> $act->usia,
+				'suku'					=> $act->suku,
+				'agama'					=> $act->agama,
+				'pendidikan'			=> $act->pendidikan,
+				'pekerjaan'				=> $act->pekerjaan,
+				'kawin'					=> $act->kawin,
+				'jkn'					=> $act->jkn,
+				'no_hp'					=> $act->no_hp,
+				'edit'					=> 1,
+				'delete'				=> 1
+			);
+		}
+
+		
+				$kode='P'.$this->session->userdata('puskesmas');
+				$kd_prov = $this->morganisasi_model->get_nama('value','cl_province','code',substr($kode, 1,2));
+				$kd_kab  = $this->morganisasi_model->get_nama('value','cl_district','code',substr($kode, 1,4));
+				$nama  = $this->morganisasi_model->get_nama('value','cl_phc','code',$kode);
+				$kd_kec  = 'KEC. '.$this->morganisasi_model->get_nama('nama','cl_kec','code',substr($kode, 1,7));
+				$kd_upb  = 'KEC. '.$this->morganisasi_model->get_nama('nama','cl_kec','code',substr($kode, 1,7));
+				
+		
+		$datadetail = $this->datakeluarga_model->get_data_export_detail($anggota);
+		$desa  = $this->morganisasi_model->get_nama('value','cl_village','code',$datadetail['id_desa']);
+		$tanggal_export = date("d-m-Y");
+		$data_puskesmas[] = array('nama_puskesmas' => $nama,'kd_prov' => $kd_prov,'kd_kab' => $kd_kab,'tanggal_export' => $tanggal_export,'kd_kab' => $kd_kab,
+			'kepala_keluarga' => $datadetail['namakepalakeluarga'],'kecamatan' => $kd_kec,'desa' => $desa,'rw' => $datadetail['rw'],'rt' => $datadetail['rt'],'norumah' => $datadetail['norumah'],'kodepos' => $datadetail['id_kodepos'],'pendata' => $datadetail['nama_pendata'],'koordinator' => $datadetail['nama_koordinator'],'alamat' => $datadetail['alamat']);
+		
+		$dir = getcwd().'/';
+		$template = $dir.'public/files/template/anggotakeluarga.xlsx';		
+		$TBS->LoadTemplate($template, OPENTBS_ALREADY_UTF8);
+
+		// Merge data in the first sheet
+		$TBS->MergeBlock('a', $data_tabel);
+		$TBS->MergeBlock('b', $data_puskesmas);
+		
+		$code = uniqid();
+		$output_file_name = 'public/files/hasil/hasil_anggotakeluarga_'.$code.'.xlsx';
+		$output = $dir.$output_file_name;
+		$TBS->Show(OPENTBS_FILE, $output); // Also merges all [onshow] automatic fields.
+		
+		echo base_url().$output_file_name ;
+	}
     function datakepalakeluaraexport(){
     	$TBS = new clsTinyButStrong;		
 		$TBS->Plugin(TBS_INSTALL, OPENTBS_PLUGIN);

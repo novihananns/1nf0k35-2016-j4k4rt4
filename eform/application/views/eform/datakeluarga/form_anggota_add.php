@@ -42,22 +42,20 @@
       }
       $('#btn-save-add').click(function(){
         $.get("<?php echo base_url()?>eform/data_kepala_keluarga/cekkonek/",function(response){
-          //alert(response);
-          if(response=='konek'){
+          if(response=='ready'){
               if (($("#bpjs").val() != '')) {
-                if (confirm("Daftar sebagai Home Visit ? ")) {
+                if (confirm("Daftarkan Home Visit ? ")) {
                     $.get("<?php echo base_url()?>eform/data_kepala_keluarga/simpanbpjs/"+$("#bpjs").val(),function(res){
-                      //alert(res);
                       if (res=='bpjserror') {
-                        if (confirm("Tidak bisa terhubung ke server BPJS! Apakah tetap ingin disimpan ?")) {
+                        if (confirm("Tidak bisa terhubung ke server BPJS! \nApakah tetap ingin disimpan ?")) {
                           simpandata();
                         }
                       }else if (res=='dataada') {
-                        if (confirm("Peserta sudah terdaftar di BPJS hari ini. Apakah data ingin tetap disimpan ?")) {
+                        if (confirm("Peserta sudah terdaftar di BPJS hari ini. \nApakah data ingin tetap disimpan ?")) {
                           simpandata();
                         }
                       }else if (res=='datatidakada') {
-                        if (confirm("Peserta Tidak Terdaftar dibpjs. Apakah data ingin tetap disimpan ?")) {
+                        if (confirm("Peserta Tidak Terdaftar dibpjs. \nApakah data ingin tetap disimpan ?")) {
                           simpandata();
                         }
                       }else{
@@ -77,13 +75,13 @@
         
       });
   $.get("<?php echo base_url()?>eform/data_kepala_keluarga/cekkonek/",function(response){
-    if(response=='konek'){ 
+    if(response=='ready'){ 
       $("input[name='nik']").keyup(function(){
         var nik = $("input[name='nik']").val();
         if(nik.length==16){
           $.get("<?php echo base_url()?>eform/data_kepala_keluarga/bpjs_search/nik/"+nik,function(res){
               if(res.metaData.code=="200"){
-                if(confirm("Anggota keluarga terdaftar sebagai peserta BPJS, gunakan data?")){
+                if(confirm("Anggota keluarga terdaftar sebagai peserta BPJS. \nGunakan data?")){
                   $("#bpjs").val(res.response.noKartu);
                   $("#nama").val(res.response.nama);
                   var tgl = res.response.tglLahir.split("-");

@@ -26,34 +26,33 @@ class Bpjs extends CI_Model {
 	   require_once(APPPATH.'third_party/httpful.phar');
 
 
-	   $cnf = $this->get_data_bpjs();
-	   $this->server 	= $cnf['server'];
-	   $this->username 	= $cnf['username'];
-	   $this->password 	= $cnf['password'];
-	   $this->consid 	= $cnf['consid'];
-	   $this->secretkey = $cnf['secretkey'];
-	   $this->xtime = time();
-	   $this->maxxtimeget 	= 15;
-	   $this->maxxtimepost 	= 120;
-	   $this->xauth = base64_encode($this->username.':'.$this->password.':095');
-	   $this->data = $this->consid."&".time();
-	   $this->signature = hash_hmac('sha256', $this->data, $this->secretkey, true);
-	   $this->xsign = base64_encode($this->signature);
-
-	   ///////////////  TES BPJS /////////////////////
-	   // $this->server = "http://dvlp.bpjs-kesehatan.go.id:9080/pcare-rest-dev/v1/";
-	   // $this->username = "pkmbangko";
-    //    $this->password = "05050101";
-    //    $this->consid = "23921";
-    //    $this->secretKey = "0pMBE6D40F";
-    //    $this->xtime = time();
-    //    $this->maxxtimeget 	= 15;
-	   // $this->maxxtimepost 	= 120;
-	   // $this->xauth = base64_encode($this->username.':'.$this->username.':095');
-    //    $this->data = $this->consid."&".time();
-    //    $this->signature = hash_hmac('sha256', $this->data, $this->username, true);
-    //    $this->xsign = base64_encode($this->signature);
-	   //////////////////////////////////////
+	    /*$cnf = $this->get_data_bpjs();
+	    $this->server 	= $cnf['server'];
+	    $this->username 	= $cnf['username'];
+	    $this->password 	= $cnf['password'];
+	    $this->consid 	= $cnf['consid'];
+	    $this->secretkey = $cnf['secretkey'];
+	    $this->xtime = time();
+	    $this->maxxtimeget 	= 15;
+	    $this->maxxtimepost 	= 120;
+	    $this->xauth = base64_encode($this->username.':'.$this->password.':095');
+	    $this->data = $this->consid."&".time();
+	    $this->signature = hash_hmac('sha256', $this->data, $this->secretkey, true);
+	    $this->xsign = base64_encode($this->signature);
+	    */
+		////////  TES BPJS /////////////////////
+		$this->server = "http://dvlp.bpjs-kesehatan.go.id:9080/pcare-rest-dev/v1/";
+		$this->username = "pkmbangko";
+		$this->password = "05050101";
+		$this->consid 	= "23921";
+		$this->secretKey = "0pMBE6D40F";
+		$this->xtime = time();
+		$this->maxxtimeget 	= 15;
+		$this->maxxtimepost 	= 120;
+		$this->xauth = base64_encode($this->username.':'.$this->password.':095');
+		$this->data = $this->consid."&".time();
+		$this->signature = hash_hmac('sha256', $this->data, $this->secretKey, true);
+		$this->xsign = base64_encode($this->signature);
 	   
 	}
 	function get_data_bpjs()
@@ -198,20 +197,16 @@ class Bpjs extends CI_Model {
           $data = "Tidak dapat terkoneksi ke server BPJS, silakan dicoba lagi";
           $data = array("metaData"=>array("message" =>'error',"code"=>777));
         }
-        //die(print_r($url));
         return $data;
 	}
 
-
 	function bpjs_option($type="poli"){
-
 		$data = $this->getApi('poli/fktp/0/99');
 
       	return $data['response']['list'];
 	}
 
 	function bpjs_search($by="nik",$no){
-
 		if($by == "nik"){
 			$data = $this->getApi('peserta/nik/'.$no);
 		}else{
@@ -222,39 +217,38 @@ class Bpjs extends CI_Model {
 	}
 	function inserbpjs($kode){
        $tampildata = $this->getApi('peserta/'.$kode);
-       //die(print_r($tampildata));
        if (($tampildata['metaData']['message']=='error')&&($tampildata['metaData']['code']=='777')) {
            return  'bpjserror';
        }else{
 	        if (array_key_exists("kdProvider",$tampildata['response']['kdProviderPst'])){
 	            $kodeprov = $tampildata['response']['kdProviderPst']['kdProvider'];
 	        }else{
-	            $kodeprov = '-';
+	            $kodeprov = '0';
 	        }
-           	$tanggalskr  = date('d-m-Y');
             $data_kunjungan = array(
               "kdProviderPeserta" => $kodeprov,
-              "tglDaftar" => $tanggalskr,
-              "noKartu" => $tampildata['response']['noKartu'],
-              "kdPoli" => "020",
-              "keluhan" => null,
-              "kunjSakit" => false,
-              "sistole" => 0,
-              "diastole" => 0,
-              "beratBadan" => 0,
+              "tglDaftar" 	=> date('d-m-Y'),
+              "noKartu" 	=> $tampildata['response']['noKartu'],
+              "kdPoli" 		=> "020",
+              "keluhan" 	=> null,
+              "kunjSakit" 	=> false,
+              "sistole" 	=> 0,
+              "diastole" 	=> 0,
+              "beratBadan" 	=> 0,
               "tinggiBadan" => 0,
-              "respRate" => 0,
-              "heartRate" => 0,
-              "rujukBalik" => 0,
-              "rawatInap" => false
+              "respRate" 	=> 0,
+              "heartRate" 	=> 0,
+              "rujukBalik" 	=> 0,
+              "rawatInap" 	=> false
             ); 
             $datavisit = $this->postApi('pendaftaran', $data_kunjungan);
-            if (($datavisit['metaData']['message']=='CREATED')&&($datavisit['metaData']['code']=='201')) {
-            	$datasmpn = $this->simpandatabpjs($data['response']['message'],$kode);
-	            return $datasmpn;
-	        }else if (($datavisit['metaData']['message']=='NOT_MODIFIED')&&($datavisit['metaData']['code']=='304')) {
+            if (($datavisit['metaData']['message']=='CREATED') && ($datavisit['metaData']['code']=='201')){
+            	return $datasmpn = $this->simpandatabpjs($datavisit['response']['message'],$kode);
+	        }
+	        elseif(($datavisit['metaData']['message']=='NOT_MODIFIED') && ($datavisit['metaData']['code']=='304')){
 	            return 'dataada';
-	        }else if (($datavisit['metaData']['message']=='PRECONDITION_FAILED')&&($datavisit['metaData']['code']=='412')) {
+	        }
+	        elseif(($datavisit['metaData']['message']=='PRECONDITION_FAILED') && ($datavisit['metaData']['code']=='412')){
 	            return 'datatidakada';
 	        }else{
 	            return 'bpjserror';
@@ -264,20 +258,19 @@ class Bpjs extends CI_Model {
    
     function simpandatabpjs($nourut=0,$kartu=0){
         $tampildata = $this->getApi('peserta/'.$kartu);
-        if (($tampildata['metaData']['message']=='error')&&($tampildata['metaData']['code']=='777')) {
+        if (($tampildata['metaData']['message']=='error') && ($tampildata['metaData']['code']=='777')) {
            return  'bpjserror';
-       }else{
-           if (array_key_exists("kdProvider",$tampildata['response']['kdProviderPst'])){
+        }else{
+           if (isset($tampildata['response']['kdProviderPst']['kdProvider']) && $tampildata['response']['kdProviderPst']['kdProvider']!=""){
                 $kodeprov = $tampildata['response']['kdProviderPst']['kdProvider'];
             }else{
-                $kodeprov = '-';
+                $kodeprov = '0';
             }
-            $tgl = date("d-m-Y");
             $data = array(
-            'no_kartu'  => $kartu,
-            'tgl_daftar'  =>  $tgl,
-            'kd_provider_peserta'  =>  $kodeprov,
-            'no_urut'  =>  $nourut
+	            'kd_provider_peserta'  =>  $kodeprov,
+	            'no_kartu'  	=> $kartu,
+	            'tgl_daftar'  	=> date("d-m-Y"),
+	            'no_urut'  		=> $nourut
             );
             $this->db->insert('data_keluarga_anggota_bpjs',$data);
             return 'datatersimpan';
@@ -289,19 +282,18 @@ class Bpjs extends CI_Model {
         if ($query->num_rows() > 0) {
             $data = $query->row_array();
         }else{
-            $data['no_kartu'] = '';
-            $data['tgl_daftar'] = '';
-            $data['no_urut'] = '';
             $data['kd_provider_peserta'] = '';
+            $data['no_kartu'] 	= '';
+            $data['tgl_daftar'] = '';
+            $data['no_urut'] 	= '';
         }
         $query->free_result();
         return $data;
     }
-    
     function deletebpjs($kode){
     	$tampildata = $this->keluargaanggotabpjs($kode);
-    	$datavisit = $this->deleteApi("/pendaftaran/peserta/$tampildata[no_kartu]/tglDaftar/$tampildata[tgl_daftar]/noUrut/$tampildata[no_urut]");
-        die(print_r($datavisit));
+    	$datavisit 	= $this->deleteApi("/pendaftaran/peserta/".$tampildata['no_kartu']."/tglDaftar/".$tampildata['tgl_daftar']."/noUrut/".$tampildata['no_urut']);
+    	die();
         if (($datavisit['metaData']['message']=='OK')&&($datavisit['metaData']['code']=='200')) {
             return 'datatersimpan';
         }else{

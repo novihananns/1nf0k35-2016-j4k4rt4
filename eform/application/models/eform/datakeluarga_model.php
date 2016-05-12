@@ -28,6 +28,21 @@ class Datakeluarga_model extends CI_Model {
         
         return $query->result();
     }
+    function get_data_export_detail($anggota = 0){
+        $this->db->where('id_data_keluarga',$anggota);
+        $this->db->select("$this->tabel.*,cl_village.value,
+            (SELECT COUNT(no_anggota) l FROM data_keluarga_anggota WHERE id_pilihan_kelamin='5' AND id_data_keluarga=data_keluarga.id_data_keluarga) AS laki,
+            (SELECT COUNT(no_anggota) p FROM data_keluarga_anggota WHERE id_pilihan_kelamin='6' AND id_data_keluarga=data_keluarga.id_data_keluarga) AS pr,
+            (SELECT COUNT(no_anggota) jml FROM data_keluarga_anggota WHERE id_data_keluarga=data_keluarga.id_data_keluarga) AS jmljiwa,
+            ");
+        $this->db->join('cl_village', "data_keluarga.id_desa = cl_village.code",'inner');
+        $query =$this->db->get($this->tabel);
+        if ($query->num_rows() > 0) {
+            $data = $query->row_array();
+        }
+        $query->free_result();
+        return $data;
+    }
     public function get_data_export($start=0,$limit=999999,$options=array())
     {
         $this->db->select("$this->tabel.*,cl_village.value,

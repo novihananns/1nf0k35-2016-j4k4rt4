@@ -279,13 +279,13 @@ class Bpjs extends CI_Model {
             'kd_provider_peserta'  =>  $kodeprov,
             'no_urut'  =>  $nourut
             );
-            $this->db->insert('keluarga_anggota_bpjs',$data);
+            $this->db->insert('data_keluarga_anggota_bpjs',$data);
             return 'datatersimpan';
         }
     }
     function keluargaanggotabpjs($kode=0){
         $this->db->where('no_kartu',$kode);
-        $query = $this->db->get('keluarga_anggota_bpjs');
+        $query = $this->db->get('data_keluarga_anggota_bpjs');
         if ($query->num_rows() > 0) {
             $data = $query->row_array();
         }else{

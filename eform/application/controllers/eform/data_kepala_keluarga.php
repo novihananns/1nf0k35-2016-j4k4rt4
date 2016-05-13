@@ -678,6 +678,7 @@ class Data_kepala_keluarga extends CI_Controller {
 
 	function cekkonek(){
 		$data = $this->bpjs->get_data_bpjs();
+		
 		if (isset($data['code']) && isset($data['server']) && isset($data['username']) && isset($data['password']) && isset($data['consid']) && isset($data['secretkey'])) {
 			die('ready');
 		}else{

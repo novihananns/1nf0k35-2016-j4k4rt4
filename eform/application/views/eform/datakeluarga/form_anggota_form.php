@@ -58,30 +58,26 @@
       $("input[name='keluarga6_nik']").keyup(function(){
         var nik = $("input[name='keluarga6_nik']").val();
         if(nik.length==16){
-          $.get("<?php echo base_url()?>eform/data_kepala_keluarga/cekkonek/",function(response){
-            if(response=='ready'){
-              $.get("<?php echo base_url()?>eform/data_kepala_keluarga/bpjs_search/nik/"+nik,function(res){
-                  if(res.metaData.code=="200"){
-                    if(confirm("Anggota keluarga terdaftar sebagai peserta BPJS.\nGunakan data?")){
-                      $("#keluarga6_bpjs").val(res.response.noKartu).change();
-                      $("#keluarga6_nama").val(res.response.nama).change();
+          $.get("<?php echo base_url()?>eform/data_kepala_keluarga/bpjs_search/nik/"+nik,function(res){
+              if(res.metaData.code=="200"){
+                if(confirm("Anggota keluarga terdaftar sebagai peserta BPJS.\nGunakan data?")){
+                  $("#keluarga6_bpjs").val(res.response.noKartu).change();
+                  $("#keluarga6_nama").val(res.response.nama).change();
 
-                      var tgl = res.response.tglLahir.split("-");
-                      var date = new Date(tgl[2], (tgl[1]-1), tgl[0]);
-                      $("#keluarga6_tgl_lahir").jqxDateTimeInput('setDate', date);
+                  var tgl = res.response.tglLahir.split("-");
+                  var date = new Date(tgl[2], (tgl[1]-1), tgl[0]);
+                  $("#keluarga6_tgl_lahir").jqxDateTimeInput('setDate', date);
 
-                      if(res.response.noHP!=" " && res.response.noHP!="") $("#keluarga6_no_hp").val(res.response.noHP).change();
-                      if(res.response.sex=="P"){
-                        $("#keluarga6_id_pilihan_kelamin").val(6).change();
-                      }else{
-                        $("#keluarga6_id_pilihan_kelamin").val(5).change();
-                      }
-                    }
-                    $("#keluarga6_tmpt_lahir").focus();
+                  if(res.response.noHP!=" " && res.response.noHP!="") $("#keluarga6_no_hp").val(res.response.noHP).change();
+                  if(res.response.sex=="P"){
+                    $("#keluarga6_id_pilihan_kelamin").val(6).change();
+                  }else{
+                    $("#keluarga6_id_pilihan_kelamin").val(5).change();
                   }
-              },"json");
-            }
-          });
+                }
+                $("#keluarga6_tmpt_lahir").focus();
+              }
+          },"json");
         }
 
         return false;
@@ -90,30 +86,26 @@
       $("#keluarga6_bpjs").keyup(function(){
         var bpjs = $("#keluarga6_bpjs").val();
         if(bpjs.length==13){
-          $.get("<?php echo base_url()?>eform/data_kepala_keluarga/cekkonek/",function(response){
-            if(response=='ready'){
-              $.get("<?php echo base_url()?>eform/data_kepala_keluarga/bpjs_search/bpjs/"+bpjs,function(res){
-                  if(res.metaData.code=="200"){
-                    if(confirm("Nomor BPJS terdaftar.\nGunakan data?")){
-                      $("input[name='keluarga6_nik']").val(res.response.noKTP).change();
-                      $("#keluarga6_nama").val(res.response.nama).change();
+          $.get("<?php echo base_url()?>eform/data_kepala_keluarga/bpjs_search/bpjs/"+bpjs,function(res){
+              if(res.metaData.code=="200"){
+                if(confirm("Nomor BPJS terdaftar.\nGunakan data?")){
+                  $("input[name='keluarga6_nik']").val(res.response.noKTP).change();
+                  $("#keluarga6_nama").val(res.response.nama).change();
 
-                      var tgl = res.response.tglLahir.split("-");
-                      var date = new Date(tgl[2], (tgl[1]-1), tgl[0]);
-                      $("#keluarga6_tgl_lahir").jqxDateTimeInput('setDate', date);
+                  var tgl = res.response.tglLahir.split("-");
+                  var date = new Date(tgl[2], (tgl[1]-1), tgl[0]);
+                  $("#keluarga6_tgl_lahir").jqxDateTimeInput('setDate', date);
 
-                      if(res.response.noHP!=" " && res.response.noHP!="") $("#keluarga6_no_hp").val(res.response.noHP).change();
-                      if(res.response.sex=="P"){
-                        $("#keluarga6_id_pilihan_kelamin").val(6).change();
-                      }else{
-                        $("#keluarga6_id_pilihan_kelamin").val(5).change();
-                      }
-                    }
-                    $("#keluarga6_tmpt_lahir").focus();
+                  if(res.response.noHP!=" " && res.response.noHP!="") $("#keluarga6_no_hp").val(res.response.noHP).change();
+                  if(res.response.sex=="P"){
+                    $("#keluarga6_id_pilihan_kelamin").val(6).change();
+                  }else{
+                    $("#keluarga6_id_pilihan_kelamin").val(5).change();
                   }
-              },"json");
-           }
-          });
+                }
+                $("#keluarga6_tmpt_lahir").focus();
+              }
+          },"json");
         }
 
       });

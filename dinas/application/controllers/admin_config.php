@@ -123,6 +123,7 @@ class Admin_config extends CI_Controller {
 		$data['action']			= "add";
 		$data 					= $this->admin_config_model->get_detail($kode);
 		$data['namapuskes']		= $this->admin_config_model->get_nama($kode,'value');
+		print_r($data);
 		die($this->parser->parse('admin/config/form_detail_bpjs', $data));
 	}
 }

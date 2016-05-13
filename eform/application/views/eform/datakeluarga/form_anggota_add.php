@@ -65,17 +65,14 @@
                   }else{
                       simpandata();
                   }
-              }else{
-                      
               }
           }else{
             simpandata();
           }
-      });
+        });
         
       });
-  $.get("<?php echo base_url()?>eform/data_kepala_keluarga/cekkonek/",function(response){
-    if(response=='ready'){ 
+
       $("input[name='nik']").keyup(function(){
         var nik = $("input[name='nik']").val();
         if(nik.length==16){
@@ -107,7 +104,7 @@
           $.get("<?php echo base_url()?>eform/data_kepala_keluarga/bpjs_search/bpjs/"+bpjs,function(res){
               if(res.metaData.code=="200"){
                 if(confirm("Nomor BPJS terdaftar, gunakan data?")){
-                  $("input[name='nik']").val(res.response.noKTP);
+                  if(res.response.noKTP!=null) $("input[name='nik']").val(res.response.noKTP);
                   $("#nama").val(res.response.nama);
 
                   var tgl = res.response.tglLahir.split("-");
@@ -126,8 +123,6 @@
           },"json");
         }
       });
-    }
-  });
 
       $("#tgl_lahir").jqxDateTimeInput({ formatString: 'dd-MM-yyyy', theme: theme, height: '30px'});
 	});

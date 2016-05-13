@@ -21,59 +21,67 @@ class Bpjs extends CI_Model {
 	var $xsign;
 
 	function __construct() {
-       parent::__construct();
+		parent::__construct();
+	   	
+	   	require_once(APPPATH.'third_party/httpful.phar');
 
-	   require_once(APPPATH.'third_party/httpful.phar');
-
-
-	    /*$cnf = $this->get_data_bpjs();
-	    $this->server 	= $cnf['server'];
-	    $this->username 	= $cnf['username'];
-	    $this->password 	= $cnf['password'];
-	    $this->consid 	= $cnf['consid'];
-	    $this->secretkey = $cnf['secretkey'];
-	    $this->xtime = time();
-	    $this->maxxtimeget 	= 15;
-	    $this->maxxtimepost 	= 120;
-	    $this->xauth = base64_encode($this->username.':'.$this->password.':095');
-	    $this->data = $this->consid."&".time();
-	    $this->signature = hash_hmac('sha256', $this->data, $this->secretkey, true);
-	    $this->xsign = base64_encode($this->signature);
-	    */
-		////////  TES BPJS /////////////////////
-		$this->server = "http://dvlp.bpjs-kesehatan.go.id:9080/pcare-rest-dev/v1/";
-		$this->username = "pkmbangko";
-		$this->password = "05050101";
-		$this->consid 	= "23921";
-		$this->secretKey = "0pMBE6D40F";
-		$this->xtime = time();
-		$this->maxxtimeget 	= 15;
-		$this->maxxtimepost 	= 120;
-		$this->xauth = base64_encode($this->username.':'.$this->password.':095');
-		$this->data = $this->consid."&".time();
-		$this->signature = hash_hmac('sha256', $this->data, $this->secretKey, true);
-		$this->xsign = base64_encode($this->signature);
-	   
+		$this->get_data_bpjs("live");
 	}
-	function get_data_bpjs()
-    {
+
+	function get_demo_bpjs(){
     	$data = array();
-    	$id='P'.$this->session->userdata('puskesmas');
-    	$this->db->where('code',$id);
-    	$this->db->select("*");
-    	$data = $this->db->get('cl_phc_bpjs')->row_array();
-        if (!empty($data['server'])){
-            return $data;
-        }else{
-        	$data['server'] ='';
-        	$data['username'] ='';
-        	$data['password'] ='';
-        	$data['consid'] ='';
-        	$data['secretkey'] ='';
-        	return $data;
-        }	
+    	$data['server'] 	='http://dvlp.bpjs-kesehatan.go.id:9080/pcare-rest-dev/v1/';
+    	$data['username'] 	='pkmbangko';
+    	$data['password'] 	='05050101';
+    	$data['consid'] 	='23921';
+    	$data['secretkey'] 	='0pMBE6D40F';
+    	return $data;
+	}
+	function get_data_bpjs($default = "live"){
+    	$data = array();
+    	if($default=="live"){
+	    	$id='P'.$this->session->userdata('puskesmas');
+	    	$this->db->where('code',$id);
+	    	$data = $this->db->get('cl_phc_bpjs')->row_array();
+			if(!isset($data['code']) || !isset($data['server']) || !isset($data['username']) || !isset($data['password']) || !isset($data['consid']) || !isset($data['secretkey'])) {
+        		$data = $this->get_demo_bpjs();
+	        }
+	    }
+    	elseif($default=="global"){
+	    	$id='P'.$this->session->userdata('puskesmas');
+	    	$this->db->where('code',$id);
+	    	$data = $this->db->get('cl_phc_bpjs')->row_array();
+			if(!isset($data['code']) || !isset($data['server']) || !isset($data['username']) || !isset($data['password']) || !isset($data['consid']) || !isset($data['secretkey'])) {
+		    	$id='P3172010202';
+		    	$this->db->where('code',$id);
+		    	$data = $this->db->get('cl_phc_bpjs')->row_array();
+				if(!isset($data['code']) || !isset($data['server']) || !isset($data['username']) || !isset($data['password']) || !isset($data['consid']) || !isset($data['secretkey'])) {
+	        		$data = $this->get_demo_bpjs();
+		        }
+	        }
+        }
+        else{
+        	$data = $this->get_demo_bpjs();
+        }
+
+	    $this->server 		= $data['server'];
+	    $this->username 	= $data['username'];
+	    $this->password 	= $data['password'];
+	    $this->consid 		= $data['consid'];
+	    $this->secretkey 	= $data['secretkey'];
+	    $this->xtime 		= time();
+	    $this->maxxtimeget 	= 15;
+	    $this->maxxtimepost	= 120;
+	    $this->xauth 		= base64_encode($this->username.':'.$this->password.':095');
+	    $this->data 		= $this->consid."&".time();
+	    $this->signature 	= hash_hmac('sha256', $this->data, $this->secretkey, true);
+	    $this->xsign 		= base64_encode($this->signature);
+
+	    return $data;
     }
+
 	function getApi($url=""){
+	   $this->get_data_bpjs("global");
 	   try
 	    {
 	      $response = \Httpful\Request::get($this->server.$url)
@@ -109,6 +117,7 @@ class Bpjs extends CI_Model {
 	}
 
 	function postApi($url="", $data=array()){
+	   $this->get_data_bpjs("live");
 	   try
 	    {
 	      $response = \Httpful\Request::post($this->server.$url)
@@ -145,6 +154,7 @@ class Bpjs extends CI_Model {
 	}
 
 	function putApi($url="", $data=array()){
+	   $this->get_data_bpjs("live");
 	   try
 	    {
 	      $response = \Httpful\Request::post($this->server.$url)
@@ -178,6 +188,7 @@ class Bpjs extends CI_Model {
 	}
 
 	function deleteApi($url=""){
+	   $this->get_data_bpjs("live");
 	   try
         {
           $response = \Httpful\Request::delete($this->server.$url)
@@ -266,13 +277,18 @@ class Bpjs extends CI_Model {
             }else{
                 $kodeprov = '0';
             }
-            $data = array(
-	            'kd_provider_peserta'  =>  $kodeprov,
-	            'no_kartu'  	=> $kartu,
-	            'tgl_daftar'  	=> date("d-m-Y"),
-	            'no_urut'  		=> $nourut
-            );
-            $this->db->insert('data_keluarga_anggota_bpjs',$data);
+            $this->db->where('no_kartu',$kartu);
+            $this->db->where('tgl_daftar',date("d-m-Y"));
+            $dt = $this->db->get('data_keluarga_anggota_bpjs')->row();
+            if(empty($dt->no_kartu)){
+	            $data = array(
+		            'kd_provider_peserta'  =>  $kodeprov,
+		            'no_kartu'  	=> $kartu,
+		            'tgl_daftar'  	=> date("d-m-Y"),
+		            'no_urut'  		=> $nourut
+	            );
+	            $this->db->insert('data_keluarga_anggota_bpjs',$data);
+            }
             return 'datatersimpan';
         }
     }
@@ -292,13 +308,12 @@ class Bpjs extends CI_Model {
     }
     function deletebpjs($kode){
     	$tampildata = $this->keluargaanggotabpjs($kode);
-    	$datavisit 	= $this->deleteApi("/pendaftaran/peserta/".$tampildata['no_kartu']."/tglDaftar/".$tampildata['tgl_daftar']."/noUrut/".$tampildata['no_urut']);
-    	die();
+    	/*$datavisit 	= $this->deleteApi("/pendaftaran/peserta/".$tampildata['no_kartu']."/tglDaftar/".$tampildata['tgl_daftar']."/noUrut/".$tampildata['no_urut']);
         if (($datavisit['metaData']['message']=='OK')&&($datavisit['metaData']['code']=='200')) {
             return 'datatersimpan';
         }else{
             return 'bpjserror';
-        }
+        }*/
     }
 
 }

@@ -526,4 +526,9 @@ class Datakeluarga_model extends CI_Model {
         $this->db->like($condition,$code);
         return $this->db->get($table)->result();
     }
+    function get_datawhereasli ($code,$condition,$table){
+        $this->db->select("*");
+        $this->db->where($condition,$code);
+        return $this->db->get($table)->result();
+    }
 }

@@ -1251,7 +1251,7 @@ class Laporan_kpldh extends CI_Controller {
 		die($this->parser->parse("eform/laporan/chartmenangis",$data));
 	}
 	function hilangminat($kecamatan=0,$kelurahan=0,$rw=0,$rt=0){
-		$data = array();
+		$data = array(); 
 		$data['ya'] = $this->laporan_kpldh_model->get_data_hilangminat('kesehatan_5_g_15_kk_cebox',$kecamatan,$kelurahan,$rw,$rt);
 		$data['tidak']= $this->laporan_kpldh_model->get_data_anggotaprofile($kecamatan,$kelurahan,$rw,$rt)-$this->laporan_kpldh_model->get_data_hilangminat('kesehatan_5_g_15_kk_cebox',$kecamatan,$kelurahan,$rw,$rt);
 		$data['jumlahorang'] =$this->laporan_kpldh_model->get_data_anggotaprofile($kecamatan,$kelurahan,$rw,$rt);

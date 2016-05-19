@@ -181,6 +181,11 @@ class Datakeluarga_model extends CI_Model {
         }
 
     }
+    function get_datawhereasli ($code,$condition,$table){
+        $this->db->select("*");
+        $this->db->where($condition,$code);
+        return $this->db->get($table)->result();
+    }
     function noanggota($id_data_keluarga){
         $q = $this->db->query("select MAX(no_anggota) as kd_max from data_keluarga_anggota");
         $kd = "";

@@ -83,6 +83,14 @@
 				     		</select>
 				  		</div>
 				  	</div>
+				  	<div class="col-md-6">
+						<div class="form-group">
+							<label>RT</label>
+				     		<select name="rt" class="form-control" id="rt">
+				     			<option value="">Pilih RT</option>
+				     		</select>
+				  		</div>
+				  	</div>
 				  	<div class="col-md-12">
 						<div class="form-group pull-right">
 						<!--	<button id="btn-export" type="button"  class="btn btn-success"><i class='fa fa-file-excel-o'></i> &nbsp; Export</button>-->
@@ -163,6 +171,7 @@
       		var kecamatanbar = $("#kecamatan").val();
       		var kelurahanbar = $("#kelurahan").val();
       		var id_judul = $("#laporan").val();
+      		var rt = $("#rt").val();
       		var rw = $("#rw").val();
 	      		if ($("#laporan").val()=="") {
 	      			$("#hilang").hide();
@@ -173,7 +182,7 @@
       		$.ajax({
 		        url : '<?php echo site_url('eform/laporan_kpldh/pilihchart/') ?>',
 		        type : 'POST',
-		        data : 'judul=' + judul+'&kecamatan=' + kecamatanbar+'&kelurahan=' + kelurahanbar+'&rw=' + rw+'&id_judul=' + id_judul,
+		        data : 'judul=' + judul+'&kecamatan=' + kecamatanbar+'&kelurahan=' + kelurahanbar+'&rw=' + rw+'&rt=' + rt+'&id_judul=' + id_judul,
 		        success : function(data) {
 		        	$("#loading").hide();
 		        	$("#hilang").show(); 
@@ -197,7 +206,7 @@
 	          $('#kelurahan').html(data);
 	        }
 	      });
-
+		$('#kelurahan').change();
 	      return false;
 	    }).change();
 	    $('#kelurahan').change(function(){
@@ -211,11 +220,25 @@
 	          $('#rw').html(data);
 	        }
 	      });
-
+		$('#rw').change();
 	      return false;
 	    }).change();
 
 
+		$('#rw').change(function(){
+	     var kelurahan = $('#kelurahan').val();
+	      var rw = $(this).val();
+	      $.ajax({
+	        url : '<?php echo site_url('eform/laporan_kpldh/get_rukunwargafilter') ?>',
+	        type : 'POST',
+	        data : 'rw=' + rw+'&kelurahan=' + kelurahan,
+	        success : function(data) {
+	          $('#rt').html(data);
+	        }
+	      });
+
+	      return false;
+	    }).change();
 
 	 
 

@@ -43,7 +43,7 @@
       $('#btn-save-add').click(function(){
         $.get("<?php echo base_url()?>eform/data_kepala_keluarga/cekkonek/",function(response){
           if(response=='ready'){
-              if (($("#bpjs").val() != '')) {
+              if (($("#bpjs").val() != '') && $("#bpjs").val().length==13) {
                 if (confirm("Daftarkan Home Visit ? ")) {
                     $.get("<?php echo base_url()?>eform/data_kepala_keluarga/simpanbpjs/"+$("#bpjs").val(),function(res){
                       if (res=='bpjserror') {
@@ -65,6 +65,8 @@
                   }else{
                       simpandata();
                   }
+              }else{
+                simpandata();
               }
           }else{
             simpandata();

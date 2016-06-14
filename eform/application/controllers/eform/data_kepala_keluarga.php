@@ -990,10 +990,17 @@ $data_tabel[] = array(
         $this->form_validation->set_rules('namakepalakeluarga', 'Nama Kepala Keluarga', 'trim|required');
         $this->form_validation->set_rules('notlp', 'No. HP / Telepon', 'trim|required');
         $this->form_validation->set_rules('namadesawisma', 'Nama Desa Wisma', 'trim|required');
+        $this->form_validation->set_rules('jml_anaklaki', 'Jumlah Laki-laki', 'trim|required');
+        $this->form_validation->set_rules('jml_anakperempuan', 'Jumlah Perempuan', 'trim|required');
+        $this->form_validation->set_rules('pus_ikutkb', 'Jumlah PUS Peserta KB', 'trim|required');
+        $this->form_validation->set_rules('pus_tidakikutkb', 'Jumlah PUS Bukan Peserta KB', 'trim|required');
         $this->form_validation->set_rules('jabatanstuktural', '', 'trim');
         $this->form_validation->set_rules('kelurahan', '', 'trim');
         $this->form_validation->set_rules('kodepos', '', 'trim');
         
+
+
+
 		if($this->form_validation->run()== FALSE){
 			$data['title_group'] = "eForm - Ketuk Pintu";
 			$data['title_form']="Tambah Data Keluarga";
@@ -1037,6 +1044,10 @@ $data_tabel[] = array(
         $this->form_validation->set_rules('jabatanstuktural', '', 'trim');
         $this->form_validation->set_rules('kelurahan', '', 'trim');
         $this->form_validation->set_rules('kodepos', '', 'trim');
+        $this->form_validation->set_rules('jml_anaklaki', 'Jumlah Laki-laki', 'trim|required');
+        $this->form_validation->set_rules('jml_anakperempuan', 'Jumlah Perempuan', 'trim|required');
+        $this->form_validation->set_rules('pus_ikutkb', 'Jumlah PUS Peserta KB', 'trim|required');
+        $this->form_validation->set_rules('pus_tidakikutkb', 'Jumlah PUS Bukan Peserta KB', 'trim|required');
         $this->form_validation->set_rules('nama_koordinator', '', 'trim');
         $this->form_validation->set_rules('nama_pendata', '', 'trim');
         $this->form_validation->set_rules('jam_selesai', '', 'trim');

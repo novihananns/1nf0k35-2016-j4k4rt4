@@ -275,6 +275,9 @@ class Datakeluarga_model extends CI_Model {
     function insert_entry(){
         $id = $this->getNourutkel($this->input->post('kelurahan'));
 
+
+
+
         $data=array(
             'id_data_keluarga'  => $id['id_data_keluarga'],
             'nourutkel'         => $id['nourutkel'],
@@ -282,6 +285,10 @@ class Datakeluarga_model extends CI_Model {
             'jam_data'          => $this->input->post('jam_data'),
             'alamat'            => $this->input->post('alamat'),
             'id_propinsi'       => $this->input->post('provinsi'),
+            'jml_anaklaki'      => $this->input->post('jml_anaklaki'),
+            'jml_anakperempuan' => $this->input->post('jml_anakperempuan'),
+            'pus_ikutkb'        => $this->input->post('pus_ikutkb'),
+            'pus_tidakikutkb'   => $this->input->post('pus_tidakikutkb'),
             'id_kota'           => $this->input->post('kota'),
             'id_kecamatan'      => $this->input->post('id_kecamatan'),
             'id_desa'           => $this->input->post('kelurahan'),
@@ -391,6 +398,10 @@ class Datakeluarga_model extends CI_Model {
             'nama_komunitas'    => $this->input->post('namakomunitas'),
             'namakepalakeluarga'=> $this->input->post('namakepalakeluarga'),
             'notlp'             => $this->input->post('notlp'),
+            'jml_anaklaki'      => $this->input->post('jml_anaklaki'),
+            'jml_anakperempuan' => $this->input->post('jml_anakperempuan'),
+            'pus_ikutkb'        => $this->input->post('pus_ikutkb'),
+            'pus_tidakikutkb'   => $this->input->post('pus_tidakikutkb'),
             'namadesawisma'     => $this->input->post('namadesawisma'),
             'id_pkk'            => $this->input->post('jabatanstuktural'),
             'nama_koordinator'  => $this->input->post('nama_koordinator'),

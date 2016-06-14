@@ -26,8 +26,11 @@
 				<?php
 						}
 				?>
+				
 				 	<button type="button" class="btn btn-warning" id="btn-refresh"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
 				 	<button type="button" class="btn btn-success" id="btn-export"><i class='fa fa-file-excel-o'></i> &nbsp; Export</button>
+				 	<button type="button" class="btn btn-danger" id="btn-exportall" style="display:none"><i class='fa fa-file-excel-o'></i> &nbsp; Export All</button>
+				 	<button type="button" class="btn btn-danger" id="export-loader" style="display:none"><i class='fa fa-clock-o'></i> &nbsp; Loading ...</button>
 				 </div>
 			</div>
 			<div class="box-body">
@@ -220,6 +223,11 @@
     $('#kelurahan').change(function(){
       var kelurahan = $(this).val();
      // var id_mst_inv_ruangan = '<?php echo set_value('ruangan')?>';
+     if(kelurahan == "" || kelurahan === null){
+      	$("#btn-exportall").hide();
+      }else{
+      	$("#btn-exportall").show('fade');
+      }
       $.ajax({
         url : '<?php echo site_url('eform/data_kepala_keluarga/get_kelurahanfilter') ?>',
         type : 'POST',
@@ -302,6 +310,55 @@
 		
 		$.post("<?php echo base_url()?>eform/data_kepala_keluarga/datakepalakeluaraexport",post,function(response	){
 			//alert(response);
+			window.location.href=response;
+		});
+	});
+	$("#btn-exportall").click(function(){
+		$("#btn-exportall").hide();
+		$("#export-loader").show('fade');
+
+		var post = "";
+		var getpaginginformation = $("#jqxgrid").jqxGrid('getpaginginformation');
+		var pagesize = getpaginginformation.pagesize;
+		var pagenum = getpaginginformation.pagenum;
+		var filter = $("#jqxgrid").jqxGrid('getfilterinformation');
+		for(i=0; i < filter.length; i++){
+			var fltr 	= filter[i];
+			var value	= fltr.filter.getfilters()[0].value;
+			var condition	= fltr.filter.getfilters()[0].condition;
+			var filteroperation	= fltr.filter.getfilters()[0].operation;
+			var filterdatafield	= fltr.filtercolumn;
+			if(filterdatafield=="tanggal_pengisian"){
+				var d = new Date(value);
+				var day = d.getDate();
+				var month = d.getMonth();
+				var year = d.getFullYear();
+				value = year+'-'+month+'-'+day;
+				
+			}
+
+			post = post+'&filtervalue'+i+'='+value;
+			post = post+'&filtercondition'+i+'='+condition;
+			post = post+'&filteroperation'+i+'='+filteroperation;
+			post = post+'&filterdatafield'+i+'='+filterdatafield;
+			post = post+'&'+filterdatafield+'operator=and';
+		}
+		post = post+'&filterscount='+i+'&recordstartindex='+(pagenum * pagesize)+'&pagesize='+pagesize;
+		
+		var sortdatafield = $("#jqxgrid").jqxGrid('getsortcolumn');
+		if(sortdatafield != "" && sortdatafield != null){
+			post = post + '&sortdatafield='+sortdatafield;
+		}
+		if(sortdatafield != null){
+			var sortorder = $("#jqxgrid").jqxGrid('getsortinformation').sortdirection.ascending ? "asc" : ($("#jqxgrid").jqxGrid('getsortinformation').sortdirection.descending ? "desc" : "");
+			post = post+'&sortorder='+sortorder;
+			
+		}
+		post = post+'&kecamatan='+$("#kecamatan option:selected").text()+'&kelurahan='+$("#kelurahan option:selected").text()+'&rukunwarga='+$("#rukunwarga option:selected").text()+'&rukunrumahtangga='+$("#rukunrumahtangga option:selected").text();
+		
+		$.post("<?php echo base_url()?>eform/data_kepala_keluarga/dataallexport",post,function(response	){
+			$("#export-loader").hide();
+	      	$("#btn-exportall").show('fade');
 			window.location.href=response;
 		});
 	});

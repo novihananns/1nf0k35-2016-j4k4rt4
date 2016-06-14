@@ -93,7 +93,7 @@
 				  	</div>
 				  	<div class="col-md-12">
 						<div class="form-group pull-right">
-						<!--	<button id="btn-export" type="button"  class="btn btn-success"><i class='fa fa-file-excel-o'></i> &nbsp; Export</button>-->
+							<!-- <button id="btn-export" type="button"  class="btn btn-success"><i class='fa fa-file-excel-o'></i> &nbsp; Export</button> -->
             				<button id="btn-preview" type="button"  class="btn btn-warning"><i class='fa fa-bar-chart-o'></i> &nbsp; Tampilkan Laporan & Chart</button>
 						</div>
 				  	</div>
@@ -218,18 +218,23 @@
        
 	});
 	$("#btn-export").click(function(){
-  		var judul = $('[name=laporan] :selected').text();
-  		var id_judul = $("#laporan").val();
-  		var kecamatanbar = $("#kecamatan").val();
-  		var kelurahanbar = $("#kelurahan").val();
-  		var rw = $("#rw").val();
+		if ($("#laporan").val()=='') {
+			alert('Silahkan Pilih Laporan');
+		}else{
+			var judul = $('[name=laporan] :selected').text();
+	  		var id_judul = $("#laporan").val();
+	  		var kecamatanbar = $("#kecamatan").val();
+	  		var kelurahanbar = $("#kelurahan").val();
+	  		var rw = $("#rw").val();
+	  		var rt = $("#rt").val();
 
-		var post = "";
-		post = post+'judul='+judul+'&kecamatan='+ kecamatanbar+'&kelurahan=' + kelurahanbar+'&rw=' + rw+'&id_judul=' + id_judul;
-		
-		$.post("<?php echo base_url()?>eform/export_data/pilih_export",post,function(response){
-			//window.location.href=response;
-			alert(response);
-		});
+			var post = "";
+			post = post+'judul='+judul+'&kecamatan='+ kecamatanbar+'&kelurahan=' + kelurahanbar+'&rw=' + rw+'&rt=' + rt+'&id_judul=' + id_judul;
+			
+			$.post("<?php echo base_url()?>eform/export_data/pilih_export",post,function(response){
+				// window.location.href=response;
+				alert(response);
+			});
+		}
 	});
 </script>

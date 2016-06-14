@@ -8,7 +8,6 @@ class Laporan_kpldh_model extends CI_Model {
         parent::__construct();
         $this->lang   = $this->config->item('language');
     }
-    
     /*public function get_jum_kelamin($kecamatan=0,$kelurahan=0,$rw=0)
     {
         if ($kecamatan!=0) {

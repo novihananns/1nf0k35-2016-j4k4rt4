@@ -25,8 +25,8 @@ class Morganisasi extends CI_Controller {
 		$penduduk 	= $this->morganisasi_model->get_data_penduduk();
 		$data['kecamatan'] 	= $this->morganisasi_model->get_data_kecamatan();
 		$data['j_kecamatan']= count($data['kecamatan']);
-		$data['j_penduduk'] = count($penduduk);
-		$data['j_kk'] 		= count($kk);
+		$data['j_penduduk'] = $penduduk;//count($penduduk);
+		$data['j_kk'] 		= $kk;//count($kk);
 
 		$bar = array();
 		$pie = array();

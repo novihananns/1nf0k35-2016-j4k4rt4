@@ -24,14 +24,29 @@ class Morganisasi_model extends CI_Model {
     }
     
     function get_data_kk(){
-		$data = $this->db->get('data_keluarga')->result_array();
-
+    	$this->db->select("count(*) as jml");
+		$data = $this->db->get('data_keluarga');
+		if($data->num_rows() > 0){
+			foreach ($data->result() as $key) {
+				$data = $key->jml;
+			}
+		}else{
+				$data = 0;
+		}
+		
 		return $data;
     }
     
     function get_data_penduduk(){
-		$data = $this->db->get('data_keluarga_anggota')->result_array();
-
+    	$this->db->select("count(*) as jml");
+		$data = $this->db->get('data_keluarga_anggota');
+		if($data->num_rows() > 0){
+			foreach ($data->result() as $key) {
+				$data = $key->jml;
+			}
+		}else{
+				$data = 0;
+		}
 		return $data;
     }
     

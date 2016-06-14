@@ -197,15 +197,6 @@
         ?>
         </div>
       </div>
-
-    </div>
-  </div><!-- /.form-box -->
-</div><!-- /.form-box -->
-
-  <div class="col-md-6">
-    <div class="box box-warning">
-      <div class="box-body">
-
       <div class="row" style="margin: 5px">
         <div class="col-md-4" style="padding: 5px">Alamat</div>
         <div class="col-md-8">
@@ -215,17 +206,26 @@
         }else{
         ?>
             <textarea name="alamat" id="alamat" class="form-control" placeholder="Alamat"><?php 
-      			if(set_value('alamat')=="" && isset($alamat)){
-      				echo $alamat;
-      			}else{
-      				echo  set_value('alamat');
-      			}
-  			?></textarea>
+            if(set_value('alamat')=="" && isset($alamat)){
+              echo $alamat;
+            }else{
+              echo  set_value('alamat');
+            }
+        ?></textarea>
         <?php 
         }
         ?>
         </div>
       </div>
+    </div>
+  </div><!-- /.form-box -->
+</div><!-- /.form-box -->
+
+  <div class="col-md-6">
+    <div class="box box-warning">
+      <div class="box-body">
+
+      
        
       <div class="row" style="margin: 5px">
         <div class="col-md-5" style="padding: 5px">Nama Komunitas</div>
@@ -334,6 +334,102 @@
         <?php 
         }
         ?>
+        </div>
+      </div>
+
+      <div class="row" style="margin: 5px">
+        <div class="col-md-12" style="padding: 5px">Jumlah Jiwa</div>
+      </div>
+
+      <div class="row" style="margin: 5px">
+        <div class="col-md-1" style="padding: 5px"></div>
+        <div class="col-md-4" style="padding: 5px">Laki-laki</div>
+        <div class="col-md-7">
+          <?php
+          if ($action=="detail") {
+             echo $jml_anaklaki;
+          }else{
+          ?>          
+          <input type="number" name="jml_anaklaki" placeholder="Jumlah Laki-laki" id="jml_anaklaki" value="<?php 
+            if(set_value('jml_anaklaki')=="" && isset($jml_anaklaki)){
+              echo $jml_anaklaki;
+            }else{
+              echo  set_value('jml_anaklaki');
+            }
+            ?>" class="form-control">
+            <?php 
+            }
+            ?>
+        </div>
+      </div>
+
+      <div class="row" style="margin: 5px">
+        <div class="col-md-1" style="padding: 5px"></div>
+        <div class="col-md-4" style="padding: 5px">Perempuan</div>
+        <div class="col-md-7">
+        <?php
+          if ($action=="detail") {
+             echo $jml_anakperempuan;
+          }else{
+          ?> 
+          <input type="number" name="jml_anakperempuan" placeholder="Jumlah Perempuan" id="jml_anakperempuan" value="<?php 
+            if(set_value('jml_anakperempuan')=="" && isset($jml_anakperempuan)){
+              echo $jml_anakperempuan;
+            }else{
+              echo  set_value('jml_anakperempuan');
+            }
+            ?>" class="form-control">
+            <?php 
+            }
+            ?>
+        </div>
+      </div>
+        
+      <div class="row" style="margin: 5px">
+        <div class="col-md-12" style="padding: 5px">Jumlah PUS</div>
+      </div>
+
+      <div class="row" style="margin: 5px">
+        <div class="col-md-1" style="padding: 5px"></div>
+        <div class="col-md-4" style="padding: 5px">Peseta KB</div>
+        <div class="col-md-7">
+        <?php
+          if ($action=="detail") {
+             echo $pus_ikutkb;
+          }else{
+          ?> 
+          <input type="number" name="pus_ikutkb" placeholder="Pus Peserta KB" id="pus_ikutkb" value="<?php 
+            if(set_value('pus_ikutkb')=="" && isset($pus_ikutkb)){
+              echo $pus_ikutkb;
+            }else{
+              echo  set_value('pus_ikutkb');
+            }
+            ?>" class="form-control">
+            <?php 
+            }
+            ?>
+        </div>
+      </div>
+
+      <div class="row" style="margin: 5px">
+        <div class="col-md-1" style="padding: 5px"></div>
+        <div class="col-md-4" style="padding: 5px">Bukan Peserta KB</div>
+        <div class="col-md-7">
+        <?php
+          if ($action=="detail") {
+             echo $pus_tidakikutkb;
+          }else{
+          ?>
+          <input type="number" name="pus_tidakikutkb" placeholder="Pus Bukan peserta KB" id="pus_tidakikutkb" value="<?php 
+            if(set_value('pus_tidakikutkb')=="" && isset($pus_tidakikutkb)){
+              echo $pus_tidakikutkb;
+            }else{
+              echo  set_value('pus_tidakikutkb');
+            }
+            ?>" class="form-control">
+            <?php 
+            }
+            ?>
         </div>
       </div>
 

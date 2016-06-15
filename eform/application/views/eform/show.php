@@ -57,7 +57,7 @@
         <div class="box-body">
         <div class="row" id="row_dim">
           <div class="chart">
-            <canvas id="barChart" height="240" width="511" style="width: 511px; height: 240px;"></canvas>
+            <canvas id="barChart" height="240" width="511" style="width: 511px; height: 300px;min-height: 300px;"></canvas>
           </div>
         </div>
         <!--<div class="row">

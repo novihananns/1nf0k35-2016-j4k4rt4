@@ -320,19 +320,6 @@
       </div>
 
       <div class="row" style="margin: 5px">
-        <div class="col-md-5" style="padding: 5px">Nama Pendata</div>
-        <div class="col-md-7">
-          <input type="text" name="nama_pendata" id="nama_pendata" value="<?php 
-            if(set_value('nama_pendata')=="" && isset($nama_pendata)){
-              echo $nama_pendata;
-            }else{
-              echo  set_value('nama_pendata');
-            }
-            ?>" class="form-control">
-        </div>
-      </div>
-
-      <div class="row" style="margin: 5px">
         <div class="col-md-5" style="padding: 5px">Jam Selesai Mendata</div>
         <div class="col-md-7">
           <div id='jam_selesai' name="jam_selesai"></div>

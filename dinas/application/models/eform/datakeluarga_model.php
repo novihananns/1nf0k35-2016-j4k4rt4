@@ -468,7 +468,7 @@ class Datakeluarga_model extends CI_Model {
         $data = array();
         
         $this->db->where("data_keluarga.id_data_keluarga IN ('".$keluarga."')");
-        $this->db->select("data_keluarga.namakepalakeluarga,data_keluarga.id_data_keluarga as id,data_keluarga_anggota.*,(year(curdate())-year(data_keluarga_anggota.tgl_lahir)) as usia");
+        $this->db->select("data_keluarga.namakepalakeluarga,data_keluarga.id_data_keluarga as id,data_keluarga_anggota.*,(year(curdate())-year(data_keluarga_anggota.tgl_lahir)) as usia,data_keluarga.jml_anaklaki,data_keluarga.jml_anakperempuan,data_keluarga.pus_ikutkb,data_keluarga.pus_tidakikutkb");
         $this->db->join("data_keluarga","data_keluarga.id_data_keluarga=data_keluarga_anggota.id_data_keluarga","right");
         $this->db->order_by('data_keluarga.nourutkel');
         $query =$this->db->get('data_keluarga_anggota');

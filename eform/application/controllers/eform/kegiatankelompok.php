@@ -315,7 +315,8 @@ class Kegiatankelompok extends CI_Controller {
 	{
 		if($this->input->is_ajax_request()) {
 			$datakelom = $this->input->post('datakelom');
-
+			$puskes = 'P'.$this->session->userdata('puskesmas');
+			$this->db->where('provider',$puskes);
 			$kode 	= $this->kegiatankelompok_model->getSelectedData('mas_club',array('kdProgram'=>$datakelom))->result();
 			$kode_club='';
 			'<option value="">Pilih Ruangan</option>';
@@ -334,7 +335,8 @@ class Kegiatankelompok extends CI_Controller {
 		if($this->input->is_ajax_request()) {
 			$datakelom = $this->input->post('datakelom');
 			$kode_club = $this->input->post('kode_club');
-
+			$puskes = 'P'.$this->session->userdata('puskesmas');
+			$this->db->where('provider',$puskes);
 			$kode 	= $this->kegiatankelompok_model->getSelectedData('mas_club',array('kdProgram'=>$datakelom))->result();
 			
 			'<option value="">Pilih Ruangan</option>';

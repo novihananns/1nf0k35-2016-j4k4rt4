@@ -2,6 +2,15 @@
 <script>
 
 	$(function(){
+		$("#btn-back-pesertadata").hide();
+		$('#btn-back-pesertadata').click(function(){
+            $("#tambahtjqxgrid_peserta").hide();
+            $("#btn-back-pesertadata").hide();
+            $("#jqxgrid_peserta").show();
+            $("#btn_add_peserta").show();
+            $("#btn-refresh-datapeserta").show();
+            $("#jqxgrid_peserta").jqxGrid('updatebounddata', 'cells');
+      });
 		$("#menu_kegiatan_kelompok").addClass("active");
       $("#menu_kegiatankelompok").addClass("active");	
 	   var source = {
@@ -123,7 +132,7 @@
 		$("#tambahtjqxgrid_peserta").hide();
 	});
 	
-
+	
 	function add_peserta(){
 		
 		$.get("<?php echo base_url().'eform/kegiatankelompok/tab/1/'.$kode.'/'; ?>" , function(data) {
@@ -132,6 +141,7 @@
 			$("#btn_add_peserta").hide();
 			$("#btn-refresh-datapeserta").hide();
 			$("#jqxgrid_peserta").hide();
+			$("#btn-back-pesertadata").show();
 		});
 	}
 
@@ -155,6 +165,7 @@
 		<div style="padding:5px" class="pull-right">
 			<button class="btn btn-success" id='btn_add_peserta' type='button'><i class='fa fa-plus-square'></i> Tambah peserta</button>
 			<button type="button" class="btn btn-primary" id="btn-refresh-datapeserta"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
+			<button type="button" id="btn-back-pesertadata" class="btn btn-warning"><i class='fa fa-reply'></i> &nbsp; Kembali</button>
 		</div>
         <div id="jqxgrid_peserta"></div>
         <div id="tambahtjqxgrid_peserta"></div>

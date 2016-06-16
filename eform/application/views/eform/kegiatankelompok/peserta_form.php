@@ -232,7 +232,7 @@
             </div>
           </div>
             <div class="col-md-12" style="text-align: right">
-                <button type="button" id="btn-back-peserta" class="btn btn-warning"><i class='fa fa-reply'></i> &nbsp; Kembali</button>
+                <!-- <button type="button" id="btn-back-peserta" class="btn btn-warning"><i class='fa fa-reply'></i> &nbsp; Kembali</button> -->
                 <button type="button" id="btn-save-add-peserta" class="btn btn-success"><i class='fa fa-save'></i> &nbsp; Pilih</button>
             </div>
           </div>

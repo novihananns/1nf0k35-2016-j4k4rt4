@@ -16,8 +16,7 @@
       <div class="box box-primary">
       <div class="box-footer">
         <button type="button" class="btn btn-primary" id="btn-refresh-pesertabpjs"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
-        <button type="button" id="btn-back-pesertadata" class="btn btn-warning"><i class='fa fa-reply'></i> &nbsp; Kembali</button>
-        <button type="button" onclick="doList()" class="btn btn-success" id="btn-success"><i class='fa fa-sign-in'></i> &nbsp; Pilih </button>
+        <!-- <button type="button" onclick="doList()" class="btn btn-success" id="btn-success"><i class='fa fa-sign-in'></i> &nbsp; Pilih </button> -->
       </div>
         <div class="box-body">
         <div class="div-grid">
@@ -121,7 +120,7 @@
           if (res[0]=="OK") {
 
           }else{
-            
+
           }
       });
        // if (event.args.value) {
@@ -172,11 +171,5 @@
     var data = $("input[name='pesertaceklis']:checked").val();
     alert(data);
   }
-        $('#btn-back-pesertadata').click(function(){
-            $("#tambahtjqxgrid_peserta").hide();
-            $("#jqxgrid_peserta").show();
-            $("#btn_add_peserta").show();
-            $("#btn-refresh-datapeserta").show();
-            $("#jqxgrid_peserta").jqxGrid('updatebounddata', 'cells');
-      });
+        
 </script>

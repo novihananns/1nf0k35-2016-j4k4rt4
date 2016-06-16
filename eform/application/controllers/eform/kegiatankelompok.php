@@ -291,7 +291,7 @@ class Kegiatankelompok extends CI_Controller {
 	function index(){
 		$this->authentication->verify('eform','edit');
 		$data['title_group'] = "eform";
-		$data['title_form'] = "Daftar Pengadaan Barang";
+		$data['title_form'] = "Kegiatan Kelompok";
 
 		$kodepuskesmas = $this->session->userdata('puskesmas');
 		if(substr($kodepuskesmas, -2)=="01"){
@@ -366,7 +366,7 @@ class Kegiatankelompok extends CI_Controller {
 
 		if($this->form_validation->run()== FALSE){
 			$data['title_group'] = "eform";
-			$data['title_form']="Tambah Pengadaan Barang";
+			$data['title_form']="Tambah Kegiatan Kelompok";
 			$data['action']="add";
 			$data['kode']="";
 
@@ -410,7 +410,7 @@ class Kegiatankelompok extends CI_Controller {
 		if($this->form_validation->run()== FALSE){
 			$data 	= $this->kegiatankelompok_model->get_data_row($id_kegiatan);
 			$data['title_group'] 	= "eform";
-			$data['title_form']		= "Ubah Pengadaan Barang";
+			$data['title_form']		= "Ubah Kegiatan Kelompok";
 			$data['action']			= "edit";
 			$data['kode']			= $id_kegiatan;
 			$kodepuskesmas = $this->session->userdata('puskesmas');
@@ -604,7 +604,7 @@ class Kegiatankelompok extends CI_Controller {
 				break;
 			default:
 					// $this->add_peserta($id_kegiatan);
-				die($this->parser->parse("eform/kegiatankelompok/peserta_form",$data));
+				$this->add_peserta($id_kegiatan);
 				break;
 		}
 
@@ -624,6 +624,7 @@ class Kegiatankelompok extends CI_Controller {
         $this->form_validation->set_rules('nama', 'Nama', 'trim|required');
         $this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir', 'trim|required');
         $this->form_validation->set_rules('id_pilihan_kelamin', 'Jenis Kelamin', 'trim|required');
+        $this->form_validation->set_rules('jenis_peserta', 'Jenis Peserta', 'trim|required');
 
 		if($this->form_validation->run()== FALSE){
 			$data['data_pilihan_kelamin'] = $this->kegiatankelompok_model->get_pilihan("jk");
@@ -640,7 +641,7 @@ class Kegiatankelompok extends CI_Controller {
 			if ($qwery->num_rows() > 0) {
 				die("Error|Data Telah Tersimpan");
 			}else{
-				$jenispeserta = 'apa';//$this->input->post('jenis_peserta')
+				$jenispeserta = $this->input->post('jenis_peserta');
 				$tgl = explode('-', $this->input->post('tgl_lahir'));
 				$tgl_lahir = $tgl[2].'-'.$tgl[1].'-'.$tgl[0];
 				$kel = $this->input->post('id_pilihan_kelamin');

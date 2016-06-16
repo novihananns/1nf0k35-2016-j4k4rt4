@@ -14,6 +14,7 @@
         data.append('nik', $("[name='nik']").val());
         data.append('bpjs', $("[name='bpjs']").val());
         data.append('nama', $("[name='nama']").val());
+        data.append('jenis_peserta', $("[name='jenis_peserta']").val());
         data.append('tgl_lahir', $("[name='tgl_lahir']").val());
         data.append('id_pilihan_kelamin', $("[name='id_pilihan_kelamin']").val());
 
@@ -53,6 +54,7 @@
                 if(confirm("Anggota keluarga terdaftar sebagai peserta BPJS. \nGunakan data?")){
                   $("#bpjs").val(res.response.noKartu);
                   $("#nama").val(res.response.nama);
+                  $("#jenis_peserta").val(res.response.jnsPeserta.nama);
                   var tgl = res.response.tglLahir.split("-");
                   var date = new Date(tgl[2], (tgl[1]-1), tgl[0]);
                   $("#tgl_lahir").jqxDateTimeInput('setDate', date);
@@ -81,7 +83,7 @@
                 if(confirm("Nomor BPJS terdaftar, gunakan data?")){
                   if(res.response.noKTP!=null) $("input[name='nik']").val(res.response.noKTP);
                   $("#nama").val(res.response.nama);
-
+                  $("#jenis_peserta").val(res.response.jnsPeserta.nama);
                   var tgl = res.response.tglLahir.split("-");
                   var date = new Date(tgl[2], (tgl[1]-1), tgl[0]);
                   $("#tgl_lahir").jqxDateTimeInput('setDate', date);
@@ -194,7 +196,18 @@
               </div>
             </div>
           </div>
-          
+          <div class="row" style="margin: 5px">
+            <div class="col-md-4" style="padding: 5px">Nama</div>
+            <div class="col-md-8">
+              <input type="text" name="jenis_peserta" id="jenis_peserta" placeholder="Jenis Peserta" value="<?php 
+                if(set_value('jenis_peserta')=="" && isset($jenis_peserta)){
+                  echo $jenis_peserta;
+                }else{
+                  echo  set_value('jenis_peserta');
+                }
+                ?>" class="form-control">
+            </div>
+          </div>
           <div class="row" style="margin: 5px">
             <div class="col-md-4" style="padding: 5px">Jenis Kelamin</div>
             <div class="col-md-8">

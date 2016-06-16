@@ -7,7 +7,7 @@ class Kegiatankelompok_model extends CI_Model {
     function __construct() {
         parent::__construct();
 		$this->lang	  = $this->config->item('language');
-
+        $this->load->model('bpjs');
     }
     function get_data_puskesmas()
     {   
@@ -25,16 +25,18 @@ class Kegiatankelompok_model extends CI_Model {
         return $data;
     }
     function add_pesertabpjs($id_kegiatan,$id_data){
+
         $db = explode('_tr_',$id_data);
         for($i=0; $i<(count($db))-1; $i++){
             $peserta = explode('_td_', $db[$i]);
             $datalengkap = $this->lengkapdata($peserta[0]);
+            $databpjs = $this->bpjs->bpjs_search('bpjs',$peserta[0]);
             $values = array(
                 'id_data_kegiatan'      => $id_kegiatan,
                 'no_kartu'              => $datalengkap['bpjs'],
                 'nama'                  => $datalengkap['nama'],
                 'sex'                   => $datalengkap['id_pilihan_kelamin'],
-                'jenis_peserta'         => $datalengkap['suku'],
+                'jenis_peserta'         => $databpjs['response']['jnsPeserta']['nama'],
                 'tgl_lahir'             => $datalengkap['tgl_lahir']
             );
             $this->db->insert('data_kegiatan_peserta', $values);

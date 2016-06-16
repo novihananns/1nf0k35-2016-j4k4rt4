@@ -130,6 +130,7 @@
 			$("#tambahtjqxgrid_peserta").show();
 			$("#tambahtjqxgrid_peserta").html(data);
 			$("#btn_add_peserta").hide();
+			$("#btn-refresh-datapeserta").hide();
 			$("#jqxgrid_peserta").hide();
 		});
 	}

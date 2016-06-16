@@ -509,6 +509,8 @@ class Kegiatankelompok extends CI_Controller {
 				'usia'					=> $act->usia,
 				'suku'					=> $act->suku,
 				'no_hp'					=> $act->no_hp,
+				'ceklis'				=> isset($act->no_kartu) ? 1:0,
+				'no_kartu'				=> $act->no_kartu,
 				'edit'					=> 1,
 				'delete'				=> 1
 			);
@@ -528,6 +530,14 @@ class Kegiatankelompok extends CI_Controller {
 		
 		if($this->kegiatankelompok_model->add_pesertabpjs($iddata,$data_peserta)==true){			
 			die("OK|");
+		}else{
+			die("Error|Proses data gagal");
+		}
+	}
+	function addpesetabpjsterdaftar($id_data_kegiatan=0,$no_kartu=0){
+
+		if($this->kegiatankelompok_model->add_pesetabpjsterdaftar($id_data_kegiatan,$no_kartu)==true){			
+			die("OK|Data Telah disimpan");
 		}else{
 			die("Error|Proses data gagal");
 		}

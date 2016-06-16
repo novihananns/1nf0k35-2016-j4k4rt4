@@ -5,6 +5,7 @@
             $("#tambahtjqxgrid_peserta").hide();
             $("#jqxgrid_peserta").show();
             $("#btn_add_peserta").show();
+            $("#btn-refresh-datapeserta").show();
             $("#jqxgrid_peserta").jqxGrid('updatebounddata', 'cells');
       });
       function simpandatapeserta() {
@@ -32,6 +33,7 @@
               }else{
                   $("#tambahtjqxgrid_peserta").hide();
                   $("#btn_add_peserta").show();
+                  $("#btn-refresh-datapeserta").show();
                   $("#jqxgrid_peserta").show();
                   $("#jqxgrid_peserta").jqxGrid('updatebounddata', 'cells');
               }

@@ -15,8 +15,8 @@
       <!-- general form elements -->
       <div class="box box-primary">
       <div class="box-footer">
-      <button type="button" id="btn-back-pesertadata" class="btn btn-warning"><i class='fa fa-reply'></i> &nbsp; Kembali</button>
         <button type="button" class="btn btn-primary" id="btn-refresh-pesertabpjs"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
+        <button type="button" id="btn-back-pesertadata" class="btn btn-warning"><i class='fa fa-reply'></i> &nbsp; Kembali</button>
         <button type="button" onclick="doList()" class="btn btn-success" id="btn-success"><i class='fa fa-sign-in'></i> &nbsp; Pilih </button>
       </div>
         <div class="box-body">
@@ -42,7 +42,6 @@
       datatype: "json",
       type  : "POST",
       datafields: [
-      { name: 'no_kartu', type: 'string' },
       { name: 'id_data_kegiatan', type: 'string' },
       { name: 'nama', type: 'string' },
       { name: 'bpjs', type: 'string' },
@@ -52,6 +51,8 @@
       { name: 'usia', type: 'string' },
       { name: 'jeniskelamin', type: 'string' },
       { name: 'jenis_peserta', type: 'string' },
+      { name: 'no_kartu', type: 'string' },
+      { name: 'ceklis', type: 'number' },
         ],
     url: "<?php echo site_url('eform/kegiatankelompok/json_pesertabpjs'); ?>",    
     cache: false,
@@ -93,11 +94,16 @@
         return obj.data;
       },
       columns: [
-        { text: 'Pilih', align: 'center', filtertype: 'none', sortable: false, width: '4%', cellsrenderer: function (row) {
-            var dataRecord = $("#jqxgridPesertaBPJS").jqxGrid('getrowdata', row);
-          return "<div style='width:100%;padding-top:2px;text-align:center'><input type='checkbox' name='aset[]' value="+dataRecord.bpjs+" ></div>";
-                 }
-                },
+        { text: 'Pilih',filtertype: 'none', datafield: 'no_kartu', columntype: 'checkbox', width: 40 },
+        // { text: 'Pilih', align: 'center', filtertype: 'none', sortable: false, width: '4%', cellsrenderer: function (row) {
+        //     var dataRecord = $("#jqxgridPesertaBPJS").jqxGrid('getrowdata', row);
+        //     if (dataRecord.ceklis==1) {
+        //         return "<div style='width:100%;padding-top:2px;text-align:center'><input type='checkbox' onclick='doList()' checked name='pesertaceklis' value="+dataRecord.bpjs+" ></div>";
+        //     }else{
+        //         return "<div style='width:100%;padding-top:2px;text-align:center'><input type='checkbox' onclick='doList()' name='pesertaceklis' value="+dataRecord.bpjs+" ></div>";
+        //     }
+        //   }
+        // },
         { text: 'No Kartu', align: 'center',cellsalign: 'center',editable: false, datafield: 'bpjs', columntype: 'textbox', filtertype: 'textbox', width: '22%' },
         { text: 'Nama Peserta ', editable: false,datafield: 'nama', columntype: 'textbox', filtertype: 'textbox', width: '23%'},
         { text: 'Jenis Kelamin ', editable: false,datafield: 'jeniskelamin', columntype: 'textbox', filtertype: 'textbox', width: '11%'},
@@ -107,17 +113,38 @@
             ]
     });
     
-  
+    $("#jqxgridPesertaBPJS").bind('cellendedit', function (event) {
+       
+      var datarow = $("#jqxgridPesertaBPJS").jqxGrid('getrowdata', event.args.rowindex);
+      $.get("<?php echo base_url().'eform/kegiatankelompok/addpesetabpjsterdaftar/'.$kode; ?>/"+datarow.bpjs ,function(data){
+          var res = data.split("|");
+          if (res[0]=="OK") {
+
+          }else{
+            
+          }
+      });
+       // if (event.args.value) {
+       //     $("#jqxgridPesertaBPJS").jqxGrid('selectrow', event.args.rowindex);
+
+       // }
+       // else {
+       //     $("#jqxgridPesertaBPJS").jqxGrid('unselectrow', event.args.rowindex);
+       //     alert('koplok');
+       // }
+   });
 
   function add_pesertabpjs(data_pesertabpjs){
     
     $.get("<?php echo base_url().'eform/kegiatankelompok/add_pesertabpjs/'.$kode; ?>"+data_pesertabpjs ,  function(data) {
         res = data.split('|');
         if (res[0]=='OK') {
-            $("#tambahtjqxgrid_peserta").hide();
-            $("#btn_add_peserta").show();
-            $("#jqxgrid_peserta").show();
-            $("#jqxgrid_peserta").jqxGrid('updatebounddata', 'cells');
+            // $("#tambahtjqxgrid_peserta").hide();
+            // $("#btn_add_peserta").show();
+            // $("#btn-refresh-datapeserta").show();
+            // $("#jqxgrid_peserta").show();
+            // $("#jqxgrid_peserta").jqxGrid('updatebounddata', 'cells');
+            $("#jqxgridPesertaBPJS").jqxGrid('updatebounddata', 'cells');
         }else{
           alert(res[1]);
         }
@@ -126,27 +153,30 @@
   }
   
   function doList(){        
-    var values = new Array(); 
-    var data_pesertabpjs = "/";
-    $.each($("input[name='aset[]']:checked"), function() {
-        values.push($(this).val());   
-    });
-    //alert(values);
+    // var values = new Array(); 
+    // var data_pesertabpjs = "/";
+    // $.each($("input[name='aset[]']:checked"), function() {
+    //     values.push($(this).val());   
+    // });
+    // //alert(values);
     
-    if(values.length > 0){
-      for(i=0; i<values.length; i++){
-        data_pesertabpjs = data_pesertabpjs+values[i]+"_tr_";
-      }
-      add_pesertabpjs(data_pesertabpjs);
-    }else{
-      alert('Silahkan Pilih Barang Terlebih Dahulu');
-    }
+    // if(values.length > 0){
+    //   for(i=0; i<values.length; i++){
+    //     data_pesertabpjs = data_pesertabpjs+values[i]+"_tr_";
+    //   }
+    //   add_pesertabpjs(data_pesertabpjs);
+    // }else{
+    //   alert('Silahkan Pilih Barang Terlebih Dahulu');
+    // }
     //alert(data_pesertabpjs); 
+    var data = $("input[name='pesertaceklis']:checked").val();
+    alert(data);
   }
         $('#btn-back-pesertadata').click(function(){
             $("#tambahtjqxgrid_peserta").hide();
             $("#jqxgrid_peserta").show();
             $("#btn_add_peserta").show();
+            $("#btn-refresh-datapeserta").show();
             $("#jqxgrid_peserta").jqxGrid('updatebounddata', 'cells');
       });
 </script>

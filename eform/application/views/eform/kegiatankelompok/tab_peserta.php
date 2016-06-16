@@ -35,7 +35,7 @@
                       <i class="icon fa fa-plus" style="font-size: 18px"></i>
                   </div>
                   <div style="margin-left: 10px; vertical-align: middle; text-align: center; float: left;">
-                      Peserta Ploranis</div>
+                      Cari Peserta Terdaftar</div>
               </div>
             </li>
         </ul>

@@ -377,6 +377,48 @@ class Bpjs extends CI_Model {
         }
     }
    
+	function bpjs_resend_kegiatan($kode){
+    	$this->db->where('id_data_kegiatan',$kode);
+    	$data = $this->db->get('data_kegiatan')->row_array();
+
+    	if($data['status_penyuluhan']==1 && $data['status_senam']==1){
+    		$kdKegiatan = "11";
+    	}elseif($data['status_penyuluhan']==1 && $data['status_senam']==0){
+    		$kdKegiatan = "10";
+    	}else{
+    		$kdKegiatan = "01";
+    	}
+
+        $data_kegiatan = array(
+          "eduId" 		=> null,
+          "clubId" 		=> $data['kode_club'],
+          "tglPelayanan"=> date("d-m-Y",strtotime($data['biaya'])),
+          "kdKegiatan" 	=> $kdKegiatan,
+          "kdKelompok" 	=> $data['kode_kelompok'],
+          "materi" 		=> $data['materi'],
+          "pembicara" 	=> $data['pembicara'],
+          "lokasi" 		=> $data['lokasi'],
+          "keterangan" 	=> $data['keterangan'],
+          "biaya" 		=> $data['biaya'],
+        ); 
+        $datavisit = $this->postApi('kelompok/kegiatan', $data_kegiatan);
+        if (($datavisit['metaData']['message']=='CREATED') && ($datavisit['metaData']['code']=='201')){
+        	$update = array();
+        	$update['eduId'] = $datavisit['response']['message'];
+        	$this->db->where('id_data_kegiatan',$kode);
+        	$this->db->update('data_kegiatan',$update);
+        	return 'ok';
+        }
+        elseif(($datavisit['metaData']['message']=='NOT_MODIFIED') && ($datavisit['metaData']['code']=='304')){
+            return 'dataada';
+        }
+        elseif(($datavisit['metaData']['message']=='PRECONDITION_FAILED') && ($datavisit['metaData']['code']=='412')){
+            return print_r($datavisit['response'],true);
+        }else{
+            return 'bpjserror';
+        }
+    }
+   
 
 }
 ?>

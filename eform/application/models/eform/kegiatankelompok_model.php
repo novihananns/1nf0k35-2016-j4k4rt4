@@ -247,4 +247,10 @@ class Kegiatankelompok_model extends CI_Model {
 
         return $this->bpjs->bpjs_send_kegiatan($kode);
     }
+
+    function bpjs_resend_kegiatan(){
+        $kode = $this->input->post('kode');
+
+        return $this->bpjs->bpjs_resend_kegiatan($kode);
+    }
 }

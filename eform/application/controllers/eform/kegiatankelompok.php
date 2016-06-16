@@ -519,5 +519,12 @@ class Kegiatankelompok extends CI_Controller {
 
       	echo $data;
 	}
+
+	function resend(){
+		$this->authentication->verify('eform','add');
+      	$data = $this->kegiatankelompok_model->bpjs_resend_kegiatan();
+
+      	echo $data;
+	}
 }
 

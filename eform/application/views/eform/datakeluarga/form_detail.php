@@ -293,7 +293,7 @@
 
       <div class="row" style="margin: 5px">
         <div class="col-md-1" style="padding: 5px"></div>
-        <div class="col-md-4" style="padding: 5px">Peseta KB</div>
+        <div class="col-md-4" style="padding: 5px">Peserta KB</div>
         <div class="col-md-7">
           <input type="number" name="pus_ikutkb" placeholder="Pus Peserta KB" id="pus_ikutkb" value="<?php 
             if(set_value('pus_ikutkb')=="" && isset($pus_ikutkb)){

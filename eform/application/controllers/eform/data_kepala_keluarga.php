@@ -1152,6 +1152,7 @@ $data_tabel[] = array(
         $this->form_validation->set_rules('suku', 'Suku', 'trim|required');
         $this->form_validation->set_rules('no_hp', 'No HP', 'trim|required');
         $this->form_validation->set_rules('bpjs', 'bpjs', 'trim');
+        $this->form_validation->set_rules('providerPeserta', 'providerPeserta', 'trim');
 
         $data['action']="add";
 		$data['id_data_keluarga'] = $kode;

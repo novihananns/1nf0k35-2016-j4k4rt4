@@ -1,22 +1,10 @@
-
-<?php if($this->session->flashdata('alert')!=""){ ?>
-<div class="alert alert-success alert-dismissable">
-  <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-  <h4>  <i class="icon fa fa-check"></i> Information!</h4>
-  <?php echo $this->session->flashdata('alert')?>
-</div>
-<?php } ?>
-
 <section class="content">
 <form action="<?php echo base_url()?>inventory/pengadaanbarang/dodel_multi" method="POST" name="">
   <div class="row">
-    <!-- left column -->
     <div class="col-md-12">
-      <!-- general form elements -->
       <div class="box box-primary">
       <div class="box-footer">
         <button type="button" class="btn btn-primary" id="btn-refresh-pesertabpjs"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
-        <!-- <button type="button" onclick="doList()" class="btn btn-success" id="btn-success"><i class='fa fa-sign-in'></i> &nbsp; Pilih </button> -->
       </div>
         <div class="box-body">
         <div class="div-grid">
@@ -30,13 +18,6 @@
 </section>
 
 <script type="text/javascript">
-  $(function () { 
-    
-      $("#menu_kegiatan_kelompok").addClass("active");
-      $("#menu_kegiatankelompok").addClass("active");
-    
-  });
-
      var source = {
       datatype: "json",
       type  : "POST",
@@ -49,7 +30,7 @@
       { name: 'tgl_lahirdata', type: 'string' },
       { name: 'usia', type: 'string' },
       { name: 'jeniskelamin', type: 'string' },
-      { name: 'jenis_peserta', type: 'string' },
+      { name: 'nik', type: 'string' },
       { name: 'no_kartu', type: 'string' },
       { name: 'ceklis', type: 'number' },
         ],
@@ -93,7 +74,7 @@
         return obj.data;
       },
       columns: [
-        { text: 'Pilih',filtertype: 'none', datafield: 'no_kartu', columntype: 'checkbox', width: 40 },
+        { text: 'Pilih',filtertype: 'none', align:'center', datafield: 'no_kartu', columntype: 'checkbox', width: '8%' },
         // { text: 'Pilih', align: 'center', filtertype: 'none', sortable: false, width: '4%', cellsrenderer: function (row) {
         //     var dataRecord = $("#jqxgridPesertaBPJS").jqxGrid('getrowdata', row);
         //     if (dataRecord.ceklis==1) {
@@ -103,12 +84,12 @@
         //     }
         //   }
         // },
-        { text: 'No Kartu', align: 'center',cellsalign: 'center',editable: false, datafield: 'bpjs', columntype: 'textbox', filtertype: 'textbox', width: '22%' },
+        { text: 'No Kartu', align: 'center',cellsalign: 'center',editable: false, datafield: 'bpjs', columntype: 'textbox', filtertype: 'textbox', width: '18%' },
+        { text: 'NIK', align: 'center',cellsalign: 'center',editable: false,datafield: 'nik', columntype: 'textbox', filtertype: 'textbox', width: '19%'},
         { text: 'Nama Peserta ', editable: false,datafield: 'nama', columntype: 'textbox', filtertype: 'textbox', width: '23%'},
-        { text: 'Jenis Kelamin ', editable: false,datafield: 'jeniskelamin', columntype: 'textbox', filtertype: 'textbox', width: '11%'},
-        { text: 'Jenis Peserta ', align: 'center',cellsalign: 'center',editable: false,datafield: 'jenis_peserta', columntype: 'textbox', filtertype: 'textbox', width: '15%'},
+        { text: 'Jenis Kelamin ', align: 'center',cellsalign: 'center',editable: false,datafield: 'jeniskelamin', columntype: 'textbox', filtertype: 'textbox', width: '11%'},
         { text: 'Tanggal Lahir',align: 'center',cellsalign: 'center', editable: false,datafield: 'tgl_lahir', columntype: 'date', filtertype: 'date', cellsformat: 'dd-MM-yyyy', width: '12%'},
-        { text: 'Usia', align: 'center',cellsalign: 'right',editable: false, datafield: 'usia', columntype: 'textbox', filtertype: 'textbox', width: '13%'}
+        { text: 'Usia', align: 'center',cellsalign: 'center',editable: false, datafield: 'usia', columntype: 'textbox', filtertype: 'textbox', width: '9%'}
             ]
     });
     

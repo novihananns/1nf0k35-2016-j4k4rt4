@@ -25,6 +25,7 @@
         data.append('id_pilihan_jkn', $("[name='id_pilihan_jkn']").val());
         data.append('suku', $("[name='suku']").val());
         data.append('no_hp', $("[name='no_hp']").val());
+        data.append('providerPeserta', $("[name='providerPeserta']").val());
 
         $.ajax({
             cache : false,
@@ -44,7 +45,7 @@
         $.get("<?php echo base_url()?>eform/data_kepala_keluarga/cekkonek/",function(response){
           if(response=='ready'){
               if (($("#bpjs").val() != '') && $("#bpjs").val().length==13) {
-                if (confirm("Daftarkan Home Visit ? ")) {
+                if (confirm("Daftarkan Home Visit di "+$("#providerPeserta").val()+"? ")) {
                     $.get("<?php echo base_url()?>eform/data_kepala_keluarga/simpanbpjs/"+$("#bpjs").val(),function(res){
                       if (res=='bpjserror') {
                         if (confirm("Tidak bisa terhubung ke server BPJS! \nApakah tetap ingin disimpan ?")) {
@@ -80,9 +81,10 @@
         if(nik.length==16){
           $.get("<?php echo base_url()?>eform/data_kepala_keluarga/bpjs_search/nik/"+nik,function(res){
               if(res.metaData.code=="200"){
-                if(confirm("Anggota keluarga terdaftar sebagai peserta BPJS. \nGunakan data?")){
+                if(confirm("Anggota keluarga terdaftar sebagai peserta BPJS "+res.response.kdProviderPst.nmProvider+". \nGunakan data?")){
                   $("#bpjs").val(res.response.noKartu);
                   $("#nama").val(res.response.nama);
+                  $("#providerPeserta").val(res.response.kdProviderPst.nmProvider);
                   var tgl = res.response.tglLahir.split("-");
                   var date = new Date(tgl[2], (tgl[1]-1), tgl[0]);
                   $("#tgl_lahir").jqxDateTimeInput('setDate', date);
@@ -105,9 +107,10 @@
         if(bpjs.length==13){
           $.get("<?php echo base_url()?>eform/data_kepala_keluarga/bpjs_search/bpjs/"+bpjs,function(res){
               if(res.metaData.code=="200"){
-                if(confirm("Nomor BPJS terdaftar, gunakan data?")){
+                if(confirm("Nomor BPJS terdaftar di "+res.response.kdProviderPst.nmProvider+", gunakan data?")){
                   if(res.response.noKTP!=null) $("input[name='nik']").val(res.response.noKTP);
                   $("#nama").val(res.response.nama);
+                  $("#providerPeserta").val(res.response.kdProviderPst.nmProvider);
 
                   var tgl = res.response.tglLahir.split("-");
                   var date = new Date(tgl[2], (tgl[1]-1), tgl[0]);
@@ -179,6 +182,13 @@
           <div class="row" style="margin: 5px">
             <div class="col-md-4" style="padding: 5px">Nomor BPJS</div>
             <div class="col-md-8">
+              <input type="hidden" name="providerPeserta" id="providerPeserta" value="<?php 
+                if(set_value('providerPeserta')=="" && isset($providerPeserta)){
+                  echo $providerPeserta;
+                }else{
+                  echo  set_value('providerPeserta');
+                }
+                ?>">
               <input style="background:#dde4ff" type="text" name="bpjs" id="bpjs" placeholder="Nomor BPJS" value="<?php 
                 if(set_value('bpjs')=="" && isset($bpjs)){
                   echo $bpjs;

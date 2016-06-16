@@ -53,21 +53,12 @@
         if(nik.length==16){
           $.get("<?php echo base_url()?>eform/kegiatankelompok/bpjs_search/nik/"+nik,function(res){
               if(res.metaData.code=="200"){
-                if(confirm("Anggota keluarga terdaftar sebagai peserta BPJS. \nGunakan data?")){
+                if(confirm("Nomor terdaftar sebagai peserta \nBPJS "+res.response.kdProviderPst.nmProvider+", \nGunakan data?")){
                   $("#bpjs").val(res.response.noKartu);
                   $("#nama").val(res.response.nama);
                   $("#jenis_peserta").val(res.response.jnsPeserta.nama);
-                  var tgl = res.response.tglLahir.split("-");
-                  var date = new Date(tgl[2], (tgl[1]-1), tgl[0]);
-                  $("#tgl_lahir").jqxDateTimeInput('setDate', date);
-
-                  if(res.response.noHP!=" " && res.response.noHP!="") $("#no_hp").val(res.response.noHP);
-                  if(res.response.sex=="P"){
-                    $("#id_pilihan_kelamin").val(6);
-                  }else{
-                    $("#id_pilihan_kelamin").val(5);
-                  }
-                  
+                  $("#tgl_lahir").val(res.response.tglLahir);
+                  $("#id_pilihan_kelamin").val(res.response.sex);
                 }
               }else{
                 alert("Peserta tidak terdaftar sebagai angota BPJS");
@@ -82,21 +73,12 @@
         if(bpjs.length==13){
           $.get("<?php echo base_url()?>eform/kegiatankelompok/bpjs_search/bpjs/"+bpjs,function(res){
               if(res.metaData.code=="200"){
-                if(confirm("Nomor BPJS terdaftar, gunakan data?")){
+                if(confirm("Nomor terdaftar sebagai peserta \nBPJS "+res.response.kdProviderPst.nmProvider+", \nGunakan data?")){
                   if(res.response.noKTP!=null) $("input[name='nik']").val(res.response.noKTP);
                   $("#nama").val(res.response.nama);
                   $("#jenis_peserta").val(res.response.jnsPeserta.nama);
-                  var tgl = res.response.tglLahir.split("-");
-                  var date = new Date(tgl[2], (tgl[1]-1), tgl[0]);
-                  $("#tgl_lahir").jqxDateTimeInput('setDate', date);
-
-                  if(res.response.noHP!=" " && res.response.noHP!="") $("#no_hp").val(res.response.noHP);
-                  if(res.response.sex=="P"){
-                    $("#id_pilihan_kelamin").val(6);
-                  }else{
-                    $("#id_pilihan_kelamin").val(5);
-                  }
-                  
+                  $("#tgl_lahir").val(res.response.tglLahir);
+                  $("#id_pilihan_kelamin").val(res.response.sex);
                 }
               }else{
                 alert("Peserta tidak terdaftar sebagai angota BPJS");
@@ -110,38 +92,16 @@
             $("#bpjs").val('');
             $("#nik").val('');
       }
-      $("#tgl_lahir").jqxDateTimeInput({ formatString: 'dd-MM-yyyy', theme: theme, height: '30px'});
-  
 </script>
 
-<?php if(validation_errors()!=""){ ?>
-<div class="alert alert-warning alert-dismissable">
-  <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-  <h4>  <i class="icon fa fa-check"></i> Information!</h4>
-  <?php echo validation_errors()?>
-</div>
-<?php } ?>
-
-<?php if($alert_form!=""){ ?>
-<div class="alert alert-success alert-dismissable">
-  <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-  <h4>  <i class="icon fa fa-check"></i> Information!</h4>
-  <?php echo $alert_form; ?>
-</div>
-<?php } ?>
 <form action="<?php echo base_url()?>eform/kegiatankelompok/{action}_peserta/{kode}" method="post">
 <div class="row" style="margin: 0">
   <div class="col-md-12">
-    <div class="box-footer">
-      <div class="col-md-6">
-        <h4><i class="icon fa fa-group" ></i> Tambah Anggota Keluarga</h4>
-      </div>
-    </div>
+  <br>
     <div class="row">
       <div class="col-md-6">
         <div class="box box-primary">
           <div class="box-body">
-          <label>Data Anggota Keluarga</label>
           <div class="row" style="margin: 5px">
             <div class="col-md-4" style="padding: 5px">NIK</div>
             <div class="col-md-8">
@@ -173,66 +133,29 @@
           <div class="row" style="margin: 5px">
             <div class="col-md-4" style="padding: 5px">Nama</div>
             <div class="col-md-8">
-              <input type="text" name="nama" id="nama" placeholder="Nama" value="<?php 
-                if(set_value('nama')=="" && isset($nama)){
-                  echo $nama;
-                }else{
-                  echo  set_value('nama');
-                }
-                ?>" class="form-control">
+              <input type="text" name="nama" id="nama" placeholder="Nama" readonly class="form-control">
             </div>
           </div>
 
           <div class="row" style="margin: 5px">
             <div class="col-md-4" style="padding: 5px">Tanggal Lahir</div>
             <div class="col-md-8">
-              <div id='tgl_lahir' name="tgl_lahir" value="<?php
-                if(set_value('tgl_lahir')=="" && isset($tgl_lahir)){
-                  $tgl_lahir = strtotime($tgl_lahir);
-                }else{
-                  $tgl_lahir = strtotime(set_value('tgl_lahir'));
-                }
-                if($tgl_lahir=="") $tgl_lahir = time();
-                echo date("Y-m-d",$tgl_lahir);
-              ?>" >
-              </div>
+              <input type="text" name="tgl_lahir" id="tgl_lahir" placeholder="Tanggal Lahir" readonly class="form-control">
             </div>
           </div>
           <div class="row" style="margin: 5px">
-            <div class="col-md-4" style="padding: 5px">Nama</div>
+            <div class="col-md-4" style="padding: 5px">Jenis Peserta</div>
             <div class="col-md-8">
-              <input type="text" name="jenis_peserta" id="jenis_peserta" placeholder="Jenis Peserta" value="<?php 
-                if(set_value('jenis_peserta')=="" && isset($jenis_peserta)){
-                  echo $jenis_peserta;
-                }else{
-                  echo  set_value('jenis_peserta');
-                }
-                ?>" class="form-control">
+              <input type="text" name="jenis_peserta" id="jenis_peserta" placeholder="Jenis Peserta" readonly class="form-control">
             </div>
           </div>
           <div class="row" style="margin: 5px">
-            <div class="col-md-4" style="padding: 5px">Jenis Kelamin</div>
+            <div class="col-md-4" style="padding: 5px">Kelamin</div>
             <div class="col-md-8">
-              <select  name="id_pilihan_kelamin" id="id_pilihan_kelamin" class="form-control">
-                <?php
-                if(set_value('id_pilihan_kelamin')=="" && isset($id_pilihan_kelamin)){
-                  $pilihan_kelamin = $id_pilihan_kelamin;
-                }else{
-                  $pilihan_kelamin = set_value('id_pilihan_kelamin');
-                }
-
-                foreach($data_pilihan_kelamin as $row_kelamin){
-                $select = $row_kelamin->id_pilihan == $pilihan_kelamin ? 'selected' : '' ;
-                ?>
-                    <option value="<?php echo $row_kelamin->id_pilihan; ?>" <?php echo $select; ?>><?php echo ucwords(strtolower($row_kelamin->value)); ?></option>
-                <?php
-                }    
-                ?>
-            </select>
+              <input type="text" name="id_pilihan_kelamin" id="id_pilihan_kelamin" placeholder="Jenis Kelamin" readonly class="form-control">
             </div>
           </div>
             <div class="col-md-12" style="text-align: right">
-                <!-- <button type="button" id="btn-back-peserta" class="btn btn-warning"><i class='fa fa-reply'></i> &nbsp; Kembali</button> -->
                 <button type="button" id="btn-save-add-peserta" class="btn btn-success"><i class='fa fa-save'></i> &nbsp; Pilih</button>
             </div>
           </div>

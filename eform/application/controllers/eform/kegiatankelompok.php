@@ -12,193 +12,34 @@ class Kegiatankelompok extends CI_Controller {
 
 	}
 
-	function pengadaan_export(){
-		$this->authentication->verify('eform','show');
-		
-		$TBS = new clsTinyButStrong;		
-		$TBS->Plugin(TBS_INSTALL, OPENTBS_PLUGIN);
-		
+	function index(){
+		$this->authentication->verify('eform','edit');
+		$data['title_group'] = "Kegiatan Kelompok";
+		$data['title_form'] = "Daftar Kegiatan";
 
-
-		if($_POST) {
-			$fil = $this->input->post('filterscount');
-			$ord = $this->input->post('sortdatafield');
-
-			for($i=0;$i<$fil;$i++) {
-				$field = $this->input->post('filterdatafield'.$i);
-				$value = $this->input->post('filtervalue'.$i);
-
-				if($field == 'tgl_pengadaan') {
-					$value = date("Y-m-d",strtotime($value));
-					$this->db->where($field,$value);
-				}elseif($field != 'year') {
-					$this->db->like($field,$value);
-				}
-			}
-
-			if(!empty($ord)) {
-				$this->db->order_by($ord, $this->input->post('sortorder'));
-			}
-		}
-		if ($this->session->userdata('puskesmas')!='' ) {
-			$this->db->where('code_cl_phc','P'.$this->session->userdata('puskesmas'));
-		}
-		$rows_all = $this->kegiatankelompok_model->get_data();
-
-
-		if($_POST) {
-			$fil = $this->input->post('filterscount');
-			$ord = $this->input->post('sortdatafield');
-
-			for($i=0;$i<$fil;$i++) {
-				$field = $this->input->post('filterdatafield'.$i);
-				$value = $this->input->post('filtervalue'.$i);
-
-				if($field == 'tgl_pengadaan') {
-					$value = date("Y-m-d",strtotime($value));
-					$this->db->where($field,$value);
-				}elseif($field != 'year') {
-					$this->db->like($field,$value);
-				}
-
-			}
-
-			if(!empty($ord)) {
-				$this->db->order_by($ord, $this->input->post('sortorder'));
-			}
-		}
-		if ($this->session->userdata('puskesmas')!='') {
-			$this->db->where('code_cl_phc','P'.$this->session->userdata('puskesmas'));
-		}
-		//$rows = $this->kegiatankelompok_model->get_data($this->input->post('recordstartindex'), $this->input->post('pagesize'));
-		$rows = $this->kegiatankelompok_model->get_data();
-		$data = array();
-		$no=1;
-		
-
-		$data_tabel = array();
-		foreach($rows as $act) {
-			$data_tabel[] = array(
-				'tgl_pengadaan' 			=> date("d-m-Y",strtotime($act->tgl_pengadaan)),
-				'nomor_kontrak' 			=> $act->nomor_kontrak,
-				'nomor_kwitansi' 			=> $act->nomor_kwitansi,
-				'tgl_kwitansi' 				=> date("d-m-Y",strtotime($act->tgl_kwitansi)),
-				'pilihan_status_pengadaan' 	=> $this->kegiatankelompok_model->getPilihan("status_pengadaan",$act->pilihan_status_pengadaan),
-				'jumlah_unit'				=> $act->jumlah_unit,
-				'nilai_pengadaan'			=> number_format($act->nilai_pengadaan,2),
-				'keterangan'				=> $act->keterangan,
-				'detail'					=> 1,
-				'edit'						=> 1,
-				'delete'					=> 1
-			);
-		}
-
-
-		$puskes = $this->input->post('puskes');
-		if(empty($puskes) or $puskes == 'Pilih Puskesmas'){
-			$nama = 'Semua Data Puskesmas';
+		$kodepuskesmas = $this->session->userdata('puskesmas');
+		if(substr($kodepuskesmas, -2)=="01"){
+			$data['unlock'] = 1;
 		}else{
-			$nama = $this->input->post('puskes');
+			$data['unlock'] = 0;
 		}
-		$data_puskesmas[] = array('nama_puskesmas' => $nama);
-		$dir = getcwd().'/';
-		$template = $dir.'public/files/template/eform/pengadaan_peserta.xlsx';		
-		$TBS->LoadTemplate($template, OPENTBS_ALREADY_UTF8);
+		$kodepuskesmas = $this->session->userdata('puskesmas');
+		if(strlen($kodepuskesmas) == 4){
+			$this->db->like('code','P'.substr($kodepuskesmas, 0,4));
+		}else {
+			$this->db->where('code','P'.$kodepuskesmas);
+		}
 
-		// Merge data in the first sheet
-		$TBS->MergeBlock('a', $data_tabel);
-		$TBS->MergeBlock('b', $data_puskesmas);
-		
-		$code = date('Y-m-d-H-i-s');
-		$output_file_name = 'public/files/hasil/hasil_export_'.$code.'.xlsx';
-		$output = $dir.$output_file_name;
-		$TBS->Show(OPENTBS_FILE, $output); // Also merges all [onshow] automatic fields.
-		
-		echo base_url().$output_file_name ;
+		$data['datapuskesmas'] 	= $this->kegiatankelompok_model->get_data_puskesmas();
+		$data['content'] = $this->parser->parse("eform/kegiatankelompok/show",$data,true);
+		$this->template->show($data,"home");
 	}
 
-	function pengadaan_detail_export(){
-		$this->authentication->verify('eform','show');
-
-		$id 	= $this->input->post('kode');
-
-		$TBS = new clsTinyButStrong;		
-		$TBS->Plugin(TBS_INSTALL, OPENTBS_PLUGIN);
-		
-
-		if($_POST) {
-			$fil = $this->input->post('filterscount');
-			$ord = $this->input->post('sortdatafield');
-
-			for($i=0;$i<$fil;$i++) {
-				$field = $this->input->post('filterdatafield'.$i);
-				$value = $this->input->post('filtervalue'.$i);
-
-				if($field == 'tgl_pengadaan') {
-					$value = date("Y-m-d",strtotime($value));
-					$this->db->where($field,$value);
-				}elseif($field != 'year') {
-					$this->db->like($field,$value);
-				}
-			}
-
-			if(!empty($ord)) {
-				$this->db->order_by($ord, $this->input->post('sortorder'));
-			}
-		}
-		
-		$data = array();
-
-		$activity = $this->kegiatankelompok_model->getItem('inv_inventaris_peserta', array('id_pengadaan'=>$id))->result();
-		foreach($activity as $act) {
-			$data[] = array(
-				'id_inventaris_peserta'   		=> $act->id_inventaris_peserta,
-				'id_mst_inv_peserta'   			=> substr(chunk_split($act->id_mst_inv_peserta, 2, '.'),0,14),
-				'nama_peserta'					=> $act->nama_peserta,
-				'jumlah'						=> $act->jumlah,
-				'harga'							=> number_format($act->harga,2),
-				'totalharga'					=> number_format($act->totalharga,2),
-				'keterangan'					=> $act->keterangan_pengadaan,
-				'pilihan_status_invetaris'		=> $this->kegiatankelompok_model->getPilihan("status_inventaris",$act->pilihan_status_invetaris),
-				'barang_kembar_proc'			=> $act->barang_kembar_proc,
-				'tanggal_diterima'				=> date("d-m-Y",strtotime($act->tanggal_diterima)),
-				'waktu_dibuat'					=> $act->waktu_dibuat,
-				'terakhir_diubah'				=> $act->terakhir_diubah,
-				'value'							=> $act->value
-			);
-		}
-
-		$data_puskesmas	= $this->kegiatankelompok_model->get_data_row($id);
-		$nama_puskesmas	= $this->kegiatankelompok_model->get_data_nama($data_puskesmas['code_cl_phc']);
-		$data_puskesmas['puskesmas']		= $nama_puskesmas['value'];
-		$data_puskesmas['tgl_pengadaan']	= date("d-m-Y",strtotime($data_puskesmas['tgl_pengadaan']));
-		$data_puskesmas['tgl_kwitansi']		= date("d-m-Y",strtotime($data_puskesmas['tgl_kwitansi']));
-		$data_puskesmas['nomor_kwitansi']	= $data_puskesmas['nomor_kwitansi'];
-		$data_puskesmas['nilai_pengadaan']	= number_format($data_puskesmas['nilai_pengadaan'],2);
-		$data_puskesmas['pilihan_status_pengadaan']	= $this->kegiatankelompok_model->getPilihan("status_pengadaan",$data_puskesmas['pilihan_status_pengadaan']);
-
-		$TBS->ResetVarRef(false);
-		$TBS->VarRef =  &$data_puskesmas;	
-		$dir = getcwd().'/';
-		$template = $dir.'public/files/template/eform/pengadaan_peserta_detail.xlsx';		
-		$TBS->LoadTemplate($template, OPENTBS_ALREADY_UTF8);
-
-		
-		$TBS->MergeBlock('a', $data);
-		
-		$code = date('Y-m-d-H-i-s');
-		$output_file_name = 'public/files/hasil/hasil_detail_export_'.$code.'.xlsx';
-		$output = $dir.$output_file_name;
-		$TBS->Show(OPENTBS_FILE, $output); // Also merges all [onshow] automatic fields.
-		
-		echo base_url().$output_file_name ;
-	}
 	function bpjs_search($by = 'nik',$no){
       	$data = $this->bpjs->bpjs_search($by,$no);
 
       	echo json_encode($data);
 	}
-	
 	
 	function json(){
 		$this->authentication->verify('eform','show');
@@ -258,18 +99,25 @@ class Kegiatankelompok extends CI_Controller {
 		$data = array();
 
 		foreach($rows as $act) {
+	    	if($act->status_penyuluhan==1 && $act->status_senam==1){
+	    		$kegiatan = "Penyuluhan dan Senam";
+	    	}elseif($act->status_penyuluhan==1 && $act->status_senam==0){
+	    		$kegiatan = "Penyuluhan";
+	    	}else{
+	    		$kegiatan = "Senam";
+	    	}
 			$data[] = array(
 				'id_data_kegiatan' 			=> $act->id_data_kegiatan,
 				'tgl' 						=> $act->tgl,
 				'kode_kelompok' 			=> $act->kode_kelompok,
-				'kode_club' 				=> $act->kode_club,
+				'kode_club' 				=> $act->club,
 				'status_penyuluhan' 		=> $act->status_penyuluhan,
 				'status_senam'				=> $act->status_senam,
 				'materi'					=> $act->materi,
 				'pembicara'					=> $act->pembicara,
-				'namakelompok'				=> $act->namakelompok,
+				'kegiatan'					=> $kegiatan,
 				'lokasi'					=> $act->lokasi,
-				'alamat'					=> $act->alamat,
+				'eduId'						=> $act->eduId,
 				'biaya'						=> number_format($act->biaya,2),
 				'keterangan'				=> $act->keterangan,
 				'edit'						=> 1,//$unlock,
@@ -288,29 +136,6 @@ class Kegiatankelompok extends CI_Controller {
 		echo json_encode(array($json));
 	}
 	
-	function index(){
-		$this->authentication->verify('eform','edit');
-		$data['title_group'] = "eform";
-		$data['title_form'] = "Kegiatan Kelompok";
-
-		$kodepuskesmas = $this->session->userdata('puskesmas');
-		if(substr($kodepuskesmas, -2)=="01"){
-			$data['unlock'] = 1;
-		}else{
-			$data['unlock'] = 0;
-		}
-		$kodepuskesmas = $this->session->userdata('puskesmas');
-		if(strlen($kodepuskesmas) == 4){
-			$this->db->like('code','P'.substr($kodepuskesmas, 0,4));
-		}else {
-			$this->db->where('code','P'.$kodepuskesmas);
-		}
-
-		$data['datapuskesmas'] 	= $this->kegiatankelompok_model->get_data_puskesmas();
-		$data['content'] = $this->parser->parse("eform/kegiatankelompok/show",$data,true);
-		$this->template->show($data,"home");
-	}
-
 	public function getdatakelompok()
 	{
 		if($this->input->is_ajax_request()) {
@@ -322,7 +147,7 @@ class Kegiatankelompok extends CI_Controller {
 			'<option value="">Pilih Ruangan</option>';
 			foreach($kode as $kode) :
 				echo $select = $kode->clubId == $kode_club ? 'selected' : '';
-				echo '<option value="'.$kode->clubId.'" '.$select.'>' . $kode->alamat . '</option>';
+				echo '<option value="'.$kode->clubId.'" '.$select.'>' . $kode->nama . '</option>';
 			endforeach;
 
 			return FALSE;
@@ -342,7 +167,7 @@ class Kegiatankelompok extends CI_Controller {
 			'<option value="">Pilih Ruangan</option>';
 			foreach($kode as $kode) :
 				echo $select = $kode->clubId == $kode_club ? 'selected' : '';
-				echo '<option value="'.$kode->clubId.'" '.$select.'>' . $kode->alamat . '</option>';
+				echo '<option value="'.$kode->clubId.'" '.$select.'>' . $kode->nama . '</option>';
 			endforeach;
 
 			return FALSE;
@@ -356,10 +181,9 @@ class Kegiatankelompok extends CI_Controller {
 
 		$this->form_validation->set_rules('kode_kelompok', 'Jenis Kelompok', 'trim|required');
         $this->form_validation->set_rules('tgl', 'Tanggal Pelaksanaan', 'trim|required');
-        $this->form_validation->set_rules('jenis_kelompok', 'Club Ploranis', 'trim|required');
+        if($this->input->post('kode_kelompok')!="00") $this->form_validation->set_rules('jenis_kelompok', 'Club Ploranis', 'trim|required');
         $this->form_validation->set_rules('edukasi', 'Edukasi', 'trim');
         $this->form_validation->set_rules('senam', 'Senam', 'trim');
-        $this->form_validation->set_rules('jenis_kelompok', 'Club Ploranis', 'trim|required');
         $this->form_validation->set_rules('materi', 'Materi', 'trim|required');
         $this->form_validation->set_rules('pembicara', 'Pembicara', 'trim|required');
         $this->form_validation->set_rules('lokasi', 'Lokasi', 'trim|required');
@@ -367,8 +191,8 @@ class Kegiatankelompok extends CI_Controller {
         $this->form_validation->set_rules('keterangan', 'Keterangan', 'trim|required');
 
 		if($this->form_validation->run()== FALSE){
-			$data['title_group'] = "eform";
-			$data['title_form']="Tambah Kegiatan Kelompok";
+			$data['title_group'] = "Kegiatan Kelompok";
+			$data['title_form']="Tambah Kegiatan";
 			$data['action']="add";
 			$data['kode']="";
 
@@ -399,10 +223,9 @@ class Kegiatankelompok extends CI_Controller {
 		$this->form_validation->set_rules('id_data_kegiatan', 'id_data_kegiatan', 'trim|required');
         $this->form_validation->set_rules('kode_kelompok', 'Jenis Kelompok', 'trim|required');
         $this->form_validation->set_rules('tgl', 'Tanggal Pelaksanaan', 'trim|required');
-        $this->form_validation->set_rules('jenis_kelompok', 'Club Ploranis', 'trim|required');
+        if($this->input->post('kode_kelompok')!="00") $this->form_validation->set_rules('jenis_kelompok', 'Club Ploranis', 'trim|required');
         $this->form_validation->set_rules('edukasi', 'Edukasi', 'trim');
         $this->form_validation->set_rules('senam', 'Senam', 'trim');
-        $this->form_validation->set_rules('jenis_kelompok', 'Club Ploranis', 'trim|required');
         $this->form_validation->set_rules('materi', 'Materi', 'trim|required');
         $this->form_validation->set_rules('pembicara', 'Pembicara', 'trim|required');
         $this->form_validation->set_rules('lokasi', 'Lokasi', 'trim|required');
@@ -411,8 +234,8 @@ class Kegiatankelompok extends CI_Controller {
 
 		if($this->form_validation->run()== FALSE){
 			$data 	= $this->kegiatankelompok_model->get_data_row($id_kegiatan);
-			$data['title_group'] 	= "eform";
-			$data['title_form']		= "Ubah Kegiatan Kelompok";
+			$data['title_group'] 	= "Kegiatan Kelompok";
+			$data['title_form']		= "Ubah Kegiatan";
 			$data['action']			= "edit";
 			$data['kode']			= $id_kegiatan;
 			$kodepuskesmas = $this->session->userdata('puskesmas');
@@ -586,7 +409,7 @@ class Kegiatankelompok extends CI_Controller {
 				'nama'							=> $act->nama,
 				'tgl_lahir'						=> $act->tgl_lahir,
 				'usia'							=> $act->usia,
-				'jenis_kelamin'					=> $act->jenis_kelamin,
+				'jenis_kelamin'					=> $act->sex,
 				'jenis_peserta'					=> $act->jenis_peserta,
 				'edit'		=> 1,
 				'delete'	=> 1
@@ -690,5 +513,11 @@ class Kegiatankelompok extends CI_Controller {
 		}
 	}
 
+	function send(){
+		$this->authentication->verify('eform','add');
+      	$data = $this->kegiatankelompok_model->bpjs_send_kegiatan();
+
+      	echo $data;
+	}
 }
 

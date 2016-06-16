@@ -391,7 +391,7 @@
 
       <div class="row" style="margin: 5px">
         <div class="col-md-1" style="padding: 5px"></div>
-        <div class="col-md-4" style="padding: 5px">Peseta KB</div>
+        <div class="col-md-4" style="padding: 5px">Peserta KB</div>
         <div class="col-md-7">
         <?php
           if ($action=="detail") {

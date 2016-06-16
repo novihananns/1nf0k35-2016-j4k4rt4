@@ -20,11 +20,9 @@
 
 	      	<div class="box-footer">
 		      <div class="col-md-8">
-		      	<?php //if($unlock==1){ ?>
-			 	<button type="button" class="btn btn-primary" onclick="document.location.href='<?php echo base_url()?>eform/kegiatankelompok/add'"><i class='fa fa-plus-square-o'></i> &nbsp; Pengadaan Kegiatan</button>
-				<?php //} ?>		 	
+			 	<button type="button" class="btn btn-primary" onclick="document.location.href='<?php echo base_url()?>eform/kegiatankelompok/add'"><i class='fa fa-plus-square-o'></i> &nbsp; Tambah Kegiatan</button>
 			 	<button type="button" class="btn btn-success" id="btn-refresh"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
-	          <button type="button" id="btn-export" class="btn btn-warning"><i class='fa fa-save'></i> &nbsp; Export</button>
+	          <button type="button" id="btn-export" class="btn btn-warning" style="display:none"><i class='fa fa-save'></i> &nbsp; Export</button>
 		     </div>
 		      <div class="col-md-4">
 		     	<div class="row">
@@ -52,8 +50,8 @@
 
 <script type="text/javascript">
 	$(function () {	
-	    $("#menu_kegiatan_kelompok").addClass("active");
-    	$("#menu_kegiatankelompok").addClass("active");
+	    $("#menu_eform_kegiatankelompok").addClass("active");
+    	$("#menu_kegiatan_kelompok").addClass("active");
 	});
 	   var source = {
 			datatype: "json",
@@ -68,9 +66,11 @@
 			{ name: 'pembicara', type: 'string'},
 			{ name: 'lokasi', type: 'string'},
 			{ name: 'biaya', type: 'string'},
-			{ name: 'alamat', type: 'string'},
 			{ name: 'namakelompok', type: 'string'},
+			{ name: 'kegiatan', type: 'string'},
+			{ name: 'kode_club', type: 'string'},
 			{ name: 'keterangan', type: 'string'},
+			{ name: 'eduId', type: 'string'},
 			{ name: 'edit', type: 'number'},
 			{ name: 'delete', type: 'number'}
         ],
@@ -132,25 +132,28 @@
 					}
                  }
                 },
-				{ text: 'Kegiatan', editable:false ,datafield: 'namakelompok', columntype: 'textbox', filtertype: 'textbox', width: '20%' },
-				{ text: 'Tgl. Pelaksanaan',editable:false , align: 'center', cellsalign: 'center', datafield: 'tgl', columntype: 'date', filtertype: 'date', cellsformat: 'dd-MM-yyyy', width: '11%' },
-				{ text: 'Club prolanis', editable:false ,align: 'center', cellsalign: 'center', datafield: 'alamat', columntype: 'textbox', filtertype: 'textbox', width: '25%' },
-				{ text: 'Materi', editable:false ,align: 'center', cellsalign: 'right', datafield: 'materi', columntype: 'textbox', filtertype: 'textbox', width: '36%' }
+				{ text: 'Kegiatan', editable:false ,datafield: 'kegiatan', columntype: 'textbox', filtertype: 'none', width: '16%' },
+				{ text: 'Pelaksanaan',editable:false , align: 'center', cellsalign: 'center', datafield: 'tgl', columntype: 'date', filtertype: 'date', cellsformat: 'dd-MM-yyyy', width: '10%' },
+				{ text: 'Club Prolanis', editable:false ,align: 'center', datafield: 'kode_club', columntype: 'textbox', filtertype: 'textbox', width: '20%' },
+				{ text: 'Materi', editable:false ,align: 'center', datafield: 'materi', columntype: 'textbox', filtertype: 'textbox', width: '38%' },
+				{ text: 'Status', align: 'center', filtertype: 'none', sortable: false, width: '8%', cellsrenderer: function (row) {
+				    var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+				    if(dataRecord.eduId=="" || dataRecord.eduId==null){
+						return "<div style='width:100%;padding-top:8px;text-align:center'>-</div>";
+					}else{
+						return "<div style='width:100%;padding-top:8px;text-align:center'><b>Sent</b></div>";
+					}
+                 }
+                },
             ]
 		});
-
-	
 
 	function edit(id){
 		document.location.href="<?php echo base_url().'eform/kegiatankelompok/edit';?>/" + id ;
 	}
 
-
 	function del(id){
-		if(jumlah>0){
-			alert('Maaf, Data ini tidak bisa dihapus karena sudah ada pengadaan barang sebanyak '+ jumlah +'unit \n Jika ingin menghapus data ini silahkan hapus pengadaan barang didalamnya');
-		}else{
-		var confirms = confirm("Hapus Data ?");
+		var confirms = confirm("Hapus Data Kegiatan ?");
 		if(confirms == true){
 			$.post("<?php echo base_url().'eform/kegiatankelompok/dodel' ?>/"+id,  function(){
 				alert('data berhasil dihapus');
@@ -158,11 +161,9 @@
 				$("#jqxgrid").jqxGrid('updatebounddata', 'cells');
 			});
 		}
-		}
 	}
 
 	$("#btn-export").click(function(){
-		
 		var post = "";
 		var filter = $("#jqxgrid").jqxGrid('getfilterinformation');
 		for(i=0; i < filter.length; i++){

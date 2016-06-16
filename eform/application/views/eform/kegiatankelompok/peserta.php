@@ -74,12 +74,12 @@
                  }
                 },
                 { text: 'No', align: 'center',cellsalign: 'center',editable: false, datafield: 'no', columntype: 'textbox', filtertype: 'none', width: '5%' },
-				{ text: 'No Kartu', align: 'center',cellsalign: 'center',editable: false, datafield: 'no_kartu', columntype: 'textbox', filtertype: 'textbox', width: '20%' },
+				{ text: 'No Kartu', align: 'center',cellsalign: 'center',editable: false, datafield: 'no_kartu', columntype: 'textbox', filtertype: 'textbox', width: '16%' },
 				{ text: 'Nama Peserta ', editable: false,datafield: 'nama', columntype: 'textbox', filtertype: 'textbox', width: '20%'},
-				{ text: 'Jenis Kelamin ', editable: false,datafield: 'jenis_kelamin', columntype: 'textbox', filtertype: 'textbox', width: '11%'},
-				{ text: 'Jenis Peserta ', align: 'center',cellsalign: 'center',editable: false,datafield: 'jenis_peserta', columntype: 'textbox', filtertype: 'textbox', width: '15%'},
+				{ text: 'Jenis Kelamin ', editable: false,datafield: 'jenis_kelamin', align: 'center', cellsalign: 'center', columntype: 'textbox', filtertype: 'textbox', width: '11%'},
+				{ text: 'Jenis Peserta ', align: 'center',cellsalign: 'center',editable: false,datafield: 'jenis_peserta', columntype: 'textbox', filtertype: 'textbox', width: '20%'},
 				{ text: 'Tanggal Lahir',align: 'center',cellsalign: 'center', editable: false,datafield: 'tgl_lahir', columntype: 'date', filtertype: 'date', cellsformat: 'dd-MM-yyyy', width: '12%'},
-				{ text: 'Usia', align: 'center',cellsalign: 'right',editable: false, datafield: 'usia', columntype: 'textbox', filtertype: 'textbox', width: '13%'}
+				{ text: 'Usia', align: 'center', cellsalign: 'center', editable: false, datafield: 'usia', columntype: 'textbox', filtertype: 'textbox', width: '12%'}
            ]
 		});
         
@@ -163,8 +163,8 @@
 <div>
 	<div style="width:100%;">
 		<div style="padding:5px" class="pull-right">
-			<button class="btn btn-success" id='btn_add_peserta' type='button'><i class='fa fa-plus-square'></i> Tambah peserta</button>
-			<button type="button" class="btn btn-primary" id="btn-refresh-datapeserta"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
+			<button type="button" class="btn btn-success" id="btn-refresh-datapeserta"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
+			<button class="btn btn-danger" id='btn_add_peserta' type='button'><i class='fa fa-plus-square'></i> Tambah Peserta</button>
 			<button type="button" id="btn-back-pesertadata" class="btn btn-warning"><i class='fa fa-reply'></i> &nbsp; Kembali</button>
 		</div>
         <div id="jqxgrid_peserta"></div>

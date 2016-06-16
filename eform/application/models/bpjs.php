@@ -37,15 +37,23 @@ class Bpjs extends CI_Model {
     	$data['secretkey'] 	='0pMBE6D40F';
     	return $data;
 	}
-	function get_data_bpjs($default = "live"){
+	function get_data_bpjs($default = "live", $kdProviderPeserta = ""){
     	$data = array();
     	if($default=="live"){
-	    	$id='P'.$this->session->userdata('puskesmas');
-	    	$this->db->where('code',$id);
-	    	$data = $this->db->get('cl_phc_bpjs')->row_array();
-			if(!isset($data['code']) || !isset($data['server']) || !isset($data['username']) || !isset($data['password']) || !isset($data['consid']) || !isset($data['secretkey'])) {
-        		$data = $this->get_demo_bpjs();
-	        }
+    		if($kdProviderPeserta!="" && $kdProviderPeserta!=0){
+		    	$this->db->where('username',$kdProviderPeserta);
+		    	$data = $this->db->get('cl_phc_bpjs')->row_array();
+				if(!isset($data['code']) || !isset($data['server']) || !isset($data['username']) || !isset($data['password']) || !isset($data['consid']) || !isset($data['secretkey'])) {
+	        		$data = $this->get_demo_bpjs();
+		        }
+    		}else{
+		    	$id='P'.$this->session->userdata('puskesmas');
+		    	$this->db->where('code',$id);
+		    	$data = $this->db->get('cl_phc_bpjs')->row_array();
+				if(!isset($data['code']) || !isset($data['server']) || !isset($data['username']) || !isset($data['password']) || !isset($data['consid']) || !isset($data['secretkey'])) {
+	        		$data = $this->get_demo_bpjs();
+		        }
+    		}
 	    }
     	elseif($default=="global"){
 	    	$id='P'.$this->session->userdata('puskesmas');
@@ -117,7 +125,12 @@ class Bpjs extends CI_Model {
 	}
 
 	function postApi($url="", $data=array()){
-	   $this->get_data_bpjs("live");
+		if(isset($data['kdProviderPeserta'])){
+		   $this->get_data_bpjs("live",$data['kdProviderPeserta']);
+		}else{
+		   $this->get_data_bpjs("live");
+		}
+	   //$this->get_data_bpjs("demo");
 	   try
 	    {
 	      $response = \Httpful\Request::post($this->server.$url)
@@ -209,6 +222,12 @@ class Bpjs extends CI_Model {
           $data = array("metaData"=>array("message" =>'error',"code"=>777));
         }
         return $data;
+	}
+
+	function bpjs_club($kdJnsKelompok="01"){
+		$data = $this->getApi('pcare-rest-dev/v1/kelompok/club/'.$kdJnsKelompok);
+
+      	return $data['response']['list'];
 	}
 
 	function bpjs_option($type="poli"){
@@ -315,6 +334,49 @@ class Bpjs extends CI_Model {
             return 'bpjserror';
         }*/
     }
+
+	function bpjs_send_kegiatan($kode){
+    	$this->db->where('id_data_kegiatan',$kode);
+    	$data = $this->db->get('data_kegiatan')->row_array();
+
+    	if($data['status_penyuluhan']==1 && $data['status_senam']==1){
+    		$kdKegiatan = "11";
+    	}elseif($data['status_penyuluhan']==1 && $data['status_senam']==0){
+    		$kdKegiatan = "10";
+    	}else{
+    		$kdKegiatan = "01";
+    	}
+
+        $data_kegiatan = array(
+          "eduId" 		=> null,
+          "clubId" 		=> $data['kode_club'],
+          "tglPelayanan"=> date("d-m-Y",strtotime($data['biaya'])),
+          "kdKegiatan" 	=> $kdKegiatan,
+          "kdKelompok" 	=> $data['kode_kelompok'],
+          "materi" 		=> $data['materi'],
+          "pembicara" 	=> $data['pembicara'],
+          "lokasi" 		=> $data['lokasi'],
+          "keterangan" 	=> $data['keterangan'],
+          "biaya" 		=> $data['biaya'],
+        ); 
+        $datavisit = $this->postApi('kelompok/kegiatan', $data_kegiatan);
+        if (($datavisit['metaData']['message']=='CREATED') && ($datavisit['metaData']['code']=='201')){
+        	$update = array();
+        	$update['eduId'] = $datavisit['response']['message'];
+        	$this->db->where('id_data_kegiatan',$kode);
+        	$this->db->update('data_kegiatan',$update);
+        	return 'ok';
+        }
+        elseif(($datavisit['metaData']['message']=='NOT_MODIFIED') && ($datavisit['metaData']['code']=='304')){
+            return 'dataada';
+        }
+        elseif(($datavisit['metaData']['message']=='PRECONDITION_FAILED') && ($datavisit['metaData']['code']=='412')){
+            return print_r($datavisit['response'],true);
+        }else{
+            return 'bpjserror';
+        }
+    }
+   
 
 }
 ?>

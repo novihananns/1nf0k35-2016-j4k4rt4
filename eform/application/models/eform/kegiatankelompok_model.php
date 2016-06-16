@@ -40,7 +40,7 @@ class Kegiatankelompok_model extends CI_Model {
                 'id_data_kegiatan'      => $id_data_kegiatan,
                 'no_kartu'              => $datalengkap['bpjs'],
                 'nama'                  => $datalengkap['nama'],
-                'sex'                   => $datalengkap['id_pilihan_kelamin'],
+                'sex'                   => $datalengkap['id_pilihan_kelamin']==5 ? "L":"P",
                 'jenis_peserta'         => $databpjs['response']['jnsPeserta']['nama'],
                 'tgl_lahir'             => $datalengkap['tgl_lahir']
             );
@@ -59,7 +59,7 @@ class Kegiatankelompok_model extends CI_Model {
                 'id_data_kegiatan'      => $id_kegiatan,
                 'no_kartu'              => $datalengkap['bpjs'],
                 'nama'                  => $datalengkap['nama'],
-                'sex'                   => $datalengkap['id_pilihan_kelamin'],
+                'sex'                   => $datalengkap['id_pilihan_kelamin']==5 ? "L":"P",
                 'jenis_peserta'         => $databpjs['response']['jnsPeserta']['nama'],
                 'tgl_lahir'             => $datalengkap['tgl_lahir']
             );
@@ -85,7 +85,7 @@ class Kegiatankelompok_model extends CI_Model {
     }
     function get_data($start=0,$limit=999999,$options=array())
     {
-        $this->db->select("$this->tabel.*,IF(kode_kelompok = '00','Non-Prolanis',IF(kode_kelompok = '01','Diabetes Melitus',IF(kode_kelompok = '02','Hipertensi','-'))) as namakelompok,mas_club.alamat",false);
+        $this->db->select("$this->tabel.*,mas_club.nama as club,mas_club.alamat",false);
         $this->db->order_by('tgl','desc');
         $this->db->join('mas_club','mas_club.clubId=data_kegiatan.kode_club','left');
         $query = $this->db->get($this->tabel,$limit,$start);
@@ -171,7 +171,7 @@ class Kegiatankelompok_model extends CI_Model {
     function insert_entry()
     {   
         $datapus =$this->session->userdata('puskesmas');
-        $pus=substr($datapus, 1,12);
+        $pus= $datapus;
         $id = $this->getNourutkel($pus);
         $tg = explode("-", $this->input->post('tgl'));
         $tgldata = $tg[2].'-'.$tg[1].'-'.$tg[0];
@@ -184,8 +184,9 @@ class Kegiatankelompok_model extends CI_Model {
         $data['materi']                     = $this->input->post('materi');
         $data['pembicara']                  = $this->input->post('pembicara');
         $data['lokasi']                     = $this->input->post('lokasi');
-        $data['biaya']                        = $this->input->post('biaya');
-        $data['keterangan']                   = $this->input->post('keterangan');
+        $data['biaya']                      = $this->input->post('biaya');
+        $data['keterangan']                 = $this->input->post('keterangan');
+        $data['code_cl_phc']                = 'P'.$this->session->userdata('puskesmas');
         if($this->db->insert($this->tabel, $data)){
             return $data['id_data_kegiatan'];
         }else{
@@ -240,5 +241,10 @@ class Kegiatankelompok_model extends CI_Model {
         $this->db->where('id_mst_inv_barang',$id_barang);
         return $this->db->delete($table);
     }
-	
+
+    function bpjs_send_kegiatan(){
+        $kode = $this->input->post('kode');
+
+        return $this->bpjs->bpjs_send_kegiatan($kode);
+    }
 }

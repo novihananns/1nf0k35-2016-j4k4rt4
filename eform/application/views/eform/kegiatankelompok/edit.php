@@ -32,9 +32,9 @@
         <div class="form-group">
           <label>Jenis Kelompok</label> 
           <select  name="kode_kelompok" id="kode_kelompok" type="text" class="form-control">
-              <?php foreach($jeniskelompok as $key => $value) : ?>
-                <?php $select = $key == $kode_kelompok ? 'selected' : '' ?>
-                <option value="<?php echo $key ?>" <?php echo $select ?>><?php echo $value ?></option>
+              <?php foreach($jeniskelompok as $key) : ?>
+                <?php $select = $key->id_mas_club_kelompok == $kode_kelompok ? 'selected' : '' ?>
+                <option value="<?php echo $key->id_mas_club_kelompok ?>" <?php echo $select ?>><?php echo $key->value ?></option>
               <?php endforeach ?>
           </select>
         </div>
@@ -171,9 +171,9 @@ $(function(){
         }
         var datakelom = $(this).val();
         $.ajax({
-          url : '<?php echo site_url('eform/kegiatankelompok/getdatakelompok') ?>',
+          url : '<?php echo site_url('eform/kegiatankelompok/getdatakelompokedit') ?>',
           type : 'POST',
-          data : 'datakelom=' + datakelom,
+          data : 'datakelom=' + datakelom+'&kode_club=' + "<?php echo $kode_club; ?>",
           success : function(data) {
             $('#jenis_kelompok').html(data);
           }

@@ -7,10 +7,10 @@
             });
         }
 
-        loadPage('<?php echo base_url()?>eform/kegiatankelompok/form_tab_dpp/1/{id_pegawai}/{tahun}/{id_mst_peg_struktur_org}/0', 1);
+        loadPage('<?php echo base_url()?>eform/kegiatankelompok/form_tab_dpp/1/{kode}', 1);
         $('#jqxTabsdppp').on('selected', function (event) {
             var pageIndex = event.args.item + 1;
-            loadPage('<?php echo base_url()?>eform/kegiatankelompok/form_tab_dpp/'+pageIndex+'/{id_pegawai}/{tahun}/{id_mst_peg_struktur_org}/0', pageIndex);
+            loadPage('<?php echo base_url()?>eform/kegiatankelompok/form_tab_dpp/'+pageIndex+'/{kode}', pageIndex);
         });
 
   });
@@ -26,7 +26,7 @@
                       <i class="icon fa fa-plus" style="font-size: 18px"></i>
                   </div>
                   <div style="margin-left: 10px; vertical-align: middle; text-align: center; float: left;">
-                      Pengukuran</div>
+                      Cari Peserta</div>
               </div>
             </li>
             <li style="margin-left: 15px;">
@@ -35,7 +35,7 @@
                       <i class="icon fa fa-plus" style="font-size: 18px"></i>
                   </div>
                   <div style="margin-left: 10px; vertical-align: middle; text-align: center; float: left;">
-                      Penilaian DP3</div>
+                      Peserta Ploranis</div>
               </div>
             </li>
         </ul>

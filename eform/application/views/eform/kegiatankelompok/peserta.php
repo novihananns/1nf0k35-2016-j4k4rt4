@@ -2,7 +2,8 @@
 <script>
 
 	$(function(){
-		
+		$("#menu_kegiatan_kelompok").addClass("active");
+      $("#menu_kegiatankelompok").addClass("active");	
 	   var source = {
 			datatype: "json",
 			type	: "POST",
@@ -57,7 +58,7 @@
 				{ text: 'Del', align: 'center', editable: false,filtertype: 'none', sortable: false, width: '4%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid_peserta").jqxGrid('getrowdata', row);
 				    if(dataRecord.delete==1){
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_del.gif' onclick='del_peserta(\""+dataRecord.no_kartu+"\",\""+dataRecord.id_data_kegiatan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_del.gif' onclick='del_peserta(\""+dataRecord.id_data_kegiatan+"\",\""+dataRecord.no_kartu+"\");'></a></div>";
 					}else{
 						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
 					}
@@ -69,7 +70,7 @@
 				{ text: 'Jenis Kelamin ', editable: false,datafield: 'jenis_kelamin', columntype: 'textbox', filtertype: 'textbox', width: '11%'},
 				{ text: 'Jenis Peserta ', align: 'center',cellsalign: 'center',editable: false,datafield: 'jenis_peserta', columntype: 'textbox', filtertype: 'textbox', width: '15%'},
 				{ text: 'Tanggal Lahir',align: 'center',cellsalign: 'center', editable: false,datafield: 'tgl_lahir', columntype: 'date', filtertype: 'date', cellsformat: 'dd-MM-yyyy', width: '12%'},
-				{ text: 'Usia', align: 'center',cellsalign: 'right',editable: false, datafield: 'harga', columntype: 'usia', filtertype: 'textbox', width: '13%'}
+				{ text: 'Usia', align: 'center',cellsalign: 'right',editable: false, datafield: 'usia', columntype: 'textbox', filtertype: 'textbox', width: '13%'}
            ]
 		});
         
@@ -77,7 +78,7 @@
 			$("#jqxgrid_peserta").jqxGrid('clearfilters');
 		});
         
- 		$('#refreshdatabutton').click(function () {
+ 		$('#btn-refresh-datapeserta').click(function () {
 			$("#jqxgrid_peserta").jqxGrid('updatebounddata', 'cells');
 		});
 
@@ -125,22 +126,18 @@
 
 	function add_peserta(){
 		
-		$.get("<?php echo base_url().'eform/kegiatankelompok/add_peserta/1/'.$kode.'/'; ?>" , function(data) {
+		$.get("<?php echo base_url().'eform/kegiatankelompok/tab/1/'.$kode.'/'; ?>" , function(data) {
 			$("#tambahtjqxgrid_peserta").show();
 			$("#tambahtjqxgrid_peserta").html(data);
+			$("#btn_add_peserta").hide();
 			$("#jqxgrid_peserta").hide();
 		});
 	}
 
-	function edit_peserta(id_inventaris_peserta,kode_proc){
-		$.get("<?php echo base_url().'eform/kegiatankelompok/edit_peserta/'.$kode.'/';?>"+id_inventaris_peserta+'/'+kode_proc, function(data) {
-			$("#popup_content").html(data);
-		});
-	}
-	function del_peserta(kodeinventaris,peserta_kembar_proc){
+	function del_peserta(id_data_kegiatan,no_kartu){
 		var confirms = confirm("Hapus Data ?");
 		if(confirms == true){
-			$.post("<?php echo base_url().'eform/kegiatankelompok/dodelpermohonan/'.$kode.'/'; ?>" + kodeinventaris+'/'+peserta_kembar_proc,  function(){
+			$.post("<?php echo base_url().'eform/kegiatankelompok/dodelpermohonan/'; ?>" + id_data_kegiatan+'/'+no_kartu,  function(){
 				alert('Data berhasil dihapus');
 
 				$("#jqxgrid_peserta").jqxGrid('updatebounddata', 'cells');
@@ -156,6 +153,7 @@
 	<div style="width:100%;">
 		<div style="padding:5px" class="pull-right">
 			<button class="btn btn-success" id='btn_add_peserta' type='button'><i class='fa fa-plus-square'></i> Tambah peserta</button>
+			<button type="button" class="btn btn-primary" id="btn-refresh-datapeserta"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
 		</div>
         <div id="jqxgrid_peserta"></div>
         <div id="tambahtjqxgrid_peserta"></div>

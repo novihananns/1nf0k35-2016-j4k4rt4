@@ -87,9 +87,12 @@
     }
     */
 ////GET DAFTAR
+
    try
     {
-      $response = \Httpful\Request::get($server.'/pendaftaran/tglDaftar/09-05-2016/0/999')
+      $response = \Httpful\Request::get($server.'/pendaftaran/tglDaftar/11-05-2016/0/999')
+      //$response = \Httpful\Request::get($server.'/peserta/0001101968302')
+      //$response = \Httpful\Request::delete($server.'/pendaftaran/peserta/0001113569638/tglDaftar/24-08-2015/noUrut/1')
       ->xConsId($consid)
       ->xTimestamp($xtime)
       ->xSignature($xsign)

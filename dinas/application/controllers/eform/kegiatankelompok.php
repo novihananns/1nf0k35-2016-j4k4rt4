@@ -16,7 +16,7 @@ class Kegiatankelompok extends CI_Controller {
 		$this->authentication->verify('eform','edit');
 		$data['title_group'] = "Kegiatan Kelompok";
 		$data['title_form'] = "Daftar Kegiatan";
-
+		$this->session->set_userdata('filter_code_cl_phc','');
 		$kodepuskesmas = $this->session->userdata('puskesmas');
 		if(substr($kodepuskesmas, -2)=="01"){
 			$data['unlock'] = 1;

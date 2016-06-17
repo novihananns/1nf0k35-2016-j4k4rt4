@@ -52,6 +52,7 @@
 
 <script type="text/javascript">
 	$(function () {	
+		filterdata();
 	    $("#menu_eform_kegiatankelompok").addClass("active");
     	$("#menu_kegiatan_kelompok").addClass("active");
 	});
@@ -158,10 +159,13 @@
 			});
 		}
 	}
-	$("select[name='code_cl_phc']").change(function(){
-		$.post("<?php echo base_url().'eform/kegiatankelompok/filter' ?>", 'code_cl_phc='+$(this).val(),  function(){
+	function filterdata(){
+		$.post("<?php echo base_url().'eform/kegiatankelompok/filter' ?>", 'code_cl_phc='+$("select[name='code_cl_phc']").val(),  function(){
 			$("#jqxgrid").jqxGrid('updatebounddata', 'cells');
 		});
+	}
+	$("select[name='code_cl_phc']").change(function(){
+		filterdata();
     });
 	$("#btn-export").click(function(){
 		var post = "";

@@ -68,8 +68,11 @@ class Kegiatankelompok extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if ($this->session->userdata('filter_code_cl_phc')!='') {
+		if ($this->session->userdata('filter_code_cl_phc')=='all') {
+		}else if ($this->session->userdata('filter_code_cl_phc')!='') {
 			$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
+		}else{
+			
 		}
 
 		$rows_all = $this->kegiatankelompok_model->get_data();
@@ -98,8 +101,11 @@ class Kegiatankelompok extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		if ($this->session->userdata('filter_code_cl_phc')!='') {
+		if ($this->session->userdata('filter_code_cl_phc')=='all') {
+		}else if ($this->session->userdata('filter_code_cl_phc')!='') {
 			$this->db->where('code_cl_phc',$this->session->userdata('filter_code_cl_phc'));
+		}else{
+			
 		}
 		$rows = $this->kegiatankelompok_model->get_data($this->input->post('recordstartindex'), $this->input->post('pagesize'));
 		$data = array();

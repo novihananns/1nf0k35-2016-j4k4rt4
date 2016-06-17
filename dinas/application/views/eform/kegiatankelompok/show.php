@@ -29,6 +29,7 @@
 			     	<div class="col-md-4" style="padding-top:5px;"><label> Puskesmas </label> </div>
 			     	<div class="col-md-8">
 			     		<select name="code_cl_phc" id="puskesmas" class="form-control">
+			     			<option value="all">All</option>
 							<?php foreach ($datapuskesmas as $row ) { 
 								$select = $row->code == $this->session->userdata('filter_code_cl_phc') ? 'selected' : '';
 							;?> 

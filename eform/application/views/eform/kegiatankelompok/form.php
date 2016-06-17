@@ -105,7 +105,7 @@
         <div class="row">
           <div class="col-md-4">Biaya</div>
           <div class="col-md-8" style="margin-bottom: 5px">
-            <input type="number" class="form-control" name="biaya" placeholder="Biaya" value="<?php 
+            <input type="number" class="form-control" name="biaya" id="biaya" placeholder="Biaya" value="<?php 
               if(set_value('biaya')=="" && isset($biaya)){
                 echo $biaya;
               }else{
@@ -151,8 +151,11 @@ $(function(){
     $("#kode_kelompok").change(function(){
         if ($(this).val()=='00') {
           $("#jenisplor").hide();
+          $("#biaya").prop( "disabled", true );
+          $("#biaya").val(0);
         }else{
           $("#jenisplor").show();
+          $("#biaya").prop( "disabled", false );
         }
         var datakelom = $(this).val();
         $.ajax({

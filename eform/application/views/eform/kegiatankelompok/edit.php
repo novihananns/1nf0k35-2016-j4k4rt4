@@ -18,60 +18,129 @@
   <div class="col-md-6">
     <div class="box box-primary">
       <div class="box-body">
-          <div class="form-group">
-          <label>Tanggal Pelaksanaan</label>
-          <div id='tgl' name="tgl" value="<?php
-             if(set_value('tgl')=="" && isset($tgl)){
-                $tgldata= $tgl;
-              }else{
-                $tgldata= set_value('tgl');
-              }
-              echo ($tgldata!="") ? $tgldata : "";
-            ?>"></div>
-        </div>
-        <div class="form-group">
-          <label>Jenis Kelompok</label> 
-          <select  name="kode_kelompok" id="kode_kelompok" type="text" class="form-control" disabled>
-              <?php foreach($jeniskelompok as $key) : ?>
-                <?php $select = $key->id_mas_club_kelompok == $kode_kelompok ? 'selected' : '' ?>
-                <option value="<?php echo $key->id_mas_club_kelompok ?>" <?php echo $select ?>><?php echo $key->value ?></option>
-              <?php endforeach ?>
-          </select>
-        </div>
-        <div class="form-group" id="jenisplor">
-          <label>Club Prolanis</label> 
-          <select name="jenis_kelompok" id="jenis_kelompok" class="form-control" disabled>
-            <option value="">Pilih Club Pronalis</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Jenis Kegiatan</label> <br/>
           <div class="row">
-            <div class="col-md-6">
-              <input type="checkbox" name="edukasi" value="1" disabled <?php if(set_value('edukasi')=="" && isset($status_penyuluhan) && $status_penyuluhan=='1'){
-                  echo 'checked';
-                }else{
-                  echo  '';
-                }?>> Penyuluhan/Edukasi
+            <div class="col-md-4">Tanggal Pelaksanaan</div>
+            <div class="col-md-8" style="margin-bottom: 5px">
+              <div id='tgl' name="tgl" value="<?php
+                 if(set_value('tgl')=="" && isset($tgl)){
+                    $tgldata= $tgl;
+                  }else{
+                    $tgldata= set_value('tgl');
+                  }
+                  echo ($tgldata!="") ? $tgldata : "";
+                ?>"></div>
             </div>
-            <div class="col-md-6">
-              <input type="checkbox" name="senam" value="1" disabled <?php if(set_value('senam')=="" && isset($status_senam) && $status_senam=='1'){
-                  echo 'checked';
-                }else{
-                  echo  '';
-                }?>> Senam
+          </div>
+          <div class="row">
+            <div class="col-md-4">Jenis Kelompok</div>
+            <div class="col-md-8" style="margin-bottom: 5px">
+              <select  name="kode_kelompok" id="kode_kelompok" type="text" class="form-control" disabled>
+                  <?php foreach($jeniskelompok as $key) : ?>
+                    <?php $select = $key->id_mas_club_kelompok == $kode_kelompok ? 'selected' : '' ?>
+                    <option value="<?php echo $key->id_mas_club_kelompok ?>" <?php echo $select ?>><?php echo $key->value ?></option>
+                  <?php endforeach ?>
+              </select>
             </div>
-          </div>  
+          </div>
+          <div class="row">
+            <div class="col-md-4">Club Prolanis</div>
+            <div class="col-md-8" style="margin-bottom: 5px">
+              <select name="jenis_kelompok" id="jenis_kelompok" class="form-control" disabled>
+                <option value="">Pilih Club Pronalis</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">Jenis Kegiatan</div>
+            <div class="col-md-8" style="margin-bottom: 5px">
+              <div class="col-md-6">
+                <input type="checkbox" name="edukasi" value="1" disabled <?php if(set_value('edukasi')=="" && isset($status_penyuluhan) && $status_penyuluhan=='1'){
+                    echo 'checked';
+                  }else{
+                    echo  '';
+                  }?>> Penyuluhan/Edukasi
+              </div>
+              <div class="col-md-6">
+                <input type="checkbox" name="senam" value="1" disabled <?php if(set_value('senam')=="" && isset($status_senam) && $status_senam=='1'){
+                    echo 'checked';
+                  }else{
+                    echo  '';
+                  }?>> Senam
+              </div>
+            </div>  
+          </div>
+        <div class="row">
+            <div class="col-md-4">Materi</div>
+            <div class="col-md-8" style="margin-bottom: 5px">
+              <input type="text" class="form-control" name="materi" placeholder="Materi" readonly value="<?php 
+                if(set_value('materi')=="" && isset($materi)){
+                  echo $materi;
+                }else{
+                  echo  set_value('materi');
+                }
+                ?>">
+            </div>
         </div>
-        <div class="form-group">
-          <label>Materi</label>
-          <input type="text" class="form-control" name="materi" placeholder="Materi" readonly value="<?php 
-            if(set_value('materi')=="" && isset($materi)){
-              echo $materi;
-            }else{
-              echo  set_value('materi');
-            }
-            ?>">
+        <div class="row">
+            <div class="col-md-4">Pembicara</div>
+            <div class="col-md-8" style="margin-bottom: 5px">
+              <input type="text" class="form-control" name="pembicara" placeholder="Pembicara" readonly value="<?php 
+              if(set_value('pembicara')=="" && isset($pembicara)){
+                echo $pembicara;
+              }else{
+                echo  set_value('pembicara');
+              }
+              ?>">
+              <input type="hidden" class="form-control" name="id_data_kegiatan" readonly placeholder="id_data_kegiatan" value="<?php 
+              if(set_value('id_data_kegiatan')=="" && isset($id_data_kegiatan)){
+                echo $id_data_kegiatan;
+              }else{
+                echo  set_value('id_data_kegiatan');
+              }
+              ?>">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">Pembicara</div>
+            <div class="col-md-8" style="margin-bottom: 5px">
+              <input type="text" class="form-control" name="lokasi" placeholder="Lokasi" readonly value="<?php 
+                if(set_value('lokasi')=="" && isset($lokasi)){
+                  echo $lokasi;
+                }else{
+                  echo  set_value('lokasi');
+                }
+                ?>">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">Pembicara</div>
+            <div class="col-md-8" style="margin-bottom: 5px">
+              <input type="number" class="form-control" name="biaya" placeholder="Biaya" readonly value="<?php 
+                if(set_value('biaya')=="" && isset($biaya)){
+                  echo $biaya;
+                }else{
+                  echo  set_value('biaya');
+                }
+                ?>">
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">Pembicara</div>
+          <div class="col-md-8" style="margin-bottom: 5px">
+            <textarea class="form-control" name="keterangan" id="keterangan" placeholder="Keterangan" readonly><?php 
+              if(set_value('keterangan')=="" && isset($keterangan)){
+                echo $keterangan;
+              }else{
+                echo  set_value('keterangan');
+              }
+              ?></textarea>
+          </div>
+        </div>
+        <div style="text-align: right">
+            <button type="button" id="btn-send" class="btn btn-danger" <?php if($eduId!="" || $kode_club==0) echo "style='display:none'"?>><i class='fa fa-cloud-upload'></i> &nbsp; Kirim ke PCare</button>
+            <button type="button" id="btn-resend" class="btn btn-default"  <?php if($eduId=="" || $kode_club==0) echo "style='display:none'"?>><i class='fa fa-cloud-upload'></i> &nbsp; Kirim Update Peserta</button>
+            <button type="submit" class="btn btn-primary"><i class='fa fa-floppy-o'></i> &nbsp; Simpan</button>
+          <button type="button" id="btn-kembali" class="btn btn-warning"><i class='fa fa-reply'></i> &nbsp; Kembali</button>
         </div>
       </div>
     </div>
@@ -80,64 +149,7 @@
   <div class="col-md-6">
     <div class="box box-warning">
       <div class="box-body">
-
-      <div class="form-group">
-          <label>Pembicara</label>
-          <input type="text" class="form-control" name="pembicara" placeholder="Pembicara" readonly value="<?php 
-            if(set_value('pembicara')=="" && isset($pembicara)){
-              echo $pembicara;
-            }else{
-              echo  set_value('pembicara');
-            }
-            ?>">
-            <input type="hidden" class="form-control" name="id_data_kegiatan" readonly placeholder="id_data_kegiatan" value="<?php 
-            if(set_value('id_data_kegiatan')=="" && isset($id_data_kegiatan)){
-              echo $id_data_kegiatan;
-            }else{
-              echo  set_value('id_data_kegiatan');
-            }
-            ?>">
-        </div>
-        <div class="form-group">
-          <label>Lokasi</label>
-          <input type="text" class="form-control" name="lokasi" placeholder="Lokasi" readonly value="<?php 
-            if(set_value('lokasi')=="" && isset($lokasi)){
-              echo $lokasi;
-            }else{
-              echo  set_value('lokasi');
-            }
-            ?>">
-        </div>
-        <div class="form-group">
-          <label>Biaya</label>
-          <input type="number" class="form-control" name="biaya" placeholder="Biaya" readonly value="<?php 
-            if(set_value('biaya')=="" && isset($biaya)){
-              echo $biaya;
-            }else{
-              echo  set_value('biaya');
-            }
-            ?>">
-        </div>
-        <div class="form-group">
-          <label>Keterangan</label>
-          <textarea class="form-control" name="keterangan" id="keterangan" placeholder="Keterangan" readonly><?php 
-              if(set_value('keterangan')=="" && isset($keterangan)){
-                echo $keterangan;
-              }else{
-                echo  set_value('keterangan');
-              }
-              ?></textarea>
-        </div>
-      <div id="success"> 
-        
-      <div style="text-align: right">
-          <button type="button" id="btn-send" class="btn btn-danger" <?php if($eduId!="" || $kode_club==0) echo "style='display:none'"?>><i class='fa fa-cloud-upload'></i> &nbsp; Kirim ke PCare</button>
-          <button type="button" id="btn-resend" class="btn btn-default"  <?php if($eduId=="" || $kode_club==0) echo "style='display:none'"?>><i class='fa fa-cloud-upload'></i> &nbsp; Kirim Update Peserta</button>
-          <button type="submit" class="btn btn-primary"><i class='fa fa-floppy-o'></i> &nbsp; Simpan</button>
-        <button type="button" id="btn-kembali" class="btn btn-warning"><i class='fa fa-reply'></i> &nbsp; Kembali</button>
-      </div>
-      </div>
-           
+          <?php echo $daftardatapeserta;?>     
     </div>
   </div><!-- /.form-box -->
 </div><!-- /.register-box -->  

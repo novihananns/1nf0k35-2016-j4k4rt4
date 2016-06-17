@@ -36,13 +36,15 @@ class Kegiatankelompok_model extends CI_Model {
         }else{
             $datalengkap = $this->lengkapdata($no_kartu);
             $databpjs = $this->bpjs->bpjs_search('bpjs',$no_kartu);
+            $tglla = explode("-", $databpjs['response']['tglLahir']);
+            $tgllahir = $tglla[2].'-'.$tglla[1].'-'.$tglla[0];
             $values = array(
                 'id_data_kegiatan'      => $id_data_kegiatan,
-                'no_kartu'              => $datalengkap['bpjs'],
-                'nama'                  => $datalengkap['nama'],
-                'sex'                   => $datalengkap['id_pilihan_kelamin']==5 ? "L":"P",
+                'no_kartu'              => $databpjs['response']['noKartu'],
+                'nama'                  => $databpjs['response']['nama'],
+                'sex'                   => $databpjs['response']['sex'],//==5 ? "L":"P",
                 'jenis_peserta'         => $databpjs['response']['jnsPeserta']['nama'],
-                'tgl_lahir'             => $datalengkap['tgl_lahir']
+                'tgl_lahir'             => $tgllahir
             );
             $this->db->insert('data_kegiatan_peserta', $values);
             return true;
@@ -71,12 +73,12 @@ class Kegiatankelompok_model extends CI_Model {
         
         
     }
-    function get_data_anggotaKeluarga($start=0,$limit=999999,$options=array()){
+    function get_data_anggotaKeluarga($id=0,$start=0,$limit=999999,$options=array()){
         
         $this->db->select("data_kegiatan_peserta.no_kartu,data_keluarga_anggota.*,jeniskelamin.value as jeniskelamin,(year(curdate())-year(data_keluarga_anggota.tgl_lahir)) as usia");
         $this->db->join("mst_keluarga_pilihan jeniskelamin","data_keluarga_anggota.id_pilihan_kelamin = jeniskelamin.id_pilihan and jeniskelamin.tipe ='jk'",'left');
         $this->db->order_by('data_keluarga_anggota.no_anggota','asc');
-        $this->db->join('data_kegiatan_peserta','data_kegiatan_peserta.no_kartu = data_keluarga_anggota.bpjs','left');
+        $this->db->join('data_kegiatan_peserta',"data_kegiatan_peserta.no_kartu = data_keluarga_anggota.bpjs and data_kegiatan_peserta.id_data_kegiatan=".'"'.$id.'"'."",'left');
         // $this->db->where('`data_keluarga_anggota`.`bpjs` NOT IN (select `no_kartu` from `data_kegiatan_peserta`)', NULL, FALSE);
         $query =$this->db->group_by("bpjs");
         $query =$this->db->get("data_keluarga_anggota",$limit,$start);

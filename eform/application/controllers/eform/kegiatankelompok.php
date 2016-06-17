@@ -65,9 +65,9 @@ class Kegiatankelompok extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		// if ($this->session->userdata('puskesmas')!='') {
-		// 	$this->db->where('code_cl_phc','P'.$this->session->userdata('puskesmas'));
-		// }
+		if ($this->session->userdata('puskesmas')!='') {
+			$this->db->where('code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		}
 
 		$rows_all = $this->kegiatankelompok_model->get_data();
 
@@ -92,9 +92,9 @@ class Kegiatankelompok extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		// if ($this->session->userdata('puskesmas')!='') {
-		// 	$this->db->where('code_cl_phc','P'.$this->session->userdata('puskesmas'));
-		// }
+		if ($this->session->userdata('puskesmas')!='') {
+			$this->db->where('code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		}
 		$rows = $this->kegiatankelompok_model->get_data($this->input->post('recordstartindex'), $this->input->post('pagesize'));
 		$data = array();
 
@@ -246,6 +246,7 @@ class Kegiatankelompok extends CI_Controller {
 			}
 			$data['kodepuskesmas'] = $this->kegiatankelompok_model->get_data_puskesmas();
 			$data['jeniskelompok'] = $this->kegiatankelompok_model->get_jenis();
+			$data['daftardatapeserta']	= $this->parser->parse('eform/kegiatankelompok/daftarpeserta', $data, TRUE);
 			$data['pesertadata']	  	= $this->parser->parse('eform/kegiatankelompok/peserta', $data, TRUE);
 			$data['content'] 	= $this->parser->parse("eform/kegiatankelompok/edit",$data,true);
 		}elseif($this->kegiatankelompok_model->update_entry($id_kegiatan)){
@@ -267,7 +268,14 @@ class Kegiatankelompok extends CI_Controller {
 			$this->session->set_flashdata('alert', 'Delete data error');
 		}
 	}
-	public function json_pesertabpjs(){
+	function filter(){
+		if($_POST) {
+			if($this->input->post('code_cl_phc') != '') {
+				$this->session->set_userdata('filter_code_cl_phc',$this->input->post('code_cl_phc'));
+			}
+		}
+	}
+	public function json_pesertabpjs($id=0){
 		$this->authentication->verify('eform','show');
 
 		if($_POST) {
@@ -289,10 +297,11 @@ class Kegiatankelompok extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
+		
 		$this->db->where("CHAR_LENGTH(data_keluarga_anggota.bpjs)",'13');
 		$this->db->where("data_keluarga_anggota.bpjs !=",'');
 		$this->db->where("data_keluarga_anggota.bpjs !=",'-');
-		$rows_all = $this->kegiatankelompok_model->get_data_anggotaKeluarga();
+		$rows_all = $this->kegiatankelompok_model->get_data_anggotaKeluarga($id);
 
     	if($_POST) {
 			$fil = $this->input->post('filterscount');
@@ -317,7 +326,7 @@ class Kegiatankelompok extends CI_Controller {
 		$this->db->where("CHAR_LENGTH(data_keluarga_anggota.bpjs)",'13');
 		$this->db->where("data_keluarga_anggota.bpjs !=",'');
 		$this->db->where("data_keluarga_anggota.bpjs !=",'-');
-		$rows = $this->kegiatankelompok_model->get_data_anggotaKeluarga($this->input->post('recordstartindex'),$this->input->post('pagesize'));
+		$rows = $this->kegiatankelompok_model->get_data_anggotaKeluarga($id,$this->input->post('recordstartindex'),$this->input->post('pagesize'));
 		$data = array();
 		foreach($rows as $act) {
 			$data[] = array(
@@ -451,7 +460,6 @@ class Kegiatankelompok extends CI_Controller {
 	}
 	public function add_peserta($kode=0)
 	{	
-
 		$data['action']			= "add";
 		$data['kode']			= $kode;
         $this->form_validation->set_rules('nik', 'NIK', 'trim');
@@ -460,6 +468,9 @@ class Kegiatankelompok extends CI_Controller {
         $this->form_validation->set_rules('tgl_lahir', 'Tanggal Lahir', 'trim|required');
         $this->form_validation->set_rules('id_pilihan_kelamin', 'Jenis Kelamin', 'trim|required');
         $this->form_validation->set_rules('jenis_peserta', 'Jenis Peserta', 'trim|required');
+        $this->form_validation->set_rules('nmProvider', 'Jenis Peserta', 'trim');
+        $this->form_validation->set_rules('jnsKelas', 'Jenis Peserta', 'trim');
+        $this->form_validation->set_rules('noHP', 'Jenis Peserta', 'trim');
 
 		if($this->form_validation->run()== FALSE){
 			$data['data_pilihan_kelamin'] = $this->kegiatankelompok_model->get_pilihan("jk");

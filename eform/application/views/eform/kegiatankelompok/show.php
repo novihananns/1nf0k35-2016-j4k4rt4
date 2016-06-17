@@ -162,7 +162,11 @@
 			});
 		}
 	}
-
+	$("select[name='code_cl_phc']").change(function(){
+		$.post("<?php echo base_url().'eform/kegiatankelompok/filter' ?>", 'code_cl_phc='+$(this).val(),  function(){
+			$("#jqxgrid").jqxGrid('updatebounddata', 'cells');
+		});
+    });
 	$("#btn-export").click(function(){
 		var post = "";
 		var filter = $("#jqxgrid").jqxGrid('getfilterinformation');

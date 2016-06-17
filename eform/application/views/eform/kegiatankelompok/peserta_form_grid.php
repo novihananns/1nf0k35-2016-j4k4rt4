@@ -34,7 +34,7 @@
       { name: 'no_kartu', type: 'string' },
       { name: 'ceklis', type: 'number' },
         ],
-    url: "<?php echo site_url('eform/kegiatankelompok/json_pesertabpjs'); ?>",    
+    url: "<?php echo base_url().'eform/kegiatankelompok/json_pesertabpjs/'.$kode; ?>",    
     cache: false,
     updateRow: function (rowID, rowData, commit) {
       
@@ -75,15 +75,6 @@
       },
       columns: [
         { text: 'Pilih',filtertype: 'none', align:'center', datafield: 'no_kartu', columntype: 'checkbox', width: '8%' },
-        // { text: 'Pilih', align: 'center', filtertype: 'none', sortable: false, width: '4%', cellsrenderer: function (row) {
-        //     var dataRecord = $("#jqxgridPesertaBPJS").jqxGrid('getrowdata', row);
-        //     if (dataRecord.ceklis==1) {
-        //         return "<div style='width:100%;padding-top:2px;text-align:center'><input type='checkbox' onclick='doList()' checked name='pesertaceklis' value="+dataRecord.bpjs+" ></div>";
-        //     }else{
-        //         return "<div style='width:100%;padding-top:2px;text-align:center'><input type='checkbox' onclick='doList()' name='pesertaceklis' value="+dataRecord.bpjs+" ></div>";
-        //     }
-        //   }
-        // },
         { text: 'No Kartu', align: 'center',cellsalign: 'center',editable: false, datafield: 'bpjs', columntype: 'textbox', filtertype: 'textbox', width: '18%' },
         { text: 'NIK', align: 'center',cellsalign: 'center',editable: false,datafield: 'nik', columntype: 'textbox', filtertype: 'textbox', width: '19%'},
         { text: 'Nama Peserta ', editable: false,datafield: 'nama', columntype: 'textbox', filtertype: 'textbox', width: '23%'},
@@ -96,22 +87,33 @@
     $("#jqxgridPesertaBPJS").bind('cellendedit', function (event) {
        
       var datarow = $("#jqxgridPesertaBPJS").jqxGrid('getrowdata', event.args.rowindex);
-      $.get("<?php echo base_url().'eform/kegiatankelompok/addpesetabpjsterdaftar/'.$kode; ?>/"+datarow.bpjs ,function(data){
-          var res = data.split("|");
-          if (res[0]=="OK") {
+      var bpjsdata = datarow.bpjs;
+      if(bpjsdata.length==13){
+        $.get("<?php echo base_url()?>eform/kegiatankelompok/bpjs_search/bpjs/"+bpjsdata,function(res){
+            if(res.metaData.code=="200"){
+              if(confirm("Nomor terdaftar sebagai peserta \nBPJS "+res.response.kdProviderPst.nmProvider+", \nGunakan data?")){
+                $.get("<?php echo base_url().'eform/kegiatankelompok/addpesetabpjsterdaftar/'.$kode; ?>/"+datarow.bpjs ,function(databp){
+                    var resd = databp.split("|");
+                    if (resd[0]=="OK") {
 
-          }else{
+                    }else{
 
-          }
-      });
-       // if (event.args.value) {
-       //     $("#jqxgridPesertaBPJS").jqxGrid('selectrow', event.args.rowindex);
-
-       // }
-       // else {
-       //     $("#jqxgridPesertaBPJS").jqxGrid('unselectrow', event.args.rowindex);
-       //     alert('koplok');
-       // }
+                    }
+                    $("#jqxgridPesertaBPJS").jqxGrid('updatebounddata', 'cells');
+                });
+              }else{
+                $("#jqxgridPesertaBPJS").jqxGrid('updatebounddata', 'cells');
+              }
+            }else{
+              alert("Peserta tidak terdaftar sebagai angota BPJS");
+              $("#jqxgridPesertaBPJS").jqxGrid('updatebounddata', 'cells');
+            }
+        },"json");
+      }else{
+        alert("Pastikan Nomor BPJS Berjumalh 13 digit");
+        $("#jqxgridPesertaBPJS").jqxGrid('updatebounddata', 'cells');
+      }
+      
    });
 
   function add_pesertabpjs(data_pesertabpjs){

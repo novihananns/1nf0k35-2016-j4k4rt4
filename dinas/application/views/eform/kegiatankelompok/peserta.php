@@ -64,20 +64,20 @@
 			},
 
 			columns: [
-				{ text: 'Del', align: 'center', editable: false,filtertype: 'none', sortable: false, width: '4%', cellsrenderer: function (row) {
-				    var dataRecord = $("#jqxgrid_peserta").jqxGrid('getrowdata', row);
-				    if(dataRecord.delete==1){
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_del.gif' onclick='del_peserta(\""+dataRecord.id_data_kegiatan+"\",\""+dataRecord.no_kartu+"\");'></a></div>";
-					}else{
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
-					}
-                 }
-                },
+				// { text: 'Del', align: 'center', editable: false,filtertype: 'none', sortable: false, width: '4%', cellsrenderer: function (row) {
+				//     var dataRecord = $("#jqxgrid_peserta").jqxGrid('getrowdata', row);
+				//     if(dataRecord.delete==1){
+				// 		return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php /* echo base_url(); ?>media/images/16_del.gif' onclick='del_peserta(\""+dataRecord.id_data_kegiatan+"\",\""+dataRecord.no_kartu+"\");'></a></div>";
+				// 	}else{
+				// 		return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url();*/ ?>media/images/16_lock.gif'></a></div>";
+				// 	}
+    //              }
+    //             },
                 { text: 'No', align: 'center',cellsalign: 'center',editable: false, datafield: 'no', columntype: 'textbox', filtertype: 'none', width: '5%' },
-				{ text: 'No Kartu', align: 'center',cellsalign: 'center',editable: false, datafield: 'no_kartu', columntype: 'textbox', filtertype: 'textbox', width: '16%' },
-				{ text: 'Nama Peserta ', editable: false,datafield: 'nama', columntype: 'textbox', filtertype: 'textbox', width: '20%'},
-				{ text: 'Jenis Kelamin ', editable: false,datafield: 'jenis_kelamin', align: 'center', cellsalign: 'center', columntype: 'textbox', filtertype: 'textbox', width: '11%'},
-				{ text: 'Jenis Peserta ', align: 'center',cellsalign: 'center',editable: false,datafield: 'jenis_peserta', columntype: 'textbox', filtertype: 'textbox', width: '20%'},
+				{ text: 'No Kartu', align: 'center',cellsalign: 'center',editable: false, datafield: 'no_kartu', columntype: 'textbox', filtertype: 'textbox', width: '17%' },
+				{ text: 'Nama Peserta ', editable: false,datafield: 'nama', columntype: 'textbox', filtertype: 'textbox', width: '21%'},
+				{ text: 'Jenis Kelamin ', editable: false,datafield: 'jenis_kelamin', align: 'center', cellsalign: 'center', columntype: 'textbox', filtertype: 'textbox', width: '12%'},
+				{ text: 'Jenis Peserta ', align: 'center',cellsalign: 'center',editable: false,datafield: 'jenis_peserta', columntype: 'textbox', filtertype: 'textbox', width: '21%'},
 				{ text: 'Tanggal Lahir',align: 'center',cellsalign: 'center', editable: false,datafield: 'tgl_lahir', columntype: 'date', filtertype: 'date', cellsformat: 'dd-MM-yyyy', width: '12%'},
 				{ text: 'Usia', align: 'center', cellsalign: 'center', editable: false, datafield: 'usia', columntype: 'textbox', filtertype: 'textbox', width: '12%'}
            ]
@@ -173,7 +173,7 @@
 	     	 	<div class="col-md-8">
 	     	 		<div class="pull-right">
 					<button type="button" class="btn btn-success" id="btn-refresh-datapeserta"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
-					<button class="btn btn-danger" id='btn_add_peserta' type='button'><i class='fa fa-plus-square'></i> Tambah Peserta</button>
+					<!-- <button class="btn btn-danger" id='btn_add_peserta' type='button'><i class='fa fa-plus-square'></i> Tambah Peserta</button> -->
 					<button type="button" id="btn-back-pesertadata" class="btn btn-warning"><i class='fa fa-reply'></i> &nbsp; Kembali</button>
 					</div>
 				</div>

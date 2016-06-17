@@ -88,8 +88,8 @@ class Bpjs extends CI_Model {
 	    return $data;
     }
 
-	function getApi($url=""){
-	   $this->get_data_bpjs("global");
+	function getApi($url="",$methode="global"){
+	   $this->get_data_bpjs($methode);
 	   try
 	    {
 	      $response = \Httpful\Request::get($this->server.$url)
@@ -200,8 +200,8 @@ class Bpjs extends CI_Model {
 	    return $data;
 	}
 
-	function deleteApi($url=""){
-	   $this->get_data_bpjs("live");
+	function deleteApi($url="",$methode="live"){
+	   $this->get_data_bpjs($methode);
 	   try
         {
           $response = \Httpful\Request::delete($this->server.$url)
@@ -365,6 +365,8 @@ class Bpjs extends CI_Model {
         	$update['eduId'] = $datavisit['response']['message'];
         	$this->db->where('id_data_kegiatan',$kode);
         	$this->db->update('data_kegiatan',$update);
+
+        	$this->bpjs_resend_kegiatan($kode);
         	return 'ok';
         }
         elseif(($datavisit['metaData']['message']=='NOT_MODIFIED') && ($datavisit['metaData']['code']=='304')){
@@ -379,44 +381,46 @@ class Bpjs extends CI_Model {
    
 	function bpjs_resend_kegiatan($kode){
     	$this->db->where('id_data_kegiatan',$kode);
-    	$data = $this->db->get('data_kegiatan')->row_array();
+    	$kegiatan = $this->db->get('data_kegiatan')->row_array();
 
-    	if($data['status_penyuluhan']==1 && $data['status_senam']==1){
-    		$kdKegiatan = "11";
-    	}elseif($data['status_penyuluhan']==1 && $data['status_senam']==0){
-    		$kdKegiatan = "10";
-    	}else{
-    		$kdKegiatan = "01";
+    	/*$datapeserta_pcare = $this->getApi('kelompok/peserta/'.$kegiatan['eduId'],"live");
+    	if (($datapeserta_pcare['metaData']['message']=='OK') && ($datapeserta_pcare['metaData']['code']=='200')){
+    		$dt = array();
+    		$list = $datapeserta_pcare['response']['list'];
+    		foreach ($list as $value) {
+        		$deletepeserta = $this->deleteApi('kelompok/peserta/'.$kegiatan['eduId'].'/'.$value['peserta']['noKartu']);
+    		}
+		}else{
+            return print_r($datapeserta_pcare,true);
+		}*/
+
+    	$this->db->where('id_data_kegiatan',$kode);
+    	$peserta = $this->db->get('data_kegiatan_peserta')->result_array();
+    	foreach ($peserta as $value) {
+	        $data_peserta = array(
+	          "eduId" 		=> $kegiatan['eduId'],
+	          "noKartu" 	=> $value['no_kartu'],
+	        ); 
+        	$datapeserta = $this->postApi('kelompok/peserta', $data_peserta);
+        	if (($datapeserta['metaData']['message']=='CREATED') && ($datapeserta['metaData']['code']=='201')){
+	        	$update = array();
+	        	$update['eduId'] = $kegiatan['eduId'];
+	        	$this->db->where('id_data_kegiatan',$kode);
+	        	$this->db->where('no_kartu',$value['no_kartu']);
+	        	$this->db->update('data_kegiatan_peserta',$update);
+	        }
+	        /*elseif(($datapeserta['metaData']['message']=='NOT_MODIFIED') && ($datavisit['metaData']['code']=='304')){
+	            return 'dataada';
+	        }
+	        elseif(($datapeserta['metaData']['message']=='PRECONDITION_FAILED') && ($datavisit['metaData']['code']=='412')){
+	            return print_r($datapeserta['response'],true);
+	        }else{
+	            return 'bpjserror';
+	        }*/
     	}
 
-        $data_kegiatan = array(
-          "eduId" 		=> null,
-          "clubId" 		=> $data['kode_club'],
-          "tglPelayanan"=> date("d-m-Y",strtotime($data['biaya'])),
-          "kdKegiatan" 	=> $kdKegiatan,
-          "kdKelompok" 	=> $data['kode_kelompok'],
-          "materi" 		=> $data['materi'],
-          "pembicara" 	=> $data['pembicara'],
-          "lokasi" 		=> $data['lokasi'],
-          "keterangan" 	=> $data['keterangan'],
-          "biaya" 		=> $data['biaya'],
-        ); 
-        $datavisit = $this->postApi('kelompok/kegiatan', $data_kegiatan);
-        if (($datavisit['metaData']['message']=='CREATED') && ($datavisit['metaData']['code']=='201')){
-        	$update = array();
-        	$update['eduId'] = $datavisit['response']['message'];
-        	$this->db->where('id_data_kegiatan',$kode);
-        	$this->db->update('data_kegiatan',$update);
-        	return 'ok';
-        }
-        elseif(($datavisit['metaData']['message']=='NOT_MODIFIED') && ($datavisit['metaData']['code']=='304')){
-            return 'dataada';
-        }
-        elseif(($datavisit['metaData']['message']=='PRECONDITION_FAILED') && ($datavisit['metaData']['code']=='412')){
-            return print_r($datavisit['response'],true);
-        }else{
-            return 'bpjserror';
-        }
+    	return "Data peserta berhasil terkirim ke PCare";
+        
     }
    
 

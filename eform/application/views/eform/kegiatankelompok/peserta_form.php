@@ -34,11 +34,13 @@
               if (res[0]=='Error') {
                 alert(res[1]);
               }else{
-                  $("#tambahtjqxgrid_peserta").hide();
-                  $("#btn_add_peserta").show();
-                  $("#btn-refresh-datapeserta").show();
-                  $("#jqxgrid_peserta").show();
-                  $("#jqxgrid_peserta").jqxGrid('updatebounddata', 'cells');
+                  // $("#tambahtjqxgrid_peserta").hide();
+                  // $("#btn_add_peserta").show();
+                  // $("#btn-refresh-datapeserta").show();
+                  // $("#jqxgrid_peserta").show();
+                  // $("#jqxgrid_peserta").jqxGrid('updatebounddata', 'cells');
+                  alert("Data Bershasil disimpan");
+                  bersih();
               }
             }
         });
@@ -106,6 +108,12 @@
             $("#nama").val('');
             $("#bpjs").val('');
             $("#nik").val('');
+            $("#tgl_lahir").val('');
+            $("#jenis_peserta").val('');
+            $("#id_pilihan_kelamin").val('');
+            $("#nmProvider").val('');
+            $("#jnsKelas").val('');
+            $("#noHP").val('');
       }
 </script>
 

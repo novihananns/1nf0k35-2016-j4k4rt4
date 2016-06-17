@@ -220,12 +220,30 @@ class Kegiatankelompok_model extends CI_Model {
 			return mysql_error();
 		}
     }
-    
-	function delete_entry($kode)
+    function get_data_anggotaKeluarga_count($id){
+        
+        $this->db->select("count(*) as totaldata");
+        $this->db->join("mst_keluarga_pilihan jeniskelamin","data_keluarga_anggota.id_pilihan_kelamin = jeniskelamin.id_pilihan and jeniskelamin.tipe ='jk'",'left');
+        $this->db->order_by('data_keluarga_anggota.no_anggota','asc');
+        $this->db->join('data_kegiatan_peserta',"data_kegiatan_peserta.no_kartu = data_keluarga_anggota.bpjs and data_kegiatan_peserta.id_data_kegiatan=".'"'.$id.'"'."",'left');
+        // $query =$this->db->group_by("bpjs");
+        $query =$this->db->get("data_keluarga_anggota");
+        if ($query->num_rows > 0) {
+            foreach ($query->result() as $key) {
+                $data = $key->totaldata;
+            }
+        }else{
+            $data = 0;
+        }
+        return $data;
+    }
+	function deletealldata($kode)
 	{
-		$this->db->where('id_pengadaan',$kode);
+		$this->db->where('id_data_kegiatan',$kode);
+		$this->db->delete('data_kegiatan_peserta');
 
-		return $this->db->delete($this->tabel);
+        $this->db->where('id_data_kegiatan',$kode);
+        return $this->db->delete('data_kegiatan');
 	}
     function get_jenis(){
         return $this->db->get('mas_club_kelompok')->result();

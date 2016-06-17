@@ -17,6 +17,9 @@
   <form action="<?php echo base_url()?>eform/kegiatankelompok/{action}/{kode}/" method="post">
   <div class="col-md-6">
     <div class="box box-primary">
+      <div class="box-header">
+          <h3 class="box-title">Kegiatan Kelompok</h3>
+      </div>
       <div class="box-body">
           <div class="row">
             <div class="col-md-4">Tanggal Pelaksanaan</div>
@@ -150,6 +153,9 @@
 
   <div class="col-md-6">
     <div class="box box-warning">
+      <div class="box-header">
+          <h3 class="box-title">Riwayat Kegiatan Kelompok</h3>
+      </div>
       <div class="box-body">
           <?php echo $daftardatapeserta;?>     
     </div>

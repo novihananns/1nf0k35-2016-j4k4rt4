@@ -301,7 +301,7 @@ class Kegiatankelompok extends CI_Controller {
 		$this->db->where("CHAR_LENGTH(data_keluarga_anggota.bpjs)",'13');
 		$this->db->where("data_keluarga_anggota.bpjs !=",'');
 		$this->db->where("data_keluarga_anggota.bpjs !=",'-');
-		$rows_all = $this->kegiatankelompok_model->get_data_anggotaKeluarga($id);
+		$rows_all = $this->kegiatankelompok_model->get_data_anggotaKeluarga_count($id);
 
     	if($_POST) {
 			$fil = $this->input->post('filterscount');
@@ -350,7 +350,7 @@ class Kegiatankelompok extends CI_Controller {
 			);
 		}
 
-		$size = sizeof($rows_all);
+		$size = $rows_all;
 		$json = array(
 			'TotalRows' => (int) $size,
 			'Rows' => $data
@@ -523,7 +523,15 @@ class Kegiatankelompok extends CI_Controller {
 			$this->session->set_flashdata('alert', 'Delete data error');
 		}
 	}
+	function dodel($kode=0){
+		$this->authentication->verify('eform','del');
 
+		if($this->kegiatankelompok_model->deletealldata($kode)){
+			$this->session->set_flashdata('alert', 'Delete data ('.$kode.')');
+		}else{
+			$this->session->set_flashdata('alert', 'Delete data error');
+		}
+	}
 	function send(){
 		$this->authentication->verify('eform','add');
       	$data = $this->kegiatankelompok_model->bpjs_send_kegiatan();

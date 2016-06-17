@@ -18,7 +18,19 @@
   <div class="col-md-6">
     <div class="box box-primary">
       <div class="box-header">
-          <h3 class="box-title">Kegiatan Kelompok</h3>
+        <div class="row">
+          <div class="col-md-7">
+            <h3 class="box-title">Kegiatan Kelompok</h3>
+          </div>
+          <div class="col-md-5">
+             <div style="text-align: right">
+                 <!--  <button type="button" id="btn-send" class="btn btn-danger" <?php if($eduId!="" || $kode_club==0) echo "style='display:none'"?>><i class='fa fa-cloud-upload'></i> &nbsp; Kirim ke PCare</button>
+                  <button type="button" id="btn-resend" class="btn btn-default"  <?php if($eduId=="" || $kode_club==0) echo "style='display:none'"?>><i class='fa fa-cloud-upload'></i> &nbsp; Kirim Update Peserta</button>
+                  <button type="submit" class="btn btn-primary"><i class='fa fa-floppy-o'></i> &nbsp; Simpan</button> -->
+                <button type="button" id="btn-kembali" class="btn btn-warning"><i class='fa fa-reply'></i> &nbsp; Kembali</button>
+              </div>
+          </div>
+        </div>
       </div>
       <div class="box-body">
           <div class="row">
@@ -141,12 +153,7 @@
               ?></textarea>
           </div>
         </div>
-        <div style="text-align: right">
-           <!--  <button type="button" id="btn-send" class="btn btn-danger" <?php if($eduId!="" || $kode_club==0) echo "style='display:none'"?>><i class='fa fa-cloud-upload'></i> &nbsp; Kirim ke PCare</button>
-            <button type="button" id="btn-resend" class="btn btn-default"  <?php if($eduId=="" || $kode_club==0) echo "style='display:none'"?>><i class='fa fa-cloud-upload'></i> &nbsp; Kirim Update Peserta</button>
-            <button type="submit" class="btn btn-primary"><i class='fa fa-floppy-o'></i> &nbsp; Simpan</button> -->
-          <button type="button" id="btn-kembali" class="btn btn-warning"><i class='fa fa-reply'></i> &nbsp; Kembali</button>
-        </div>
+       
       </div>
     </div>
   </div><!-- /.form-box -->

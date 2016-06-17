@@ -117,10 +117,10 @@
 				return obj.data;    
 			},
 			columns: [
-				{ text: 'Edit', align: 'center', filtertype: 'none', sortable: false, width: '4%', cellsrenderer: function (row) {
+				{ text: 'Detail', align: 'center', filtertype: 'none', sortable: false, width: '4%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
 				    if(dataRecord.edit==1){
-						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' onclick='edit(\""+dataRecord.id_data_kegiatan+"\");'></a></div>";
+						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' onclick='edit(\""+dataRecord.id_data_kegiatan+"\");'></a></div>";
 					}else{
 						return "<div style='width:100%;padding-top:2px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
 					}
@@ -139,7 +139,7 @@
 				{ text: 'Pelaksanaan',editable:false , align: 'center', cellsalign: 'center', datafield: 'tgl', columntype: 'date', filtertype: 'date', cellsformat: 'dd-MM-yyyy', width: '11%' },
 				{ text: 'Club Prolanis', editable:false ,align: 'center', datafield: 'kode_club', columntype: 'textbox', filtertype: 'textbox', width: '21%' },
 				{ text: 'Materi', editable:false ,align: 'center', datafield: 'materi', columntype: 'textbox', filtertype: 'textbox', width: '39%' },
-				{ text: 'Jumlah Peserta', align: 'center', filtertype: 'textbox',datafield: 'jmlpeserta', sortable: true, width: '8%', columntype: 'textbox'
+				{ text: 'Peserta', align: 'center',cellsalign:'center', filtertype: 'textbox',datafield: 'jmlpeserta', sortable: true, width: '8%', columntype: 'textbox'
                 },
             ]
 		});

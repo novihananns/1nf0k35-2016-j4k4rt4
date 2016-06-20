@@ -46,7 +46,7 @@ class Kegiatankelompok extends CI_Controller {
 		}
 		$rows = $this->kegiatankelompok_model->get_data();
 		$data_tabel = array();
-
+		$no=1;
 		foreach($rows as $act) {
 	    	if($act->status_penyuluhan==1 && $act->status_senam==1){
 	    		$kegiatan = "Penyuluhan dan Senam";
@@ -55,7 +55,7 @@ class Kegiatankelompok extends CI_Controller {
 	    	}else{
 	    		$kegiatan = "Senam";
 	    	}
-	    	$no=1;
+	    	
 			$data_tabel[] = array(
 				'no'						=> $no++,
 				'id_data_kegiatan' 			=> $act->id_data_kegiatan,

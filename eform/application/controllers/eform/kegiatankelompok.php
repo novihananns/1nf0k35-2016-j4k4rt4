@@ -59,8 +59,9 @@ class Kegiatankelompok extends CI_Controller {
 			$data_tabel[] = array(
 				'no'						=> $no++,
 				'id_data_kegiatan' 			=> $act->id_data_kegiatan,
-				'tgl' 						=> $act->tgl,
+				'tgl' 						=> date("d-m-Y",strtotime($act->tgl)),
 				'kode_kelompok' 			=> $act->kode_kelompok,
+				'kelompok' 					=> $act->kelompok,
 				'kode_club' 				=> $act->club,
 				'status_penyuluhan' 		=> $act->status_penyuluhan,
 				'status_senam'				=> $act->status_senam,

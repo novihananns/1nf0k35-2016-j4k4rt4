@@ -95,9 +95,10 @@ class Kegiatankelompok_model extends CI_Model {
     }
     function get_data($start=0,$limit=999999,$options=array())
     {
-        $this->db->select("$this->tabel.*,mas_club.nama as club,mas_club.alamat,(select count(*) from data_kegiatan_peserta where id_data_kegiatan = data_kegiatan.id_data_kegiatan) as jmlpeserta",false);
+        $this->db->select("$this->tabel.*,mas_club.nama as club,mas_club.alamat,mas_club_kelompok.value as kelompok,(select count(*) from data_kegiatan_peserta where id_data_kegiatan = data_kegiatan.id_data_kegiatan) as jmlpeserta",false);
         $this->db->order_by('tgl','desc');
         $this->db->join('mas_club','mas_club.clubId=data_kegiatan.kode_club','left');
+        $this->db->join('mas_club_kelompok','mas_club_kelompok.id_mas_club_kelompok=data_kegiatan.kode_kelompok','left');
         $query = $this->db->get($this->tabel,$limit,$start);
         return $query->result();
     }

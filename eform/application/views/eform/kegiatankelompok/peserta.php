@@ -96,7 +96,7 @@
 		});
 
 
-		$("#btn-export").click(function(){
+		$("#btn-export-peserta").click(function(){
 			var post = "";
 			var filter = $("#jqxgrid_peserta").jqxGrid('getfilterinformation');
 			for(i=0; i < filter.length; i++){

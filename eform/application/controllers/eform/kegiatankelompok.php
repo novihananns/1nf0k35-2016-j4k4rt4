@@ -11,7 +11,101 @@ class Kegiatankelompok extends CI_Controller {
 		$this->load->model('eform/kegiatankelompok_model');
 
 	}
+	function pengadaan_export(){
+		$this->authentication->verify('eform','show');
+		
+		$TBS = new clsTinyButStrong;		
+		$TBS->Plugin(TBS_INSTALL, OPENTBS_PLUGIN);
+		
 
+
+		$this->authentication->verify('eform','show');
+
+		if($_POST) {
+			$fil = $this->input->post('filterscount');
+			$ord = $this->input->post('sortdatafield');
+
+			for($i=0;$i<$fil;$i++) {
+				$field = $this->input->post('filterdatafield'.$i);
+				$value = $this->input->post('filtervalue'.$i);
+
+				if($field == 'tgl') {
+					$value = date("Y-m-d",strtotime($value));
+					$this->db->where($field,$value);
+				}elseif($field != 'year') {
+					$this->db->like($field,$value);
+				}
+			}
+
+			if(!empty($ord)) {
+				$this->db->order_by($ord, $this->input->post('sortorder'));
+			}
+		}
+		if ($this->session->userdata('puskesmas')!='') {
+			$this->db->where('code_cl_phc','P'.$this->session->userdata('puskesmas'));
+		}
+		$rows = $this->kegiatankelompok_model->get_data();
+		$data_tabel = array();
+
+		foreach($rows as $act) {
+	    	if($act->status_penyuluhan==1 && $act->status_senam==1){
+	    		$kegiatan = "Penyuluhan dan Senam";
+	    	}elseif($act->status_penyuluhan==1 && $act->status_senam==0){
+	    		$kegiatan = "Penyuluhan";
+	    	}else{
+	    		$kegiatan = "Senam";
+	    	}
+	    	$no=1;
+			$data_tabel[] = array(
+				'no'						=> $no++,
+				'id_data_kegiatan' 			=> $act->id_data_kegiatan,
+				'tgl' 						=> $act->tgl,
+				'kode_kelompok' 			=> $act->kode_kelompok,
+				'kode_club' 				=> $act->club,
+				'status_penyuluhan' 		=> $act->status_penyuluhan,
+				'status_senam'				=> $act->status_senam,
+				'materi'					=> $act->materi,
+				'pembicara'					=> $act->pembicara,
+				'jmlpeserta'				=> $act->jmlpeserta,
+				'kegiatan'					=> $kegiatan,
+				'lokasi'					=> $act->lokasi,
+				'eduId'						=> $act->eduId,
+				'biaya'						=> number_format($act->biaya,2),
+				'keterangan'				=> $act->keterangan,
+				'edit'						=> 1,
+				'delete'					=> 1
+			);
+		}
+
+
+		$puskes = $this->input->post('puskes');
+		if(empty($puskes) or $puskes == 'Pilih Puskesmas'){
+			$nama = 'Semua Data Puskesmas';
+		}else{
+			$nama = $this->input->post('puskes');
+		}
+		$puskes = $this->input->post('puskes');
+		$kode_sess=$this->session->userdata('puskesmas');
+		$kd_prov = $this->kegiatankelompok_model->get_nama('value','cl_province','code',substr($kode_sess, 0,2));
+		$kd_kab  = $this->kegiatankelompok_model->get_nama('value','cl_district','code',substr($kode_sess, 0,4));
+		$kd_kec  = 'KEC. '.$this->kegiatankelompok_model->get_nama('nama','cl_kec','code',substr($kode_sess, 0,7));
+		$tahun_ = date("Y");
+		$data_puskesmas[] = array('nama_puskesmas' => $puskes,'kd_prov' => $kd_prov,'kd_kab' => $kd_kab,'tahun' => $tahun_);
+		$dir = getcwd().'/';
+		$template = $dir.'public/files/template/dataKelompok.xlsx';		
+		$TBS->LoadTemplate($template, OPENTBS_ALREADY_UTF8);
+
+		// Merge data in the first sheet
+		$TBS->MergeBlock('a', $data_tabel);
+		$TBS->MergeBlock('b', $data_puskesmas);
+		
+		$code = date('Y-m-d-H-i-s');
+		$output_file_name = 'public/files/hasil/hasil_export_dataKelompok_'.$code.'.xlsx';
+		$output = $dir.$output_file_name;
+		$TBS->Show(OPENTBS_FILE, $output); // Also merges all [onshow] automatic fields.
+		
+		echo base_url().$output_file_name ;
+	}
 	function index(){
 		$this->authentication->verify('eform','edit');
 		$data['title_group'] = "Kegiatan Kelompok";

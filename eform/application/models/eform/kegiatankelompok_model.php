@@ -73,6 +73,14 @@ class Kegiatankelompok_model extends CI_Model {
         
         
     }
+    function get_nama($kolom_sl,$tabel,$kolom_wh,$kond){
+       $this->db->where($kolom_wh,$kond);
+        $this->db->select($kolom_sl);
+        $query = $this->db->get($tabel)->result();
+        foreach ($query as $key) {
+            return $key->$kolom_sl;
+        }
+    }
     function get_data_anggotaKeluarga($id=0,$start=0,$limit=999999,$options=array()){
         
         $this->db->select("data_kegiatan_peserta.no_kartu,data_keluarga_anggota.*,jeniskelamin.value as jeniskelamin,(year(curdate())-year(data_keluarga_anggota.tgl_lahir)) as usia");
@@ -87,7 +95,7 @@ class Kegiatankelompok_model extends CI_Model {
     }
     function get_data($start=0,$limit=999999,$options=array())
     {
-        $this->db->select("$this->tabel.*,mas_club.nama as club,mas_club.alamat",false);
+        $this->db->select("$this->tabel.*,mas_club.nama as club,mas_club.alamat,(select count(*) from data_kegiatan_peserta where id_data_kegiatan = data_kegiatan.id_data_kegiatan) as jmlpeserta",false);
         $this->db->order_by('tgl','desc');
         $this->db->join('mas_club','mas_club.clubId=data_kegiatan.kode_club','left');
         $query = $this->db->get($this->tabel,$limit,$start);

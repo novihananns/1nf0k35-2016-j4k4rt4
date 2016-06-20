@@ -22,7 +22,7 @@
 		      <div class="col-md-8">
 			 	<button type="button" class="btn btn-primary" onclick="document.location.href='<?php echo base_url()?>eform/kegiatankelompok/add'"><i class='fa fa-plus-square-o'></i> &nbsp; Tambah Kegiatan</button>
 			 	<button type="button" class="btn btn-success" id="btn-refresh"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
-	          <button type="button" id="btn-export" class="btn btn-warning" style="display:none"><i class='fa fa-save'></i> &nbsp; Export</button>
+	          <button type="button" id="btn-export" class="btn btn-warning" style=""><i class='fa fa-save'></i> &nbsp; Export</button>
 		     </div>
 		      <div class="col-md-4">
 		     	<div class="row">
@@ -168,6 +168,7 @@
 		});
     });
 	$("#btn-export").click(function(){
+		
 		var post = "";
 		var filter = $("#jqxgrid").jqxGrid('getfilterinformation');
 		for(i=0; i < filter.length; i++){
@@ -205,6 +206,7 @@
 		
 		$.post("<?php echo base_url()?>eform/kegiatankelompok/pengadaan_export",post,function(response	){
 			window.location.href=response;
+			// alert(response);
 		});
 	});
 </script>

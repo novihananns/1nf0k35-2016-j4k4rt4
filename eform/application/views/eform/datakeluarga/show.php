@@ -132,7 +132,7 @@
 		$("#jqxgrid").jqxGrid({		
 			width: '100%',
 			selectionmode: 'singlerow',
-			source: dataadapter, theme: theme,columnsresize: true,showtoolbar: false, pagesizeoptions: ['10', '25', '50', '100', '200'],
+			source: dataadapter, theme: theme,columnsresize: true,showtoolbar: false, pagesizeoptions: ['10', '50', '100', '200', '500'],
 			showfilterrow: true, filterable: true, sortable: true, autoheight: true, pageable: true, virtualmode: true, editable: false,
 			rendergridrows: function(obj)
 			{

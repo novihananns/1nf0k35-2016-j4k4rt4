@@ -350,7 +350,7 @@ class Bpjs extends CI_Model {
         $data_kegiatan = array(
           "eduId" 		=> null,
           "clubId" 		=> $data['kode_club'],
-          "tglPelayanan"=> date("d-m-Y",strtotime($data['biaya'])),
+          "tglPelayanan"=> date("d-m-Y",strtotime($data['tgl'])),
           "kdKegiatan" 	=> $kdKegiatan,
           "kdKelompok" 	=> $data['kode_kelompok'],
           "materi" 		=> $data['materi'],

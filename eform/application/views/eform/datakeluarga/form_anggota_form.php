@@ -1,5 +1,49 @@
 <script>
   	$(function () { 
+      var imtval;
+      var pembagi;
+      var bb;
+      var tb;
+      function imt(){
+        bb = $("[name='kesehatan_6_g_4_bb_text'").val();
+        tb = $("[name='kesehatan_6_g_4_at_text'").val();
+        pembagi = tb/100;
+        imtval = bb / (pembagi*pembagi);
+
+        if(imtval>25){
+          imtval = 'GIZI LEBIH';
+        }
+        else if (imtval>18.5){
+          imtval = 'GIZI BAIK';
+        }
+        else{
+          imtval = 'GIZI KURANG';
+        }
+
+      }
+
+      $("[name='kesehatan_6_g_4_at_text']").keyup(function(){
+        if($(this).val()!="" && $("[name='kesehatan_6_g_4_bb_text'").val()!=""){
+          imt();
+          $("[name='kesehatan_6_g_4_sg_text']").val(imtval);
+        }
+        $("[name='kesehatan_6_g_4_sg_text']").change();
+      });
+      $("[name='kesehatan_6_g_4_bb_text']").keyup(function(){
+        if($(this).val()!="" && $("[name='kesehatan_6_g_4_at_text'").val()!=""){
+          imt();
+          $("[name='kesehatan_6_g_4_sg_text']").val(imtval);
+        }
+        $("[name='kesehatan_6_g_4_sg_text']").change();
+      });
+
+      $("[name='kesehatan_6_g_4_at_text']").change(function(){
+        $("[name='kesehatan_6_g_4_at_text']").keyup();
+      });
+      $("[name='kesehatan_6_g_4_bb_text']").change(function(){
+        $("[name='kesehatan_6_g_4_bb_text']").keyup();
+      });
+
       <?php
       if(isset($data_profile_anggota) and $data_profile_anggota!="salah"){
         foreach($data_profile_anggota as $row){ ?>

@@ -179,13 +179,13 @@ class Datakeluarga_model extends CI_Model {
 
 
         for($i=1;$i<$max;$i++){
-            $key = str_repeat("0", (3-strlen($i))).$i;
+            $key = str_repeat("0", (4-strlen($i))).$i;
             if(!isset($reserved[$key])){
                 $vacant[] = $key;
             }
         }
 
-        $max = str_repeat("0", (3-strlen($max))).$max;
+        $max = str_repeat("0", (4-strlen($max))).$max;
         $vacant[] = $max;
 
         return $vacant;
@@ -256,12 +256,12 @@ class Datakeluarga_model extends CI_Model {
 
         if(empty($id->id_data_keluarga)){
             $data = array(
-                'id_data_keluarga'  => $kelurahan."001",
-                'nourutkel'         => "001"
+                'id_data_keluarga'  => $kelurahan."0001",
+                'nourutkel'         => "0001"
             );            
         }else{
-            $last_id = substr($id->id_data_keluarga, -3) + 1;
-            $last_id = str_repeat("0",3-strlen($last_id)).$last_id;
+            $last_id = substr($id->id_data_keluarga, -4) + 1;
+            $last_id = str_repeat("0",4-strlen($last_id)).$last_id;
 
             $data = array(
                 'id_data_keluarga'  => $kelurahan.$last_id,

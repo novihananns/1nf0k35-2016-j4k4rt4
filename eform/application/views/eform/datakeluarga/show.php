@@ -385,7 +385,7 @@
 	$('#bulanfilter').change(function(){
       var bulanfilter = $(this).val();
       var tahunfilter = $("#tahunfilter").val();
-      if(bulanfilter == "" || bulanfilter === null){
+      if(bulanfilter == "" || bulanfilter === null|| bulanfilter == 'all'|| tahunfilter == 'all'){
       	$("#btn-export").hide();
       }else{
       	$("#btn-export").show('fade');
@@ -404,7 +404,7 @@
     $('#tahunfilter').change(function(){
       var tahunfilter = $(this).val();
       var bulanfilter = $("#bulanfilter").val();
-      if(tahunfilter == "" || tahunfilter === null){
+      if(tahunfilter == "" || tahunfilter === null|| tahunfilter == 'all'|| bulanfilter == 'all'){
       	$("#btn-export").hide();
       }else{
       	$("#btn-export").show('fade');

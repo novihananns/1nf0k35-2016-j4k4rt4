@@ -28,15 +28,12 @@
 				 	<div class="row">
 				 		<div class="col-md-6">
 						 	<select name="bulanfilter" id="bulanfilter" class="form-control">
-						 			<option value="all">All</option>
-								<?php for($bulan=1; $bulan <= 12; $bulan++ ) { ?>
-									<option value="<?php echo $bulan; ?>"><?php echo $bulan; ?></option>
-								<?php	} ;?>
+						 	<option value="all">Bulan</option>
 					     	</select>
 				     	</div>
 				     	<div class="col-md-6">
 						 	<select name="tahunfilter" id="tahunfilter" class="form-control">
-						 			<option value="all">All</option>
+						 			<option value="all">Tahun</option>
 								<?php for($tahun=date("Y"); $tahun >=date("Y")-10; $tahun-- ) { ?>
 									<option value="<?php echo $tahun; ?>"><?php echo $tahun; ?></option>
 								<?php	} ;?>
@@ -414,6 +411,7 @@
         type : 'POST',
         data : 'tahunfilter=' + tahunfilter+'&bulanfilter=' + bulanfilter,
         success : function(data) {
+        	$('#bulanfilter').html(data);
           $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
         }
       });

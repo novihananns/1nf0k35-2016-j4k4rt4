@@ -81,7 +81,7 @@ class Data_kepala_keluarga extends CI_Controller {
 			$data[] = $act->id_data_keluarga;
 		}
 		$keluarga = implode("','", $data);
-
+		// die($keluarga);
 		$profile 	 	= $this->datakeluarga_model->get_data_all_profile($keluarga);
 		$kb 		 	= $this->datakeluarga_model->get_data_all_kb($keluarga);
 		$pembangunan 	= $this->datakeluarga_model->get_data_all_pembangunan($keluarga);
@@ -1251,13 +1251,25 @@ $data_tabel[] = array(
 	}
 	function get_filtertahundata(){
 		if ($this->input->post('tahunfilter')!="null") {
-			if($_POST) {
-				if($this->input->post('tahunfilter') != '') {
-					$this->session->set_userdata('filter_code_cl_tahundata',$this->input->post('tahunfilter'));
+			if($this->input->is_ajax_request()) {
+				$tahunfilter = $this->input->post('tahunfilter');
+				if ($tahunfilter=='' || empty($tahunfilter) || $tahunfilter=='all') {
+					echo '<option value="all">Bulan</option>';
+						$this->session->set_userdata('filter_code_cl_tahundata','');
+						$this->session->set_userdata('filter_code_cl_bulandata','');
 				}else{
-					$this->session->set_userdata('filter_code_cl_tahundata','');
+					$this->session->set_userdata('filter_code_cl_tahundata',$this->input->post('tahunfilter'));
+					echo '<option value="all">Bulan</option>';
+					for($bulan=1; $bulan <= 12; $bulan++ ) {
+						echo $select = $bulan == set_value('bulanfilter') ? 'selected' : '';
+						echo '<option value="'.$bulan.'" '.$select.'>' . $bulan . '</option>';
+					}
 				}
+
+				return FALSE;
 			}
+
+			show_404();
 		}
 	}
 }

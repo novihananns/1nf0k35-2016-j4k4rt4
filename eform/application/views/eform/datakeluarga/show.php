@@ -356,6 +356,7 @@
 			$("#export-loader").hide();
 	      	$("#btn-exportall").show('fade');
 			window.location.href=response;
+			// alert(response);
 		});
 	});
 </script>

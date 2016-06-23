@@ -69,6 +69,11 @@
     <td><?php echo (isset($rows['irt'])) ? number_format($rows['irt']/$rows['totalorang']*100,2): 0;?></td>
   </tr>
   <tr>
+    <td><?php echo "Pedagang"; ?></td>
+    <td><?php echo (isset($rows['pedagang'])) ? $rows['pedagang'] : 0;?></td>
+    <td><?php echo (isset($rows['pedagang'])) ? number_format($rows['pedagang']/$rows['totalorang']*100,2): 0;?></td>
+  </tr>
+  <tr>
     <td><?php echo "Lainnya"; ?></td>
     <td><?php echo (isset($rows['lainnya'])) ? $rows['lainnya'] : 0;?></td>
     <td><?php echo (isset($rows['lainnya'])) ? number_format($rows['lainnya']/$rows['totalorang']*100,2): 0;?></td>
@@ -127,6 +132,9 @@
   </div>
   <div class="col-md-2">
       <div class="bux12"></div> &nbsp; <label>IRT</label>
+  </div>
+  <div class="col-md-2">
+      <div class="bux13"></div> &nbsp; <label>Pedagang</label>
   </div>
   <div class="col-md-2">
       <div class="bux7"></div> &nbsp; <label>Lainnya</label>
@@ -224,6 +232,13 @@
         width: 10px;
         padding: 10px;
         background-color: #800080;
+        margin: 0;
+        float: left;
+      }
+      .bux13{
+        width: 10px;
+        padding: 10px;
+        background-color: #FF1493;
         margin: 0;
         float: left;
       }
@@ -460,6 +475,25 @@ $(function(){
             $i=0;
             foreach ($bar as $row ) { 
               if(isset($row['irt']))  $x = number_format(($row['irt']/$row['totalorang']*100),2);
+              else                              $x = 0;
+
+              if($i>0) echo ",";
+              echo "\"".$x."\"";
+              $i++;
+            } ?>]
+          },
+          {
+            label: "Pedagang",
+            fillColor: "#FF1493",
+            strokeColor: "#FF1493",
+            pointColor: "#FF1493",
+            pointStrokeColor: "#c1c7d1",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [<?php 
+            $i=0;
+            foreach ($bar as $row ) { 
+              if(isset($row['pedagang']))  $x = number_format(($row['pedagang']/$row['totalorang']*100),2);
               else                              $x = 0;
 
               if($i>0) echo ",";

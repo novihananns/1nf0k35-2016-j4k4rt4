@@ -74,7 +74,21 @@ class Data_kepala_keluarga extends CI_Controller {
 		if($this->session->userdata('filter_code_cl_rukunrumahtangga') != '') {
 			$this->db->where('data_keluarga.rt',$this->session->userdata('filter_code_cl_rukunrumahtangga'));
 		}
-
+		if($this->session->userdata('filter_code_cl_bulandata') != '') {
+			if($this->session->userdata('filter_code_cl_bulandata') == 'all') {
+			}else{
+				$this->db->where('MONTH(data_keluarga.tanggal_pengisian)',$this->session->userdata('filter_code_cl_bulandata'));
+			}
+		}
+		if($this->session->userdata('filter_code_cl_tahundata') != '') {
+			if($this->session->userdata('filter_code_cl_tahundata') == 'all') {
+			}else{
+				$this->db->where('YEAR(data_keluarga.tanggal_pengisian)',$this->session->userdata('filter_code_cl_tahundata'));	
+			}
+		}else{
+			$thnda=date("Y");
+			$this->db->where('YEAR(data_keluarga.tanggal_pengisian)',$thnda);	
+		}
 		$rows = $this->datakeluarga_model->get_data($this->input->post('recordstartindex'), $this->input->post('pagesize'));
 		$data = array();
 		foreach($rows as $act) {

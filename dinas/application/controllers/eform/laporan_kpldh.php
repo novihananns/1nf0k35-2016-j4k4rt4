@@ -472,9 +472,13 @@ class Laporan_kpldh extends CI_Controller {
 		$tamat_pt = $this->laporan_kpldh_model->get_jml_pekerjaan('45',$kecamatan,$kelurahan,$rw,$rt);
 		foreach ($tamat_pt as $row) {
 			$bar[/*$row->id_kecamatan*/$kecamatan]['irt'] = $row->jumlah;
-			$bar[/*$row->id_kecamatan*/$kecamatan]['irt'] = $row->total;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totalirt'] = $row->total;
 		}
-		
+		$tamat_pt = $this->laporan_kpldh_model->get_jml_pekerjaan('46',$kecamatan,$kelurahan,$rw,$rt);
+		foreach ($tamat_pt as $row) {
+			$bar[/*$row->id_kecamatan*/$kecamatan]['pedagang'] = $row->jumlah;
+			$bar[/*$row->id_kecamatan*/$kecamatan]['totalpedagang'] = $row->total;
+		}
 		
 		$data['bar']	= $bar;
 		$data['color']	= $color;

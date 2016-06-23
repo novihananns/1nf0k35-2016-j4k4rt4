@@ -75,7 +75,7 @@ class Data_kepala_keluarga extends CI_Controller {
 			$this->db->where('data_keluarga.rt',$this->session->userdata('filter_code_cl_rukunrumahtangga'));
 		}
 
-		$rows = $this->datakeluarga_model->get_data();
+		$rows = $this->datakeluarga_model->get_data($this->input->post('recordstartindex'), $this->input->post('pagesize'));
 		$data = array();
 		foreach($rows as $act) {
 			$data[] = $act->id_data_keluarga;
@@ -128,13 +128,13 @@ $data_tabel[] = array(
 	'kegiatanlain'	=> isset($profile[$id]['profile_b_10_a_radio']) && $profile[$id]['profile_b_10_a_radio']==1? "Ya" : "Tidak",
 	'pendapatan'	=> isset($profile[$id]['profile_c_1_a_jumlah']) && $profile[$id]['profile_c_1_a_jumlah']!=""? $profile[$id]['profile_c_1_a_jumlah'] : "-",
 	'sumber_pendapatan'		=> (isset($profile[$id]['profile_c_2_a_radio']) && $profile[$id]['profile_c_2_a_radio']==1? "Pekerjaan;" : "").' '.(isset($profile[$id]['profile_c_2_b_radio']) && $profile[$id]['profile_c_2_b_radio']==1? "Sumbangan;" : "").' '.(isset($profile[$id]['profile_c_2_c_radio']) && $profile[$id]['profile_c_2_c_radio']==1? "Lainnya" : ""),
-	'hubungan'		=> ((isset($anggota[$id][$no_anggota]['id_pilihan_hubungan'])) ? ($anggota[$id][$no_anggota]['id_pilihan_hubungan']==1? "KK" : ($anggota[$id][$no_anggota]['id_pilihan_hubungan']== 2 ? "Istri" : ($anggota[$id][$no_anggota]['id_pilihan_hubungan']==3? "Anak" : ($anggota[$id][$no_anggota]['id_pilihan_hubungan']==4? "Lain" : "-")))):'-'),
-	'jenis_kelamin'	=> ((isset($anggota[$id][$no_anggota]['id_pilihan_kelamin'])) ? ($anggota[$id][$no_anggota]['id_pilihan_kelamin']==5? "L" : ($anggota[$id][$no_anggota]['id_pilihan_kelamin']==6 ? "P" : '-')):'-'),
-	'agama'			=> ((isset($anggota[$id][$no_anggota]['id_pilihan_agama'])) ? ($anggota[$id][$no_anggota]['id_pilihan_agama']==7? "Islam" : ($anggota[$id][$no_anggota]['id_pilihan_agama']==8? "Kristen" : ($anggota[$id][$no_anggota]['id_pilihan_agama']==9? "Katolik" : ($anggota[$id][$no_anggota]['id_pilihan_agama']==10? "Hindu" : ($anggota[$id][$no_anggota]['id_pilihan_agama']==11? "Budha" : ($anggota[$id][$no_anggota]['id_pilihan_agama']==12? "Konghucu" : ($anggota[$id][$no_anggota]['id_pilihan_agama']==13? "Lain" : "-"))))))):'-'),
-	'pendidikan'	=> ((isset($anggota[$id][$no_anggota]['id_pilihan_pendidikan'])) ? ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']== 14 ? "Tidak Tamat SD/MI" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==15? "Masih SD/MI" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==16? "Tamat SD/MI" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==17? "Masih SLTP/MTs" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==18? "Tamat SLTP/MTs" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==19? "Masih SLTA/MA" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==20? "Tamat SLTA/MA" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==21? "Masih PT/Akademi" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==22? "Tamat PT/Akademi" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==23? "Tidak/Belum Sekolah" : "-")))))))))):'-'),
-	'pekerjaan'		=> ((isset($anggota[$id][$no_anggota]['id_pilihan_pekerjaan'])) ? ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==24? "Petani" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==25? "Nelayan" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==46? "Pedagang" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==26? "PNS/TNI/Porli" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==27? "Pegawai Swasta" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==28? "Wiraswasta" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==29? "Pensiunan" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==30? "Pekerja Lepas" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==31? "Lainnya" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==32? "Tidak/Belum Bekerja" : "-")))))))))):'-'),
-	'status_kawin'	=> ((isset($anggota[$id][$no_anggota]['id_pilihan_kawin'])) ? ($anggota[$id][$no_anggota]['id_pilihan_kawin']==33? "Belum Kawin" : ($anggota[$id][$no_anggota]['id_pilihan_kawin']==34? "Kawin" : ($anggota[$id][$no_anggota]['id_pilihan_kawin']==35? "Janda/Duda" : "-"))) :'-'),
-	'usaha_lingkungan'=> ((isset($anggota_pr[$id][$no_anggota]['profile_b_2_a_radio'])) ? ($anggota_pr[$id][$no_anggota]['profile_b_2_a_radio']==1? "Ya" : ($anggota_pr[$id][$no_anggota]['profile_b_2_a_radio']==2? "x" : "-")):'-'),
+	'hubungan'		=> ((isset($anggota[$id][$no_anggota]['id_pilihan_hubungan'])) ? ($anggota[$id][$no_anggota]['id_pilihan_hubungan']==1? "KK" : ($anggota[$id][$no_anggota]['id_pilihan_hubungan']== 2 ? "Istri" : ($anggota[$id][$no_anggota]['id_pilihan_hubungan']==3? "Anak" : ($anggota[$id][$no_anggota]['id_pilihan_hubungan']==4? "Lain" : "x")))):'x'),
+	'jenis_kelamin'	=> ((isset($anggota[$id][$no_anggota]['id_pilihan_kelamin'])) ? ($anggota[$id][$no_anggota]['id_pilihan_kelamin']==5? "L" : ($anggota[$id][$no_anggota]['id_pilihan_kelamin']==6 ? "P" : 'x')):'x'),
+	'agama'			=> ((isset($anggota[$id][$no_anggota]['id_pilihan_agama'])) ? ($anggota[$id][$no_anggota]['id_pilihan_agama']==7? "Islam" : ($anggota[$id][$no_anggota]['id_pilihan_agama']==8? "Kristen" : ($anggota[$id][$no_anggota]['id_pilihan_agama']==9? "Katolik" : ($anggota[$id][$no_anggota]['id_pilihan_agama']==10? "Hindu" : ($anggota[$id][$no_anggota]['id_pilihan_agama']==11? "Budha" : ($anggota[$id][$no_anggota]['id_pilihan_agama']==12? "Konghucu" : ($anggota[$id][$no_anggota]['id_pilihan_agama']==13? "Lain" : "x"))))))):'x'),
+	'pendidikan'	=> ((isset($anggota[$id][$no_anggota]['id_pilihan_pendidikan'])) ? ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']== 14 ? "Tidak Tamat SD/MI" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==15? "Masih SD/MI" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==16? "Tamat SD/MI" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==17? "Masih SLTP/MTs" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==18? "Tamat SLTP/MTs" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==19? "Masih SLTA/MA" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==20? "Tamat SLTA/MA" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==21? "Masih PT/Akademi" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==22? "Tamat PT/Akademi" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==23? "Tidak/Belum Sekolah" : "x")))))))))):'x'),
+	'pekerjaan'		=> ((isset($anggota[$id][$no_anggota]['id_pilihan_pekerjaan'])) ? ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==24? "Petani" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==25? "Nelayan" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==46? "Pedagang" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==26? "PNS/TNI/Porli" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==27? "Pegawai Swasta" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==28? "Wiraswasta" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==29? "Pensiunan" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==30? "Pekerja Lepas" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==31? "Lainnya" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==32? "Tidak/Belum Bekerja" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==42? "Bekerja" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==43? "Belum Bekerja" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==44? "TidakBekerja" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==45? "IRT" : "x")))))))))))))):'x'),
+	'status_kawin'	=> ((isset($anggota[$id][$no_anggota]['id_pilihan_kawin'])) ? ($anggota[$id][$no_anggota]['id_pilihan_kawin']==33? "Belum Kawin" : ($anggota[$id][$no_anggota]['id_pilihan_kawin']==34? "Kawin" : ($anggota[$id][$no_anggota]['id_pilihan_kawin']==35? "Janda/Duda" : "x"))) :'x'),
+	'usaha_lingkungan'=> ((isset($anggota_pr[$id][$no_anggota]['profile_b_2_a_radio'])) ? ($anggota_pr[$id][$no_anggota]['profile_b_2_a_radio']==1? "Ya" : ($anggota_pr[$id][$no_anggota]['profile_b_2_a_radio']==2? "x" : "x")):'x'),
 	'bpjsjkn'		=> ((isset($anggota[$id][$no_anggota]['id_pilihan_jkn'])) ? ($anggota[$id][$no_anggota]['id_pilihan_jkn']==36 ? "BPJS-PBI" : ($anggota[$id][$no_anggota]['id_pilihan_jkn']==37? "BPJS-Non PBI" : ($anggota[$id][$no_anggota]['id_pilihan_jkn']==38? "Non BPJS" : ($anggota[$id][$no_anggota]['id_pilihan_jkn']==39? "Tidak Memiliki" : "x")))):'x'),
 	'akte_lahir'	=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_0_g_1_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_1_radio']==0? "Ada" : ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_1_radio']==1? "Tidak Ada" : "x")):'x'),
 	'wna_status'	=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_0_g_2_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_2_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_2_radio']==1? "Tidak" : "x")):'x'),
@@ -148,7 +148,7 @@ $data_tabel[] = array(
 	'tabungan_punya'=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_0_g_6_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_6_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_6_radio']==1? "Tidak" : "x")):'x'),
 	'koperasi_punya'=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_0_g_7_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_7_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_7_radio']==1? "Tidak" : "x")):'x'),
 	'subur_usia'	=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_0_g_8_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_8_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_8_radio']==1? "Tidak" : "x")):'x'),
-	'hamil_status'	=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_0_g_9_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_9_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_9_radio']==1? "Tidak" : "-")):'x'),
+	'hamil_status'	=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_0_g_9_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_9_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_9_radio']==1? "Tidak" : "x")):'x'),
 	'disabilitas_st'=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_0_g_10_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_10_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_10_radio']==1? "Tidak" : "x")):'x'),
 	'kb_suami'			=> isset($kb[$id]['berencana_II_1_suami']) && $kb[$id]['berencana_II_1_suami']!=""? $kb[$id]['berencana_II_1_suami'] : "-",
 	'kb_istri'			=> isset($kb[$id]['berencana_II_1_istri']) && $kb[$id]['berencana_II_1_istri']!=""? $kb[$id]['berencana_II_1_istri'] : "-",
@@ -167,16 +167,16 @@ $data_tabel[] = array(
 	'berobat_faskes'		=> ((isset($pembangunan[$id]['pembangunan_III_3_radio'])) ?  ($pembangunan[$id]['pembangunan_III_3_radio']==0? "Ya" : (($pembangunan[$id]['pembangunan_III_3_radio']==1 ||$pembangunan[$id]['pembangunan_III_3_radio']==2 )? "Tidak" : "x")):'x'),
 	'pakaian_beda'		=> ((isset($pembangunan[$id]['pembangunan_III_4_radio'])) ?($pembangunan[$id]['pembangunan_III_4_radio']==0? "Ya" : (($pembangunan[$id]['pembangunan_III_4_radio']==1 || $pembangunan[$id]['pembangunan_III_4_radio']==2)? "Tidak" : "x")):'x'),
 	'pem_daging'		=> ((isset($pembangunan[$id]['pembangunan_III_5_radio'])) ? ($pembangunan[$id]['pembangunan_III_5_radio']==0? "Ya" : (($pembangunan[$id]['pembangunan_III_5_radio']==1||$pembangunan[$id]['pembangunan_III_5_radio']==2 ) ? "Tidak" : "x")):'x'),
-	'pem_ibadah'		=> ((isset($pembangunan[$id]['pembangunan_III_6_radio'])) ? ($pembangunan[$id]['pembangunan_III_6_radio']==0? "Ya" : (($pembangunan[$id]['pembangunan_III_6_radio']==1 || $pembangunan[$id]['pembangunan_III_6_radio']==2 ) ? "Tidak" : "-")):'x'),
+	'pem_ibadah'		=> ((isset($pembangunan[$id]['pembangunan_III_6_radio'])) ? ($pembangunan[$id]['pembangunan_III_6_radio']==0? "Ya" : (($pembangunan[$id]['pembangunan_III_6_radio']==1 || $pembangunan[$id]['pembangunan_III_6_radio']==2 ) ? "Tidak" : "x")):'x'),
 	'pem_kb_subur'		=> ((isset($pembangunan[$id]['pembangunan_III_7_radio'])) ? ($pembangunan[$id]['pembangunan_III_7_radio']==0? "Ya" : (($pembangunan[$id]['pembangunan_III_7_radio']==1 ||$pembangunan[$id]['pembangunan_III_7_radio']==2) ? "Tidak" : "x")):'x'),
 	'pem_tabung'		=> ((isset($pembangunan[$id]['pembangunan_III_8_radio'])) ? ($pembangunan[$id]['pembangunan_III_8_radio']==0? "Ya" : (($pembangunan[$id]['pembangunan_III_8_radio']==1 || $pembangunan[$id]['pembangunan_III_8_radio']==2) ? "Tidak" : "x")):'x'),
 	'pem_komunikasi'	=> ((isset($pembangunan[$id]['pembangunan_III_9_radio'])) ? ($pembangunan[$id]['pembangunan_III_9_radio']==0? "Ya" : (($pembangunan[$id]['pembangunan_III_9_radio']==1|| $pembangunan[$id]['pembangunan_III_9_radio']==2) ? "Tidak" : "x")):'x'),
 	'pem_sosial'		=> ((isset($pembangunan[$id]['pembangunan_III_10_radio'])) ? ($pembangunan[$id]['pembangunan_III_10_radio']==0? "Ya" : (($pembangunan[$id]['pembangunan_III_10_radio']==1 || $pembangunan[$id]['pembangunan_III_10_radio']==2)? "Tidak" : "x")):'x'),
 	'pem_akses'			=> ((isset($pembangunan[$id]['pembangunan_III_11_radio'])) ? ($pembangunan[$id]['pembangunan_III_11_radio']==0? "Ya" : (($pembangunan[$id]['pembangunan_III_11_radio']==1 || $pembangunan[$id]['pembangunan_III_11_radio']==2) ? "Tidak" : "x")):'x'),
 	'pem_pengurus'		=> ((isset($pembangunan[$id]['pembangunan_III_12_radio'])) ? ($pembangunan[$id]['pembangunan_III_12_radio']==0? "Ya" : (($pembangunan[$id]['pembangunan_III_12_radio']==1 || $pembangunan[$id]['pembangunan_III_12_radio']==2)? "Tidak" : "x")):'x'),
-	'pem_posyandu'		=> ((isset($pembangunan[$id]['pembangunan_III_13_radio'])) ? ($pembangunan[$id]['pembangunan_III_13_radio']==0? "Ya" : (($pembangunan[$id]['pembangunan_III_13_radio']==1|| $pembangunan[$id]['pembangunan_III_13_radio']==2)? "Tidak" : "-")):'x'),
+	'pem_posyandu'		=> ((isset($pembangunan[$id]['pembangunan_III_13_radio'])) ? ($pembangunan[$id]['pembangunan_III_13_radio']==0? "Ya" : (($pembangunan[$id]['pembangunan_III_13_radio']==1|| $pembangunan[$id]['pembangunan_III_13_radio']==2)? "Tidak" : "x")):'x'),
 	'pem_bkb'			=> ((isset($pembangunan[$id]['pembangunan_III_14_radio'])) ? ($pembangunan[$id]['pembangunan_III_14_radio']==0? "Ya" : (($pembangunan[$id]['pembangunan_III_14_radio']==1 || $pembangunan[$id]['pembangunan_III_14_radio']==2) ? "Tidak" : "x")):'x'),
-	'pem_bkr'			=> ((isset($pembangunan[$id]['pembangunan_III_15_radio'])) ? ($pembangunan[$id]['pembangunan_III_15_radio']==0? "Ya" : (($pembangunan[$id]['pembangunan_III_15_radio']==1 ||$pembangunan[$id]['pembangunan_III_15_radio']==2 ) ? "Tidak" : "-")):'x'),
+	'pem_bkr'			=> ((isset($pembangunan[$id]['pembangunan_III_15_radio'])) ? ($pembangunan[$id]['pembangunan_III_15_radio']==0? "Ya" : (($pembangunan[$id]['pembangunan_III_15_radio']==1 ||$pembangunan[$id]['pembangunan_III_15_radio']==2 ) ? "Tidak" : "x")):'x'),
 	'pem_pik'			=> ((isset($pembangunan[$id]['pembangunan_III_16_radio'])) ? ($pembangunan[$id]['pembangunan_III_16_radio']==0? "Ya" : (($pembangunan[$id]['pembangunan_III_16_radio']==1 ||$pembangunan[$id]['pembangunan_III_16_radio']==2)? "Tidak" : "x")):'x'),
 	'pem_bkl'			=> ((isset($pembangunan[$id]['pembangunan_III_17_radio'])) ? ($pembangunan[$id]['pembangunan_III_17_radio']==0? "Ya" : (($pembangunan[$id]['pembangunan_III_17_radio']==1|| $pembangunan[$id]['pembangunan_III_17_radio']==2)? "Tidak" : "x")):'x'),
 	'pem_uppks'			=> ((isset($pembangunan[$id]['pembangunan_III_18_radio'])) ? ($pembangunan[$id]['pembangunan_III_18_radio']==0? "Ya" : (($pembangunan[$id]['pembangunan_III_18_radio']==1|| $pembangunan[$id]['pembangunan_III_18_radio']==2)? "Tidak" : "x")):'x'),
@@ -223,13 +223,13 @@ $data_tabel[] = array(
 	'kanker_tes_iva'			=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_4_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_3_g_4_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_3_g_4_radio']==1? "Tidak" : "x")):'x'),
 	'kanker_pap_smear'			=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_6_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_3_g_6_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_3_g_6_radio']==1? "Tidak" : "x")):'x'),
 	'pengobatan_dijalani'		=> (isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_5_kk_a_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_5_kk_a_cebox']==1? "Pembedahan/ operasi;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_5_kk_b_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_5_kk_b_cebox']==1? "Radiasi/ penyinaran;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_5_kk_c_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_5_kk_c_cebox']==1? "Kemoterapi;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_d_text']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_d_text']!=""? $anggota_pr[$id][$no_anggota]['kesehatan_3_g_d_text'] : ""),
-	'ppok_pernah'	=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_1_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_3_g_1_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_3_g_1_radio']==1? "Tidak" : "-")):'x'),
-	'kesehatan_gelaja_sesak'	=> (isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_a_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_a_cebox']==1? "Terpapar Udara Dingin;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_b_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_b_cebox']==1? "Debu;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_c_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_c_cebox']==1? "Asap Rokok" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_d_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_d_cebox']==1? "Stress;" : "-").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_e_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_e_cebox']==1? "Flu atau Infeksi;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_f_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_f_cebox']==1? "Kelelahan;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_g_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_g_cebox']==1? "Alergi obat" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_h_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_h_cebox']==1? "Alergi Makanan;" : "-"),
+	'ppok_pernah'	=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_1_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_3_g_1_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_3_g_1_radio']==1? "Tidak" : "x")):'x'),
+	'kesehatan_gelaja_sesak'	=> (isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_a_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_a_cebox']==1? "Terpapar Udara Dingin;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_b_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_b_cebox']==1? "Debu;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_c_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_c_cebox']==1? "Asap Rokok" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_d_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_d_cebox']==1? "Stress;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_e_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_e_cebox']==1? "Flu atau Infeksi;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_f_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_f_cebox']==1? "Kelelahan;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_g_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_g_cebox']==1? "Alergi obat" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_h_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_2_sn_h_cebox']==1? "Alergi Makanan;" : ""),
 	'gejala_sesak_disertai'		=> (isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_3_mg_a_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_3_mg_a_cebox']==1? "Mengi;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_3_mg_b_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_3_mg_b_cebox']==1? "Sesak Napas Berkurang atau Menghilang dengan Pengobatan" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_3_mg_c_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_3_mg_c_cebox']==1? "Sesak Napas Berkurang atau Menghilang tanpa Pengobatan;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_3_mg_d_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_3_mg_d_cebox']==1? " Sesak Napas Lebih Berat dirasakan pada Malam Hari atau Menjelang Pagi;" : ""),
 	'pertama_kali_sesak'		=> (isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_4_mg_d_text']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_4_mg_d_text']!=""? $anggota_pr[$id][$no_anggota]['kesehatan_3_g_4_mg_d_text'] : ""),
-	'ppok_kambuh'				=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_5_radio']))? ($anggota_pr[$id][$no_anggota]['kesehatan_3_g_5_radio']==0? "Ya" : (isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_5_radio']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_5_radio']==1? "Tidak" : "-")):'x'),
+	'ppok_kambuh'				=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_5_radio']))? ($anggota_pr[$id][$no_anggota]['kesehatan_3_g_5_radio']==0? "Ya" : (isset($anggota_pr[$id][$no_anggota]['kesehatan_3_g_5_radio']) && $anggota_pr[$id][$no_anggota]['kesehatan_3_g_5_radio']==1? "Tidak" : "x")):'x'),
 	'diabet_diagnosa'			=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_1_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_4_g_1_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_4_g_1_radio']==1? "Tidak" : "x")):'x'),
-	'pengendalian_dm'			=> (isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_p_a_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_p_a_cebox']==1? "Diet;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_p_b_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_p_b_cebox']==1? "Olahraga;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_p_c_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_p_c_cebox']==1? "Minum obat anti diabetik;" : "-").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_p_d_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_p_d_cebox']==1? "Injeksi Insulin;" : ""),
+	'pengendalian_dm'			=> (isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_p_a_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_p_a_cebox']==1? "Diet;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_p_b_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_p_b_cebox']==1? "Olahraga;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_p_c_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_p_c_cebox']==1? "Minum obat anti diabetik;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_p_d_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_p_d_cebox']==1? "Injeksi Insulin;" : ""),
 	'gejala_dm_satubulan'		=> (isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_p_a_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_p_a_cebox']==1? "Sering lapar;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_p_b_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_p_b_cebox']==1? "Sering Haus;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_p_c_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_p_c_cebox']==1? "Sering Buang Air Kecil & Jumlah Banyak" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_p_d_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_p_d_cebox']==1? "Berat Badan turun;" : ""),
 	'darting_diagnosa'			=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_1_hp_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_4_g_1_hp_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_4_g_1_hp_radio']==1? "Tidak" : "x")):'x'),
 	'kesehatan_4_g_2_hp_text'	=> isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_hp_text']) && $anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_hp_text']!=""? $anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_hp_text'] : "-",
@@ -237,7 +237,7 @@ $data_tabel[] = array(
 	'jantung_diagnosa'			=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_1_jk_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_4_g_1_jk_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_4_g_1_jk_radio']==1? "Tidak" : "x")):'x'),
 	'kesehatan_4_g_2_jk_text'	=> isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_jk_text']) && $anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_jk_text']!=""? $anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_jk_text'] : "-",
 	'gejala_alami_jantung'		=> (isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_jk_a_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_jk_a_cebox']==1? "Nyeri di dalam dada/ rasa tertekan berat/ tidak nyaman di dada ;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_jk_b_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_jk_b_cebox']==1? "Nyeri/ tidak nyaman di dada bagian tengah/ dada kiri depan/ menjalar ke lengan kiri;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_jk_c_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_jk_c_cebox']==1? "Nyeri/ tidak nyaman di dada dirasakan waktu endaki/ naik tangga/ berjalan tergesa-gesa;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_jk_d_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_jk_d_cebox']==1? "Nyeri/ tidak nyaman di dada hilang ketika menghentikan aktivitas/ istirahat" : ""),
-	'stroke_diagnosa'			=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_1_sk_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_4_g_1_sk_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_4_g_1_sk_radio']==1? "Tidak" : "-")):'x'),
+	'stroke_diagnosa'			=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_1_sk_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_4_g_1_sk_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_4_g_1_sk_radio']==1? "Tidak" : "x")):'x'),
 	'kesehatan_4_g_2_sk_text'	=> isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_sk_text']) && $anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_sk_text']!=""? $anggota_pr[$id][$no_anggota]['kesehatan_4_g_2_sk_text'] : "-",
 	'gejala_struke_mendadak'	=> (isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_sk_a_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_sk_a_cebox']==1? "Kelumpuhan pada satu sisi tubuh;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_sk_b_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_sk_b_cebox']==1? "Kesemutan atau baal satu sisi tubuh;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_sk_c_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_sk_c_cebox']==1? " Mulut jadi mencong tanpa kelumpuhan otot mata;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_sk_d_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_sk_d_cebox']==1? "Bicara pelo;" : "").' '.(isset($anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_sk_e_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_4_g_3_sk_e_cebox']==1? "Sulit bicara/ komunikasi dan/atau tidak mengerti pembicaraan;" : ""),
 	'kesehatan_5_g_1_kk_cebox'=> isset($anggota_pr[$id][$no_anggota]['kesehatan_5_g_1_kk_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_5_g_1_kk_cebox']==1? "Ya" : "Tidak",
@@ -262,7 +262,7 @@ $data_tabel[] = array(
 	'kesehatan_5_g_23_kk_cebox'=> isset($anggota_pr[$id][$no_anggota]['kesehatan_5_g_23_kk_cebox']) && $anggota_pr[$id][$no_anggota]['kesehatan_5_g_23_kk_cebox']==1? "Ya" : "Tidak",
 	'semua_20_obat'				=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_5_g_21_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_5_g_21_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_5_g_21_radio']==1? "Tidak" : "x")):'x'),
 	'pernah_obat_faskes'		=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_5_g_22_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_5_g_22_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_5_g_22_radio']==1? "Tidak" : "x")):'x'),
-	'stat_imunisasi'	=> isset($anggota_pr[$id][$no_anggota]['kesehatan_6_g_1_radi4']) && $anggota_pr[$id][$no_anggota]['kesehatan_6_g_1_radi4']==1? "Lengkap" : (isset($anggota_pr[$id][$no_anggota]['kesehatan_6_g_1_radi4']) && $anggota_pr[$id][$no_anggota]['kesehatan_6_g_1_radi4']==2? "Tidak tahu" : (isset($anggota_pr[$id][$no_anggota]['kesehatan_6_g_1_radi4']) && $anggota_pr[$id][$no_anggota]['kesehatan_6_g_1_radi4']==2? "Lengkap sesuai umur" : (isset($anggota_pr[$id][$no_anggota]['kesehatan_6_g_1_radi4']) && $anggota_pr[$id][$no_anggota]['kesehatan_6_g_1_radi4']==3? "Tidak lengkap" : "-"))),
+	'stat_imunisasi'	=> isset($anggota_pr[$id][$no_anggota]['kesehatan_6_g_1_radi4']) && $anggota_pr[$id][$no_anggota]['kesehatan_6_g_1_radi4']==1? "Lengkap" : (isset($anggota_pr[$id][$no_anggota]['kesehatan_6_g_1_radi4']) && $anggota_pr[$id][$no_anggota]['kesehatan_6_g_1_radi4']==2? "Tidak tahu" : (isset($anggota_pr[$id][$no_anggota]['kesehatan_6_g_1_radi4']) && $anggota_pr[$id][$no_anggota]['kesehatan_6_g_1_radi4']==2? "Lengkap sesuai umur" : (isset($anggota_pr[$id][$no_anggota]['kesehatan_6_g_1_radi4']) && $anggota_pr[$id][$no_anggota]['kesehatan_6_g_1_radi4']==3? "Tidak lengkap" : "x"))),
 	'kesehatan_6_g_2_ol_text'	=> isset($anggota_pr[$id][$no_anggota]['kesehatan_6_g_2_ol_text']) && $anggota_pr[$id][$no_anggota]['kesehatan_6_g_2_ol_text']!=""? $anggota_pr[$id][$no_anggota]['kesehatan_6_g_2_ol_text'] : "-",
 	'kesehatan_6_g_2_td_text'	=> isset($anggota_pr[$id][$no_anggota]['kesehatan_6_g_2_td_text']) && $anggota_pr[$id][$no_anggota]['kesehatan_6_g_2_td_text']!=""? $anggota_pr[$id][$no_anggota]['kesehatan_6_g_2_td_text'] : "-",
 	'kesehatan_6_g_3_td_text'	=> isset($anggota_pr[$id][$no_anggota]['kesehatan_6_g_3_td_text']) && $anggota_pr[$id][$no_anggota]['kesehatan_6_g_3_td_text']!=""? $anggota_pr[$id][$no_anggota]['kesehatan_6_g_3_td_text'] : "-",
@@ -346,6 +346,18 @@ $data_tabel[] = array(
 		if($this->session->userdata('filter_code_cl_rukunrumahtangga') != '') {
 			$this->db->where('data_keluarga.rt',$this->session->userdata('filter_code_cl_rukunrumahtangga'));
 		}
+		if($this->session->userdata('filter_code_cl_bulandata') != '') {
+			if($this->session->userdata('filter_code_cl_bulandata') == 'all') {
+			}else{
+				$this->db->where('MONTH(data_keluarga.tanggal_pengisian)',$this->session->userdata('filter_code_cl_bulandata'));
+			}
+		}
+		if($this->session->userdata('filter_code_cl_tahundata') != '') {
+			if($this->session->userdata('filter_code_cl_tahundata') == 'all') {
+			}else{
+				$this->db->where('YEAR(data_keluarga.tanggal_pengisian)',$this->session->userdata('filter_code_cl_tahundata'));	
+			}
+		}
 		$rows_all = $this->datakeluarga_model->get_data_export();
 
     	if($_POST) {
@@ -376,7 +388,18 @@ $data_tabel[] = array(
 		if($this->session->userdata('filter_code_cl_rukunrumahtangga') != '') {
 			$this->db->where('data_keluarga.rt',$this->session->userdata('filter_code_cl_rukunrumahtangga'));
 		}
-
+		if($this->session->userdata('filter_code_cl_bulandata') != '') {
+			if($this->session->userdata('filter_code_cl_bulandata') == 'all') {
+			}else{
+				$this->db->where('MONTH(data_keluarga.tanggal_pengisian)',$this->session->userdata('filter_code_cl_bulandata'));
+			}
+		}
+		if($this->session->userdata('filter_code_cl_tahundata') != '') {
+			if($this->session->userdata('filter_code_cl_tahundata') == 'all') {
+			}else{
+				$this->db->where('YEAR(data_keluarga.tanggal_pengisian)',$this->session->userdata('filter_code_cl_tahundata'));	
+			}
+		}
 		$rows = $this->datakeluarga_model->get_data_export(/*$this->input->post('recordstartindex'), $this->input->post('pagesize')*/);
 		$no=1;
 		$data_tabel = array();
@@ -490,6 +513,19 @@ $data_tabel[] = array(
 		if($this->session->userdata('filter_code_cl_rukunrumahtangga') != '') {
 			$this->db->where('data_keluarga.rt',$this->session->userdata('filter_code_cl_rukunrumahtangga'));
 		}
+
+		if($this->session->userdata('filter_code_cl_bulandata') != '') {
+			if($this->session->userdata('filter_code_cl_bulandata') == 'all') {
+			}else{
+				$this->db->where('MONTH(data_keluarga.tanggal_pengisian)',$this->session->userdata('filter_code_cl_bulandata'));
+			}
+		}
+		if($this->session->userdata('filter_code_cl_tahundata') != '') {
+			if($this->session->userdata('filter_code_cl_tahundata') == 'all') {
+			}else{
+				$this->db->where('YEAR(data_keluarga.tanggal_pengisian)',$this->session->userdata('filter_code_cl_tahundata'));	
+			}
+		}
 		$rows_all = $this->datakeluarga_model->get_data();
 
     	if($_POST) {
@@ -524,7 +560,18 @@ $data_tabel[] = array(
 		if($this->session->userdata('filter_code_cl_rukunrumahtangga') != '') {
 			$this->db->where('data_keluarga.rt',$this->session->userdata('filter_code_cl_rukunrumahtangga'));
 		}
-
+		if($this->session->userdata('filter_code_cl_bulandata') != '') {
+			if($this->session->userdata('filter_code_cl_bulandata') == 'all') {
+			}else{
+				$this->db->where('MONTH(data_keluarga.tanggal_pengisian)',$this->session->userdata('filter_code_cl_bulandata'));
+			}
+		}
+		if($this->session->userdata('filter_code_cl_tahundata') != '') {
+			if($this->session->userdata('filter_code_cl_tahundata') == 'all') {
+			}else{
+				$this->db->where('YEAR(data_keluarga.tanggal_pengisian)',$this->session->userdata('filter_code_cl_tahundata'));	
+			}
+		}
 		$rows = $this->datakeluarga_model->get_data($this->input->post('recordstartindex'), $this->input->post('pagesize'));
 		$data = array();
 		foreach($rows as $act) {
@@ -763,6 +810,8 @@ $data_tabel[] = array(
 		$this->session->set_userdata('filter_code_kelurahan','');
 		$this->session->set_userdata('filter_code_rukunwarga','');
 		$this->session->set_userdata('filter_code_cl_rukunrumahtangga','');
+		$this->session->set_userdata('filter_code_cl_bulandata','');
+		$this->session->set_userdata('filter_code_cl_tahundata','');
 		$kode_sess = $this->session->userdata("puskesmas");
 		$data['datakecamatan'] = $this->datakeluarga_model->get_datawhere(substr($kode_sess, 0,7),"code","cl_kec");
 		$data['content'] = $this->parser->parse("eform/datakeluarga/show",$data,true);
@@ -1188,5 +1237,27 @@ $data_tabel[] = array(
 			}
 		}
 	}
+	}
+	function get_filterbulandata(){
+		if ($this->input->post('bulanfilter')!="null") {
+			if($_POST) {
+				if($this->input->post('bulanfilter') != '') {
+					$this->session->set_userdata('filter_code_cl_bulandata',$this->input->post('bulanfilter'));
+				}else{
+					$this->session->set_userdata('filter_code_cl_bulandata','');
+				}
+			}
+		}
+	}
+	function get_filtertahundata(){
+		if ($this->input->post('tahunfilter')!="null") {
+			if($_POST) {
+				if($this->input->post('tahunfilter') != '') {
+					$this->session->set_userdata('filter_code_cl_tahundata',$this->input->post('tahunfilter'));
+				}else{
+					$this->session->set_userdata('filter_code_cl_tahundata','');
+				}
+			}
+		}
 	}
 }

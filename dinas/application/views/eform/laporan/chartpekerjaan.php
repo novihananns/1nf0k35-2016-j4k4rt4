@@ -69,6 +69,11 @@
     <td><?php echo (isset($rows['irt'])) ? number_format($rows['irt']/$rows['totalorang']*100,2): 0;?></td>
   </tr>
   <tr>
+    <td><?php echo "Pedagang"; ?></td>
+    <td><?php echo (isset($rows['pedagang'])) ? $rows['pedagang'] : 0;?></td>
+    <td><?php echo (isset($rows['pedagang'])) ? number_format($rows['pedagang']/$rows['totalorang']*100,2): 0;?></td>
+  </tr>
+  <tr>
     <td><?php echo "Lainnya"; ?></td>
     <td><?php echo (isset($rows['lainnya'])) ? $rows['lainnya'] : 0;?></td>
     <td><?php echo (isset($rows['lainnya'])) ? number_format($rows['lainnya']/$rows['totalorang']*100,2): 0;?></td>
@@ -129,6 +134,9 @@
       <div class="bux12"></div> &nbsp; <label>IRT</label>
   </div>
   <div class="col-md-2">
+      <div class="bux13"></div> &nbsp; <label>Pedagang</label>
+  </div>
+  <div class="col-md-2">
       <div class="bux7"></div> &nbsp; <label>Lainnya</label>
   </div>
 </div>
@@ -140,6 +148,13 @@
         padding: 10px; 
         margin-right: 40%;
         background-color: #20ad3a;
+        margin: 0;
+        float: left;
+      }
+      .bux13{
+        width: 10px;
+        padding: 10px;
+        background-color: #FF1493;
         margin: 0;
         float: left;
       }

@@ -17,14 +17,36 @@
 
 	      <div class="box-footer">
 	      	<div class="row">
-	      		<div class="col-md-12">
+	      		<div class="col-md-9">
 				 	<button type="button" class="btn btn-primary" onclick="document.location.href='<?php echo base_url()?>eform/data_kepala_keluarga/add'"><i class='fa fa-plus-square-o'></i> &nbsp; Tambah</button>
 				 	<button type="button" class="btn btn-warning" id="btn-refresh"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
-				 	<button type="button" class="btn btn-success" id="btn-export"><i class='fa fa-file-excel-o'></i> &nbsp; Export KK</button>
+				 	<button type="button" class="btn btn-success" id="btn-export" style="display:none"><i class='fa fa-file-excel-o'></i> &nbsp; Export KK</button>
 				 	<button type="button" class="btn btn-danger" id="btn-exportall" style="display:none"><i class='fa fa-file-excel-o'></i> &nbsp; Export All</button>
 				 	<button type="button" class="btn btn-danger" id="export-loader" style="display:none"><i class='fa fa-clock-o'></i> &nbsp; Loading ...</button>
 				 </div>
-			</div>
+				 <div class="col-md-3">
+				 	<div class="row">
+				 		<div class="col-md-6">
+						 	<select name="bulanfilter" id="bulanfilter" class="form-control">
+						 			<option value="all">All</option>
+								<?php for($bulan=1; $bulan <= 12; $bulan++ ) { ?>
+									<option value="<?php echo $bulan; ?>"><?php echo $bulan; ?></option>
+								<?php	} ;?>
+					     	</select>
+				     	</div>
+				     	<div class="col-md-6">
+						 	<select name="tahunfilter" id="tahunfilter" class="form-control">
+						 			<option value="all">All</option>
+								<?php for($tahun=date("Y"); $tahun >=date("Y")-10; $tahun-- ) { ?>
+									<option value="<?php echo $tahun; ?>"><?php echo $tahun; ?></option>
+								<?php	} ;?>
+					     	</select>
+				     	</div>
+				    </div>
+				 </div>
+
+		  	</div>
+		  </div>
 			<div class="box-body">
 			<div class="row">
 				 <div class="col-md-3">
@@ -53,7 +75,7 @@
 				 </div>
 		 	</div>
 		 </div>	
-		 </div>
+		 
         <div class="box-body">
 		    <div class="div-grid">
 		        <div id="jqxgrid"></div>
@@ -267,6 +289,7 @@
 
       return false;
     }).change();
+    
     $("#btn-export").click(function(){
 		
 		var post = "";
@@ -359,4 +382,42 @@
 			// alert(response);
 		});
 	});
+	$('#bulanfilter').change(function(){
+      var bulanfilter = $(this).val();
+      var tahunfilter = $("#tahunfilter").val();
+      if(bulanfilter == "" || bulanfilter === null){
+      	$("#btn-export").hide();
+      }else{
+      	$("#btn-export").show('fade');
+      }
+      $.ajax({
+        url : '<?php echo site_url('eform/data_kepala_keluarga/get_filterbulandata') ?>',
+        type : 'POST',
+        data : 'bulanfilter=' + bulanfilter+'&tahunfilter=' + tahunfilter,
+        success : function(data) {
+          $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
+        }
+      });
+
+      return false;
+    });
+    $('#tahunfilter').change(function(){
+      var tahunfilter = $(this).val();
+      var bulanfilter = $("#bulanfilter").val();
+      if(tahunfilter == "" || tahunfilter === null){
+      	$("#btn-export").hide();
+      }else{
+      	$("#btn-export").show('fade');
+      }
+      $.ajax({
+        url : '<?php echo site_url('eform/data_kepala_keluarga/get_filtertahundata') ?>',
+        type : 'POST',
+        data : 'tahunfilter=' + tahunfilter+'&bulanfilter=' + bulanfilter,
+        success : function(data) {
+          $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
+        }
+      });
+
+      return false;
+    });
 </script>

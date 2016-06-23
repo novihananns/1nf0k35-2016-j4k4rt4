@@ -17,26 +17,31 @@
 
 	      <div class="box-footer">
 	      	<div class="row">
-	      		<div class="col-md-9">
+	      		<div class="col-md-7">
 				 	<button type="button" class="btn btn-primary" onclick="document.location.href='<?php echo base_url()?>eform/data_kepala_keluarga/add'"><i class='fa fa-plus-square-o'></i> &nbsp; Tambah</button>
 				 	<button type="button" class="btn btn-warning" id="btn-refresh"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
-				 	<button type="button" class="btn btn-success" id="btn-export" style="display:none"><i class='fa fa-file-excel-o'></i> &nbsp; Export KK</button>
+				 	<button type="button" class="btn btn-success" id="btn-export" style="display:none"><i class='fa fa-file-excel-o'></i> &nbsp; Export KK Perbulan</button>
 				 	<button type="button" class="btn btn-danger" id="btn-exportall" style="display:none"><i class='fa fa-file-excel-o'></i> &nbsp; Export All</button>
 				 	<button type="button" class="btn btn-danger" id="export-loader" style="display:none"><i class='fa fa-clock-o'></i> &nbsp; Loading ...</button>
 				 </div>
-				 <div class="col-md-3">
+				 <div class="col-md-5">
 				 	<div class="row">
-				 		<div class="col-md-6">
-						 	<select name="bulanfilter" id="bulanfilter" class="form-control">
-						 	<option value="all">Bulan</option>
-					     	</select>
+				 		<div class="col-md-3">
+						 	<label> Pilih Bulan </label>
 				     	</div>
-				     	<div class="col-md-6">
+				     	<div class="col-md-4">
 						 	<select name="tahunfilter" id="tahunfilter" class="form-control">
 						 			<option value="all">Tahun</option>
-								<?php for($tahun=date("Y"); $tahun >=date("Y")-10; $tahun-- ) { ?>
-									<option value="<?php echo $tahun; ?>"><?php echo $tahun; ?></option>
+								<?php for($tahun=date("Y"); $tahun >=date("Y")-10; $tahun-- ) { 
+									$select = $tahun == date("Y") ? 'selected' : '' ;
+								?>
+									<option value="<?php echo $tahun; ?>" <?php echo $select ?> ><?php echo $tahun; ?></option>
 								<?php	} ;?>
+					     	</select>
+				     	</div>
+				 		<div class="col-md-5">
+						 	<select name="bulanfilter" id="bulanfilter" class="form-control">
+						 	<option value="all">Bulan</option>
 					     	</select>
 				     	</div>
 				    </div>
@@ -44,6 +49,7 @@
 
 		  	</div>
 		  </div>
+
 			<div class="box-body">
 			<div class="row">
 				 <div class="col-md-3">
@@ -222,7 +228,7 @@
         $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
 		$("#popup_kpldh").jqxWindow('close');
 	}
-
+	
 	$('#kecamatan').change(function(){
       var kecamatan = $(this).val();
       $.ajax({
@@ -286,7 +292,26 @@
 
       return false;
     }).change();
-    
+    $('#tahunfilter').change(function(){
+      var tahunfilter = $(this).val();
+      var bulanfilter = $("#bulanfilter").val();
+      if(tahunfilter == "" || tahunfilter === null|| tahunfilter == 'all'|| bulanfilter == 'all'){
+      	$("#btn-export").hide();
+      }else{
+      	$("#btn-export").show('fade');
+      }
+      $.ajax({
+        url : '<?php echo site_url('eform/data_kepala_keluarga/get_filtertahundata') ?>',
+        type : 'POST',
+        data : 'tahunfilter=' + tahunfilter+'&bulanfilter=' + bulanfilter,
+        success : function(data) {
+        	$('#bulanfilter').html(data);
+          	$("#jqxgrid").jqxGrid('updatebounddata', 'cells');
+        }
+      });
+
+      return false;
+    }).change();
     $("#btn-export").click(function(){
 		
 		var post = "";
@@ -323,7 +348,7 @@
 			post = post+'&sortorder='+sortorder;
 			
 		}
-		post = post+'&kecamatan='+$("#kecamatan option:selected").text()+'&kelurahan='+$("#kelurahan option:selected").text()+'&rukunwarga='+$("#rukunwarga option:selected").text()+'&rukunrumahtangga='+$("#rukunrumahtangga option:selected").text();
+		post = post+'&kecamatan='+$("#kecamatan option:selected").text()+'&kelurahan='+$("#kelurahan option:selected").text()+'&rukunwarga='+$("#rukunwarga option:selected").text()+'&rukunrumahtangga='+$("#rukunrumahtangga option:selected").text()+'&tahunfilter='+$("#tahunfilter option:selected").text()+'&bulanfilter='+$("#bulanfilter option:selected").text();
 		
 		$.post("<?php echo base_url()?>eform/data_kepala_keluarga/datakepalakeluaraexport",post,function(response	){
 			window.location.href=response;
@@ -398,24 +423,5 @@
 
       return false;
     });
-    $('#tahunfilter').change(function(){
-      var tahunfilter = $(this).val();
-      var bulanfilter = $("#bulanfilter").val();
-      if(tahunfilter == "" || tahunfilter === null|| tahunfilter == 'all'|| bulanfilter == 'all'){
-      	$("#btn-export").hide();
-      }else{
-      	$("#btn-export").show('fade');
-      }
-      $.ajax({
-        url : '<?php echo site_url('eform/data_kepala_keluarga/get_filtertahundata') ?>',
-        type : 'POST',
-        data : 'tahunfilter=' + tahunfilter+'&bulanfilter=' + bulanfilter,
-        success : function(data) {
-        	$('#bulanfilter').html(data);
-          $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
-        }
-      });
-
-      return false;
-    });
+    
 </script>

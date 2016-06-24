@@ -57,12 +57,12 @@
 				 <div class="col-md-6">
 					 <div class="row">
 						 <div class="col-md-3">
-						 <label> Rukun Warga </label>
+						 <label> RW </label>
 						 	<select name="rukunwarga" id="rukunwarga" class="form-control">
 					     	</select>
 						 </div>
 						 <div class="col-md-3">
-						 <label> Rukun Tetangga </label>
+						 <label> RT </label>
 						 	<select name="rukunrumahtangga" id="rukunrumahtangga" class="form-control">
 					     	</select>
 						 </div>

@@ -211,11 +211,8 @@ class Kegiatankelompok_model extends CI_Model {
         $id = $this->getNourutkel($pus);
         $tg = explode("-", $this->input->post('tgl'));
         $tgldata = $tg[2].'-'.$tg[1].'-'.$tg[0];
-        $data['tgl']                        = $tgldata;
-        $data['kode_kelompok']              = $this->input->post('kode_kelompok');
         $data['status_penyuluhan']          = $this->input->post('edukasi');
         $data['status_senam']               = $this->input->post('senam');
-        $data['kode_club']                  = $this->input->post('jenis_kelompok');
         $data['materi']                     = $this->input->post('materi');
         $data['pembicara']                  = $this->input->post('pembicara');
         $data['lokasi']                     = $this->input->post('lokasi');

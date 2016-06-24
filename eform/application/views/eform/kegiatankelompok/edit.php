@@ -58,14 +58,14 @@
             <div class="col-md-8" style="margin-bottom: 5px">
               <div class="row">
                 <div class="col-md-7">
-                  <input type="checkbox" name="edukasi" value="1" disabled <?php if(set_value('edukasi')=="" && isset($status_penyuluhan) && $status_penyuluhan=='1'){
+                  <input type="checkbox" name="edukasi" value="1" <?php if(set_value('edukasi')=="" && isset($status_penyuluhan) && $status_penyuluhan=='1'){
                       echo 'checked';
                     }else{
                       echo  '';
                     }?>> Penyuluhan/Edukasi
                 </div>
                 <div class="col-md-5">
-                  <input type="checkbox" name="senam" value="1" disabled <?php if(set_value('senam')=="" && isset($status_senam) && $status_senam=='1'){
+                  <input type="checkbox" name="senam" value="1" <?php if(set_value('senam')=="" && isset($status_senam) && $status_senam=='1'){
                       echo 'checked';
                     }else{
                       echo  '';
@@ -77,7 +77,7 @@
         <div class="row">
             <div class="col-md-4">Materi</div>
             <div class="col-md-8" style="margin-bottom: 5px">
-              <input type="text" class="form-control" name="materi" placeholder="Materi" readonly value="<?php 
+              <input type="text" class="form-control" name="materi" placeholder="Materi" value="<?php 
                 if(set_value('materi')=="" && isset($materi)){
                   echo $materi;
                 }else{
@@ -89,14 +89,14 @@
         <div class="row">
             <div class="col-md-4">Pembicara</div>
             <div class="col-md-8" style="margin-bottom: 5px">
-              <input type="text" class="form-control" name="pembicara" placeholder="Pembicara" readonly value="<?php 
+              <input type="text" class="form-control" name="pembicara" placeholder="Pembicara" value="<?php 
               if(set_value('pembicara')=="" && isset($pembicara)){
                 echo $pembicara;
               }else{
                 echo  set_value('pembicara');
               }
               ?>">
-              <input type="hidden" class="form-control" name="id_data_kegiatan" readonly placeholder="id_data_kegiatan" value="<?php 
+              <input type="hidden" class="form-control" name="id_data_kegiatan" placeholder="id_data_kegiatan" value="<?php 
               if(set_value('id_data_kegiatan')=="" && isset($id_data_kegiatan)){
                 echo $id_data_kegiatan;
               }else{
@@ -108,7 +108,7 @@
         <div class="row">
             <div class="col-md-4">Lokasi</div>
             <div class="col-md-8" style="margin-bottom: 5px">
-              <input type="text" class="form-control" name="lokasi" placeholder="Lokasi" readonly value="<?php 
+              <input type="text" class="form-control" name="lokasi" placeholder="Lokasi" value="<?php 
                 if(set_value('lokasi')=="" && isset($lokasi)){
                   echo $lokasi;
                 }else{
@@ -120,7 +120,7 @@
         <div class="row">
             <div class="col-md-4">Biaya</div>
             <div class="col-md-8" style="margin-bottom: 5px">
-              <input type="number" class="form-control" name="biaya" placeholder="Biaya" readonly value="<?php 
+              <input type="number" class="form-control" name="biaya" placeholder="Biaya" <?php if($kode_kelompok=="00") echo "readonly"?> value="<?php 
                 if(set_value('biaya')=="" && isset($biaya)){
                   echo $biaya;
                 }else{
@@ -132,7 +132,7 @@
         <div class="row">
           <div class="col-md-4">Keterang</div>
           <div class="col-md-8" style="margin-bottom: 5px">
-            <textarea class="form-control" name="keterangan" id="keterangan" placeholder="Keterangan" readonly><?php 
+            <textarea class="form-control" name="keterangan" id="keterangan" placeholder="Keterangan"><?php 
               if(set_value('keterangan')=="" && isset($keterangan)){
                 echo $keterangan;
               }else{

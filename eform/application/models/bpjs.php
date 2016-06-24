@@ -81,7 +81,7 @@ class Bpjs extends CI_Model {
 	    $this->maxxtimeget 	= 15;
 	    $this->maxxtimepost	= 120;
 	    $this->xauth 		= base64_encode($this->username.':'.$this->password.':095');
-	    $this->data 		= $this->consid."&".time();
+	    $this->data 		= $this->consid."&".$this->xtime;
 	    $this->signature 	= hash_hmac('sha256', $this->data, $this->secretkey, true);
 	    $this->xsign 		= base64_encode($this->signature);
 
@@ -383,16 +383,43 @@ class Bpjs extends CI_Model {
     	$this->db->where('id_data_kegiatan',$kode);
     	$kegiatan = $this->db->get('data_kegiatan')->row_array();
 
-    	/*$datapeserta_pcare = $this->getApi('kelompok/peserta/'.$kegiatan['eduId'],"live");
-    	if (($datapeserta_pcare['metaData']['message']=='OK') && ($datapeserta_pcare['metaData']['code']=='200')){
-    		$dt = array();
-    		$list = $datapeserta_pcare['response']['list'];
-    		foreach ($list as $value) {
-        		$deletepeserta = $this->deleteApi('kelompok/peserta/'.$kegiatan['eduId'].'/'.$value['peserta']['noKartu']);
+    	/*if($kegiatan['status_penyuluhan']==1 && $kegiatan['status_senam']==1){
+    		$kdKegiatan = "11";
+    	}elseif($kegiatan['status_penyuluhan']==1 && $kegiatan['status_senam']==0){
+    		$kdKegiatan = "10";
+    	}else{
+    		$kdKegiatan = "01";
+    	}
+        $data_kegiatan = array(
+          "eduId" 		=> $kegiatan['eduId'],
+          "clubId" 		=> $kegiatan['kode_club'],
+          "tglPelayanan"=> date("d-m-Y",strtotime($kegiatan['tgl'])),
+          "kdKegiatan" 	=> $kdKegiatan,
+          "kdKelompok" 	=> $kegiatan['kode_kelompok'],
+          "materi" 		=> $kegiatan['materi'],
+          "pembicara" 	=> $kegiatan['pembicara'],
+          "lokasi" 		=> $kegiatan['lokasi'],
+          "keterangan" 	=> $kegiatan['keterangan'],
+          "biaya" 		=> $kegiatan['biaya'],
+        ); 
+        $datavisit = $this->postApi('kelompok/kegiatan/', $data_kegiatan);
+        */
+    	$getpeserta = $this->getApi("kelompok/peserta/".$kegiatan['eduId'], "live");
+    	if(is_array($getpeserta['response']['list'])){
+    		$list = $getpeserta['response']['list'];
+    		foreach ($list as $pst) {
+    			$delpeserta = $this->deleteApi("kelompok/peserta/".$kegiatan['eduId']."/".$pst['peserta']['noKartu'],"live");
+			   	echo "\n".$this->server."kelompok/peserta/".$kegiatan['eduId']."/".$pst['peserta']['noKartu'];
+			   	echo "\n".$this->consid;
+			   	echo "\n".$this->xtime;
+			   	echo "\n".$this->xsign;
+			   	echo "\n"."Basic ".$this->xauth;
+			   	echo "\n";
+
+    			print_r($delpeserta);
     		}
-		}else{
-            return print_r($datapeserta_pcare,true);
-		}*/
+    	}
+    	die();
 
     	$this->db->where('id_data_kegiatan',$kode);
     	$peserta = $this->db->get('data_kegiatan_peserta')->result_array();

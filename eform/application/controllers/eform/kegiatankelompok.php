@@ -282,7 +282,7 @@ class Kegiatankelompok extends CI_Controller {
         $this->form_validation->set_rules('materi', 'Materi', 'trim|required');
         $this->form_validation->set_rules('pembicara', 'Pembicara', 'trim|required');
         $this->form_validation->set_rules('lokasi', 'Lokasi', 'trim|required');
-        $this->form_validation->set_rules('biaya', 'Biaya', 'trim|required');
+        if($this->input->post('kode_kelompok')!="00") $this->form_validation->set_rules('biaya', 'Biaya', 'trim|required');
         $this->form_validation->set_rules('keterangan', 'Keterangan', 'trim|required');
 
 		if($this->form_validation->run()== FALSE){
@@ -316,15 +316,12 @@ class Kegiatankelompok extends CI_Controller {
 	function edit($id_kegiatan=0){
 		$this->authentication->verify('eform','edit');
 		$this->form_validation->set_rules('id_data_kegiatan', 'id_data_kegiatan', 'trim|required');
-        $this->form_validation->set_rules('kode_kelompok', 'Jenis Kelompok', 'trim|required');
-        $this->form_validation->set_rules('tgl', 'Tanggal Pelaksanaan', 'trim|required');
-        if($this->input->post('kode_kelompok')!="00") $this->form_validation->set_rules('jenis_kelompok', 'Club Ploranis', 'trim|required');
         $this->form_validation->set_rules('edukasi', 'Edukasi', 'trim');
         $this->form_validation->set_rules('senam', 'Senam', 'trim');
         $this->form_validation->set_rules('materi', 'Materi', 'trim|required');
         $this->form_validation->set_rules('pembicara', 'Pembicara', 'trim|required');
         $this->form_validation->set_rules('lokasi', 'Lokasi', 'trim|required');
-        $this->form_validation->set_rules('biaya', 'Biaya', 'trim|required');
+        if($this->input->post('kode_kelompok')!="00") $this->form_validation->set_rules('biaya', 'Biaya', 'trim|required');
         $this->form_validation->set_rules('keterangan', 'Keterangan', 'trim|required');
 
 		if($this->form_validation->run()== FALSE){

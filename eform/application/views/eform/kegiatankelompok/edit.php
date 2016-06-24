@@ -45,8 +45,8 @@
               </select>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-4">Club Prolanis</div>
+          <div class="row" id="jenisplor">
+            <div class="col-md-4" >Club Prolanis</div>
             <div class="col-md-8" style="margin-bottom: 5px">
               <select name="jenis_kelompok" id="jenis_kelompok" class="form-control" disabled>
                 <option value="">Pilih Club Pronalis</option>

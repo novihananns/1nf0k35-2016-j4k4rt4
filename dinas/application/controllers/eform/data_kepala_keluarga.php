@@ -297,8 +297,39 @@ class Data_kepala_keluarga extends CI_Controller {
 		}else{
 			$bulanfilter = date("M");
 		}
+		$kodekecamatan 	= $this->input->post('kodekecamatan');
+		$kodedesa 	   	= $this->input->post('kodedesa');
+		$koderw 		= $this->input->post('koderw');
+		$kodert 		= $this->input->post('kodert');
+		$kodetahun 		= $this->input->post('kodetahun');
+		$kodebulan 		= $this->input->post('kodebulan');
+		if ($kodekecamatan!='null' && $kodekecamatan !='' && isset($kodekecamatan)) {
+			$this->db->where('data_keluarga.id_kecamatan',$kodekecamatan);
+		}
+		if ($kodedesa != 'null' && $kodedesa !='' && isset($kodedesa)) {
+			$this->db->where('data_keluarga.id_desa',$kodedesa);
+		}
+		if ($koderw != 'null' && $koderw !='' && isset($koderw)) {
+			$this->db->where('data_keluarga.rw',$koderw);
+		}
+		if ($kodert != 'null' && $kodert !='' && isset($kodert)) {
+			$this->db->where('data_keluarga.rt',$kodert);
+		}
+		if ($kodetahun != 'null' && $kodetahun !='' && isset($kodetahun)) {
+			$this->db->where('YEAR(data_keluarga.tanggal_pengisian)',$kodetahun);	
+		}
+		if ($kodebulan != 'null' && $kodebulan !='' && isset($kodebulan)) {
+			$this->db->where('MONTH(data_keluarga.tanggal_pengisian)',$kodebulan);
+		}
+
+		$datajml = $this->datakeluarga_model->datajml();
+		
+		$jumlahjiwa = $datajml['jml_jiwa'];
+		$jumlahlaki = $datajml['jml_laki'];
+		$jumlahkk = $datajml['jml_kk'];
+		$jumlahperempuan = $datajml['jml_perempuan'];
 		$tanggal_export = date("d-m-Y");
-		$data_puskesmas[] = array('nama_puskesmas' => $nama,'kd_prov' => $kd_prov,'kd_kab' => $kd_kab,'tanggal_export' => $tanggal_export,'kd_kab' => $kd_kab,'rw' => $rukunwarga,'rt' => $rukunrumahtangga,'tahunfilter' => $tahunfilter,'bulanfilter' => $bulanfilter);
+		$data_puskesmas[] = array('nama_puskesmas' => $nama,'kd_prov' => $kd_prov,'kd_kab' => $kd_kab,'tanggal_export' => $tanggal_export,'kd_kab' => $kd_kab,'rw' => $rukunwarga,'rt' => $rukunrumahtangga,'tahunfilter' => $tahunfilter,'bulanfilter' => $bulanfilter,'jumlahjiwa' => $jumlahjiwa,'jumlahlaki' => $jumlahlaki,'jumlahperempuan' => $jumlahperempuan,'jumlahkk' => $jumlahkk);
 		
 		$dir = getcwd().'/';
 		$template = $dir.'public/files/template/data_kepala_keluarga.xlsx';		
@@ -540,6 +571,8 @@ class Data_kepala_keluarga extends CI_Controller {
 		$this->session->set_userdata('filter_code_kelurahan','');
 		$this->session->set_userdata('filter_code_rukunwarga','');
 		$this->session->set_userdata('filter_code_cl_rukunrumahtangga','');
+		$this->session->set_userdata('filter_code_cl_bulandata','');
+		$this->session->set_userdata('filter_code_cl_tahundata','');
 		$kode_sess = $this->session->userdata("puskesmas");
 		$data['datakecamatan'] = $this->datakeluarga_model->get_datawhere($kode_sess,"code","cl_kec");
 		$unlock= $this->datakeluarga_model->get_datawhere($kode_sess,"code","cl_district");

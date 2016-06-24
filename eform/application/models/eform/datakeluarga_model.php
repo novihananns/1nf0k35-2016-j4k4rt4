@@ -59,6 +59,21 @@ class Datakeluarga_model extends CI_Model {
         
         return $query->result();
     }
+    
+    function datajml(){
+        $this->db->select("SUM(jml_anaklaki) as jml_laki,SUM(jml_anakperempuan) as jml_perempuan, SUM((jml_anaklaki+jml_anakperempuan)) as jml_jiwa,COUNT(*) AS jml_kk",false);
+        $query = $this->db->get('data_keluarga');
+        if ($query->num_rows() > 0) {
+            $data = $query->row_array();
+        }else{
+            $data['jml_jiwa'] ='0';
+            $data['jml_kk'] ='0';
+            $data['jml_laki'] ='0';
+            $data['jml_perempuan'] ='0';
+        }
+        $query->free_result();
+        return $data;
+    }
 
     function get_data_all($keluarga="-"){
         if($_POST) {

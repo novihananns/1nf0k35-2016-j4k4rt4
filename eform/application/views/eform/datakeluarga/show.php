@@ -347,10 +347,11 @@
 			post = post+'&sortorder='+sortorder;
 			
 		}
-		post = post+'&kecamatan='+$("#kecamatan option:selected").text()+'&kelurahan='+$("#kelurahan option:selected").text()+'&rukunwarga='+$("#rukunwarga option:selected").text()+'&rukunrumahtangga='+$("#rukunrumahtangga option:selected").text()+'&tahunfilter='+$("#tahunfilter option:selected").text()+'&bulanfilter='+$("#bulanfilter option:selected").text();
+		post = post+'&kecamatan='+$("#kecamatan option:selected").text()+'&kelurahan='+$("#kelurahan option:selected").text()+'&rukunwarga='+$("#rukunwarga option:selected").text()+'&rukunrumahtangga='+$("#rukunrumahtangga option:selected").text()+'&tahunfilter='+$("#tahunfilter option:selected").text()+'&bulanfilter='+$("#bulanfilter option:selected").text()+'&kodekecamatan='+$("#kecamatan").val()+'&kodedesa='+$("#kelurahan").val()+'&koderw='+$("#rukunwarga").val()+'&kodert='+$("#rukunrumahtangga").val()+'&kodetahun='+$("#tahunfilter").val()+'&kodebulan='+$("#bulanfilter").val();
 		
 		$.post("<?php echo base_url()?>eform/data_kepala_keluarga/datakepalakeluaraexport",post,function(response	){
 			window.location.href=response;
+			// alert(response);
 		});
 	});
     $("#btn-exportall").click(function(){

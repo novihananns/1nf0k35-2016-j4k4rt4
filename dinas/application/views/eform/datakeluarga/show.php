@@ -54,15 +54,36 @@
 				 	<select name="kelurahan" id="kelurahan" class="form-control">
 			     	</select>
 				 </div>
-				 <div class="col-md-3">
-				 <label> Rukun Warga </label>
-				 	<select name="rukunwarga" id="rukunwarga" class="form-control">
-			     	</select>
-				 </div>
-				 <div class="col-md-3">
-				 <label> Rukun Tetangga </label>
-				 	<select name="rukunrumahtangga" id="rukunrumahtangga" class="form-control">
-			     	</select>
+				 <div class="col-md-6">
+					 <div class="row">
+						 <div class="col-md-3">
+						 <label> Rukun Warga </label>
+						 	<select name="rukunwarga" id="rukunwarga" class="form-control">
+					     	</select>
+						 </div>
+						 <div class="col-md-3">
+						 <label> Rukun Tetangga </label>
+						 	<select name="rukunrumahtangga" id="rukunrumahtangga" class="form-control">
+					     	</select>
+						 </div>
+						 <div class="col-md-3">
+						 	<label> Tahun </label>
+						 	<select name="tahunfilter" id="tahunfilter" class="form-control">
+						 			<option value="all">All</option>
+								<?php for($tahun=date("Y"); $tahun >=date("Y")-10; $tahun-- ) { 
+									$select = $tahun == date("Y") ? 'selected' : '' ;
+								?>
+									<option value="<?php echo $tahun; ?>" <?php echo $select ?> ><?php echo $tahun; ?></option>
+								<?php	} ;?>
+					     	</select>
+				     	</div>
+				 		<div class="col-md-3">
+				 			<label> Bulan </label>
+						 	<select name="bulanfilter" id="bulanfilter" class="form-control">
+						 	<option value="all">All</option>
+					     	</select>
+				     	</div>
+				     </div>
 				 </div>
 		 	</div>
 		 </div>	
@@ -270,6 +291,26 @@
 
       return false;
     }).change();
+    $('#tahunfilter').change(function(){
+      var tahunfilter = $(this).val();
+      var bulanfilter = $("#bulanfilter").val();
+      if(tahunfilter == "" || tahunfilter === null|| tahunfilter == 'all'|| bulanfilter == 'all'){
+      	$("#btn-export").hide();
+      }else{
+      	$("#btn-export").show('fade');
+      }
+      $.ajax({
+        url : '<?php echo site_url('eform/data_kepala_keluarga/get_filtertahundata') ?>',
+        type : 'POST',
+        data : 'tahunfilter=' + tahunfilter+'&bulanfilter=' + bulanfilter,
+        success : function(data) {
+        	$('#bulanfilter').html(data);
+          	$("#jqxgrid").jqxGrid('updatebounddata', 'cells');
+        }
+      });
+
+      return false;
+    }).change();
     $("#btn-export").click(function(){
 		
 		var post = "";
@@ -306,7 +347,7 @@
 			post = post+'&sortorder='+sortorder;
 			
 		}
-		post = post+'&kecamatan='+$("#kecamatan option:selected").text()+'&kelurahan='+$("#kelurahan option:selected").text()+'&rukunwarga='+$("#rukunwarga option:selected").text()+'&rukunrumahtangga='+$("#rukunrumahtangga option:selected").text();
+		post = post+'&kecamatan='+$("#kecamatan option:selected").text()+'&kelurahan='+$("#kelurahan option:selected").text()+'&rukunwarga='+$("#rukunwarga option:selected").text()+'&rukunrumahtangga='+$("#rukunrumahtangga option:selected").text()+'&tahunfilter='+$("#tahunfilter option:selected").text()+'&bulanfilter='+$("#bulanfilter option:selected").text();
 		
 		$.post("<?php echo base_url()?>eform/data_kepala_keluarga/datakepalakeluaraexport",post,function(response	){
 			//alert(response);
@@ -360,6 +401,27 @@
 			$("#export-loader").hide();
 	      	$("#btn-exportall").show('fade');
 			window.location.href=response;
+			// alert(response);
 		});
 	});
+	$('#bulanfilter').change(function(){
+      var bulanfilter = $(this).val();
+      var tahunfilter = $("#tahunfilter").val();
+      if(bulanfilter == "" || bulanfilter === null|| bulanfilter == 'all'|| tahunfilter == 'all'){
+      	$("#btn-export").hide();
+      }else{
+      	$("#btn-export").show('fade');
+      }
+      $.ajax({
+        url : '<?php echo site_url('eform/data_kepala_keluarga/get_filterbulandata') ?>',
+        type : 'POST',
+        data : 'bulanfilter=' + bulanfilter+'&tahunfilter=' + tahunfilter,
+        success : function(data) {
+          $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
+        }
+      });
+
+      return false;
+    });
+    
 </script>

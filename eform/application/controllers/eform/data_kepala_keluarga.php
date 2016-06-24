@@ -132,13 +132,13 @@ $data_tabel[] = array(
 	'stiker'		=> isset($profile[$id]['profile_a_6_a_radio']) && $profile[$id]['profile_a_6_a_radio']==1? "Ada" : "Tidak Ada",
 	'up4k'			=> isset($profile[$id]['profile_b_1_a_radio']) && $profile[$id]['profile_b_1_a_radio']==1? "Ya" : "Tidak",
 	'kesling'		=> isset($profile[$id]['profile_b_2_a_radio']) && $profile[$id]['profile_b_2_a_radio']==1? "Ya" : "Tidak",
-	'pancasila'		=> ((isset($profile[$id]['profile_b_3_a_radio'])) ? ($profile[$id]['profile_b_3_a_radio']==1 ? "Ya" : ($profile[$id]['profile_b_3_a_radio']==2 ? "Tidak" : "x")):'x'),
-	'kerjabakti'	=> ((isset($profile[$id]['profile_b_4_a_radio'])) ? ($profile[$id]['profile_b_4_a_radio']==1? "Ya" : ($profile[$id]['profile_b_4_a_radio']==2? "Tidak" : "x")):'x'),
-	'rukunmati'		=> ((isset($profile[$id]['profile_b_5_a_radio'])) ? ($profile[$id]['profile_b_5_a_radio']==1? "Ya" : ($profile[$id]['profile_b_5_a_radio']==2? "Tidak" : "x")):'x'),
-	'keagamaan'		=> ((isset($profile[$id]['profile_b_6_a_radio'])) ? ($profile[$id]['profile_b_6_a_radio']==1? "Ya" : ($profile[$id]['profile_b_6_a_radio']==2? "Tidak" : "x")):'x'),
-	'jimpitan'		=> ((isset($profile[$id]['profile_b_7_a_radio'])) ? ($profile[$id]['profile_b_7_a_radio']==1? "Ya" : ($profile[$id]['profile_b_7_a_radio']==2? "Tidak" : "x")):'x'),
-	'arisan'		=> ((isset($profile[$id]['profile_b_8_a_radio'])) ? ($profile[$id]['profile_b_8_a_radio']==1? "Ya" : ($profile[$id]['profile_b_8_a_radio']==2? "Tidak" : "x")):'x'),
-	'koperasi'		=> ((isset($profile[$id]['profile_b_9_a_radio'])) ? ($profile[$id]['profile_b_9_a_radio']==1? "Ya" : ($profile[$id]['profile_b_9_a_radio']==2? "Tidak" : "x")):'x'),
+	'pancasila'		=> ((isset($profile[$id]['profile_b_3_a_radio'])) ? ($profile[$id]['profile_b_3_a_radio']==1 ? "Ya" : ($profile[$id]['profile_b_3_a_radio']==0 ? "Tidak" : "x")):'x'),
+	'kerjabakti'	=> ((isset($profile[$id]['profile_b_4_a_radio'])) ? ($profile[$id]['profile_b_4_a_radio']==1? "Ya" : ($profile[$id]['profile_b_4_a_radio']==0? "Tidak" : "x")):'x'),
+	'rukunmati'		=> ((isset($profile[$id]['profile_b_5_a_radio'])) ? ($profile[$id]['profile_b_5_a_radio']==1? "Ya" : ($profile[$id]['profile_b_5_a_radio']==0? "Tidak" : "x")):'x'),
+	'keagamaan'		=> ((isset($profile[$id]['profile_b_6_a_radio'])) ? ($profile[$id]['profile_b_6_a_radio']==1? "Ya" : ($profile[$id]['profile_b_6_a_radio']==0? "Tidak" : "x")):'x'),
+	'jimpitan'		=> ((isset($profile[$id]['profile_b_7_a_radio'])) ? ($profile[$id]['profile_b_7_a_radio']==1? "Ya" : ($profile[$id]['profile_b_7_a_radio']==0? "Tidak" : "x")):'x'),
+	'arisan'		=> ((isset($profile[$id]['profile_b_8_a_radio'])) ? ($profile[$id]['profile_b_8_a_radio']==1? "Ya" : ($profile[$id]['profile_b_8_a_radio']==0? "Tidak" : "x")):'x'),
+	'koperasi'		=> ((isset($profile[$id]['profile_b_9_a_radio'])) ? ($profile[$id]['profile_b_9_a_radio']==1? "Ya" : ($profile[$id]['profile_b_9_a_radio']==0? "Tidak" : "x")):'x'),
 	'kegiatanlain'	=> isset($profile[$id]['profile_b_10_a_radio']) && $profile[$id]['profile_b_10_a_radio']==1? "Ya" : "Tidak",
 	'pendapatan'	=> isset($profile[$id]['profile_c_1_a_jumlah']) && $profile[$id]['profile_c_1_a_jumlah']!=""? $profile[$id]['profile_c_1_a_jumlah'] : "-",
 	'sumber_pendapatan'		=> (isset($profile[$id]['profile_c_2_a_radio']) && $profile[$id]['profile_c_2_a_radio']==1? "Pekerjaan;" : "").' '.(isset($profile[$id]['profile_c_2_b_radio']) && $profile[$id]['profile_c_2_b_radio']==1? "Sumbangan;" : "").' '.(isset($profile[$id]['profile_c_2_c_radio']) && $profile[$id]['profile_c_2_c_radio']==1? "Lainnya" : "").' '.((!isset($profile[$id]['profile_c_2_a_radio']) &&!isset($profile[$id]['profile_c_2_b_radio']) && !isset($profile[$id]['profile_c_2_c_radio'])) ? 'x' :''),
@@ -148,7 +148,7 @@ $data_tabel[] = array(
 	'pendidikan'	=> ((isset($anggota[$id][$no_anggota]['id_pilihan_pendidikan'])) ? ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']== 14 ? "Tidak Tamat SD/MI" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==15? "Masih SD/MI" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==16? "Tamat SD/MI" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==17? "Masih SLTP/MTs" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==18? "Tamat SLTP/MTs" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==19? "Masih SLTA/MA" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==20? "Tamat SLTA/MA" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==21? "Masih PT/Akademi" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==22? "Tamat PT/Akademi" : ($anggota[$id][$no_anggota]['id_pilihan_pendidikan']==23? "Tidak/Belum Sekolah" : "x")))))))))):'x'),
 	'pekerjaan'		=> ((isset($anggota[$id][$no_anggota]['id_pilihan_pekerjaan'])) ? ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==24? "Petani" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==25? "Nelayan" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==46? "Pedagang" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==26? "PNS/TNI/Porli" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==27? "Pegawai Swasta" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==28? "Wiraswasta" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==29? "Pensiunan" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==30? "Pekerja Lepas" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==31? "Lainnya" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==32? "Tidak/Belum Bekerja" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==42? "Bekerja" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==43? "Belum Bekerja" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==44? "TidakBekerja" : ($anggota[$id][$no_anggota]['id_pilihan_pekerjaan']==45? "IRT" : "x")))))))))))))):'x'),
 	'status_kawin'	=> ((isset($anggota[$id][$no_anggota]['id_pilihan_kawin'])) ? ($anggota[$id][$no_anggota]['id_pilihan_kawin']==33? "Belum Kawin" : ($anggota[$id][$no_anggota]['id_pilihan_kawin']==34? "Kawin" : ($anggota[$id][$no_anggota]['id_pilihan_kawin']==35? "Janda/Duda" : "x"))) :'x'),
-	'usaha_lingkungan'=> ((isset($anggota_pr[$id][$no_anggota]['profile_b_2_a_radio'])) ? ($anggota_pr[$id][$no_anggota]['profile_b_2_a_radio']==1? "Ya" : ($anggota_pr[$id][$no_anggota]['profile_b_2_a_radio']==2? "x" : "x")):'x'),
+	'usaha_lingkungan'=> ((isset($anggota_pr[$id][$no_anggota]['profile_b_2_a_radio'])) ? ($anggota_pr[$id][$no_anggota]['profile_b_2_a_radio']==1? "Ya" : ($anggota_pr[$id][$no_anggota]['profile_b_2_a_radio']==0 ? "Tidak" : "x")):'x'),
 	'bpjsjkn'		=> ((isset($anggota[$id][$no_anggota]['id_pilihan_jkn'])) ? ($anggota[$id][$no_anggota]['id_pilihan_jkn']==36 ? "BPJS-PBI" : ($anggota[$id][$no_anggota]['id_pilihan_jkn']==37? "BPJS-Non PBI" : ($anggota[$id][$no_anggota]['id_pilihan_jkn']==38? "Non BPJS" : ($anggota[$id][$no_anggota]['id_pilihan_jkn']==39? "Tidak Memiliki" : "x")))):'x'),
 	'akte_lahir'	=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_0_g_1_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_1_radio']==0? "Ada" : ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_1_radio']==1? "Tidak Ada" : "x")):'x'),
 	'wna_status'	=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_0_g_2_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_2_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_2_radio']==1? "Tidak" : "x")):'x'),
@@ -163,7 +163,7 @@ $data_tabel[] = array(
 	'koperasi_punya'=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_0_g_7_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_7_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_7_radio']==1? "Tidak" : "x")):'x'),
 	'subur_usia'	=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_0_g_8_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_8_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_8_radio']==1? "Tidak" : "x")):'x'),
 	'hamil_status'	=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_0_g_9_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_9_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_9_radio']==1? "Tidak" : "x")):'x'),
-	'disabilitas_st'=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_0_g_10_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_10_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_10_radio']==1? "Tidak" : "x")):'x'),
+	'disabilitas_st'=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_0_g_10_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_10_radio']== 0 ? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_10_radio']==1? "Tidak" : "x")):'x'),
 	'kb_suami'			=> isset($kb[$id]['berencana_II_1_suami']) && $kb[$id]['berencana_II_1_suami']!=""? $kb[$id]['berencana_II_1_suami'] : "-",
 	'kb_istri'			=> isset($kb[$id]['berencana_II_1_istri']) && $kb[$id]['berencana_II_1_istri']!=""? $kb[$id]['berencana_II_1_istri'] : "-",
 	'kb_lahir_l'		=> isset($kb[$id]['berencana_II_2_laki']) && $kb[$id]['berencana_II_2_laki']!=""? $kb[$id]['berencana_II_2_laki'] : "-",
@@ -1295,7 +1295,7 @@ $data_tabel[] = array(
 				}else{
 					$bln=array(1=>"Januari","Februari","Maret","April","Mei","Juni","July","Agustus","September","Oktober","November","Desember");
 					$this->session->set_userdata('filter_code_cl_tahundata',$this->input->post('tahunfilter'));
-					echo '<option value="all">Bulan</option>';
+					echo '<option value="all">All</option>';
 					foreach ($bln as $key => $value) {
 						echo $select = $key == set_value('bulanfilter') ? 'selected' : '';
 						echo '<option value="'.$key.'" '.$select.'>' . $value . '</option>';

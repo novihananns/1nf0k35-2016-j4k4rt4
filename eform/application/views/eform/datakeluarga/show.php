@@ -17,34 +17,12 @@
 
 	      <div class="box-footer">
 	      	<div class="row">
-	      		<div class="col-md-7">
+	      		<div class="col-md-12">
 				 	<button type="button" class="btn btn-primary" onclick="document.location.href='<?php echo base_url()?>eform/data_kepala_keluarga/add'"><i class='fa fa-plus-square-o'></i> &nbsp; Tambah</button>
 				 	<button type="button" class="btn btn-warning" id="btn-refresh"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
 				 	<button type="button" class="btn btn-success" id="btn-export" style="display:none"><i class='fa fa-file-excel-o'></i> &nbsp; Export KK Perbulan</button>
 				 	<button type="button" class="btn btn-danger" id="btn-exportall" style="display:none"><i class='fa fa-file-excel-o'></i> &nbsp; Export All</button>
 				 	<button type="button" class="btn btn-danger" id="export-loader" style="display:none"><i class='fa fa-clock-o'></i> &nbsp; Loading ...</button>
-				 </div>
-				 <div class="col-md-5">
-				 	<div class="row">
-				 		<div class="col-md-3">
-						 	<label> Pilih Bulan </label>
-				     	</div>
-				     	<div class="col-md-4">
-						 	<select name="tahunfilter" id="tahunfilter" class="form-control">
-						 			<option value="all">Tahun</option>
-								<?php for($tahun=date("Y"); $tahun >=date("Y")-10; $tahun-- ) { 
-									$select = $tahun == date("Y") ? 'selected' : '' ;
-								?>
-									<option value="<?php echo $tahun; ?>" <?php echo $select ?> ><?php echo $tahun; ?></option>
-								<?php	} ;?>
-					     	</select>
-				     	</div>
-				 		<div class="col-md-5">
-						 	<select name="bulanfilter" id="bulanfilter" class="form-control">
-						 	<option value="all">Bulan</option>
-					     	</select>
-				     	</div>
-				    </div>
 				 </div>
 
 		  	</div>
@@ -66,15 +44,36 @@
 				 	<select name="kelurahan" id="kelurahan" class="form-control">
 			     	</select>
 				 </div>
-				 <div class="col-md-3">
-				 <label> Rukun Warga </label>
-				 	<select name="rukunwarga" id="rukunwarga" class="form-control">
-			     	</select>
-				 </div>
-				 <div class="col-md-3">
-				 <label> Rukun Tetangga </label>
-				 	<select name="rukunrumahtangga" id="rukunrumahtangga" class="form-control">
-			     	</select>
+				 <div class="col-md-6">
+					 <div class="row">
+						 <div class="col-md-3">
+						 <label> Rukun Warga </label>
+						 	<select name="rukunwarga" id="rukunwarga" class="form-control">
+					     	</select>
+						 </div>
+						 <div class="col-md-3">
+						 <label> Rukun Tetangga </label>
+						 	<select name="rukunrumahtangga" id="rukunrumahtangga" class="form-control">
+					     	</select>
+						 </div>
+						 <div class="col-md-3">
+						 	<label> Tahun </label>
+						 	<select name="tahunfilter" id="tahunfilter" class="form-control">
+						 			<option value="all">All</option>
+								<?php for($tahun=date("Y"); $tahun >=date("Y")-10; $tahun-- ) { 
+									$select = $tahun == date("Y") ? 'selected' : '' ;
+								?>
+									<option value="<?php echo $tahun; ?>" <?php echo $select ?> ><?php echo $tahun; ?></option>
+								<?php	} ;?>
+					     	</select>
+				     	</div>
+				 		<div class="col-md-3">
+				 			<label> Bulan </label>
+						 	<select name="bulanfilter" id="bulanfilter" class="form-control">
+						 	<option value="all">All</option>
+					     	</select>
+				     	</div>
+				     </div>
 				 </div>
 		 	</div>
 		 </div>	

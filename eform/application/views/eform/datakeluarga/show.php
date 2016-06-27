@@ -19,6 +19,7 @@
 	      	<div class="row">
 	      		<div class="col-md-12">
 				 	<button type="button" class="btn btn-primary" onclick="document.location.href='<?php echo base_url()?>eform/data_kepala_keluarga/add'"><i class='fa fa-plus-square-o'></i> &nbsp; Tambah</button>
+				 	<button type="button" class="btn btn-primary" onclick="document.location.href='<?php echo base_url()?>eform/data_kepala_keluarga/import_add'"><i class='fa fa-arrow-circle-o-down'></i> &nbsp; Import *.xls</button>
 				 	<button type="button" class="btn btn-warning" id="btn-refresh"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
 				 	<button type="button" class="btn btn-success" id="btn-export" style="display:none"><i class='fa fa-file-excel-o'></i> &nbsp; Export KK Perbulan</button>
 				 	<button type="button" class="btn btn-danger" id="btn-exportall" style="display:none"><i class='fa fa-file-excel-o'></i> &nbsp; Export All</button>

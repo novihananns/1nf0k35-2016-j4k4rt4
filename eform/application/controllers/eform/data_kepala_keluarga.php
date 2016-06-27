@@ -886,6 +886,36 @@ $data_tabel[] = array(
 		 $this->dataform_model->insertdataform_profile();
 	}
 
+	function import_add(){
+		$this->authentication->verify('eform','add');
+
+        $this->form_validation->set_rules('filename', 'File Excel', 'trim|required');
+        
+
+		if($this->form_validation->run()== FALSE){
+			$data['title_group'] = "eForm - Ketuk Pintu";
+			$data['title_form']="Import Excel KPLDH";
+			$data['action']="import_add";
+			$data['id_data_keluarga']="";
+          	$data['data_provinsi'] = $this->datakeluarga_model->get_provinsi();
+          	$data['data_kotakab'] = $this->datakeluarga_model->get_kotakab();
+          	$data['data_kecamatan'] = $this->datakeluarga_model->get_kecamatan();
+          	$data['data_desa'] = $this->datakeluarga_model->get_desa();
+          	$data['data_pos'] = $this->datakeluarga_model->get_pos();
+          	$data['data_pkk'] = $this->datakeluarga_model->get_pkk();
+
+			$data['content'] = $this->parser->parse("eform/datakeluarga/import_add",$data,true);
+			$this->template->show($data,"home");
+		}elseif($id = $this->datakeluarga_model->insert_entry()){
+			$this->session->set_flashdata('alert', 'Save data successful...');
+			redirect(base_url().'eform/data_kepala_keluarga/edit/'.$id);
+		}else{
+			$this->session->set_flashdata('alert_form', 'Save data failed...');
+			redirect(base_url()."eform/data_kepala_keluarga/");
+		}
+
+	}
+    
 	function add(){
 		$this->authentication->verify('eform','add');
 

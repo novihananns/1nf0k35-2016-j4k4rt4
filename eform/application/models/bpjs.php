@@ -403,7 +403,6 @@ class Bpjs extends CI_Model {
           "biaya" 		=> $kegiatan['biaya'],
         ); 
         $datavisit = $this->postApi('kelompok/kegiatan/', $data_kegiatan);
-        */
     	$getpeserta = $this->getApi("kelompok/peserta/".$kegiatan['eduId'], "live");
     	if(is_array($getpeserta['response']['list'])){
     		$list = $getpeserta['response']['list'];
@@ -419,7 +418,7 @@ class Bpjs extends CI_Model {
     			print_r($delpeserta);
     		}
     	}
-    	die();
+        */
 
     	$this->db->where('id_data_kegiatan',$kode);
     	$peserta = $this->db->get('data_kegiatan_peserta')->result_array();

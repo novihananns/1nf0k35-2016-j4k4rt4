@@ -88,8 +88,12 @@ class Bpjs extends CI_Model {
 	    return $data;
     }
 
-	function getApi($url="",$methode="global"){
+	function getApi($url="",$methode="global",$ver = 1){
 	   $this->get_data_bpjs($methode);
+	   if($ver!=1){
+			$this->server = str_replace("v1", "v2", $this->server);
+	   }
+
 	   try
 	    {
 	      $response = \Httpful\Request::get($this->server.$url)
@@ -238,9 +242,9 @@ class Bpjs extends CI_Model {
 
 	function bpjs_search($by="nik",$no){
 		if($by == "nik"){
-			$data = $this->getApi('peserta/nik/'.$no);
+			$data = $this->getApi('peserta/nik/'.$no,"global",2);
 		}else{
-			$data = $this->getApi('peserta/'.$no);
+			$data = $this->getApi('peserta/'.$no,"global",2);
 		}
 
       	return $data;

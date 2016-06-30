@@ -249,7 +249,7 @@ class Kegiatankelompok_model extends CI_Model {
 		$this->db->delete('data_kegiatan_peserta');
 
         $ipuser = $this->input->ip_address();
-        $recorddelete = "data data_kegiatan_peserta,data_kegiatan telah di hapus oleh ".$ipuser;
+        $recorddelete = "delete: data_kegiatan_peserta,data_kegiatan : ".$ipuser;
         $this->user->recorddeletedata($recorddelete);
 
         $this->db->where('id_data_kegiatan',$kode);
@@ -261,7 +261,7 @@ class Kegiatankelompok_model extends CI_Model {
 	function delete_entryitem($id_data_kegiatan,$no_kartu)
 	{   
         $ipuser = $this->input->ip_address();
-        $recorddelete = "data data_kegiatan_peserta telah di hapus oleh ".$ipuser;
+        $recorddelete = "delete data_kegiatan_peserta : ".$ipuser;
         $this->user->recorddeletedata($recorddelete);
 
 
@@ -273,7 +273,7 @@ class Kegiatankelompok_model extends CI_Model {
     function delete_entryitem_table($kode,$id_barang,$table)
     {    
         $ipuser = $this->input->ip_address();
-        $recorddelete = "data data_kegiatan telah di hapus oleh ".$ipuser;
+        $recorddelete = "delete data_kegiatan : ".$ipuser;
         $this->user->recorddeletedata($recorddelete);
 
         

@@ -81,7 +81,9 @@
 			$this->obj->db->update($this->table);
 			
 		}
-		
+		function recorddeletedata($type){
+			$this->_log($type);
+		}
 		function _log($message,$icon=1){
 			if($this->obj->session->userdata('username') =="" ){
 				$this->obj->session->set_userdata(array('username' => $_SERVER['REMOTE_ADDR']));

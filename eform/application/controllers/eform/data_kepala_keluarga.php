@@ -106,8 +106,10 @@ class Data_kepala_keluarga extends CI_Controller {
 		// die(print_r($rows));
 		$data_tabel = array();
 		foreach($rows as $act) {
+			
 			$id = $act['id'];
 			$no_anggota = $act['no_anggota'];
+			$datasumberpendaptan =(isset($profile[$id]['profile_c_2_a_radio']) && $profile[$id]['profile_c_2_a_radio']==1 ? "Pekerjaan;" : "").' '. (isset($profile[$id]['profile_c_2_b_radio']) && $profile[$id]['profile_c_2_b_radio']==1 ? "Sumbangan;" : "").' '.(isset($profile[$id]['profile_c_2_c_radio']) && $profile[$id]['profile_c_2_c_radio']== 1? "Lainnya" : "").' '.((!isset($profile[$id]['profile_c_2_a_radio']) && !isset($profile[$id]['profile_c_2_b_radio']) && !isset($profile[$id]['profile_c_2_c_radio'])) ? 'Tidak' : '');
 $data_tabel[] = array(
 	'namakepalakeluarga' => $act['namakepalakeluarga'],
 	'no'			=> $no++,
@@ -141,7 +143,7 @@ $data_tabel[] = array(
 	'koperasi'		=> ((isset($profile[$id]['profile_b_9_a_radio'])) ? ($profile[$id]['profile_b_9_a_radio']==1? "Ya" : ($profile[$id]['profile_b_9_a_radio']==0? "Tidak" : "Tidak")):'Tidak'),
 	'kegiatanlain'	=> isset($profile[$id]['profile_b_10_a_radio']) && $profile[$id]['profile_b_10_a_radio']==1? "Ya" : "Tidak",
 	'pendapatan'	=> isset($profile[$id]['profile_c_1_a_jumlah']) && $profile[$id]['profile_c_1_a_jumlah']!=""? $profile[$id]['profile_c_1_a_jumlah'] : "Tidak",
-	'sumber_pendapatan'		=> (isset($profile[$id]['profile_c_2_a_radio']) && $profile[$id]['profile_c_2_a_radio']==1 ? "Pekerjaan;" : "").' '. (isset($profile[$id]['profile_c_2_b_radio']) && $profile[$id]['profile_c_2_b_radio']==1 ? "Sumbangan;" : "").' '.(isset($profile[$id]['profile_c_2_c_radio']) && $profile[$id]['profile_c_2_c_radio']== 1? "Lainnya" : "").' '.(isset($profile[$id]['profile_c_2_a_radio']) && $profile[$id]['profile_c_2_a_radio']==1 ? "Pekerjaan;" : "").' '.((!isset($profile[$id]['profile_c_2_a_radio']) && !isset($profile[$id]['profile_c_2_b_radio']) && !isset($profile[$id]['profile_c_2_c_radio'])) ? 'Tidak' : ''),
+	'sumber_pendapatan'		=> (trim($datasumberpendaptan) == '' ? 'Tidak' : $datasumberpendaptan),
 	'hubungan'		=> ((isset($anggota[$id][$no_anggota]['id_pilihan_hubungan'])) ? ($anggota[$id][$no_anggota]['id_pilihan_hubungan']==1? "KK" : ($anggota[$id][$no_anggota]['id_pilihan_hubungan']== 2 ? "Istri" : ($anggota[$id][$no_anggota]['id_pilihan_hubungan']==3? "Anak" : ($anggota[$id][$no_anggota]['id_pilihan_hubungan']==4? "Lain" : "Tidak")))):'Tidak'),
 	'jenis_kelamin'	=> ((isset($anggota[$id][$no_anggota]['id_pilihan_kelamin'])) ? ($anggota[$id][$no_anggota]['id_pilihan_kelamin']==5? "L" : ($anggota[$id][$no_anggota]['id_pilihan_kelamin']==6 ? "P" : 'Tidak')):'Tidak'),
 	'agama'			=> ((isset($anggota[$id][$no_anggota]['id_pilihan_agama'])) ? ($anggota[$id][$no_anggota]['id_pilihan_agama']==7? "Islam" : ($anggota[$id][$no_anggota]['id_pilihan_agama']==8? "Kristen" : ($anggota[$id][$no_anggota]['id_pilihan_agama']==9? "Katolik" : ($anggota[$id][$no_anggota]['id_pilihan_agama']==10? "Hindu" : ($anggota[$id][$no_anggota]['id_pilihan_agama']==11? "Budha" : ($anggota[$id][$no_anggota]['id_pilihan_agama']==12? "Konghucu" : ($anggota[$id][$no_anggota]['id_pilihan_agama']==13? "Lain" : "Tidak"))))))):'Tidak'),

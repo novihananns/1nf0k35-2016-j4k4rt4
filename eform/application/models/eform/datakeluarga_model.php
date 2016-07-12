@@ -240,6 +240,46 @@ class Datakeluarga_model extends CI_Model {
     public function getSelectedData($table,$data){
         return $this->db->get_where($table, array('code'=>$data));
     }
+
+    //ini untuk memasukkan kedalam tabel data_keluarga
+    function loaddata($dataarray) {
+        for ($i = 0; $i < count($dataarray); $i++) {
+            $data = array(
+                'id_data_keluarga'  => $dataarray[$i]['id_data_keluarga'],
+                'nourutkel'         => $dataarray[$i]['nourutkel'],
+                'tanggal_pengisian' => $dataarray[$i]['tanggal_pengisian'],
+                'jam_data'          => $dataarray[$i]['jam_data'],
+                'alamat'            => $dataarray[$i]['alamat'],
+                'id_propinsi'       => $dataarray[$i]['id_propinsi'],
+                'id_kota'           => $dataarray[$i]['id_kota'],
+                'id_kecamatan'      => $dataarray[$i]['id_kecamatan'],
+                'id_desa'           => $dataarray[$i]['id_desa'],
+                'id_kodepos'        => $dataarray[$i]['id_kodepos'],
+                'rw'                => $dataarray[$i]['rw'],
+                'rt'                => $dataarray[$i]['rt'],
+                'norumah'           => $dataarray[$i]['norumah'],
+                'namakepalakeluarga'=> $dataarray[$i]['namakepalakeluarga'],
+                'notlp'             => $dataarray[$i]['notlp'],
+                'namadesawisma'     => $dataarray[$i]['namadesawisma'],
+                'nama_komunitas'    => $dataarray[$i]['nama_komunitas'],
+                'id_pkk'            => $dataarray[$i]['id_pkk'],
+                'nama_koordinator'  => $dataarray[$i]['nama_koordinator'],
+                'nama_pendata'      => $dataarray[$i]['nama_pendata'],
+                'jam_selesai'       => $dataarray[$i]['jam_selesai'],
+                'jml_anaklaki'      => $dataarray[$i]['jml_anaklaki'],
+                'jml_anakperempuan' => $dataarray[$i]['jml_anakperempuan'],
+                'pus_ikutkb'        => $dataarray[$i]['pus_ikutkb'],
+                'pus_tidakikutkb'  => $dataarray[$i]['pus_tidakikutkb']
+            );
+            //ini untuk menambahkan apakah dalam tabel sudah ada data yang sama
+            //apabila data sudah ada maka data di-skip
+            // saya contohkan kalau ada data nama yang sama maka data tidak dimasukkan
+            $this->db->where('id_data_keluarga', $this->input->post('id_data_keluarga'));            
+            if ($cek) {
+                $this->db->insert('data', $data);
+            }
+        }
+    }
     
     function insertDataTable(){
         $id_data_keluarga = $this->input->post('id_data_keluarga');
@@ -286,12 +326,9 @@ class Datakeluarga_model extends CI_Model {
 
         return $data;
     }
-    
+   
     function insert_entry(){
         $id = $this->getNourutkel($this->input->post('kelurahan'));
-
-
-
 
         $data=array(
             'id_data_keluarga'  => $id['id_data_keluarga'],

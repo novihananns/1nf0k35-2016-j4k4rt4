@@ -41,13 +41,13 @@
 </div>
 <?php } ?>
 <div class="row">
-<form action="<?php echo base_url()?>eform/data_kepala_keluarga/{action}/{id_data_keluarga}" method="post">
+<form action="<?php echo base_url()?>eform/data_kepala_keluarga/importdata" method="post" enctype="multipart/form-data">
   <div class="col-md-6">
     <div class="box box-primary">
       <div class="box-footer">
         <button type="button" id="btn-kembali" class="btn btn-success"><i class='fa fa-arrow-circle-left'></i> &nbsp;Kembali</button>
         <button type="button" class="btn btn-primary"><i class='fa fa-file-excel-o'></i> &nbsp; Download Template</button>
-        <button type="submit" class="btn btn-warning"><i class='fa fa-arrow-circle-right'></i> &nbsp; Periksa File & Import</button>
+        <button type="submit" id="btn-import" class="btn btn-warning"><i class='fa fa-arrow-circle-right'></i> &nbsp; Periksa File & Import</button>
       </div>
       <div class="box-body">
 
@@ -144,15 +144,10 @@
       <div class="row" style="margin: 5px">
         <div class="col-md-4" style="padding: 5px; font-weight:bold">Tentukan File Excel</div>
         <div class="col-md-8">
-          <input type="file" name="filename" id="filename" placeholder="File *.xls" value="<?php 
-          if(set_value('filename')=="" && isset($filename)){
-            echo $filename;
-          }else{
-            echo  set_value('filename');
-          }
-          ?>" class="form-control">
+          <input type="file" name="file" placeholder="File *.xls" class="form-control">
         </div>
       </div>
+      <div id="respon1"></div>
 
       <br><br>
     </div>
@@ -183,4 +178,51 @@ $(function () {
 	$("#menu_ketuk_pintu").addClass("active");
 	$("#menu_eform_data_kepala_keluarga").addClass("active");
 });
+
+// $("#btn-import").click(function(){
+//   var data = new FormData();
+//     data.append('filename', $("#filename").val());
+    
+//     $.ajax({
+//         cache : false,
+//         contentType : false,
+//         processData : false,
+//         type : 'POST',
+//         url : '<?php echo base_url()."eform/data_kepala_keluarga/importdata" ?>',
+//         data : data,
+//         success : function(response){
+//           if(response=="OK"){
+//             alert("OK");
+//           }else{
+//             alert("Failed");
+//           }
+//         }
+//     });
+// });
+
+  // $("#btn-import").click(function() {
+
+  //     var file=$("#filename").val();
+  //     var form = $('form').get(0); 
+
+  //     $.ajax({
+  //         type:'post',
+  //         dataType:'json',
+  //         url : '<?php echo base_url()."eform/data_kepala_keluarga/importdata" ?>',
+  //         data: new FormData(form),
+  //         mimeType:"multipart/form-data",
+  //         contentType: false,
+  //         cache: false,
+  //         processData:false,
+  //         beforeSend:function(){
+  //             $("#respon1").html('<img src="<?=base_url();?>media/images/ajax-loader.gif"/><span>Harap Tunggu...</span>');
+  //         },
+  //         success:function(x){
+  //             $("#respon1").html(x);
+  //             $("#resetbtn").trigger('click');
+  //             return false;
+  //         },
+  //     });
+  // });
+
 </script>

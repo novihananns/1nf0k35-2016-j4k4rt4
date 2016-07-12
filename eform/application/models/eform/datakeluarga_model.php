@@ -577,7 +577,10 @@ class Datakeluarga_model extends CI_Model {
                          'id_data_keluarga' => $id_data_keluarga,
                          'no_anggota' => $noanggota,
                          );
-        $this->db->update("data_keluarga_anggota",$dataubah,$keyubah);
+        $queryupdate = $this->db->update("data_keluarga_anggota",$dataubah,$keyubah);
+        if ($queryupdate) {
+            return 'ok';
+        }
 
     }
      function addanggotaprofile(){
@@ -598,7 +601,10 @@ class Datakeluarga_model extends CI_Model {
                 $this->db->where('no_anggota',$noanggota);
                 $this->db->where('id_data_keluarga',$id_data_keluarga);
                 $this->db->where('kode',$kode);
-                $this->db->delete('data_keluarga_anggota_profile');
+                $querydelete = $this->db->delete('data_keluarga_anggota_profile');
+                if ($querydelete) {
+                    return 'ok';
+                }
              }else{
                 $data=array(
                             'id' => 'G',
@@ -607,14 +613,21 @@ class Datakeluarga_model extends CI_Model {
                             'no_anggota'=>$noanggota,
                             'value'=>$value,
                             );
-                $this->db->insert('data_keluarga_anggota_profile',$data);
+                $queryinsert = $this->db->insert('data_keluarga_anggota_profile',$data);
+                if ($queryinsert) {
+                    return 'ok';
+                }
+
             }
         }else{
             if($query->num_rows() > 0){
                 $values = array(
                     'value'          => $value,
                 );
-                $this->db->update('data_keluarga_anggota_profile', $values, array('id' => 'G','id_data_keluarga'=>$id_data_keluarga,'no_anggota'=>$noanggota,'kode'=>$kode));
+                $queryupd = $this->db->update('data_keluarga_anggota_profile', $values, array('id' => 'G','id_data_keluarga'=>$id_data_keluarga,'no_anggota'=>$noanggota,'kode'=>$kode));
+                if ($queryupd) {
+                    return 'ok';
+                }
              }else{
                 $data=array(
                             'id' => 'G',
@@ -623,7 +636,10 @@ class Datakeluarga_model extends CI_Model {
                             'no_anggota'=>$noanggota,
                             'value'=>$value,
                             );
-                $this->db->insert('data_keluarga_anggota_profile',$data);
+                $queryins = $this->db->insert('data_keluarga_anggota_profile',$data);
+                if ($queryins) {
+                    return 'ok';
+                }
              }
         }
     }

@@ -47,7 +47,10 @@ class Pembangunan_keluarga_model extends CI_Model {
                 $this->db->where('id','III');
                 $this->db->where('id_data_keluarga',$id_data_keluarga);
                 $this->db->where('kode',$kode);
-                $this->db->delete('data_keluarga_pembangunan');
+                $querydelete = $this->db->delete('data_keluarga_pembangunan');
+                if ($querydelete) {
+                    return 'ok';
+                }
              }else{
                 $data=array(
                             'id' => 'III',
@@ -55,14 +58,21 @@ class Pembangunan_keluarga_model extends CI_Model {
                             'kode'=>$kode,
                             'value'=>$value,
                             );
-                $this->db->insert('data_keluarga_pembangunan',$data);
+                $queryinsert = $this->db->insert('data_keluarga_pembangunan',$data);
+                if ($queryinsert) {
+                    return 'ok';
+                }
             }
         }else{
             if($query->num_rows() == 1){
                 $values = array(
                     'value'          => $value,
                 );
-                $this->db->update('data_keluarga_pembangunan', $values, array('id' => 'III','id_data_keluarga'=>$id_data_keluarga,'kode'=>$kode));
+                $queryupdate = $this->db->update('data_keluarga_pembangunan', $values, array('id' => 'III','id_data_keluarga'=>$id_data_keluarga,'kode'=>$kode));
+                if ($queryupdate) {
+                    return 'ok';
+                }
+
              }else{
                 $data=array(
                             'id' => 'III',
@@ -70,7 +80,10 @@ class Pembangunan_keluarga_model extends CI_Model {
                             'kode'=>$kode,
                             'value'=>$value,
                             );
-                $this->db->insert('data_keluarga_pembangunan',$data);
+                $queryins = $this->db->insert('data_keluarga_pembangunan',$data);
+                if ($queryins) {
+                    return 'ok';
+                }
              }
         }
     }

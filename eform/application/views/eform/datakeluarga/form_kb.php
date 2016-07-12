@@ -122,10 +122,80 @@ $(function () {
     })
     $("input[name^=berencana]").change(function(){
 		//alert($(this).attr('name')+' ' +$(this).val());
-
+			var kodedataberencana= $(this).attr('name');
+			var valuedataberencana = $(this).val();
 			var id_data_keluarga = "<?php echo $id_data_keluarga; ?>";
 			$.post("<?php echo base_url()?>eform/data_kepala_keluarga/addkeluargaberencana",{kode:$(this).attr('name'),id_data_keluarga:id_data_keluarga,value:$(this).val()},function(data,status){;
-					});
+				if (data != 'ok') {
+					alert('Maaf, koneksi kurang stabil. Silahkan cek koneksi Anda');
+					if(kodedataberencana.slice(-5)=="radio")
+			    	{
+			    		if(valuedataberencana=="0"){
+			    			document.getElementById(kodedataberencana+"_satu").checked = false;	
+			    		}else if(valuedataberencana=="1"){
+			    			document.getElementById(kodedataberencana+"_dua").checked = false;
+			    		}else if(valuedataberencana=="2"){
+			    			document.getElementById(kodedataberencana+"_tiga").checked = false;
+			    		}
+
+			    	}else if(kodedataberencana.slice(-5)=="sepsi"){
+			    		if(valuedataberencana=="0"){
+			    			document.getElementById(kodedataberencana+"_iud").checked = false;	
+			    		}else if(valuedataberencana=="1"){
+			    			document.getElementById(kodedataberencana+"_mow").checked = false;
+			    		}else if(valuedataberencana=="2"){
+			    			document.getElementById(kodedataberencana+"_mop").checked = false;
+			    		}else if(valuedataberencana=="3"){
+			    			document.getElementById(kodedataberencana+"_sutik").checked = false;
+			    		}else if(valuedataberencana=="4"){
+			    			document.getElementById(kodedataberencana+"_batalpilih").checked = false;
+			    		}else if(valuedataberencana=="5"){
+			    			document.getElementById(kodedataberencana+"_kondom").checked = false;
+			    		}else if(valuedataberencana=="6"){
+			    			document.getElementById(kodedataberencana+"_implan").checked = false;
+			    		}else if(valuedataberencana=="7"){
+			    			document.getElementById(kodedataberencana+"_pil").checked = false;
+			    		}else if(valuedataberencana=="8"){
+			    			document.getElementById(kodedataberencana+"_tradisional").checked = false;
+			    		}
+			    	}else if(kodedataberencana.slice(-5)=="cebox"){
+			    		document.getElementById(kodedataberencana).checked = false;
+			    	}
+			    	else if(kodedataberencana.slice(-5)=="radkb"){
+			    		if(valuedataberencana=="0"){
+			    			document.getElementById(kodedataberencana+"_rsup").checked = false;	
+			    		}else if(valuedataberencana=="1"){
+			    			document.getElementById(kodedataberencana+"_tni").checked = false;
+			    		}else if(valuedataberencana=="2"){
+			    			document.getElementById(kodedataberencana+"_porli").checked = false;
+			    		}else if(valuedataberencana=="3"){
+			    			document.getElementById(kodedataberencana+"_swasta").checked = false;
+			    		}else if(valuedataberencana=="4"){
+			    			document.getElementById(kodedataberencana+"_utama").checked = false;
+			    		}else if(valuedataberencana=="5"){
+			    			document.getElementById(kodedataberencana+"_puskesmas").checked = false;
+			    		}else if(valuedataberencana=="6"){
+			    			document.getElementById(kodedataberencana+"_klinik").checked = false;
+			    		}else if(valuedataberencana=="7"){
+			    			document.getElementById(kodedataberencana+"_dokter").checked = false;
+			    		}else if(valuedataberencana=="8"){
+			    			document.getElementById(kodedataberencana+"_pratama").checked = false;
+			    		}else if(valuedataberencana=="9"){
+			    			document.getElementById(kodedataberencana+"_pustu").checked = false;
+			    		}else if(valuedataberencana=="10"){
+			    			document.getElementById(kodedataberencana+"_poskesdes").checked = false;
+			    		}else if(valuedataberencana=="11"){
+			    			document.getElementById(kodedataberencana+"_praktek").checked = false;
+			    		}else if(valuedataberencana=="12"){
+			    			document.getElementById(kodedataberencana+"_pelayanan").checked = false;
+			    		}else if(valuedataberencana=="13"){
+			    			document.getElementById(kodedataberencana+"_lainnya").checked = false;
+			    		}
+			    	}else{
+					    document.getElementById(kodedataberencana).value = "";
+			    	}
+				}
+			});
 		})
 		<?php
 		  	 if(isset($data_keluarga_kb) and $data_keluarga_kb!="salah"){

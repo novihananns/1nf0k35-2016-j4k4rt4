@@ -308,9 +308,30 @@
 $(function () { 
 	$("input[name^=profile]").change(function(){
 		//	alert($(this).attr('name')+' ' +$(this).val());
+			var kodedata= $(this).attr('name');
+			var valuedata = $(this).val();
 			var id_data_keluarga = "<?php echo $id_data_keluarga; ?>";
 			$.post("<?php echo base_url()?>eform/data_kepala_keluarga/adddataform_profile",{kode:$(this).attr('name'),id_data_keluarga:id_data_keluarga,value:$(this).val()},function(data,status){;
-					});
+				// alert(kodedata);
+				if (data != 'ok') {
+					alert('Maaf, koneksi kurang stabil. Silahkan cek koneksi Anda');
+					// document.getElementById(kodedata+"_tidak").checked = false;	
+					// $(this).prop('checked',false);
+					// $(this).removeAttr("checked");
+					if(kodedata.slice(-5)=="radio")
+			    	{
+			    		if(valuedata=="1"){
+			    			document.getElementById(kodedata+"_ya").checked = false;	
+			    			// $(this).prop('checked',false);
+			    		}else{
+			    			document.getElementById(kodedata+"_tidak").checked = false;
+			    			// $(this).attr("checked",false);
+			    		}
+			    	}else{
+			    		document.getElementById(kodedata).value = "";
+			    	}
+				}
+			});
 		})
 	<?php
 	  	 if(isset($data_formprofile) and $data_formprofile!="salah"){

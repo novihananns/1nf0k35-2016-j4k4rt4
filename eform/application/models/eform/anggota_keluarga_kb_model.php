@@ -47,7 +47,10 @@ class Anggota_keluarga_kb_model extends CI_Model {
                 $this->db->where('id','II');
                 $this->db->where('id_data_keluarga',$id_data_keluarga);
                 $this->db->where('kode',$kode);
-                $this->db->delete('data_keluarga_kb');
+                $querydelete = $this->db->delete('data_keluarga_kb');
+                if ($querydelete) {
+                    return 'ok';
+                }
              }else{
                 $data=array(
                             'id' => 'II',
@@ -55,7 +58,10 @@ class Anggota_keluarga_kb_model extends CI_Model {
                             'kode'=>$kode,
                             'value'=>$value,
                             );
-                $this->db->insert('data_keluarga_kb',$data);
+                $queryinsert = $this->db->insert('data_keluarga_kb',$data);
+                if ($queryinsert) {
+                    return 'ok';
+                }
             }
         }else{
             if($query->num_rows() == 1){
@@ -63,7 +69,10 @@ class Anggota_keluarga_kb_model extends CI_Model {
                 $values = array(
                     'value'          => $value,
                 );
-                $this->db->update('data_keluarga_kb', $values, array('id' => 'II','id_data_keluarga'=>$id_data_keluarga,'kode'=>$kode));
+                $queryupdate = $this->db->update('data_keluarga_kb', $values, array('id' => 'II','id_data_keluarga'=>$id_data_keluarga,'kode'=>$kode));
+                if ($queryupdate) {
+                    return 'ok';
+                }
              }else{
                 $data=array(
                             'id' => 'II',
@@ -71,7 +80,10 @@ class Anggota_keluarga_kb_model extends CI_Model {
                             'kode'=>$kode,
                             'value'=>$value,
                             );
-                $this->db->insert('data_keluarga_kb',$data);
+                $queryins = $this->db->insert('data_keluarga_kb',$data);
+                if ($queryins) {
+                    return 'ok';
+                }
              }
         }
     }

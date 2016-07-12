@@ -20,7 +20,14 @@ class Dataform_model extends CI_Model {
         $this->db->where('kode', $kode);
         $query = $this->db->get();
         if($query->num_rows() == 1){
-            $this->db->query("update data_keluarga_profile set value='$value' where id='D' and id_data_keluarga='$id_data_keluarga' and kode='$kode'")->result();
+            $dataupdate = array('value' => $value );
+            $this->db->where('id','D');
+            $this->db->where('id_data_keluarga',$id_data_keluarga);
+            $this->db->where('kode',$kode);
+            $queryupdate = $this->db->update('data_keluarga_profile',$dataupdate);
+            if ($queryupdate) {
+                return "ok";
+            }
          }else{
             $data=array(
                         'id' => 'D',
@@ -28,7 +35,10 @@ class Dataform_model extends CI_Model {
                         'kode'=>$kode,
                         'value'=>$value,
                         );
-            $this->db->insert('data_keluarga_profile',$data);
+            $insert = $this->db->insert('data_keluarga_profile',$data);
+            if ($insert == true) {
+                return "ok";
+            }
          }
     }
     function get_data_formprofile($id){

@@ -166,8 +166,8 @@ $data_tabel[] = array(
 	'subur_usia'	=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_0_g_8_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_8_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_8_radio']==1? "Tidak" : "Tidak")):'Tidak'),
 	'hamil_status'	=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_0_g_9_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_9_radio']==0? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_9_radio']==1? "Tidak" : "Tidak")):'Tidak'),
 	'disabilitas_st'=> ((isset($anggota_pr[$id][$no_anggota]['kesehatan_0_g_10_radio'])) ? ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_10_radio']== 0 ? "Ya" : ($anggota_pr[$id][$no_anggota]['kesehatan_0_g_10_radio']==1? "Tidak" : "Tidak")):'Tidak'),
-	'kb_suami'			=> isset($kb[$id]['berencana_II_1_suami']) && $kb[$id]['berencana_II_1_suami']!=""? $kb[$id]['berencana_II_1_suami'] : "0",
-	'kb_istri'			=> isset($kb[$id]['berencana_II_1_istri']) && $kb[$id]['berencana_II_1_istri']!=""? $kb[$id]['berencana_II_1_istri'] : "0",
+	'kb_suami'			=> ((isset($kb[$id]['berencana_II_1_suami']) && $kb[$id]['berencana_II_1_suami']!="" ) ? (($anggota[$id][$no_anggota]['id_pilihan_hubungan']==1 || $anggota[$id][$no_anggota]['id_pilihan_hubungan']==2 ) ? $kb[$id]['berencana_II_1_suami'] : '0' )  : "0"),
+	'kb_istri'			=> ((isset($kb[$id]['berencana_II_1_istri']) && $kb[$id]['berencana_II_1_istri']!="") ? (($anggota[$id][$no_anggota]['id_pilihan_hubungan']==1 || $anggota[$id][$no_anggota]['id_pilihan_hubungan']==2 ) ? $kb[$id]['berencana_II_1_istri'] : '0') : "0"),
 	'kb_lahir_l'		=> isset($kb[$id]['berencana_II_2_laki']) && $kb[$id]['berencana_II_2_laki']!=""? $kb[$id]['berencana_II_2_laki'] : "Tidak",
 	'kb_lahir_p'		=> isset($kb[$id]['berencana_II_2_perempuan']) && $kb[$id]['berencana_II_2_perempuan']!=""? $kb[$id]['berencana_II_2_perempuan'] : "Tidak",
 	'kb_hidup_l'		=> isset($kb[$id]['berencana_II_2_laki_hidup']) && $kb[$id]['berencana_II_2_laki_hidup']!=""? $kb[$id]['berencana_II_2_laki_hidup'] : "0",
@@ -885,7 +885,8 @@ $data_tabel[] = array(
 		$this->template->show($data,"home");
 	}
 	function adddataform_profile(){
-		 $this->dataform_model->insertdataform_profile();
+		 $action = $this->dataform_model->insertdataform_profile();
+		 die("$action");
 	}
 
 	function import_add(){
@@ -1134,7 +1135,8 @@ $data_tabel[] = array(
 	}
 	function addanggotaprofile()
 	{
-	 	$this->datakeluarga_model->addanggotaprofile();
+	 	$actionprofile = $this->datakeluarga_model->addanggotaprofile();
+	 	die("$actionprofile");
 	} 
 	function anggota_edit($idkeluarga=0,$noanggota=0)
 	{
@@ -1169,7 +1171,8 @@ $data_tabel[] = array(
 	}
 
 	function update_kepala(){
-		$this->datakeluarga_model->update_kepala();
+		$actionkepala = $this->datakeluarga_model->update_kepala();
+		die("$actionkepala");
 	}
 	
 	function profile($kode=0)
@@ -1218,7 +1221,8 @@ $data_tabel[] = array(
 	}
 	public function addkeluargaberencana()
 	{
-		$this->anggota_keluarga_kb_model->insertDataKeluargaBerencana();
+		$actionberencana= $this->anggota_keluarga_kb_model->insertDataKeluargaBerencana();
+		die("$actionberencana");
 	}
 	function pembangunan($kode=0)
 	{
@@ -1243,7 +1247,8 @@ $data_tabel[] = array(
 		die($this->parser->parse("eform/datakeluarga/form_pembangunan",$data));
 	}
 	function addpembangunan(){
-		$this->pembangunan_keluarga_model->insertdatatable_pembangunan();
+		$actionpembangunan = $this->pembangunan_keluarga_model->insertdatatable_pembangunan();
+		die("$actionpembangunan");
 	}
 	function get_kecamatanfilter(){
 	
@@ -1352,8 +1357,13 @@ $data_tabel[] = array(
 				$tahunfilter = $this->input->post('tahunfilter');
 				if ($tahunfilter=='' || empty($tahunfilter) || $tahunfilter=='all') {
 					echo '<option value="all">Bulan</option>';
+					if ($tahunfilter=='all') {
+						$this->session->set_userdata('filter_code_cl_tahundata',$tahunfilter);
+						$this->session->set_userdata('filter_code_cl_bulandata','');
+					}else{
 						$this->session->set_userdata('filter_code_cl_tahundata','');
 						$this->session->set_userdata('filter_code_cl_bulandata','');
+					}
 				}else{
 					$bln=array(1=>"Januari","Februari","Maret","April","Mei","Juni","July","Agustus","September","Oktober","November","Desember");
 					$this->session->set_userdata('filter_code_cl_tahundata',$this->input->post('tahunfilter'));

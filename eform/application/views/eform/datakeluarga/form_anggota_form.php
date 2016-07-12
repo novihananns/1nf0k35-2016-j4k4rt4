@@ -51,7 +51,7 @@
           var value= "<?php echo $row->value; ?>";
           if($("[name="+"<?php echo $row->kode;?>"+"]").length == 0) {
 			  
-		  }else{
+		      }else{
 	          if(kode.slice(-5)=="radio"){
 	            if(value=="0"){
 	              document.getElementById("<?php echo $row->kode.'_ya';?>").checked = true; 
@@ -156,10 +156,16 @@
 
       $("input[name^=keluarga6]").change(function(){
         //alert($(this).attr('name')+' ' +$(this).val());
+        var kodedatakeluarga6= $(this).attr('name');
+        var valuedatakeluarga6 = $(this).val();
         var noanggota = "<?php echo $noanggota;?>";
         var id_data_keluarga = "<?php echo $id_data_keluarga; ?>";
-        $.post("<?php echo base_url()?>eform/data_kepala_keluarga/update_kepala",{kode:$(this).attr('name'),id_data_keluarga:id_data_keluarga,value:$(this).val(),noanggota:noanggota},function(data,status){;
-            });
+        $.post("<?php echo base_url()?>eform/data_kepala_keluarga/update_kepala",{kode:$(this).attr('name'),id_data_keluarga:id_data_keluarga,value:$(this).val(),noanggota:noanggota},function(data,status){
+            if (data != 'ok') {
+              alert('Maaf, koneksi kurang stabil. Silahkan cek koneksi Anda');
+              cekdataanggota(kodedatakeluarga6,valuedatakeluarga6);
+            }
+        });
       });
 
       $("select").change(function(){
@@ -171,10 +177,16 @@
       });
       $("input[name^=kesehatan]").change(function(){
      // alert($(this).attr('name')+' ' +$(this).val());
+        var kodedatakesehatan= $(this).attr('name');
+        var valuedatakesehatan = $(this).val();
       var noanggota = "<?php echo $noanggota;?>";
       var id_data_keluarga = "<?php echo $id_data_keluarga; ?>";
         $.post("<?php echo base_url()?>eform/data_kepala_keluarga/addanggotaprofile",{kode:$(this).attr('name'),id_data_keluarga:id_data_keluarga,value:$(this).val(),noanggota:noanggota},function(data,status){;
-            });
+            if (data != 'ok') {
+              alert('Maaf, koneksi kurang stabil. Silahkan cek koneksi Anda');
+              cekdataanggota(kodedatakesehatan,valuedatakesehatan);
+            }
+        });
       })
 
 
@@ -197,6 +209,49 @@
           });
       }); 
 	});
+function cekdataanggota(kodedataanggota,valuedataanggota){
+     if(kodedataanggota.slice(-5)=="radio"){
+      if(valuedataanggota=="0"){
+        document.getElementById(kodedataanggota+"_ya").checked = false; 
+      }else if(valuedataanggota=="1"){
+        document.getElementById(kodedataanggota+"_tidak").checked = false;
+      }
+    }else if(kodedataanggota.slice(-5)=="radi3"){
+      if(valuedataanggota=="0"){
+        document.getElementById(kodedataanggota+"_a").checked = false; 
+      }else if(valuedataanggota=="1"){
+        document.getElementById(kodedataanggota+"_b").checked = false;
+      }else{
+        document.getElementById(kodedataanggota+"_c").checked = false;
+      }
+    }else if(kodedataanggota.slice(-5)=="radi4"){
+      if(valuedataanggota=="0"){
+        document.getElementById(kodedataanggota+"_a").checked = false; 
+      }else if(valuedataanggota=="1"){
+        document.getElementById(kodedataanggota+"_b").checked = false;
+      }else if(valuedataanggota=="2"){
+        document.getElementById(kodedataanggota+"_c").checked = false;
+      }else{
+        document.getElementById("_d").checked = false;
+      }
+    }else if(kodedataanggota.slice(-5)=="radi5"){
+      if(valuedataanggota=="0"){
+        document.getElementById(kodedataanggota+"_a").checked = false; 
+      }else if(valuedataanggota=="1"){
+        document.getElementById(kodedataanggota+"_b").checked = false;
+      }else if(valuedataanggota=="2"){
+        document.getElementById(kodedataanggota+"_c").checked = false;
+      }else if(valuedataanggota=="3"){
+        document.getElementById(kodedataanggota+"_d").checked = false;
+      }else{
+        document.getElementById(kodedataanggota+"_e").checked = false;
+      }
+    }else if(kodedataanggota.slice(-5)=="cebox"){
+      document.getElementById(kodedataanggota).checked = false;
+    }else{
+      document.getElementById(kodedataanggota).value = "";
+    }
+}
 </script>
 
 <form action="<?php echo base_url()?>eform/data_kepala_keluarga/{action}/{id_data_keluarga}" method="post">

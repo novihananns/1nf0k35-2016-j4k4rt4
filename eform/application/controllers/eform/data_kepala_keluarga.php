@@ -14,6 +14,11 @@ class Data_kepala_keluarga extends CI_Controller {
 		$this->load->model('eform/pembangunan_keluarga_model');
 		$this->load->model('eform/anggota_keluarga_kb_model');
 		$this->load->model('eform/dataform_model');
+		$this->load->model('eform/mread');
+
+	    $this->load->library(array('PHPExcel','PHPExcel/IOFactory'));
+		$this->load->helper('file');
+
 	}
 
 	function urut($id_data_keluarga=0){
@@ -888,6 +893,201 @@ $data_tabel[] = array(
 		 $action = $this->dataform_model->insertdataform_profile();
 		 die("$action");
 	}
+
+    // function export(){
+    //     $ambildata = $this->mread->export_kontak();
+         
+    //     if(count($ambildata)>0){
+    //         $objPHPExcel = new PHPExcel();
+    //         // Set properties
+    //         $objPHPExcel->getProperties()
+    //               ->setCreator("SAMSUL ARIFIN") //creator
+    //                 ->setTitle("Programmer - Regional Planning and Monitoring, XL AXIATA");  //file title
+ 
+    //         $objset = $objPHPExcel->setActiveSheetIndex(0); //inisiasi set object
+    //         $objget = $objPHPExcel->getActiveSheet();  //inisiasi get object
+ 
+    //         $objget->setTitle('Sample Sheet'); //sheet title
+             
+    //         $objget->getStyle("A1:C1")->applyFromArray(
+    //             array(
+    //                 'fill' => array(
+    //                     'type' => PHPExcel_Style_Fill::FILL_SOLID,
+    //                     'color' => array('rgb' => '92d050')
+    //                 ),
+    //                 'font' => array(
+    //                     'color' => array('rgb' => '000000')
+    //                 )
+    //             )
+    //         );
+ 
+    //         //table header
+    //         $cols = array("A","B","C");
+             
+    //         $val = array("Nama ","Alamat","Kontak");
+             
+    //         for ($a=0;$a<3; $a++) 
+    //         {
+    //             $objset->setCellValue($cols[$a].'1', $val[$a]);
+                 
+    //             //Setting lebar cell
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(25); // NAMA
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(25); // ALAMAT
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(25); // Kontak
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(25); // NAMA
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(25); // ALAMAT
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(25); // Kontak
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(25); // NAMA
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(25); // ALAMAT
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(25); // Kontak
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(25); // NAMA
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(25); // ALAMAT
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(25); // Kontak
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth(25); // NAMA
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('N')->setWidth(25); // ALAMAT
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('O')->setWidth(25); // Kontak
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('P')->setWidth(25); // NAMA
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('Q')->setWidth(25); // ALAMAT
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('R')->setWidth(25); // Kontak
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('S')->setWidth(25); // ALAMAT
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('T')->setWidth(25); // Kontak
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('U')->setWidth(25); // NAMA
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('V')->setWidth(25); // ALAMAT
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('W')->setWidth(25); // Kontak
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('X')->setWidth(25); // NAMA
+    //             $objPHPExcel->getActiveSheet()->getColumnDimension('Y')->setWidth(25); // ALAMAT
+
+             
+    //             $style = array(
+    //                 'alignment' => array(
+    //                     'horizontal' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
+    //                 )
+    //             );
+    //             $objPHPExcel->getActiveSheet()->getStyle($cols[$a].'1')->applyFromArray($style);
+    //         }
+             
+    //         $baris  = 2;
+    //         foreach ($ambildata as $frow){
+                 
+    //             //pemanggilan sesuaikan dengan nama kolom tabel
+    //             $objset->setCellValue("A".$baris, $frow->id_data_keluarga);   //membaca data nama
+    //             $objset->setCellValue("B".$baris, $frow->nourutkel); //membaca data alamat
+    //             $objset->setCellValue("C".$baris, $frow->tanggal_pengisian); //membaca data kontak
+    //             $objset->setCellValue("D".$baris, $frow->jam_data);   //membaca data nama
+    //             $objset->setCellValue("E".$baris, $frow->alamat); //membaca data alamat
+    //             $objset->setCellValue("F".$baris, $frow->id_propinsi); //membaca data kontak
+    //             $objset->setCellValue("G".$baris, $frow->id_kota);   //membaca data nama
+    //             $objset->setCellValue("H".$baris, $frow->id_kecamatan); //membaca data alamat
+    //             $objset->setCellValue("I".$baris, $frow->id_desa); //membaca data kontak
+    //             $objset->setCellValue("J".$baris, $frow->id_kodepos);   //membaca data nama
+    //             $objset->setCellValue("K".$baris, $frow->rw); //membaca data alamat
+    //             $objset->setCellValue("L".$baris, $frow->rt); //membaca data kontak
+    //             $objset->setCellValue("M".$baris, $frow->norumah);   //membaca data nama
+    //             $objset->setCellValue("N".$baris, $frow->namakepalakeluarga); //membaca data alamat
+    //             $objset->setCellValue("O".$baris, $frow->notlp); //membaca data kontak
+    //             $objset->setCellValue("P".$baris, $frow->namadesawisma);   //membaca data nama
+    //             $objset->setCellValue("Q".$baris, $frow->nama_komunitas); //membaca data alamat
+    //             $objset->setCellValue("R".$baris, $frow->id_pkk); //membaca data kontak
+    //             $objset->setCellValue("S".$baris, $frow->nama_koordinator);   //membaca data nama
+    //             $objset->setCellValue("T".$baris, $frow->nama_pendata); //membaca data alamat
+    //             $objset->setCellValue("U".$baris, $frow->jam_selesai); //membaca data kontak
+    //             $objset->setCellValue("V".$baris, $frow->jml_anaklaki);   //membaca data nama
+    //             $objset->setCellValue("W".$baris, $frow->jml_anakperempuan); //membaca data alamat
+    //             $objset->setCellValue("X".$baris, $frow->pus_ikutkb); //membaca data kontak
+    //             $objset->setCellValue("Y".$baris, $frow->pus_tidakikutkb); //membaca data kontak
+                 
+    //             //Set number value
+    //             $objPHPExcel->getActiveSheet()->getStyle('C1:C'.$baris)->getNumberFormat()->setFormatCode('0');
+                 
+    //             $baris++;
+    //         }
+             
+    //         $objPHPExcel->getActiveSheet()->setTitle('Data Export');
+ 
+    //         $objPHPExcel->setActiveSheetIndex(0);  
+    //         $filename = urlencode("Data".date("Y-m-d H:i:s").".xls");
+               
+    //           header('Content-Type: application/vnd.ms-excel'); //mime type
+    //           header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
+    //           header('Cache-Control: max-age=0'); //no cache
+ 
+    //         $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel5');                
+    //         $objWriter->save('php://output');
+    //     }else{
+	   //  	redirect(base_url()."eform/data_kepala_keluarga/");
+
+    //     }
+    // }
+
+	function import(){
+        $fileName = time().$_FILES['file_excel']['name'];
+
+        $config['upload_path'] = './assets/'; 
+        $config['file_name'] = $fileName;
+        $config['allowed_types'] = 'xls|xlsx|csv';
+        $config['max_size'] = 10000;
+         
+        $this->load->library('upload');
+        $this->upload->initialize($config);
+         
+        if(! $this->upload->do_upload('file_excel') )
+        $this->upload->display_errors();
+             
+        $media = $this->upload->data('file_excel');
+        $inputFileName = './assets/'.$media['file_name'];
+         
+        try {
+                $inputFileType = IOFactory::identify($inputFileName);
+                $objReader = IOFactory::createReader($inputFileType);
+                $objPHPExcel = $objReader->load($inputFileName);
+            } catch(Exception $e) {
+                die('Error loading file "'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
+            }
+ 
+            $sheet = $objPHPExcel->getSheet(0);
+            $highestRow = $sheet->getHighestRow();
+            $highestColumn = $sheet->getHighestColumn();
+             
+            for ($row = 2; $row <= $highestRow; $row++){  //  Read a row of data into an array                 
+                $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,NULL,TRUE,FALSE);
+        	    
+        	    $id = $this->datakeluarga_model->getNourutkel($this->input->post('kelurahan'));
+                
+                $data = array(
+                    "alamat"             => $rowData[0][4],
+                    "id_kodepos"         => $rowData[0][9],
+                    "rw" 			     => $rowData[0][10],
+                    "rt"		         => $rowData[0][11],
+                    "norumah"            => $rowData[0][12],
+                    "namakepalakeluarga" => $rowData[0][13],
+                    "notlp"              => $rowData[0][14],
+                    "namadesawisma"      => $rowData[0][15],
+                    "nama_komunitas"     => $rowData[0][16],
+                    "id_pkk"             => $rowData[0][17],
+                    "nama_koordinator"   => $rowData[0][18],
+                    "nama_pendata"       => $rowData[0][19],
+                    "jam_selesai" 		 => $rowData[0][20],
+                    "jml_anaklaki"		 => $rowData[0][21],
+                    "jml_anakperempuan"  => $rowData[0][22],
+                    "pus_ikutkb"		 => $rowData[0][23],
+                    "pus_tidakikutkb"    => $rowData[0][24]
+                );
+			        $data['id_data_keluarga'] 	 = $id['id_data_keluarga'];
+			        $data['nourutkel'] 	 		 = $id['nourutkel'];
+			        $data['tanggal_pengisian']   = date("Y-m-d", strtotime($this->input->post('tgl_pengisian')));
+			        $data['jam_data'] 			 = $this->input->post('jam_data');
+			        $data['id_propinsi']         = $this->input->post('provinsi');
+			        $data['id_kota'] 		     = $this->input->post('kota');
+			        $data['id_kecamatan']        = $this->input->post('id_kecamatan');
+			        $data['id_desa']             = $this->input->post('kelurahan');
+
+			    //insert to database
+                $insert = $this->db->insert("data_keluarga",$data);
+                delete_files($media['file_path']);
+            }
+
+	    redirect(base_url()."eform/data_kepala_keluarga/");
+    }
 
 	function import_add(){
 		$this->authentication->verify('eform','add');

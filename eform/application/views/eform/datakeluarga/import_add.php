@@ -41,13 +41,15 @@
 </div>
 <?php } ?>
 <div class="row">
-<form action="<?php echo base_url()?>eform/data_kepala_keluarga/importdata" method="post" enctype="multipart/form-data">
+<form action="<?php echo base_url()?>eform/data_kepala_keluarga/import" method="post" enctype="multipart/form-data">
   <div class="col-md-6">
     <div class="box box-primary">
       <div class="box-footer">
         <button type="button" id="btn-kembali" class="btn btn-success"><i class='fa fa-arrow-circle-left'></i> &nbsp;Kembali</button>
-        <button type="button" class="btn btn-primary"><i class='fa fa-file-excel-o'></i> &nbsp; Download Template</button>
+        <button type="button" id="btn-download-template" class="btn btn-primary"><i class='fa fa-file-excel-o'></i> &nbsp; Download Template</button>
+        <!-- <button type="button" id="btn-import" class="btn btn-warning"><i class='fa fa-arrow-circle-right'></i> &nbsp; Periksa File & Import</button> -->
         <button type="submit" id="btn-import" class="btn btn-warning"><i class='fa fa-arrow-circle-right'></i> &nbsp; Periksa File & Import</button>
+      
       </div>
       <div class="box-body">
 
@@ -144,10 +146,16 @@
       <div class="row" style="margin: 5px">
         <div class="col-md-4" style="padding: 5px; font-weight:bold">Tentukan File Excel</div>
         <div class="col-md-8">
-          <input type="file" name="file" placeholder="File *.xls" class="form-control">
+          <input type="file" name="file_excel" size="20" placeholder="File *.xls" class="form-control">
         </div>
       </div>
-      <div id="respon1"></div>
+
+      <div class="row" style="margin: 5px">
+        <div class="col-md-4" style="padding: 5px; font-weight:bold"> </div>
+        <div class="col-md-8">
+          <div id="respon1"></div>
+        </div>
+      </div>
 
       <br><br>
     </div>
@@ -179,30 +187,32 @@ $(function () {
 	$("#menu_eform_data_kepala_keluarga").addClass("active");
 });
 
-// $("#btn-import").click(function(){
-//   var data = new FormData();
-//     data.append('filename', $("#filename").val());
+$("#btn-import").click(function(){
+
+    var file=$("#file_excel").val();
+    var form = $('form').get(0); 
     
-//     $.ajax({
-//         cache : false,
-//         contentType : false,
-//         processData : false,
-//         type : 'POST',
-//         url : '<?php echo base_url()."eform/data_kepala_keluarga/importdata" ?>',
-//         data : data,
-//         success : function(response){
-//           if(response=="OK"){
-//             alert("OK");
-//           }else{
-//             alert("Failed");
-//           }
-//         }
-//     });
-// });
+    $.ajax({
+        cache : false,
+        contentType : false,
+        processData : false,
+        type : 'POST',
+        mimeType:"multipart/form-data",
+        url : '<?php echo base_url()."eform/data_kepala_keluarga/proses" ?>',
+        data: new FormData(form),
+        success : function(response){
+          if(response=="OK"){
+            alert("OK");
+          }else{
+            alert("Failed");
+          }
+        }
+    });
+});
 
   // $("#btn-import").click(function() {
 
-  //     var file=$("#filename").val();
+  //     var file=$("#file_excel").val();
   //     var form = $('form').get(0); 
 
   //     $.ajax({

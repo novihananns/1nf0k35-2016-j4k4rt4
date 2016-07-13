@@ -160,10 +160,22 @@
         var valuedatakeluarga6 = $(this).val();
         var noanggota = "<?php echo $noanggota;?>";
         var id_data_keluarga = "<?php echo $id_data_keluarga; ?>";
-        $.post("<?php echo base_url()?>eform/data_kepala_keluarga/update_kepala",{kode:$(this).attr('name'),id_data_keluarga:id_data_keluarga,value:$(this).val(),noanggota:noanggota},function(data,status){
-            if (data != 'ok') {
-              alert('Maaf, koneksi kurang stabil. Silahkan cek koneksi Anda');
-              cekdataanggota(kodedatakeluarga6,valuedatakeluarga6);
+        // $.post("<?php echo base_url()?>eform/data_kepala_keluarga/update_kepala",{kode:$(this).attr('name'),id_data_keluarga:id_data_keluarga,value:$(this).val(),noanggota:noanggota},function(data,status){
+        //     if (data != 'ok') {
+        //       alert('Maaf, koneksi kurang stabil. Silahkan cek koneksi Anda');
+        //       cekdataanggota(kodedatakeluarga6,valuedatakeluarga6);
+        //     }
+        // });
+          $.ajax({
+            type   : "POST",
+            url    : "<?php echo base_url()?>eform/data_kepala_keluarga/update_kepala",
+            data   : "kode="+$(this).attr('name')+"&id_data_keluarga="+id_data_keluarga+"&value="+$(this).val()+"&noanggota="+noanggota,
+            success: function (data, text) {
+                
+            },
+            error: function (request, status, error) {
+                alert('Maaf, koneksi kurang stabil. Silahkan cek koneksi Anda');
+                cekdataanggota(kodedatakeluarga6,valuedatakeluarga6);
             }
         });
       });
@@ -179,12 +191,24 @@
      // alert($(this).attr('name')+' ' +$(this).val());
         var kodedatakesehatan= $(this).attr('name');
         var valuedatakesehatan = $(this).val();
-      var noanggota = "<?php echo $noanggota;?>";
-      var id_data_keluarga = "<?php echo $id_data_keluarga; ?>";
-        $.post("<?php echo base_url()?>eform/data_kepala_keluarga/addanggotaprofile",{kode:$(this).attr('name'),id_data_keluarga:id_data_keluarga,value:$(this).val(),noanggota:noanggota},function(data,status){;
-            if (data != 'ok') {
-              alert('Maaf, koneksi kurang stabil. Silahkan cek koneksi Anda');
-              cekdataanggota(kodedatakesehatan,valuedatakesehatan);
+        var noanggota = "<?php echo $noanggota;?>";
+        var id_data_keluarga = "<?php echo $id_data_keluarga; ?>";
+        // $.post("<?php echo base_url()?>eform/data_kepala_keluarga/addanggotaprofile",{kode:$(this).attr('name'),id_data_keluarga:id_data_keluarga,value:$(this).val(),noanggota:noanggota},function(data,status){;
+        //     if (data != 'ok') {
+        //       alert('Maaf, koneksi kurang stabil. Silahkan cek koneksi Anda');
+        //       cekdataanggota(kodedatakesehatan,valuedatakesehatan);
+        //     }
+        // });
+         $.ajax({
+            type   : "POST",
+            url    : "<?php echo base_url()?>eform/data_kepala_keluarga/addanggotaprofile",
+            data   : "kode="+$(this).attr('name')+"&id_data_keluarga="+id_data_keluarga+"&value="+$(this).val()+"&noanggota="+noanggota,
+            success: function (data, text) {
+                
+            },
+            error: function (request, status, error) {
+                alert('Maaf, koneksi kurang stabil. Silahkan cek koneksi Anda');
+                cekdataanggota(kodedatakesehatan,valuedatakesehatan);
             }
         });
       })

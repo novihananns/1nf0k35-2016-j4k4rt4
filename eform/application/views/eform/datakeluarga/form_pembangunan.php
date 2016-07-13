@@ -217,9 +217,44 @@ $(function () {
 			var kodedatapembangunan= $(this).attr('name');
 			var valuedatapembangunan = $(this).val();
 			var id_data_keluarga = "<?php echo $id_data_keluarga; ?>";
-			$.post("<?php echo base_url()?>eform/data_kepala_keluarga/addpembangunan",{kode:$(this).attr('name'),id_data_keluarga:id_data_keluarga,value:$(this).val()},function(data,status){
-				if (data != 'ok') {
-					alert('Maaf, koneksi kurang stabil. Silahkan cek koneksi Anda');
+			// $.post("<?php echo base_url()?>eform/data_kepala_keluarga/addpembangunan",{kode:$(this).attr('name'),id_data_keluarga:id_data_keluarga,value:$(this).val()},function(data,status){
+			// 	if (data != 'ok') {
+			// 		alert('Maaf, koneksi kurang stabil. Silahkan cek koneksi Anda');
+			// 		if(kodedatapembangunan.slice(-5)=="radio")
+			//     	{
+			//     		if(valuedatapembangunan=="0"){
+			//     			document.getElementById(kodedatapembangunan+"_ya").checked = false;	
+			//     		}else if(valuedatapembangunan=="1"){
+			//     			document.getElementById(kodedatapembangunan+"_tidak").checked = false;
+			//     		}else{
+			//     			document.getElementById(kodedatapembangunan+"_tidakberlaku").checked = false;
+			//     		}
+			//     	}else if(kodedatapembangunan.slice(-5)=="cebo4"){
+			//     		document.getElementById(kodedatapembangunan).checked = false;
+			//     	}else if(kodedatapembangunan.slice(-5)=="radi4"){
+			//     		if(valuedatapembangunan=="0"){
+			//     			document.getElementById(kodedatapembangunan+"_1").checked = false;	
+			//     		}else if(valuedatapembangunan=="1"){
+			//     			document.getElementById(kodedatapembangunan+"_2").checked = false;
+			//     		}else if(valuedatapembangunan=="2"){
+			//     			document.getElementById(kodedatapembangunan+"_3").checked = false;
+			//     		}else{
+			//     			document.getElementById(kodedatapembangunan+"_4").checked = false;
+			//     		}
+			//     	}else{
+			// 		    document.getElementById(kodedatapembangunan).value = "";
+			//     	}
+			// 	}
+			// });
+			$.ajax({
+			    type   : "POST",
+			    url    : "<?php echo base_url()?>eform/data_kepala_keluarga/addpembangunan",
+			    data   : "kode="+$(this).attr('name')+"&id_data_keluarga="+id_data_keluarga+"&value="+$(this).val(),
+			    success: function (data, text) {
+			        
+			    },
+			    error: function (request, status, error) {
+			        alert('Maaf, koneksi kurang stabil. Silahkan cek koneksi Anda');
 					if(kodedatapembangunan.slice(-5)=="radio")
 			    	{
 			    		if(valuedatapembangunan=="0"){
@@ -244,7 +279,7 @@ $(function () {
 			    	}else{
 					    document.getElementById(kodedatapembangunan).value = "";
 			    	}
-				}
+			    }
 			});
 		})
 	<?php

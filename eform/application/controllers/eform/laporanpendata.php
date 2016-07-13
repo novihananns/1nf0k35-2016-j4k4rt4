@@ -365,7 +365,7 @@ class Laporanpendata extends CI_Controller {
 
 		echo json_encode(array($json));
 	}
-	function json_anggotaKeluarga($anggota){
+	function json_detailkk($nama_koordinator='',$nama_pendata=''){
 		$this->authentication->verify('eform','show');
 
 		if($_POST) {

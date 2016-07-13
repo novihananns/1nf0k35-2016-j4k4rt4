@@ -168,7 +168,7 @@
 				{ text: 'Detail', align: 'center', filtertype: 'none', sortable: false, width: '10%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
 				    if(dataRecord.edit==1){
-						return "<div style='width:100%;padding:4px;text-align:center' onclick='edit(\""+dataRecord.id_data_keluarga+"\");'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' ></a></div>";
+						return "<div style='width:100%;padding:4px;text-align:center' onclick='edit(\""+dataRecord.nama_koordinator+"\",\""+dataRecord.nama_pendata+"\");'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' ></a></div>";
 					}else{
 						return "<div style='width:100%;padding:4px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
 					}
@@ -183,7 +183,7 @@
 
 	function edit(nama_pendata){
 		$("#popup_kpldh #popup_content").html("<div style='text-align:center'><br><br><br><br><img src='<?php echo base_url();?>media/images/indicator.gif' alt='loading content.. '><br>loading</div>");
-		$.get("<?php echo base_url().'eform/laporanpendata/urut/';?>"+id, function(data) {
+		$.get("<?php echo base_url().'eform/laporanpendata/detailkk/';?>"+id, function(data) {
 			$("#popup_content").html(data);
 		});
 		$("#popup_kpldh").jqxWindow({

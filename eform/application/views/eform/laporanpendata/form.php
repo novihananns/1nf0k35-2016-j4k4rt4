@@ -1,375 +1,428 @@
-<script>
-  	$(function () { 
-
-		  <?php
-        if(set_value('jam_data')=="" && isset($jam_data)){
-          $jam_data = strtotime($jam_data);
-        }else{
-          $jam_data = strtotime(set_value('jam_data'));
-        }
-        if($jam_data=="") $jam_data = time();
-    	?>
-
-		  var date = new Date();
-	    date.setHours(<?php echo date("H", $jam_data)?>);
-			date.setMinutes(<?php echo date("i", $jam_data)?>);
-			date.setSeconds(<?php echo date("s", $jam_data)?>);
-		  $("#jam_data").jqxDateTimeInput({ height: '30px', theme: theme, formatString: 'HH:mm:ss', showTimeButton: true, showCalendarButton: false});
-		  $("#jam_data").jqxDateTimeInput('setDate', date);
-		
-    	$("#tgl_pengisian").jqxDateTimeInput({ formatString: 'dd-MM-yyyy', theme: theme, height: '30px'});
-
-      $('#btn-kembali').click(function(){
-	        window.location.href="<?php echo base_url()?>eform/data_kepala_keluarga";
-	    });
-	});
-</script>
-
-<?php if(validation_errors()!=""){ ?>
-<div class="alert alert-warning alert-dismissable">
-  <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-  <h4>  <i class="icon fa fa-check"></i> Information!</h4>
-  <?php echo validation_errors()?>
-</div>
-<?php } ?>
-
-<?php if($this->session->flashdata('alert_form')!=""){ ?>
+<?php if($this->session->flashdata('alert')!=""){ ?>
 <div class="alert alert-success alert-dismissable">
   <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
   <h4>  <i class="icon fa fa-check"></i> Information!</h4>
-  <?php echo $this->session->flashdata('alert_form')?>
+  <?php echo $this->session->flashdata('alert')?>
 </div>
 <?php } ?>
-<div class="row">
-<form action="<?php echo base_url()?>eform/data_kepala_keluarga/{action}/{id_data_keluarga}" method="post">
-  <div class="col-md-6">
-    <div class="box box-primary">
-      <div class="box-footer">
-        <button type="submit" class="btn btn-warning"><i class='fa fa-save'></i> &nbsp; Simpan</button>
-        <button type="button" id="btn-kembali" class="btn btn-success"><i class='fa fa-arrow-circle-left'></i> &nbsp;Kembali</button>
+
+<section class="content">
+<form action="<?php echo base_url()?>mst/data_keluarga/dodel_multi" method="POST" name="">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-primary">
+        <div class="box-header">
+          <h3 class="box-title">{title_form}</h3>
       </div>
+
+        <div class="box-footer">
+          <div class="row">
+            <div class="col-md-12">
+          <button type="button" class="btn btn-primary" onclick="document.location.href='<?php echo base_url()?>eform/data_kepala_keluarga/add'"><i class='fa fa-plus-square-o'></i> &nbsp; Tambah</button>
+          <button type="button" class="btn btn-primary" onclick="document.location.href='<?php echo base_url()?>eform/data_kepala_keluarga/import_add'"><i class='fa fa-arrow-circle-o-down'></i> &nbsp; Import *.xls</button>
+          <button type="button" class="btn btn-warning" id="btn-refresh"><i class='fa fa-refresh'></i> &nbsp; Refresh</button>
+          <button type="button" class="btn btn-success" id="btn-export" style="display:none"><i class='fa fa-file-excel-o'></i> &nbsp; Export KK Perbulan</button>
+          <button type="button" class="btn btn-danger" id="btn-exportall" style="display:none"><i class='fa fa-file-excel-o'></i> &nbsp; Export All</button>
+          <button type="button" class="btn btn-danger" id="export-loader" style="display:none"><i class='fa fa-clock-o'></i> &nbsp; Loading ...</button>
+         </div>
+
+        </div>
+      </div>
+
       <div class="box-body">
-
-      <div class="row" style="margin: 5px">
-        <div class="col-md-4" style="padding: 5px">Tanggal Pengisian</div>
-        <div class="col-md-8">
-          <div id='tgl_pengisian' name="tgl_pengisian" value="<?php
-            if(set_value('tgl_pengisian')=="" && isset($tgl_pengisian)){
-              $tgl_pengisian = strtotime($tgl_pengisian);
-            }else{
-              $tgl_pengisian = strtotime(set_value('tgl_pengisian'));
-            }
-            if($tgl_pengisian=="") $tgl_pengisian = time();
-            echo date("Y-m-d",$tgl_pengisian);
-          ?>" >
-          </div>
-        </div>
+      <div class="row">
+         <div class="col-md-3">
+          <label> Kecamatan </label>
+          <select name="kecamatan" id="kecamatan" class="form-control">
+            <?php foreach ($datakecamatan as $kec ) { ;?>
+            <?php $select = $kec->code == substr($this->session->userdata('puskesmas'), 0,7)  ? 'selected=selected' : '' ?>
+              <option value="<?php echo $kec->code; ?>" <?php echo $select ?>><?php echo $kec->nama; ?></option>
+            <?php } ;?>
+            </select>
+         </div>
+         <div class="col-md-3">
+         <label> Kelurahan </label>
+          <select name="kelurahan" id="kelurahan" class="form-control">
+            </select>
+         </div>
+         <div class="col-md-6">
+           <div class="row">
+             <div class="col-md-3">
+             <label> RW </label>
+              <select name="rukunwarga" id="rukunwarga" class="form-control">
+                </select>
+             </div>
+             <div class="col-md-3">
+             <label> RT </label>
+              <select name="rukunrumahtangga" id="rukunrumahtangga" class="form-control">
+                </select>
+             </div>
+             <div class="col-md-3">
+              <label> Tahun </label>
+              <select name="tahunfilter" id="tahunfilter" class="form-control">
+                  <option value="all">All</option>
+                <?php for($tahun=date("Y"); $tahun >=date("Y")-10; $tahun-- ) { 
+                  $select = $tahun == date("Y") ? 'selected' : '' ;
+                ?>
+                  <option value="<?php echo $tahun; ?>" <?php echo $select ?> ><?php echo $tahun; ?></option>
+                <?php } ;?>
+                </select>
+              </div>
+            <div class="col-md-3">
+              <label> Bulan </label>
+              <select name="bulanfilter" id="bulanfilter" class="form-control">
+              <option value="all">All</option>
+                </select>
+              </div>
+             </div>
+         </div>
       </div>
-      
-      <div class="row" style="margin: 5px">
-        <div class="col-md-4" style="padding: 5px">Jam Mulai Mendata</div>
-        <div class="col-md-8">
-          <div id='jam_data' name="jam_data"></div>
-        </div>
+     </div> 
+     
+        <div class="box-body">
+        <div class="div-grid">
+            <div id="jqxgrid"></div>
       </div>
-        
-      <div class="row" style="margin: 5px">
-        <div class="col-md-4" style="padding: 5px">Provinsi</div>
-        <div class="col-md-8">
-          <select  name="provinsi" id="provinsi" class="form-control">
-          	<?php
-            foreach($data_provinsi as $row_provinsi){
-            ?>
-                <option value="<?php echo $row_provinsi->code; ?>" ><?php echo ucwords(strtolower($row_provinsi->value)); ?></option>
-            <?php
-            }    
-          	?>
-	      </select>
-        </div>
       </div>
-
-      <div class="row" style="margin: 5px">
-        <div class="col-md-4" style="padding: 5px">Kabupaten / Kota</div>
-        <div class="col-md-8">
-          <select  name="kota" id="kota" class="form-control">
-          	<?php
-            foreach($data_kotakab as $row_kotakab){
-            ?>
-                <option value="<?php echo $row_kotakab->code; ?>" ><?php echo ucwords(strtolower($row_kotakab->value)); ?></option>
-            <?php
-            }    
-          	?>
-	      </select>
-        </div>
-      </div>
-
-      <div class="row" style="margin: 5px">
-        <div class="col-md-4" style="padding: 5px">Kecamatan</div>
-        <div class="col-md-8">
-          <select  name="id_kecamatan" id="id_kecamatan" class="form-control">
-          	<?php
-            foreach($data_kecamatan as $row_kecamatan){
-            ?>
-                <option value="<?php echo $row_kecamatan->code; ?>" ><?php echo ucwords(strtolower($row_kecamatan->nama)); ?></option>
-            <?php
-            }    
-          	?>
-	      </select>
-        </div>
-      </div>
-
-      <div class="row" style="margin: 5px">
-        <div class="col-md-4" style="padding: 5px">Desa / Kelurahan</div>
-        <div class="col-md-8">
-          <select  name="kelurahan" id="kelurahan" class="form-control">
-          	<?php
-	        if(set_value('kelurahan')=="" && isset($kelurahan)){
-	          $kelurahan = $kelurahan;
-	        }else{
-	          $kelurahan = set_value('kelurahan');
-	        }
-
-            foreach($data_desa as $row_desa){
-	 	        $select = $row_desa->code == $kelurahan ? 'selected' : '' ;
-            ?>
-                <option value="<?php echo $row_desa->code; ?>" <?php echo $select; ?>><?php echo ucwords(strtolower($row_desa->value)); ?></option>
-            <?php
-            }    
-          	?>
-	      </select>
-        </div>
-      </div>
-
-      <div class="row" style="margin: 5px">
-        <div class="col-md-4" style="padding: 5px">Dusun / RW</div>
-        <div class="col-md-8">
-          <input type="number" name="dusun"  id="dusun" placeholder="RW" value="<?php 
-			if(set_value('dusun')=="" && isset($rw)){
-				echo $rw;
-			}else{
-				echo  set_value('dusun');
-			}
-			?>" class="form-control">
-        </div>
-      </div>
-
-      <div class="row" style="margin: 5px">
-        <div class="col-md-4" style="padding: 5px">RT</div>
-        <div class="col-md-8">
-          <input type="number" name="rt" id="rt" placeholder="RT" value="<?php 
-			if(set_value('rt')=="" && isset($rt)){
-				echo $rt;
-			}else{
-				echo  set_value('rt');
-			}
-			?>" class="form-control">
-        </div>
-      </div>
-
-      <div class="row" style="margin: 5px">
-        <div class="col-md-4" style="padding: 5px">Nomor Rumah</div>
-        <div class="col-md-8">
-          <input type="text" name="norumah" id="norumah" placeholder="Nomor Rumah" value="<?php 
-			if(set_value('norumah')=="" && isset($norumah)){
-				echo $norumah;
-			}else{
-				echo  set_value('norumah');
-			}
-			?>" class="form-control">
-        </div>
-      </div>
-
-      <div class="row" style="margin: 5px">
-        <div class="col-md-4" style="padding: 5px">Alamat</div>
-        <div class="col-md-8">
-          <textarea name="alamat" id="alamat" class="form-control" placeholder="Alamat"><?php 
-      if(set_value('alamat')=="" && isset($alamat)){
-        echo $alamat;
-      }else{
-        echo  set_value('alamat');
-      }
-      ?></textarea>
-        </div>
-      </div>
-      
     </div>
-  </div><!-- /.form-box -->
-</div><!-- /.form-box -->
+  </div>
+  </div>
+</form>
+</section>
 
-  <div class="col-md-6">
-    <div class="box box-warning">
-      <div class="box-body">
+<div id="popup_kpldh" style="display:none">
+  <div id="popup_title">Nomor Urut Keluarga</div>
+  <div id="popup_content">&nbsp;</div>
+</div>
 
+<script type="text/javascript">
+  $(function () { 
+    $("#menu_ketuk_pintu").addClass("active");
+    $("#menu_eform_data_kepala_keluarga").addClass("active");
+  });
+    
+     var source = {
+      datatype: "json",
+      type  : "POST",
+      datafields: [
+      { name: 'id_data_keluarga', type: 'string'},
+      { name: 'tanggal_pengisian', type: 'date'},
+      { name: 'jam_data', type: 'string'},
+      { name: 'alamat', type: 'string'},
+      { name: 'id_propinsi', type: 'string'},
+      { name: 'id_kota', type: 'string'},
+      { name: 'id_kecamatan', type: 'string'},
+      { name: 'value', type: 'string'},
+      { name: 'rt', type: 'string'},
+      { name: 'rw', type: 'string'},
+      { name: 'norumah', type: 'string'},
+      { name: 'nourutkel', type: 'string'},
+      { name: 'id_kodepos', type: 'string'},
+      { name: 'namadesawisma', type: 'string'},
+      { name: 'id_pkk', type: 'string'},
+      { name: 'namakepalakeluarga', type: 'string'},
+      { name: 'nama_komunitas', type: 'string'},
+      { name: 'notlp', type: 'string'},
+      { name: 'edit', type: 'number'},
+      { name: 'delete', type: 'number'}
+        ],
+    url: "<?php echo site_url('eform/data_kepala_keluarga/json'); ?>",
+    cache: false,
+    updaterow: function (rowid, rowdata, commit) {
+      },
+    filter: function(){
+      $("#jqxgrid").jqxGrid('updatebounddata', 'filter');
+    },
+    sort: function(){
+      $("#jqxgrid").jqxGrid('updatebounddata', 'sort');
+    },
+    root: 'Rows',
+        pagesize: 10,
+        beforeprocessing: function(data){   
+      if (data != null){
+        source.totalrecords = data[0].TotalRows;          
+      }
+    }
+    };    
+    var dataadapter = new $.jqx.dataAdapter(source, {
+      loadError: function(xhr, status, error){
+        alert(error);
+      }
+    });
+     
+    $('#btn-refresh').click(function () {
+      $("#jqxgrid").jqxGrid('clearfilters');
+    });
+
+    $("#jqxgrid").jqxGrid({   
+      width: '100%',
+      selectionmode: 'singlerow',
+      source: dataadapter, theme: theme,columnsresize: true,showtoolbar: false, pagesizeoptions: ['10', '50', '100', '200', '500'],
+      showfilterrow: true, filterable: true, sortable: true, autoheight: true, pageable: true, virtualmode: true, editable: false,
+      rendergridrows: function(obj)
+      {
+        return obj.data;    
+      },
+      columns: [
+        { text: 'Edit', align: 'center', filtertype: 'none', sortable: false, width: '8%', cellsrenderer: function (row) {
+            var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+            if(dataRecord.edit==1){
+            return "<div style='width:100%;padding:4px;text-align:center' onclick='edit(\""+dataRecord.id_data_keluarga+"\");'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_edit.gif' ></a></div>";
+          }else{
+            return "<div style='width:100%;padding:4px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
+          }
+                 }
+                },
+        { text: 'Del', align: 'center', filtertype: 'none', sortable: false, width: '4%', cellsrenderer: function (row) {
+            var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+            if(dataRecord.delete==1){
+            return "<div style='width:100%;padding:4px;text-align:center' onclick='del(\""+dataRecord.id_data_keluarga+"\");'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_del.gif'></a></div>";
+          }else{
+            return "<div style='width:100%;padding:4px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
+          }
+                 }
+                },
+        { text: 'No. Urut', datafield: 'nourutkel', align: 'center', columntype: 'textbox', filtertype: 'textbox', width: '6%', cellsrenderer: function (row) {
+            var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+          return "<div style='width:100%;padding:4px;padding-top:6px;text-align:center;font-weight:bold;' onclick='urut(\""+dataRecord.id_data_keluarga+"\");'><a href='javascript:void(0);' style='cursor:pointer;color:#a31919'>"+dataRecord.nourutkel+"</a></div>";
+                 }
+                },
+                { text: 'Tgl Pengisian', datafield: 'tanggal_pengisian', columntype: 'textbox', align:'center', cellsalign:'center', filtertype: 'date',cellsformat: 'dd-MM-yyyy', width: '10%' },
+        { text: 'Kepala Keluarga', datafield: 'namakepalakeluarga', columntype: 'textbox', filtertype: 'textbox', width: '16%' },
+        { text: 'Desa', datafield: 'value', columntype: 'textbox', filtertype: 'textbox', width: '16%' },
+        { text: 'RT', datafield: 'rt', columntype: 'textbox', filtertype: 'textbox', width: '6%' },
+        { text: 'RW', datafield: 'rw', columntype: 'textbox', filtertype: 'textbox', width: '6%' },
+        { text: 'No. Rumah', datafield: 'norumah', columntype: 'textbox', filtertype: 'textbox', width: '8%' },
+        { text: 'Alamat', datafield: 'alamat', columntype: 'textbox', filtertype: 'textbox', width: '20%' }
+      ]
+    });
+
+  function urut(id){
+    $("#popup_kpldh #popup_content").html("<div style='text-align:center'><br><br><br><br><img src='<?php echo base_url();?>media/images/indicator.gif' alt='loading content.. '><br>loading</div>");
+    $.get("<?php echo base_url().'eform/data_kepala_keluarga/urut/';?>"+id, function(data) {
+      $("#popup_content").html(data);
+    });
+    $("#popup_kpldh").jqxWindow({
+      theme: theme, resizable: false,
+      width: 460,
+      height: 460,
+      isModal: true, autoOpen: false, modalOpacity: 0.2
+    });
+    $("#popup_kpldh").jqxWindow('open');
+  }
+
+  function edit(id){
+    document.location.href="<?php echo base_url().'eform/data_kepala_keluarga/edit';?>/" + id;
+  }
+
+  function del(id){
+    var confirms = confirm("Hapus Data ?");
+    if(confirms == true){
+      $.post("<?php echo base_url().'eform/data_kepala_keluarga/dodel' ?>/" + id,  function(){
+        $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
+      });
+    }
+  }
+
+  function close_popup(){
+        $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
+    $("#popup_kpldh").jqxWindow('close');
+  }
+  
+  $('#kecamatan').change(function(){
+      var kecamatan = $(this).val();
+      $.ajax({
+        url : '<?php echo site_url('eform/data_kepala_keluarga/get_kecamatanfilter') ?>',
+        type : 'POST',
+        data : 'kecamatan=' + kecamatan,
+        success : function(data) {
+          $('#kelurahan').html(data);
+          $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
+        }
+      });
+
+      return false;
+    }).change();
+    $('#kelurahan').change(function(){
+      var kelurahan = $(this).val();
+      if(kelurahan == "" || kelurahan === null){
+        $("#btn-exportall").hide();
+      }else{
+        $("#btn-exportall").show('fade');
+      }
+      $.ajax({
+        url : '<?php echo site_url('eform/data_kepala_keluarga/get_kelurahanfilter') ?>',
+        type : 'POST',
+        data : 'kelurahan=' + kelurahan,
+        success : function(data) {
+          $('#rukunwarga').html(data);
+          $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
+        }
+      });
+
+      return false;
+    }).change();
+    $('#rukunwarga').change(function(){
+      var rukunwarga = $(this).val();
+      var kelurahan = $("#kelurahan").val();
+      $.ajax({
+        url : '<?php echo site_url('eform/data_kepala_keluarga/get_rukunwargafilter') ?>',
+        type : 'POST',
+        data : 'rukunwarga=' + rukunwarga +'&kelurahan='+kelurahan,
+        success : function(data) {
+          $('#rukunrumahtangga').html(data);
+          $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
+        }
+      });
+
+      return false;
+    }).change();
+    $('#rukunrumahtangga').change(function(){
+      var rukunwarga = $('#rukunwarga').val();
+      var kelurahan = $("#kelurahan").val();
+      var rukunrumahtangga = $(this).val();
+      $.ajax({
+        url : '<?php echo site_url('eform/data_kepala_keluarga/get_rukunrumahtanggafilter') ?>',
+        type : 'POST',
+        data : 'rukunrumahtangga='+rukunrumahtangga,
+        success : function(data) {
+          $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
+        }
+      });
+
+      return false;
+    }).change();
+    $('#tahunfilter').change(function(){
+      var tahunfilter = $(this).val();
+      var bulanfilter = $("#bulanfilter").val();
+      if(tahunfilter == "" || tahunfilter === null|| tahunfilter == 'all'|| bulanfilter == 'all'){
+        $("#btn-export").hide();
+      }else{
+        $("#btn-export").show('fade');
+      }
+      $.ajax({
+        url : '<?php echo site_url('eform/data_kepala_keluarga/get_filtertahundata') ?>',
+        type : 'POST',
+        data : 'tahunfilter=' + tahunfilter+'&bulanfilter=' + bulanfilter,
+        success : function(data) {
+          $('#bulanfilter').html(data);
+            $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
+        }
+      });
+
+      return false;
+    }).change();
+    $("#btn-export").click(function(){
+    
+    var post = "";
+    var filter = $("#jqxgrid").jqxGrid('getfilterinformation');
+    for(i=0; i < filter.length; i++){
+      var fltr  = filter[i];
+      var value = fltr.filter.getfilters()[0].value;
+      var condition = fltr.filter.getfilters()[0].condition;
+      var filteroperation = fltr.filter.getfilters()[0].operation;
+      var filterdatafield = fltr.filtercolumn;
+      if(filterdatafield=="tanggal_pengisian"){
+        var d = new Date(value);
+        var day = d.getDate();
+        var month = d.getMonth();
+        var year = d.getFullYear();
+        value = year+'-'+month+'-'+day;
+        
+      }
+
+      post = post+'&filtervalue'+i+'='+value;
+      post = post+'&filtercondition'+i+'='+condition;
+      post = post+'&filteroperation'+i+'='+filteroperation;
+      post = post+'&filterdatafield'+i+'='+filterdatafield;
+      post = post+'&'+filterdatafield+'operator=and';
+    }
+    post = post+'&filterscount='+i;
+    
+    var sortdatafield = $("#jqxgrid").jqxGrid('getsortcolumn');
+    if(sortdatafield != "" && sortdatafield != null){
+      post = post + '&sortdatafield='+sortdatafield;
+    }
+    if(sortdatafield != null){
+      var sortorder = $("#jqxgrid").jqxGrid('getsortinformation').sortdirection.ascending ? "asc" : ($("#jqxgrid").jqxGrid('getsortinformation').sortdirection.descending ? "desc" : "");
+      post = post+'&sortorder='+sortorder;
       
+    }
+    post = post+'&kecamatan='+$("#kecamatan option:selected").text()+'&kelurahan='+$("#kelurahan option:selected").text()+'&rukunwarga='+$("#rukunwarga option:selected").text()+'&rukunrumahtangga='+$("#rukunrumahtangga option:selected").text()+'&tahunfilter='+$("#tahunfilter option:selected").text()+'&bulanfilter='+$("#bulanfilter option:selected").text()+'&kodekecamatan='+$("#kecamatan").val()+'&kodedesa='+$("#kelurahan").val()+'&koderw='+$("#rukunwarga").val()+'&kodert='+$("#rukunrumahtangga").val()+'&kodetahun='+$("#tahunfilter").val()+'&kodebulan='+$("#bulanfilter").val();
+    
+    $.post("<?php echo base_url()?>eform/data_kepala_keluarga/datakepalakeluaraexport",post,function(response ){
+      window.location.href=response;
+      // alert(response);
+    });
+  });
+    $("#btn-exportall").click(function(){
+    $("#btn-exportall").hide();
+    $("#export-loader").show('fade');
+
+    var post = "";
+    var getpaginginformation = $("#jqxgrid").jqxGrid('getpaginginformation');
+    var pagesize = getpaginginformation.pagesize;
+    var pagenum = getpaginginformation.pagenum;
+    var filter = $("#jqxgrid").jqxGrid('getfilterinformation');
+    for(i=0; i < filter.length; i++){
+      var fltr  = filter[i];
+      var value = fltr.filter.getfilters()[0].value;
+      var condition = fltr.filter.getfilters()[0].condition;
+      var filteroperation = fltr.filter.getfilters()[0].operation;
+      var filterdatafield = fltr.filtercolumn;
+      if(filterdatafield=="tanggal_pengisian"){
+        var d = new Date(value);
+        var day = d.getDate();
+        var month = d.getMonth();
+        var year = d.getFullYear();
+        value = year+'-'+month+'-'+day;
         
-       <div class="row" style="margin: 5px">
-        <div class="col-md-5" style="padding: 5px">Kode Pos</div>
-        <div class="col-md-7">
-          <select  name="kodepos" id="kodepos" class="form-control">
-          	<?php
-	        if(set_value('kodepos')=="" && isset($kodepos)){
-	          $kodepos = $kodepos;
-	        }else{
-	          $kodepos = set_value('kodepos');
-	        }
+      }
 
-            foreach($data_pos as $row_pos){
-	 	        $select = $row_pos->pos == $kodepos ? 'selected' : '' ;
-            ?>
-                <option value="<?php echo $row_pos->pos; ?>" <?php echo $select; ?>><?php echo chunk_split($row_pos->pos, 1, ' '); ?></option>
-            <?php
-            }    
-          	?>
-          </select>
-        </div>
-      </div>
+      post = post+'&filtervalue'+i+'='+value;
+      post = post+'&filtercondition'+i+'='+condition;
+      post = post+'&filteroperation'+i+'='+filteroperation;
+      post = post+'&filterdatafield'+i+'='+filterdatafield;
+      post = post+'&'+filterdatafield+'operator=and';
+    }
+    post = post+'&filterscount='+i+'&recordstartindex='+(pagenum * pagesize)+'&pagesize='+pagesize;
+    
+    var sortdatafield = $("#jqxgrid").jqxGrid('getsortcolumn');
+    if(sortdatafield != "" && sortdatafield != null){
+      post = post + '&sortdatafield='+sortdatafield;
+    }
+    if(sortdatafield != null){
+      var sortorder = $("#jqxgrid").jqxGrid('getsortinformation').sortdirection.ascending ? "asc" : ($("#jqxgrid").jqxGrid('getsortinformation').sortdirection.descending ? "desc" : "");
+      post = post+'&sortorder='+sortorder;
+      
+    }
+    post = post+'&kecamatan='+$("#kecamatan option:selected").text()+'&kelurahan='+$("#kelurahan option:selected").text()+'&rukunwarga='+$("#rukunwarga option:selected").text()+'&rukunrumahtangga='+$("#rukunrumahtangga option:selected").text();
+    
+    $.post("<?php echo base_url()?>eform/data_kepala_keluarga/dataallexport",post,function(response ){
+      $("#export-loader").hide();
+          $("#btn-exportall").show('fade');
+      window.location.href=response;
+      // alert(response);
+    });
+  });
+  $('#bulanfilter').change(function(){
+      var bulanfilter = $(this).val();
+      var tahunfilter = $("#tahunfilter").val();
+      if(bulanfilter == "" || bulanfilter === null|| bulanfilter == 'all'|| tahunfilter == 'all'){
+        $("#btn-export").hide();
+      }else{
+        $("#btn-export").show('fade');
+      }
+      $.ajax({
+        url : '<?php echo site_url('eform/data_kepala_keluarga/get_filterbulandata') ?>',
+        type : 'POST',
+        data : 'bulanfilter=' + bulanfilter+'&tahunfilter=' + tahunfilter,
+        success : function(data) {
+          $("#jqxgrid").jqxGrid('updatebounddata', 'cells');
+        }
+      });
 
-     <div class="row" style="margin: 5px">
-        <div class="col-md-5" style="padding: 5px">Nama Komunitas</div>
-        <div class="col-md-7">
-          <input type="text" name="namakomunitas" id="namakomunitas" value="<?php 
-			if(set_value('namakomunitas')=="" && isset($nama_komunitas)){
-				echo $nama_komunitas;
-			}else{
-				echo  set_value('namakomunitas');
-			}
-			?>" class="form-control">
-        </div>
-      </div>
-        
-      <div class="row" style="margin: 5px">
-        <div class="col-md-5" style="padding: 5px">Nama Kepala Rumah Tangga</div>
-        <div class="col-md-7">
-          <input type="text" name="namakepalakeluarga" id="namakepalakeluarga" value="<?php 
-			if(set_value('namakepalakeluarga')=="" && isset($namakepalakeluarga)){
-				echo $namakepalakeluarga;
-			}else{
-				echo  set_value('namakepalakeluarga');
-			}
-			?>" class="form-control">
-        </div>
-      </div>
-        
-      <div class="row" style="margin: 5px">
-        <div class="col-md-5" style="padding: 5px">No. HP / Telepon</div>
-        <div class="col-md-7">
-          <input type="text" name="notlp" id="notlp" value="<?php 
-			if(set_value('notlp')=="" && isset($notlp)){
-				echo $notlp;
-			}else{
-				echo  set_value('notlp');
-			}
-			?>" class="form-control">
-        </div>
-      </div>
-        
-      <div class="row" style="margin: 5px">
-        <div class="col-md-5" style="padding: 5px">Nama Dasa Wisma</div>
-        <div class="col-md-7">
-          <input type="text" name="namadesawisma" id="namadesawisma" value="<?php 
-			if(set_value('namadesawisma')=="" && isset($namadesawisma)){
-				echo $namadesawisma;
-			}else{
-				echo  set_value('namadesawisma');
-			}
-			?>" class="form-control">
-        </div>
-      </div>
-        
-      <div class="row" style="margin: 5px">
-        <div class="col-md-5" style="padding: 5px">Jabatan Stuktural TP PKK</div>
-        <div class="col-md-7">
-          <select  name="jabatanstuktural" id="jabatanstuktural" class="form-control">
-          	<?php
-	        if(set_value('jabatanstuktural')=="" && isset($jabatanstuktural)){
-	          $jabatanstuktural = $jabatanstuktural;
-	        }else{
-	          $jabatanstuktural = set_value('jabatanstuktural');
-	        }
-
-            foreach($data_pkk as $row_pkk){
-	 	        $select = $row_pkk->id_pkk == $jabatanstuktural ? 'selected' : '' ;
-            ?>
-                <option value="<?php echo $row_pkk->id_pkk; ?>" <?php echo $select; ?>><?php echo $row_pkk->value; ?></option>
-            <?php
-            }    
-          	?>
-		  </select>
-        </div>
-      </div>
-
-      <div class="row" style="margin: 5px">
-        <div class="col-md-12" style="padding: 5px">Jumlah Jiwa</div>
-      </div>
-
-      <div class="row" style="margin: 5px">
-        <div class="col-md-1" style="padding: 5px"></div>
-        <div class="col-md-4" style="padding: 5px">Laki-laki</div>
-        <div class="col-md-7">
-          <input type="number" name="jml_anaklaki" placeholder="Jumlah Laki-laki" id="jml_anaklaki" value="<?php 
-            if(set_value('jml_anaklaki')=="" && isset($jml_anaklaki)){
-              echo $jml_anaklaki;
-            }else{
-              echo  set_value('jml_anaklaki');
-            }
-            ?>" class="form-control">
-        </div>
-      </div>
-
-      <div class="row" style="margin: 5px">
-        <div class="col-md-1" style="padding: 5px"></div>
-        <div class="col-md-4" style="padding: 5px">Perempuan</div>
-        <div class="col-md-7">
-          <input type="number" name="jml_anakperempuan" placeholder="Jumlah Perempuan" id="jml_anakperempuan" value="<?php 
-            if(set_value('jml_anakperempuan')=="" && isset($jml_anakperempuan)){
-              echo $jml_anakperempuan;
-            }else{
-              echo  set_value('jml_anakperempuan');
-            }
-            ?>" class="form-control">
-        </div>
-      </div>
-        
-      <div class="row" style="margin: 5px">
-        <div class="col-md-12" style="padding: 5px">Jumlah PUS</div>
-      </div>
-
-      <div class="row" style="margin: 5px">
-        <div class="col-md-1" style="padding: 5px"></div>
-        <div class="col-md-4" style="padding: 5px">Peseta KB</div>
-        <div class="col-md-7">
-          <input type="number" name="pus_ikutkb" placeholder="Pus Peserta KB" id="pus_ikutkb" value="<?php 
-            if(set_value('pus_ikutkb')=="" && isset($pus_ikutkb)){
-              echo $pus_ikutkb;
-            }else{
-              echo  set_value('pus_ikutkb');
-            }
-            ?>" class="form-control">
-        </div>
-      </div>
-
-      <div class="row" style="margin: 5px">
-        <div class="col-md-1" style="padding: 5px"></div>
-        <div class="col-md-4" style="padding: 5px">Bukan Peserta KB</div>
-        <div class="col-md-7">
-          <input type="number" name="pus_tidakikutkb" placeholder="Pus Bukan peserta KB" id="pus_tidakikutkb" value="<?php 
-            if(set_value('pus_tidakikutkb')=="" && isset($pus_tidakikutkb)){
-              echo $pus_tidakikutkb;
-            }else{
-              echo  set_value('pus_tidakikutkb');
-            }
-            ?>" class="form-control">
-        </div>
-      </div>
-
-      </div>
-    </form>        
-  </div><!-- /.form-box -->
-</div><!-- /.register-box -->
-
-<script>
-$(function () { 
-	$("#menu_ketuk_pintu").addClass("active");
-	$("#menu_eform_data_kepala_keluarga").addClass("active");
-});
+      return false;
+    });
+    
 </script>

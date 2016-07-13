@@ -486,15 +486,26 @@ class Datakeluarga_model extends CI_Model {
         $query = $this->db->get('data_keluarga_anggota');
         $temp ='';
         foreach ($query->result() as $key) {
-            $data = $temp.', ('.$key->no_anggota.')'.$key->nama;
+            $data = $temp.$key->no_anggota.'-'.$key->nama;
+            $temp = $data.', ';
+        }
+        return $temp;
+    }
+    function namakepalakel($kode){
+        $this->db->where('id_data_keluarga',$kode);
+        $query = $this->db->get('data_keluarga');
+        $temp ='';
+        foreach ($query->result() as $key) {
+            $data = $key->namakepalakeluarga.', ';
             $temp = $data;
         }
         return $temp;
     }
     function delete_entry($kode){
         $namaanggotakk = $this->namakepalakeluarga($kode);
+        $namaakk = $this->namakepalakel($kode);
         $ipuser = $this->input->ip_address();
-        $recorddelete = "delete all kk, $kode a.n ( $namaanggotakk ) : ".$ipuser;
+        $recorddelete = "delete all kk, $kode - $namaakk ( $namaanggotakk ) : ".$ipuser;
         $this->user->recorddeletedata($recorddelete);
 
 
@@ -523,8 +534,8 @@ class Datakeluarga_model extends CI_Model {
         $query = $this->db->get('data_keluarga_anggota');
         $temp ='';
         foreach ($query->result() as $key) {
-            $data = $temp.', ('.$key->no_anggota.')'.$key->nama;
-            $temp = $data;
+            $data = $temp.$key->no_anggota.'-'.$key->nama;
+            $temp = $data.', ';
         }
         return $temp;
     }

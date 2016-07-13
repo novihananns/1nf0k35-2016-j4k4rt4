@@ -19,6 +19,9 @@ class Data_kepala_keluarga extends CI_Controller {
 	    $this->load->library(array('PHPExcel','PHPExcel/IOFactory'));
 		$this->load->helper('file');
 
+		$this->load->library('tools');
+
+
 	}
 
 	function urut($id_data_keluarga=0){
@@ -1019,7 +1022,7 @@ $data_tabel[] = array(
     //     }
     // }
 
-	function import(){
+    function import(){
         $fileName = time().$_FILES['file_excel']['name'];
 
         $config['upload_path'] = './assets/'; 
@@ -1045,8 +1048,12 @@ $data_tabel[] = array(
             }
  
             $sheet = $objPHPExcel->getSheet(0);
-            $highestRow = $sheet->getHighestRow();
-            $highestColumn = $sheet->getHighestColumn();
+            $highestRow    = $sheet->getHighestDataRow();
+            $highestColumn = $sheet->getHighestDataColumn();
+
+            // print_r($highestRow);
+            // print_r($highestColumn);
+            // die();
              
             for ($row = 2; $row <= $highestRow; $row++){  //  Read a row of data into an array                 
                 $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,NULL,TRUE,FALSE);
@@ -1054,23 +1061,23 @@ $data_tabel[] = array(
         	    $id = $this->datakeluarga_model->getNourutkel($this->input->post('kelurahan'));
                 
                 $data = array(
-                    "alamat"             => $rowData[0][4],
-                    "id_kodepos"         => $rowData[0][9],
-                    "rw" 			     => $rowData[0][10],
-                    "rt"		         => $rowData[0][11],
-                    "norumah"            => $rowData[0][12],
-                    "namakepalakeluarga" => $rowData[0][13],
-                    "notlp"              => $rowData[0][14],
-                    "namadesawisma"      => $rowData[0][15],
-                    "nama_komunitas"     => $rowData[0][16],
-                    "id_pkk"             => $rowData[0][17],
-                    "nama_koordinator"   => $rowData[0][18],
-                    "nama_pendata"       => $rowData[0][19],
-                    "jam_selesai" 		 => $rowData[0][20],
-                    "jml_anaklaki"		 => $rowData[0][21],
-                    "jml_anakperempuan"  => $rowData[0][22],
-                    "pus_ikutkb"		 => $rowData[0][23],
-                    "pus_tidakikutkb"    => $rowData[0][24]
+                    "alamat"             => $rowData[0][0],
+                    "id_kodepos"         => $rowData[0][1],
+                    "rw" 			     => $rowData[0][2],
+                    "rt"		         => $rowData[0][3],
+                    "norumah"            => $rowData[0][4],
+                    "namakepalakeluarga" => $rowData[0][5],
+                    "notlp"              => $rowData[0][6],
+                    "namadesawisma"      => $rowData[0][7],
+                    "nama_komunitas"     => $rowData[0][8],
+                    "id_pkk"             => $rowData[0][9],
+                    "nama_koordinator"   => $rowData[0][10],
+                    "nama_pendata"       => $rowData[0][11],
+                    "jam_selesai" 		 => $rowData[0][12],
+                    "jml_anaklaki"		 => $rowData[0][13],
+                    "jml_anakperempuan"  => $rowData[0][14],
+                    "pus_ikutkb"		 => $rowData[0][15],
+                    "pus_tidakikutkb"    => $rowData[0][16]
                 );
 			        $data['id_data_keluarga'] 	 = $id['id_data_keluarga'];
 			        $data['nourutkel'] 	 		 = $id['nourutkel'];

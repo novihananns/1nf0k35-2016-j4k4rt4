@@ -329,7 +329,7 @@
       <div class="row" style="margin: 5px">
         <div class="col-md-5" style="padding: 5px">Nama Koordinator</div>
         <div class="col-md-7">
-          <input type="text" name="nama_koordinator" id="nama_koordinator" value="<?php 
+          <input type="text" name="nama_koordinator" autocomplete="off" id="nama_koordinator" value="<?php 
             if(set_value('nama_koordinator')=="" && isset($nama_koordinator)){
               echo $nama_koordinator;
             }else{
@@ -342,7 +342,7 @@
       <div class="row" style="margin: 5px">
         <div class="col-md-5" style="padding: 5px">Nama Pendata</div>
         <div class="col-md-7">
-          <input type="text" name="nama_pendata" id="nama_pendata" value="<?php 
+          <input type="text" name="nama_pendata" autocomplete="off" id="nama_pendata" value="<?php 
             if(set_value('nama_pendata')=="" && isset($nama_pendata)){
               echo $nama_pendata;
             }else{
@@ -442,6 +442,70 @@ $(function () {
     $("#menu_ketuk_pintu").addClass("active");
     $("#menu_eform_data_kepala_keluarga").addClass("active");
 });
+
+$("#nama_koordinator").jqxInput(
+    {
+    width: '100%',
+    height: '30px',
+    minLength: 2,
+    source: function (query, response) {
+      var dataAdapter = new $.jqx.dataAdapter
+      (
+        {
+          datatype: "json",
+            datafields: [
+            { name: 'nama_koordinator', type: 'string'}
+          ],
+          url: '<?php echo base_url().'eform/data_kepala_keluarga/autocomplite_namakoordinator'; ?>'
+        },
+        {
+          autoBind: true,
+          formatData: function (data) {
+            data.query = query;
+            return data;
+          },
+          loadComplete: function (data) {
+            if (data.length > 0) {
+              response($.map(data, function (item) {
+                return item.nama_koordinator;
+              }));
+            }
+          }
+        });
+    }
+});
+$("#nama_pendata").jqxInput(
+    {
+    width: '100%',
+    height: '30px',
+    minLength: 2,
+    source: function (query, response) {
+      var dataAdapter = new $.jqx.dataAdapter
+      (
+        {
+          datatype: "json",
+            datafields: [
+            { name: 'nama_pendata', type: 'string'}
+          ],
+          url: '<?php echo base_url().'eform/data_kepala_keluarga/autocomplite_namapendata'; ?>'
+        },
+        {
+          autoBind: true,
+          formatData: function (data) {
+            data.query = query;
+            return data;
+          },
+          loadComplete: function (data) {
+            if (data.length > 0) {
+              response($.map(data, function (item) {
+                return item.nama_pendata;
+              }));
+            }
+          }
+        });
+    }
+});
+
 </script>
 <a href='javascript:void(0);' class='print-preview tombol' id='btnPreview' style="display: none;">Preview</a>
 <div id="datacetak" style="display: none;">

@@ -481,8 +481,23 @@ class Datakeluarga_model extends CI_Model {
             return 'salah';
          }
     }
-
+    function namakepalakeluarga($kode){
+        $this->db->where('id_data_keluarga',$kode);
+        $query = $this->db->get('data_keluarga_anggota');
+        $temp ='';
+        foreach ($query->result() as $key) {
+            $data = $temp.', ('.$key->no_anggota.')'.$key->nama;
+            $temp = $data;
+        }
+        return $temp;
+    }
     function delete_entry($kode){
+        $namaanggotakk = $this->namakepalakeluarga($kode);
+        $ipuser = $this->input->ip_address();
+        $recorddelete = "delete all kk, $kode a.n ( $namaanggotakk ) : ".$ipuser;
+        $this->user->recorddeletedata($recorddelete);
+
+
         $this->db->where('id_data_keluarga',$kode);
         $this->db->delete('data_keluarga_anggota');
 
@@ -498,26 +513,32 @@ class Datakeluarga_model extends CI_Model {
         $this->db->where('id_data_keluarga',$kode);
         $this->db->delete('data_keluarga_profile');
 
-        $ipuser = $this->input->ip_address();
-        $recorddelete = "delete: data_keluarga_anggota,data_keluarga_anggota_profile,data_keluarga_kb,data_keluarga_pembangunan,data_keluarga_profile,data_keluarga : ".$ipuser;
-        $this->user->recorddeletedata($recorddelete);
-        
         $this->db->where('id_data_keluarga',$kode);
         return $this->db->delete($this->tabel);
         
     }
-
+    function namaanggotakeluarga($kode,$noanggota){
+        $this->db->where('no_anggota',$noanggota);
+        $this->db->where('id_data_keluarga',$kode);
+        $query = $this->db->get('data_keluarga_anggota');
+        $temp ='';
+        foreach ($query->result() as $key) {
+            $data = $temp.', ('.$key->no_anggota.')'.$key->nama;
+            $temp = $data;
+        }
+        return $temp;
+    }
     function delete_Anggotakeluarga($kode,$noanggota){
+        $namaanggota = $this->namaanggotakeluarga($kode,$noanggota);
+        $ipuser = $this->input->ip_address();
+        $recorddelete = "delete Anggota keluarga a.n ($namaanggota) : ".$ipuser;
+        $this->user->recorddeletedata($recorddelete);
+
+
         $this->db->where('id_data_keluarga',$kode);
         $this->db->where('no_anggota',$noanggota);
 
         $this->db->delete("data_keluarga_anggota_profile");
-
-
-        $ipuser = $this->input->ip_address();
-        $recorddelete = "delete data_keluarga_anggota_profile,data_keluarga_anggota : ".$ipuser;
-        $this->user->recorddeletedata($recorddelete);
-
 
         $this->db->where('id_data_keluarga',$kode);
         $this->db->where('no_anggota',$noanggota);

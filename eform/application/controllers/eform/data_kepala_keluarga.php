@@ -1380,4 +1380,38 @@ $data_tabel[] = array(
 			show_404();
 		}
 	}
+	function autocomplite_namakoordinator(){
+		$search = explode("&",$this->input->server('QUERY_STRING'));
+		$search = str_replace("query=","",$search[0]);
+		$search = str_replace("+"," ",$search);
+
+		$this->db->where("nama_koordinator like '%".str_replace(".","",$search)."%'");
+		$this->db->limit(10,0);
+		$this->db->group_by('nama_koordinator');
+		$query= $this->db->get("data_keluarga")->result();
+		foreach ($query as $q) {
+
+			$nama[] = array(
+				'nama_koordinator' 	=> $q->nama_koordinator,
+			);
+		}
+		echo json_encode($nama);
+	}
+	function autocomplite_namapendata(){
+		$search = explode("&",$this->input->server('QUERY_STRING'));
+		$search = str_replace("query=","",$search[0]);
+		$search = str_replace("+"," ",$search);
+
+		$this->db->where("nama_pendata like '%".str_replace(".","",$search)."%'");
+		$this->db->limit(10,0);
+		$this->db->group_by('nama_pendata');
+		$query= $this->db->get("data_keluarga")->result();
+		foreach ($query as $q) {
+
+			$namapendata[] = array(
+				'nama_pendata' 	=> $q->nama_pendata,
+			);
+		}
+		echo json_encode($namapendata);
+	}
 }

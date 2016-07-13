@@ -14,7 +14,6 @@ class Data_kepala_keluarga extends CI_Controller {
 		$this->load->model('eform/pembangunan_keluarga_model');
 		$this->load->model('eform/anggota_keluarga_kb_model');
 		$this->load->model('eform/dataform_model');
-		$this->load->model('eform/mread');
 
 	    $this->load->library(array('PHPExcel','PHPExcel/IOFactory'));
 		$this->load->helper('file');
@@ -897,130 +896,69 @@ $data_tabel[] = array(
 		 die("$action");
 	}
 
-    // function export(){
-    //     $ambildata = $this->mread->export_kontak();
-         
-    //     if(count($ambildata)>0){
-    //         $objPHPExcel = new PHPExcel();
-    //         // Set properties
-    //         $objPHPExcel->getProperties()
-    //               ->setCreator("SAMSUL ARIFIN") //creator
-    //                 ->setTitle("Programmer - Regional Planning and Monitoring, XL AXIATA");  //file title
- 
-    //         $objset = $objPHPExcel->setActiveSheetIndex(0); //inisiasi set object
-    //         $objget = $objPHPExcel->getActiveSheet();  //inisiasi get object
- 
-    //         $objget->setTitle('Sample Sheet'); //sheet title
-             
-    //         $objget->getStyle("A1:C1")->applyFromArray(
-    //             array(
-    //                 'fill' => array(
-    //                     'type' => PHPExcel_Style_Fill::FILL_SOLID,
-    //                     'color' => array('rgb' => '92d050')
-    //                 ),
-    //                 'font' => array(
-    //                     'color' => array('rgb' => '000000')
-    //                 )
-    //             )
-    //         );
- 
-    //         //table header
-    //         $cols = array("A","B","C");
-             
-    //         $val = array("Nama ","Alamat","Kontak");
-             
-    //         for ($a=0;$a<3; $a++) 
-    //         {
-    //             $objset->setCellValue($cols[$a].'1', $val[$a]);
-                 
-    //             //Setting lebar cell
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(25); // NAMA
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(25); // ALAMAT
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(25); // Kontak
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(25); // NAMA
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(25); // ALAMAT
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(25); // Kontak
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(25); // NAMA
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(25); // ALAMAT
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(25); // Kontak
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(25); // NAMA
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(25); // ALAMAT
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(25); // Kontak
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth(25); // NAMA
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('N')->setWidth(25); // ALAMAT
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('O')->setWidth(25); // Kontak
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('P')->setWidth(25); // NAMA
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('Q')->setWidth(25); // ALAMAT
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('R')->setWidth(25); // Kontak
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('S')->setWidth(25); // ALAMAT
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('T')->setWidth(25); // Kontak
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('U')->setWidth(25); // NAMA
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('V')->setWidth(25); // ALAMAT
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('W')->setWidth(25); // Kontak
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('X')->setWidth(25); // NAMA
-    //             $objPHPExcel->getActiveSheet()->getColumnDimension('Y')->setWidth(25); // ALAMAT
+    function export_template(){
+            $objPHPExcel = new PHPExcel();
+            $objPHPExcel->setActiveSheetIndex(0)
+                                        ->setCellValue('A1', 'Alamat')
+                                        ->setCellValue('B1', 'kode Pos')
+                                        ->setCellValue('C1', 'RW')
+                                        ->setCellValue('D1', 'RT')
+                                        ->setCellValue('E1', 'No. Rumah')
+                                        ->setCellValue('F1', 'Nama Kepala Keluarga')
+                                        ->setCellValue('G1', 'No. Tlp')
+                                        ->setCellValue('H1', 'Nama Desa')
+                                        ->setCellValue('I1', 'Nama Komunitas')
+                                        ->setCellValue('J1', 'ID PKK')
+                                        ->setCellValue('K1', 'Nama koordinator')
+                                        ->setCellValue('L1', 'Nama Pendata')
+                                        ->setCellValue('M1', 'Jam Selesai Mendata')
+                                        ->setCellValue('N1', 'Jml Anak Laki-laki')
+                                        ->setCellValue('O1', 'Jml Anak Perempuan')
+                                        ->setCellValue('P1', 'Ikut KB')
+                                        ->setCellValue('Q1', 'Tidak Ikut KB');
 
-             
-    //             $style = array(
-    //                 'alignment' => array(
-    //                     'horizontal' => PHPExcel_Style_Alignment::VERTICAL_CENTER,
-    //                 )
-    //             );
-    //             $objPHPExcel->getActiveSheet()->getStyle($cols[$a].'1')->applyFromArray($style);
-    //         }
-             
-    //         $baris  = 2;
-    //         foreach ($ambildata as $frow){
-                 
-    //             //pemanggilan sesuaikan dengan nama kolom tabel
-    //             $objset->setCellValue("A".$baris, $frow->id_data_keluarga);   //membaca data nama
-    //             $objset->setCellValue("B".$baris, $frow->nourutkel); //membaca data alamat
-    //             $objset->setCellValue("C".$baris, $frow->tanggal_pengisian); //membaca data kontak
-    //             $objset->setCellValue("D".$baris, $frow->jam_data);   //membaca data nama
-    //             $objset->setCellValue("E".$baris, $frow->alamat); //membaca data alamat
-    //             $objset->setCellValue("F".$baris, $frow->id_propinsi); //membaca data kontak
-    //             $objset->setCellValue("G".$baris, $frow->id_kota);   //membaca data nama
-    //             $objset->setCellValue("H".$baris, $frow->id_kecamatan); //membaca data alamat
-    //             $objset->setCellValue("I".$baris, $frow->id_desa); //membaca data kontak
-    //             $objset->setCellValue("J".$baris, $frow->id_kodepos);   //membaca data nama
-    //             $objset->setCellValue("K".$baris, $frow->rw); //membaca data alamat
-    //             $objset->setCellValue("L".$baris, $frow->rt); //membaca data kontak
-    //             $objset->setCellValue("M".$baris, $frow->norumah);   //membaca data nama
-    //             $objset->setCellValue("N".$baris, $frow->namakepalakeluarga); //membaca data alamat
-    //             $objset->setCellValue("O".$baris, $frow->notlp); //membaca data kontak
-    //             $objset->setCellValue("P".$baris, $frow->namadesawisma);   //membaca data nama
-    //             $objset->setCellValue("Q".$baris, $frow->nama_komunitas); //membaca data alamat
-    //             $objset->setCellValue("R".$baris, $frow->id_pkk); //membaca data kontak
-    //             $objset->setCellValue("S".$baris, $frow->nama_koordinator);   //membaca data nama
-    //             $objset->setCellValue("T".$baris, $frow->nama_pendata); //membaca data alamat
-    //             $objset->setCellValue("U".$baris, $frow->jam_selesai); //membaca data kontak
-    //             $objset->setCellValue("V".$baris, $frow->jml_anaklaki);   //membaca data nama
-    //             $objset->setCellValue("W".$baris, $frow->jml_anakperempuan); //membaca data alamat
-    //             $objset->setCellValue("X".$baris, $frow->pus_ikutkb); //membaca data kontak
-    //             $objset->setCellValue("Y".$baris, $frow->pus_tidakikutkb); //membaca data kontak
-                 
-    //             //Set number value
-    //             $objPHPExcel->getActiveSheet()->getStyle('C1:C'.$baris)->getNumberFormat()->setFormatCode('0');
-                 
-    //             $baris++;
-    //         }
-             
-    //         $objPHPExcel->getActiveSheet()->setTitle('Data Export');
- 
-    //         $objPHPExcel->setActiveSheetIndex(0);  
-    //         $filename = urlencode("Data".date("Y-m-d H:i:s").".xls");
-               
-    //           header('Content-Type: application/vnd.ms-excel'); //mime type
-    //           header('Content-Disposition: attachment;filename="'.$filename.'"'); //tell browser what's the file name
-    //           header('Cache-Control: max-age=0'); //no cache
- 
-    //         $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel5');                
-    //         $objWriter->save('php://output');
-    //     }else{
-	   //  	redirect(base_url()."eform/data_kepala_keluarga/");
+            $objPHPExcel->getActiveSheet()->getStyle("A1:Q1")->applyFromArray(
+                array(
+                    'fill' => array(
+                        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                        'color' => array('rgb' => '92d050')
+                    ),
+                    'font' => array(
+                        'color' => array('rgb' => '000000')
+                    )
+                )
+            );
 
-    //     }
-    // }
+            //Setting lebar cell
+            $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(35); // NAMA
+            $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(15); // ALAMAT
+            $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(10); // Kontak
+            $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(10); // NAMA
+            $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(25); // ALAMAT
+            $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(25); // Kontak
+            $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(25); // NAMA
+            $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(25); // ALAMAT
+            $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(25); // Kontak
+            $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(25); // NAMA
+            $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(25); // ALAMAT
+            $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(25); // Kontak
+            $objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth(25); // NAMA
+            $objPHPExcel->getActiveSheet()->getColumnDimension('N')->setWidth(25); // ALAMAT
+            $objPHPExcel->getActiveSheet()->getColumnDimension('O')->setWidth(25); // Kontak
+            $objPHPExcel->getActiveSheet()->getColumnDimension('P')->setWidth(25); // NAMA
+            $objPHPExcel->getActiveSheet()->getColumnDimension('Q')->setWidth(25); // ALAMAT
+
+            $objPHPExcel->getActiveSheet()->setTitle('Excel Pertama');
+            $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
+            header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+            header("Cache-Control: no-store, no-cache, must-revalidate");
+            header("Cache-Control: post-check=0, pre-check=0", false);
+            header("Pragma: no-cache");
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="TemplateExcel.xlsx"');
+            $objWriter->save("php://output");
+ 
+    }
 
     function import(){
         $fileName = time().$_FILES['file_excel']['name'];
@@ -1092,7 +1030,7 @@ $data_tabel[] = array(
                 $insert = $this->db->insert("data_keluarga",$data);
                 delete_files($media['file_path']);
             }
-
+		$this->session->set_flashdata('alert', 'Import data successful...');
 	    redirect(base_url()."eform/data_kepala_keluarga/");
     }
 

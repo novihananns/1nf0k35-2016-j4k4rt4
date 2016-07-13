@@ -46,9 +46,7 @@
     <div class="box box-primary">
       <div class="box-footer">
         <button type="button" id="btn-kembali" class="btn btn-success"><i class='fa fa-arrow-circle-left'></i> &nbsp;Kembali</button>
-        <button type="button" id="btn-download-template" class="btn btn-primary"><i class='fa fa-file-excel-o'></i> &nbsp; Download Template</button>
-        <!-- <button type="button" class="btn btn-primary" onclick="document.location.href='<?php echo base_url()?>eform/data_kepala_keluarga/export'"><i class='fa fa-file-excel-o'></i> &nbsp; Download Template</button> -->
-        <!-- <button type="button" id="btn-import" class="btn btn-warning"><i class='fa fa-arrow-circle-right'></i> &nbsp; Periksa File & Import</button> -->
+        <button type="button" class="btn btn-primary" onclick="document.location.href='<?php echo base_url()?>eform/data_kepala_keluarga/export_template'"><i class='fa fa-file-excel-o'></i> &nbsp; Download Template</button>
         <button type="submit" id="btn-import" class="btn btn-warning"><i class='fa fa-arrow-circle-right'></i> &nbsp; Periksa File & Import</button>
       
       </div>

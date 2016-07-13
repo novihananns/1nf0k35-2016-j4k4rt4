@@ -340,7 +340,7 @@ $(function () {
 			        
 			    },
 			    error: function (request, status, error) {
-			        alert('Maaf, koneksi kurang stabil. Silahkan cek koneksi Anda');
+			        alert('Maaf, koneksi gagal. \nPastikan koneksi internet anda stabil sebelum melanjutkan');
 					if(kodedata.slice(-5)=="radio")
 			    	{
 			    		if(valuedata=="1"){

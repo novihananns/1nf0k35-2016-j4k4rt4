@@ -167,23 +167,44 @@
 			columns: [
 				{ text: 'Detail', align: 'center', filtertype: 'none', sortable: false, width: '10%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
-				    if(dataRecord.edit==1){
-						return "<div style='width:100%;padding:4px;text-align:center' onclick='edit(\""+dataRecord.nama_koordinator+"\",\""+dataRecord.nama_pendata+"\");'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' ></a></div>";
+				    if(dataRecord.edit==1 && dataRecord.nama_koordinator=='' && dataRecord.nama_pendata==''){
+						return "<div style='width:100%;padding:4px;text-align:center' onclick='edit(kosong,kosong);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' ></a></div>";
+					}else if(dataRecord.edit==1 && dataRecord.nama_koordinator==''){
+						return "<div style='width:100%;padding:4px;text-align:center' onclick='edit(kosong,\""+dataRecord.nama_pendata+"\");'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' ></a></div>";	
+					}else if(dataRecord.edit==1 && dataRecord.nama_pendata==''){
+						return "<div style='width:100%;padding:4px;text-align:center' onclick='edit(\""+dataRecord.nama_koordinator+"\",kosong);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' ></a></div>";	
 					}else{
-						return "<div style='width:100%;padding:4px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
+						return "<div style='width:100%;padding:4px;text-align:center' onclick='edit(\""+dataRecord.nama_koordinator+"\",\""+dataRecord.nama_pendata+"\");'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' ></a></div>";	
+						// return "<div style='width:100%;padding:4px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";
 					}
                  }
                 },
-				{ text: 'Nama Koordinator', datafield: 'nama_koordinator', columntype: 'textbox', filtertype: 'textbox', width: '35%' },
-				{ text: 'Nama Pendata', datafield: 'nama_pendata', columntype: 'textbox', filtertype: 'textbox', width: '35%' },
+				{ text: 'Nama Koordinator',datafield: 'nama_koordinator', columntype: 'textbox', filtertype: 'textbox', width: '35%', cellsrenderer: function (row) {
+				    var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+				    if(dataRecord.nama_koordinator==null || dataRecord.nama_koordinator==''){
+						return "<div style='width:100%;padding:4px;text-align:left'>Kosong</div>";
+					}else{
+						return "<div style='width:100%;padding:4px;text-align:left'>"+dataRecord.nama_koordinator+"</div>";
+					}
+                 }
+                },
+				{ text: 'Nama Pendata', datafield: 'nama_pendata', columntype: 'textbox', filtertype: 'textbox', width: '35%' , cellsrenderer: function (row) {
+				    var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
+				    if(dataRecord.nama_pendata==null || dataRecord.nama_pendata==''){
+						return "<div style='width:100%;padding:4px;text-align:left'>Kosong</div>";
+					}else{
+						return "<div style='width:100%;padding:4px;text-align:left'>"+dataRecord.nama_pendata+"</div>";
+					}
+                 }
+             	},
 				{ text: 'Jumlah KK', datafield: 'totalkk', columntype: 'textbox', filtertype: 'none', width: '20%' },
 				// { text: 'Jumlah Anggota', datafield: 'totalanggotakeluarga', columntype: 'textbox', filtertype: 'none', width: '15%' },
 			]
 		});
 
-	function edit(nama_pendata){
+	function edit(nama_koordinator,nama_pendata){
 		$("#popup_kpldh #popup_content").html("<div style='text-align:center'><br><br><br><br><img src='<?php echo base_url();?>media/images/indicator.gif' alt='loading content.. '><br>loading</div>");
-		$.get("<?php echo base_url().'eform/laporanpendata/detailkk/';?>"+id, function(data) {
+		$.get("<?php echo base_url().'eform/laporanpendata/detailkk/';?>"+nama_koordinator+'/'+nama_pendata, function(data) {
 			$("#popup_content").html(data);
 		});
 		$("#popup_kpldh").jqxWindow({

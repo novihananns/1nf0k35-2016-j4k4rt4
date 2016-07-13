@@ -542,7 +542,7 @@ class Datakeluarga_model extends CI_Model {
     function delete_Anggotakeluarga($kode,$noanggota){
         $namaanggota = $this->namaanggotakeluarga($kode,$noanggota);
         $ipuser = $this->input->ip_address();
-        $recorddelete = "delete Anggota keluarga a.n ($namaanggota) : ".$ipuser;
+        $recorddelete = "delete $kode Anggota keluarga a.n ($namaanggota) : ".$ipuser;
         $this->user->recorddeletedata($recorddelete);
 
 

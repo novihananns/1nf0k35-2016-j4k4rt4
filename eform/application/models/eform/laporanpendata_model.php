@@ -61,41 +61,32 @@ class Laporanpendata_model extends CI_Model {
         return $query->result();
     }
     
-    function get_data_all($keluarga="-"){
-        if($_POST) {
-            $ord = $this->input->post('sortdatafield');
-            if(!empty($ord)) {
-                $this->db->order_by($ord, $this->input->post('sortorder'));
-            }
+    function get_data_detail($nama_koordinator,$nama_pendata,$start=0,$limit=999999,$options=array()){
+        $this->db->select("$this->tabel.*,cl_village.value");
+        $this->db->join('cl_village', "data_keluarga.id_desa = cl_village.code",'inner');
+        if ($nama_koordinator == 'null') {
+            $this->db->where('nama_koordinator is null');
+        }else if ($nama_koordinator == 'kosong') {
+            $this->db->where("nama_koordinator =''");
+        }else{
+            $this->db->where('nama_koordinator',str_replace("%20", ' ', $nama_koordinator));
         }
-
-        $data = array();
-        
-        $this->db->where("data_keluarga.id_data_keluarga IN ('".$keluarga."')");
-        $this->db->select("data_keluarga.namakepalakeluarga,data_keluarga.id_data_keluarga as id,data_keluarga_anggota.*,(year(curdate())-year(data_keluarga_anggota.tgl_lahir)) as usia,data_keluarga.jml_anaklaki,data_keluarga.jml_anakperempuan, data_keluarga.pus_ikutkb,data_keluarga.pus_tidakikutkb ,data_keluarga.nourutkel");
-        $this->db->join("data_keluarga","data_keluarga.id_data_keluarga=data_keluarga_anggota.id_data_keluarga","right");
-        $this->db->order_by('data_keluarga.nourutkel');
-        $query =$this->db->get('data_keluarga_anggota');
-        $data = $query->result_array(); 
-
-        return $data;
-    }
-
-    
-    function get_data_anggotaKeluarga($start=0,$limit=999999,$options=array()){
-        $this->db->select("data_keluarga_anggota.*, hubungan.value as hubungan,jeniskelamin.value as jeniskelamin,(year(curdate())-year(data_keluarga_anggota.tgl_lahir)) as usia,agama.value as agama,pendidikan.value as pendidikan,pekerjaan.value as pekerjaan,kawin.value as kawin,jkn.value as jkn");
-        $this->db->join("mst_keluarga_pilihan hubungan","data_keluarga_anggota.id_pilihan_hubungan = hubungan.id_pilihan and hubungan.tipe='hubungan'",'left');
-        $this->db->join("mst_keluarga_pilihan jeniskelamin","data_keluarga_anggota.id_pilihan_kelamin = jeniskelamin.id_pilihan and jeniskelamin.tipe ='jk'",'left');
-        $this->db->join("mst_keluarga_pilihan agama","data_keluarga_anggota.id_pilihan_agama = agama.id_pilihan and agama.tipe ='agama'",'left');
-        $this->db->join("mst_keluarga_pilihan pendidikan","data_keluarga_anggota.id_pilihan_pendidikan = pendidikan.id_pilihan and pendidikan.tipe= 'pendidikan'",'left');
-        $this->db->join("mst_keluarga_pilihan pekerjaan","data_keluarga_anggota.id_pilihan_pekerjaan = pekerjaan.id_pilihan and pekerjaan.tipe = 'pekerjaan'" ,'left');
-        $this->db->join("mst_keluarga_pilihan kawin","data_keluarga_anggota.id_pilihan_kawin = kawin.id_pilihan and kawin.tipe='kawin'",'left');
-        $this->db->join("mst_keluarga_pilihan jkn","data_keluarga_anggota.id_pilihan_jkn = jkn.id_pilihan and jkn.tipe='jkn'",'left');
-        $this->db->order_by('data_keluarga_anggota.no_anggota','asc');
-        $query =$this->db->get("data_keluarga_anggota",$limit,$start);
+        if ($nama_pendata == 'null') {
+            $this->db->where('nama_pendata is null');
+        }else if ($nama_koordinator == 'kosong') {
+            $this->db->where("nama_pendata =''");
+        }else{
+            $this->db->where('nama_pendata',str_replace("%20", " ", $nama_pendata));
+        }
+        $kec = substr($this->session->userdata('puskesmas'), 0,7);
+        $this->db->like('id_data_keluarga',$kec);
+        $this->db->order_by('data_keluarga.tanggal_pengisian','asc');
+        $query =$this->db->get('data_keluarga',$limit,$start);
         
         return $query->result();
     }
+
+    
     function get_datawhere ($code,$condition,$table){
         $this->db->select("*");
         $this->db->like($condition,$code);

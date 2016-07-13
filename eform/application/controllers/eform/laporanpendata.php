@@ -375,8 +375,8 @@ class Laporanpendata extends CI_Controller {
 			for($i=0;$i<$fil;$i++) {
 				$field = $this->input->post('filterdatafield'.$i);
 				$value = $this->input->post('filtervalue'.$i);
-				if($field=="tgl_lahir"){
-					$this->db->like("tgl_lahir",date("Y-m-d",strtotime($value)));
+				if ($field=="tanggal_pengisian") {
+					$this->db->like("tanggal_pengisian",date("Y-m-d",strtotime($value)));
 				}else{
 					$this->db->like($field,$value);	
 				}
@@ -387,8 +387,36 @@ class Laporanpendata extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		$this->db->where("data_keluarga_anggota.id_data_keluarga",$anggota);
-		$rows_all = $this->laporanpendata_model->get_data_anggotaKeluarga();
+		
+		if($this->session->userdata('filter_code_kelurahan') != '') {
+			$this->db->where('data_keluarga.id_desa',$this->session->userdata('filter_code_kelurahan'));
+		}
+		if($this->session->userdata('filter_code_kecamatan') != '') {
+			$this->db->where('data_keluarga.id_kecamatan',$this->session->userdata('filter_code_kecamatan'));
+		}
+		// // if($this->session->userdata('filter_code_rukunwarga') != '') {
+		// // 	$this->db->where('data_keluarga.rw',$this->session->userdata('filter_code_rukunwarga'));
+		// // }
+		// // if($this->session->userdata('filter_code_cl_rukunrumahtangga') != '') {
+		// // 	$this->db->where('data_keluarga.rt',$this->session->userdata('filter_code_cl_rukunrumahtangga'));
+		// // }
+
+		if($this->session->userdata('filter_code_cl_bulandata') != '') {
+			if($this->session->userdata('filter_code_cl_bulandata') == 'all') {
+			}else{
+				$this->db->where('MONTH(data_keluarga.tanggal_pengisian)',$this->session->userdata('filter_code_cl_bulandata'));
+			}
+		}
+		if($this->session->userdata('filter_code_cl_tahundata') != '') {
+			if($this->session->userdata('filter_code_cl_tahundata') == 'all') {
+			}else{
+				$this->db->where('YEAR(data_keluarga.tanggal_pengisian)',$this->session->userdata('filter_code_cl_tahundata'));	
+			}
+		}else{
+			$thnda=date("Y");
+			$this->db->where('YEAR(data_keluarga.tanggal_pengisian)',$thnda);	
+		}
+		$rows_all = $this->laporanpendata_model->get_data_detail($nama_koordinator,$nama_pendata);
 
     	if($_POST) {
 			$fil = $this->input->post('filterscount');
@@ -398,8 +426,8 @@ class Laporanpendata extends CI_Controller {
 				$field = $this->input->post('filterdatafield'.$i);
 				$value = $this->input->post('filtervalue'.$i);
 
-				if($field=="tgl_lahir"){
-					$this->db->like("tgl_lahir",date("Y-m-d",strtotime($value)));
+				if ($field=="tanggal_pengisian") {
+					$this->db->like("tanggal_pengisian",date("Y-m-d",strtotime($value)));
 				}else{
 					$this->db->like($field,$value);	
 				}
@@ -409,30 +437,59 @@ class Laporanpendata extends CI_Controller {
 				$this->db->order_by($ord, $this->input->post('sortorder'));
 			}
 		}
-		$this->db->where("data_keluarga_anggota.id_data_keluarga",$anggota);
-		$rows = $this->laporanpendata_model->get_data_anggotaKeluarga($this->input->post('recordstartindex'), $this->input->post('pagesize'));
+		
+		if($this->session->userdata('filter_code_kelurahan') != '') {
+			$this->db->where('data_keluarga.id_desa',$this->session->userdata('filter_code_kelurahan'));
+		}
+		if($this->session->userdata('filter_code_kecamatan') != '') {
+			$this->db->where('data_keluarga.id_kecamatan',$this->session->userdata('filter_code_kecamatan'));
+		}
+		// // if($this->session->userdata('filter_code_rukunwarga') != '') {
+		// // 	$this->db->where('data_keluarga.rw',$this->session->userdata('filter_code_rukunwarga'));
+		// // }
+		// // if($this->session->userdata('filter_code_cl_rukunrumahtangga') != '') {
+		// // 	$this->db->where('data_keluarga.rt',$this->session->userdata('filter_code_cl_rukunrumahtangga'));
+		// // }
+		if($this->session->userdata('filter_code_cl_bulandata') != '') {
+			if($this->session->userdata('filter_code_cl_bulandata') == 'all') {
+			}else{
+				$this->db->where('MONTH(data_keluarga.tanggal_pengisian)',$this->session->userdata('filter_code_cl_bulandata'));
+			}
+		}
+		if($this->session->userdata('filter_code_cl_tahundata') != '') {
+			if($this->session->userdata('filter_code_cl_tahundata') == 'all') {
+			}else{
+				$this->db->where('YEAR(data_keluarga.tanggal_pengisian)',$this->session->userdata('filter_code_cl_tahundata'));	
+			}
+		}else{
+			$thnda=date("Y");
+			$this->db->where('YEAR(data_keluarga.tanggal_pengisian)',$thnda);	
+		}
+		$rows = $this->laporanpendata_model->get_data_detail($nama_koordinator,$nama_pendata,$this->input->post('recordstartindex'), $this->input->post('pagesize'));
 		$data = array();
 		foreach($rows as $act) {
 			$data[] = array(
 				'id_data_keluarga'		=> $act->id_data_keluarga,
-				'no_anggota'			=> $act->no_anggota,
-				'nama'					=> $act->nama,
-				'nik'					=> $act->nik,
-				'tmpt_lahir'			=> $act->tmpt_lahir,
-				'tgl_lahir'				=> $act->tgl_lahir,
-				'id_pilihan_hubungan'	=> $act->id_pilihan_hubungan,
-				'id_pilihan_kelamin'	=> $act->id_pilihan_kelamin,
-				'id_pilihan_agama'		=> $act->id_pilihan_agama,
-				'id_pilihan_pendidikan'	=> $act->id_pilihan_pendidikan,
-				'id_pilihan_pekerjaan'	=> $act->id_pilihan_pekerjaan,
-				'id_pilihan_kawin'		=> $act->id_pilihan_kawin,
-				'id_pilihan_jkn'		=> $act->id_pilihan_jkn,
-				'jeniskelamin'			=> $act->jeniskelamin,
-				'hubungan'				=> $act->hubungan,
-				'bpjs'					=> $act->bpjs,
-				'usia'					=> $act->usia,
-				'suku'					=> $act->suku,
-				'no_hp'					=> $act->no_hp,
+				'tanggal_pengisian'		=> $act->tanggal_pengisian,
+				'jam_data'				=> $act->jam_data,
+				'alamat'				=> $act->alamat,
+				'id_propinsi'			=> $act->id_propinsi,
+				'id_kota'				=> $act->id_kota,
+				'id_kecamatan'			=> $act->id_kecamatan,
+				'nama_pendata'			=> $act->nama_pendata,
+				// 'totalkk'				=> $act->totalkk,
+				// 'totalanggotakeluarga'	=> $act->totalanggotakeluarga,
+				'nama_koordinator'		=> $act->nama_koordinator,
+				'rt'					=> $act->rt,
+				'rw'					=> $act->rw,
+				'norumah'				=> $act->norumah,
+				'nourutkel'				=> $act->nourutkel,
+				'id_kodepos'			=> $act->id_kodepos,
+				'namakepalakeluarga'	=> $act->namakepalakeluarga,
+				'notlp'					=> $act->notlp,
+				'namadesawisma'			=> $act->namadesawisma,
+				'id_pkk'				=> $act->id_pkk,
+				'nama_komunitas'		=> $act->nama_komunitas,
 				'edit'					=> 1,
 				'delete'				=> 1
 			);
@@ -576,56 +633,14 @@ class Laporanpendata extends CI_Controller {
 		$this->template->show($data,"home");
 	}
 	
-	function edit($id_data_keluarga=0){
+	function detailkk($nama_koordinator='',$nama_pendata=''){
 		$this->authentication->verify('eform','edit');
-
-        $this->form_validation->set_rules('alamat', 'Alamat', 'trim|required');
-        $this->form_validation->set_rules('kelurahan', 'Kelurahan / Desa', 'trim|required');
-        $this->form_validation->set_rules('dusun', 'Dusun / RW', 'trim|required');
-        $this->form_validation->set_rules('rt', 'RT', 'trim|required');
-        $this->form_validation->set_rules('norumah', 'No Rumah', 'trim|required');
-        $this->form_validation->set_rules('namakomunitas', 'Nama Komunitas', 'trim|required');
-        $this->form_validation->set_rules('namakepalakeluarga', 'Nama Kepala Keluarga', 'trim|required');
-        $this->form_validation->set_rules('notlp', 'No. HP / Telepon', 'trim|required');
-        $this->form_validation->set_rules('namadesawisma', 'Nama Desa Wisma', 'trim|required');
-        $this->form_validation->set_rules('jabatanstuktural', '', 'trim');
-        $this->form_validation->set_rules('kelurahan', '', 'trim');
-        $this->form_validation->set_rules('kodepos', '', 'trim');
-        $this->form_validation->set_rules('jml_anaklaki', 'Jumlah Laki-laki', 'trim|required');
-        $this->form_validation->set_rules('jml_anakperempuan', 'Jumlah Perempuan', 'trim|required');
-        $this->form_validation->set_rules('pus_ikutkb', 'Jumlah PUS Peserta KB', 'trim|required');
-        $this->form_validation->set_rules('pus_tidakikutkb', 'Jumlah PUS Bukan Peserta KB', 'trim|required');
-        $this->form_validation->set_rules('nama_koordinator', '', 'trim');
-        $this->form_validation->set_rules('nama_pendata', '', 'trim');
-        $this->form_validation->set_rules('jam_selesai', '', 'trim');
-
-		if($this->form_validation->run()== FALSE){
-			$data = $this->laporanpendata_model->get_data_row($id_data_keluarga); 
-
-			$data['title_group'] = "eForm - Ketuk Pintu";
-			$data['title_form']="Detail Laporan Pendata";
-			$data['action']="edit";
-			$data['id_data_keluarga'] = $id_data_keluarga;
-          	$data['data_provinsi'] = $this->laporanpendata_model->get_provinsi();
-          	$data['data_kotakab'] = $this->laporanpendata_model->get_kotakab();
-          	$data['data_kecamatan'] = $this->laporanpendata_model->get_kecamatan();
-          	$data['data_desa'] = $this->laporanpendata_model->get_desa();
-          	$data['data_pos'] = $this->laporanpendata_model->get_pos();
-          	$data['data_pkk'] = $this->laporanpendata_model->get_pkk();
-            $data['jabatan_pkk'] = $this->laporanpendata_model->get_pkk_value($data['id_pkk']);
-
-			$data['data_profile']  = $this->laporanpendata_model->get_data_profile($id_data_keluarga); 
-            //$data['data_print'] = $this->parser->parse("eform/laporanpendata/print", $data, true);
-
-			$data['content'] = $this->parser->parse("eform/laporanpendata/form_detail",$data,true);
-			$this->template->show($data,"home");
-		}elseif($id_data_keluarga = $this->laporanpendata_model->update_entry($id_data_keluarga)){
-			$this->session->set_flashdata('alert_form', 'Save data successful...');
-			redirect(base_url()."eform/data_kepala_keluarga/edit/".$id_data_keluarga);
-		}else{
-			$this->session->set_flashdata('alert_form', 'Save data failed...');
-			redirect(base_url()."eform/data_kepala_keluarga/edit/".$id_data_keluarga);
-		}
+		$data['title_group'] = "eForm - Ketuk Pintu";
+		$data['title_form'] = "Detail Laporan Pendata";
+		$data['nama_koordinator'] = $nama_koordinator;
+		$data['nama_pendata'] = $nama_pendata;
+        
+		die($this->parser->parse("eform/laporanpendata/form",$data));
 	}
 
 	

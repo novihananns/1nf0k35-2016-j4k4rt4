@@ -168,11 +168,11 @@
 				{ text: 'Detail', align: 'center', filtertype: 'none', sortable: false, width: '10%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
 				    if(dataRecord.edit==1 && dataRecord.nama_koordinator=='' && dataRecord.nama_pendata==''){
-						return "<div style='width:100%;padding:4px;text-align:center' onclick='edit(kosong,kosong);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' ></a></div>";
+						return "<div style='width:100%;padding:4px;text-align:center' onclick='edit(\""+'kosong'+"\",\""+'kosong'+"\");'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' ></a></div>";
 					}else if(dataRecord.edit==1 && dataRecord.nama_koordinator==''){
-						return "<div style='width:100%;padding:4px;text-align:center' onclick='edit(kosong,\""+dataRecord.nama_pendata+"\");'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' ></a></div>";	
+						return "<div style='width:100%;padding:4px;text-align:center' onclick='edit(\""+'kosong'+"\",\""+dataRecord.nama_pendata+"\");'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' ></a></div>";	
 					}else if(dataRecord.edit==1 && dataRecord.nama_pendata==''){
-						return "<div style='width:100%;padding:4px;text-align:center' onclick='edit(\""+dataRecord.nama_koordinator+"\",kosong);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' ></a></div>";	
+						return "<div style='width:100%;padding:4px;text-align:center' onclick='edit(\""+dataRecord.nama_koordinator+"\",\""+'kosong'+"\");'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' ></a></div>";	
 					}else{
 						return "<div style='width:100%;padding:4px;text-align:center' onclick='edit(\""+dataRecord.nama_koordinator+"\",\""+dataRecord.nama_pendata+"\");'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_view.gif' ></a></div>";	
 						// return "<div style='width:100%;padding:4px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";

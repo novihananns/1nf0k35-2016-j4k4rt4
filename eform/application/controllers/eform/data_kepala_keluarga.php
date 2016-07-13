@@ -1385,7 +1385,7 @@ $data_tabel[] = array(
 		$search = str_replace("query=","",$search[0]);
 		$search = str_replace("+"," ",$search);
 
-		$this->db->where("nama_koordinator like '%".str_replace(".","",$search)."%'");
+		$this->db->where("nama_koordinator like '%".$search."%'");
 		$this->db->limit(10,0);
 		$this->db->group_by('nama_koordinator');
 		$query= $this->db->get("data_keluarga")->result();
@@ -1402,7 +1402,7 @@ $data_tabel[] = array(
 		$search = str_replace("query=","",$search[0]);
 		$search = str_replace("+"," ",$search);
 
-		$this->db->where("nama_pendata like '%".str_replace(".","",$search)."%'");
+		$this->db->where("nama_pendata like '%".$search."%'");
 		$this->db->limit(10,0);
 		$this->db->group_by('nama_pendata');
 		$query= $this->db->get("data_keluarga")->result();

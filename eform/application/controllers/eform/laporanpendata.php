@@ -477,7 +477,7 @@ class Laporanpendata extends CI_Controller {
 				'id_kota'				=> $act->id_kota,
 				'id_kecamatan'			=> $act->id_kecamatan,
 				'nama_pendata'			=> $act->nama_pendata,
-				// 'totalkk'				=> $act->totalkk,
+				'value'				=> $act->value,
 				// 'totalanggotakeluarga'	=> $act->totalanggotakeluarga,
 				'nama_koordinator'		=> $act->nama_koordinator,
 				'rt'					=> $act->rt,

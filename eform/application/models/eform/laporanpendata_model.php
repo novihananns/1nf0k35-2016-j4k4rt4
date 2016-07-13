@@ -73,7 +73,7 @@ class Laporanpendata_model extends CI_Model {
         }
         if ($nama_pendata == 'null') {
             $this->db->where('nama_pendata is null');
-        }else if ($nama_koordinator == 'kosong') {
+        }else if ($nama_pendata == 'kosong') {
             $this->db->where("nama_pendata =''");
         }else{
             $this->db->where('nama_pendata',str_replace("%20", " ", $nama_pendata));

@@ -15,7 +15,7 @@
     <td><?php echo ($kadang>0) ? number_format($kadang/$totalorang*100,2) : 0;?></td>
   </tr>
   <tr>
-    <td><?php echo "Sesudah makan pagi"; ?></td>
+    <td><?php echo "Tidak, tapi dulu merokok setiap hari"; ?></td>
     <td><?php echo (isset($dulu)) ? $dulu : 0;?></td>
     <td><?php echo ($dulu>0) ? number_format($dulu/$totalorang*100,2): 0;?></td>
   </tr>

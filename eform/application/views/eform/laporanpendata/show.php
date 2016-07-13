@@ -29,7 +29,7 @@
 
 			<div class="box-body">
 			<div class="row">
-				 <div class="col-md-3">
+				 <div class="col-md-4">
 				 	<label> Kecamatan </label>
 				 	<select name="kecamatan" id="kecamatan" class="form-control">
 						<?php foreach ($datakecamatan as $kec ) { ;?>
@@ -38,24 +38,14 @@
 						<?php	} ;?>
 			     	</select>
 				 </div>
-				 <div class="col-md-3">
+				 <div class="col-md-4">
 				 <label> Kelurahan </label>
 				 	<select name="kelurahan" id="kelurahan" class="form-control">
 			     	</select>
 				 </div>
-				 <div class="col-md-6">
+				 <div class="col-md-4">
 					 <div class="row">
-						 <!-- <div class="col-md-3">
-						 <label> RW </label>
-						 	<select name="rukunwarga" id="rukunwarga" class="form-control">
-					     	</select>
-						 </div>
-						 <div class="col-md-3">
-						 <label> RT </label>
-						 	<select name="rukunrumahtangga" id="rukunrumahtangga" class="form-control">
-					     	</select>
-						 </div> -->
-						 <div class="col-md-3">
+						 <div class="col-md-6">
 						 	<label> Tahun </label>
 						 	<select name="tahunfilter" id="tahunfilter" class="form-control">
 						 			<option value="all">All</option>
@@ -66,7 +56,7 @@
 								<?php	} ;?>
 					     	</select>
 				     	</div>
-				 		<div class="col-md-3">
+				 		<div class="col-md-6">
 				 			<label> Bulan </label>
 						 	<select name="bulanfilter" id="bulanfilter" class="form-control">
 						 	<option value="all">All</option>
@@ -89,7 +79,7 @@
 </section>
 
 <div id="popup_kpldh" style="display:none">
-	<div id="popup_title">Nomor Urut Keluarga</div>
+	<div id="popup_title">Pendataan Data Keluarga</div>
 	<div id="popup_content">&nbsp;</div>
 </div>
 
@@ -197,8 +187,7 @@
 					}
                  }
              	},
-				{ text: 'Jumlah KK', datafield: 'totalkk', columntype: 'textbox', filtertype: 'none', width: '20%' },
-				// { text: 'Jumlah Anggota', datafield: 'totalanggotakeluarga', columntype: 'textbox', filtertype: 'none', width: '15%' },
+				{ text: 'Jumlah Data KK', datafield: 'totalkk', columntype: 'textbox', filtertype: 'none', width: '20%', align:'center', cellsalign:'center' }
 			]
 		});
 
@@ -209,8 +198,8 @@
 		});
 		$("#popup_kpldh").jqxWindow({
 			theme: theme, resizable: false,
-			width: 700,
-			height: 500,
+			width: 750,
+			height: 580,
 			isModal: true, autoOpen: false, modalOpacity: 0.2
 		});
 		$("#popup_kpldh").jqxWindow('open');

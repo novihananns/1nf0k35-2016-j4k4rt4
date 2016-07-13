@@ -190,6 +190,8 @@ class Laporan_kpldh extends CI_Controller {
 			$this->balitaimunisasi($kecamatan,$kelurahan,$rw,$rt);
 		}else if($id_judul=="42"){
 			$this->wanitasubur($kecamatan,$kelurahan,$rw,$rt);
+		}else if($id_judul=="43"){
+			$this->jmlkk($kecamatan,$kelurahan,$rw,$rt);
 		}else{
 			return $judul;
 		}
@@ -1392,5 +1394,31 @@ class Laporan_kpldh extends CI_Controller {
 
 		$data['color']	= $color;
 		die($this->parser->parse("eform/laporan/chartwanitasubur",$data));
+	}
+	public function jmlkk($kecamatan=0,$kelurahan=0,$rw=0,$rt=0)
+	{
+		$bar = array();
+		$color = array('#f56954','#00a65a','#f39c12','#00c0ef','#8d16c5','#d2d6de','#3c8dbc','#69d856','#eb75e4','#9ACD32');
+
+		$i=0;
+		/*foreach ($jmlwanitadesa as $row) {
+
+			$bar[$row->nama]['id_kecamatan'] = $row->id_kecamatan;
+			$bar[$row->nama]['jumlah'] = $row->jumlah;
+			$bar[$row->nama]['nama'] = $row->nama;
+			$bar[$row->nama]['jumlahorang'] = $i+$row->jumlah;
+			
+		}*/
+		$data['kecamatan'] 	= $this->laporan_kpldh_model->get_data_kecamatan();
+		foreach ($data['kecamatan'] as $row) {
+			$bar[$row['code']]['code'] = $row['code'];
+			$bar[$row['code']][$row['code']] = $this->laporan_kpldh_model->get_data_kel($row['code'],6);
+			$bar[$row['code']]['nama'] = $row['nama'];
+		}
+
+		$data['bar']	= $bar;
+
+		$data['color']	= $color;
+		die($this->parser->parse("eform/laporan/jmlpenduduk",$data));
 	}
 }

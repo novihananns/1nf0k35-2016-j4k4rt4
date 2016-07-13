@@ -1419,4 +1419,24 @@ class Laporan_kpldh_model extends CI_Model {
         $query = $this->db->get('data_keluarga_anggota');
         return $query->result();   
     }
+    public function get_jum_kk($kecamatan=0,$kelurahan=0,$rw=0,$rt=0)
+    {
+        if ($kecamatan!=0) {
+            $this->db->where("id_kecamatan",$kecamatan);
+        }
+        if ($kelurahan!=0) {
+            $this->db->where("id_desa",$kelurahan);
+        }
+        if ($rw!=0) {
+            $this->db->where("rw",$rw);
+        }
+        if ($rt!=0) {
+            $this->db->where("rt",$rt);
+        }
+        $this->db->group_by("id_desa");
+        $this->db->select("id_desa,COUNT(*) AS jumlah,cl_village.value ");
+        $this->db->join("cl_village","cl_village.code = id_desa",'left');
+        $query = $this->db->get('data_keluarga');
+        return $query->result();   
+    }
 }

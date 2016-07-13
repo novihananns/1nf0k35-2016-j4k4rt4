@@ -106,8 +106,9 @@ class Admin_menu extends CI_Controller {
 	function dosort(){
 		
 		$this->authentication->verify('admin','add');		
-				
-		if(!empty($this->input->post('item'))){
+		
+		$sort = $this->input->post('item');
+		if(!empty($sort)){
 			$sort = 0;
 			foreach ($this->input->post('item') as $value) {
 				//id#posisi

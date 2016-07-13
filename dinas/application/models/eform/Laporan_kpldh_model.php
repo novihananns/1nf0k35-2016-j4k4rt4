@@ -1,3 +1,4 @@
+
 <?php
 class Laporan_kpldh_model extends CI_Model {
 
@@ -1344,5 +1345,26 @@ class Laporan_kpldh_model extends CI_Model {
         $data = $this->db->get('data_keluarga_anggota')->result_array();
 
         return count($data);
+    }
+    public function get_jum_penduduk($kecamatan=0,$kelurahan=0,$rw=0,$rt=0)
+    {
+        if ($kecamatan!=0) {
+            $this->db->where("id_kecamatan",$kecamatan);
+        }
+        if ($kelurahan!=0) {
+            $this->db->where("id_desa",$kelurahan);
+        }
+        if ($rw!=0) {
+            $this->db->where("rw",$rw);
+        }
+        if ($rt!=0) {
+            $this->db->where("rt",$rt);
+        }
+        $this->db->group_by("id_desa");
+        $this->db->select("id_desa,COUNT(*) AS jumlah,cl_village.value ");
+        $this->db->join("data_keluarga","data_keluarga.id_data_keluarga=data_keluarga_anggota.id_data_keluarga",'left');
+        $this->db->join("cl_village","cl_village.code = id_desa",'left');
+        $query = $this->db->get('data_keluarga_anggota');
+        return $query->result();   
     }
 }

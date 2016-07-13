@@ -10,13 +10,22 @@
 
         <div class="box-footer">
           <div class="row">
+            <div class="col-md-3">
+                Nama Koordinator 
+            </div>
+            <div class="col-md-9">
+                : <?php echo $nama_koordinator=='null' ? 'Kosong' : ucfirst($nama_koordinator) ?>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+                Nama Pendata
+            </div>
+            <div class="col-md-9">
+                : <?php echo $nama_pendata=='null' ? 'Kosong' : ucfirst(str_replace("%20", " ", $nama_pendata))  ?>
+            </div>
           </div>
       </div>
-
-      <div class="box-body">
-      <div class="row">
-      </div>
-     </div> 
      
         <div class="box-body">
         <div class="div-grid">
@@ -32,7 +41,7 @@
 
 <script type="text/javascript">
    
-     var source = {
+     var sourcedetail = {
       datatype: "json",
       type  : "POST",
       datafields: [
@@ -71,24 +80,24 @@
         pagesize: 10,
         beforeprocessing: function(data){   
       if (data != null){
-        source.totalrecords = data[0].TotalRows;          
+        sourcedetail.totalrecords = data[0].TotalRows;          
       }
     }
     };    
-    var dataadapter = new $.jqx.dataAdapter(source, {
+    var dataadapterdetail = new $.jqx.dataAdapter(sourcedetail, {
       loadError: function(xhr, status, error){
         alert(error);
       }
     });
      
-    $('#btn-refresh').click(function () {
+    $('#btn-refreshdatadetail').click(function () {
       $("#jqxgriddetail").jqxGrid('clearfilters');
     });
 
     $("#jqxgriddetail").jqxGrid({   
       width: '100%',
       selectionmode: 'singlerow',
-      source: dataadapter, theme: theme,columnsresize: true,showtoolbar: false, pagesizeoptions: ['10', '50', '100', '200', '500'],
+      source: dataadapterdetail, theme: theme,columnsresize: true,showtoolbar: false, pagesizeoptions: ['10', '50', '100', '200', '500'],
       showfilterrow: true, filterable: true, sortable: true, autoheight: true, pageable: true, virtualmode: true, editable: false,
       rendergridrows: function(obj)
       {

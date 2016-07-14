@@ -27,7 +27,21 @@
 			$this->obj->db->update('app_users_list', $update, $user);
 			}
 		}
+		function getnamapuskesmas(){
+	        $code = $this->obj->session->userdata('puskesmas');
+	        $this->obj->db->where('code','P'.$code);
+	        $query = $this->obj->db->get('cl_phc');
+	        if ($query->num_rows() > 0 ) {
+	        	foreach ($query->result() as $key) {
+		            $nama = $key->value;
+		        }
+	        }else{
+	        	$nama = '';
+	        }
 
+	        
+	        return $code.' - '.$nama;
+	    }
 		function login($type=""){
 			//$this->obj->db-> where('status_active', '1');
 			$this->obj->db-> where('app_users_list.code',$this->obj->input->post('kode'));
@@ -45,7 +59,8 @@
 				$update = array('last_login' => time(), 'online' => 1);
 				$user 	= array('username' => $user->username);
 				$this->obj->db->update('app_users_list', $update, $user);
-				$this->_log($type.' Login successful...');
+				$namapuskes     = $this->getnamapuskesmas();
+				$this->_log($type." Login $namapuskes successful...");
 				$this->obj->session->set_flashdata('notification', 'Login successful...');
 
 				redirect(base_url());
@@ -59,12 +74,13 @@
 		
 		function logout($type="")
 		{
+			$namapuskes     = $this->getnamapuskesmas();
 			$update = array('online' => 0);
 			$user 	= array('username' => $this->obj->session->userdata('username'));
 			$this->obj->db->update('app_users_list', $update, $user);
 			$this->update($this->username, array('online' => 0));
 
-			$this->_log('Logout successful...');
+			$this->_log("Logout $namapuskes successful...");
 			$this->_destroy_session();
 			$this->obj->session->set_flashdata('notification', 'You are now logged out');
 			redirect(base_url().$type);

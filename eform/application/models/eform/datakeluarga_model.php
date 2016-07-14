@@ -502,10 +502,11 @@ class Datakeluarga_model extends CI_Model {
         return $temp;
     }
     function delete_entry($kode){
+        $namapuskes     = $this->getnamapuskesmas();
         $namaanggotakk = $this->namakepalakeluarga($kode);
         $namaakk = $this->namakepalakel($kode);
         $ipuser = $this->input->ip_address();
-        $recorddelete = "delete all kk, $kode - $namaakk ( $namaanggotakk ) : ".$ipuser;
+        $recorddelete = "$namapuskes delete all kk, $kode - $namaakk ( $namaanggotakk ) : ".$ipuser;
         $this->user->recorddeletedata($recorddelete);
 
 
@@ -539,10 +540,20 @@ class Datakeluarga_model extends CI_Model {
         }
         return $temp;
     }
+    function getnamapuskesmas(){
+        $code = 'P'.$this->session->userdata('puskesmas');
+        $this->db->where('code',$code);
+        $query = $this->db->get('cl_phc');
+        foreach ($query->result() as $key) {
+            $nama = $key->value;
+        }
+        return $nama;
+    }
     function delete_Anggotakeluarga($kode,$noanggota){
-        $namaanggota = $this->namaanggotakeluarga($kode,$noanggota);
-        $ipuser = $this->input->ip_address();
-        $recorddelete = "delete $kode Anggota keluarga a.n ($namaanggota) : ".$ipuser;
+        $namapuskes     = $this->getnamapuskesmas();
+        $namaanggota    = $this->namaanggotakeluarga($kode,$noanggota);
+        $ipuser         = $this->input->ip_address();
+        $recorddelete   = "$namapuskes delete Anggota keluarga, $kode - ($namaanggota) : ".$ipuser;
         $this->user->recorddeletedata($recorddelete);
 
 

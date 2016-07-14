@@ -91,7 +91,7 @@
         <div class="col-md-8 col-xs-8"> :
             <?php
             foreach($data_kecamatan as $row_kecamatan){
-              echo ucwords(strtolower($row_kecamatan->nama));
+              if($row_kecamatan->code == $id_kecamatan) echo ucwords(strtolower($row_kecamatan->nama));
             }    
             ?>
         </div>

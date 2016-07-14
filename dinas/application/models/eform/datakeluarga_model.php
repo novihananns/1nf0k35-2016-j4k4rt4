@@ -323,7 +323,7 @@ class Datakeluarga_model extends CI_Model {
             $kecamatan = substr($this->session->userdata('puskesmas'),0,7);
         }
 
-        $this->db->where('code',$kecamatan);
+        $this->db->like('code',$kecamatan);
         $query = $this->db->get("cl_kec");
         
         return $query->result();

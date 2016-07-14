@@ -23,7 +23,7 @@ class Laporanpendata_model extends CI_Model {
     function get_data($start=0,$limit=999999,$options=array()){
         $this->db->select("data_keluarga.*,COUNT(id_data_keluarga) AS totalkk",false);
         $kec = substr($this->session->userdata('puskesmas'), 0,7);
-        $this->db->like('id_kecamatan',$kec);
+        // $this->db->like('id_kecamatan',$kec);
 		$this->db->group_by('nama_koordinator,nama_pendata');
 		$query =$this->db->get('data_keluarga',$limit,$start);
         

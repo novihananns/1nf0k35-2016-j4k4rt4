@@ -251,10 +251,13 @@ class Laporanpendata extends CI_Controller {
 		}
 		
 		if($this->session->userdata('filter_code_kelurahan') != '') {
-			$this->db->where('data_keluarga.id_desa',$this->session->userdata('filter_code_kelurahan'));
+				$this->db->where('data_keluarga.id_desa',$this->session->userdata('filter_code_kelurahan'));
 		}
 		if($this->session->userdata('filter_code_kecamatan') != '') {
-			$this->db->where('data_keluarga.id_kecamatan',$this->session->userdata('filter_code_kecamatan'));
+			if($this->session->userdata('filter_code_kecamatan') == 'all') {
+			}else{
+				$this->db->where('data_keluarga.id_kecamatan',$this->session->userdata('filter_code_kecamatan'));
+			}
 		}
 		// if($this->session->userdata('filter_code_rukunwarga') != '') {
 		// 	$this->db->where('data_keluarga.rw',$this->session->userdata('filter_code_rukunwarga'));
@@ -301,10 +304,13 @@ class Laporanpendata extends CI_Controller {
 		}
 		
 		if($this->session->userdata('filter_code_kelurahan') != '') {
-			$this->db->where('data_keluarga.id_desa',$this->session->userdata('filter_code_kelurahan'));
+				$this->db->where('data_keluarga.id_desa',$this->session->userdata('filter_code_kelurahan'));
 		}
 		if($this->session->userdata('filter_code_kecamatan') != '') {
-			$this->db->where('data_keluarga.id_kecamatan',$this->session->userdata('filter_code_kecamatan'));
+			if($this->session->userdata('filter_code_kecamatan') == 'all') {
+			}else{
+				$this->db->where('data_keluarga.id_kecamatan',$this->session->userdata('filter_code_kecamatan'));
+			}
 		}
 		// if($this->session->userdata('filter_code_rukunwarga') != '') {
 		// 	$this->db->where('data_keluarga.rw',$this->session->userdata('filter_code_rukunwarga'));
@@ -650,6 +656,7 @@ class Laporanpendata extends CI_Controller {
 		if($this->input->is_ajax_request()) {
 			$kecamatan = $this->input->post('kecamatan');
 			$this->session->set_userdata('filter_code_kecamatan',$this->input->post('kecamatan'));
+			$this->session->set_userdata('filter_code_kelurahan','');
 			$kode 	= $this->laporanpendata_model->get_datawhere($kecamatan,"code","cl_village");
 
 				echo '<option value="">Pilih Keluarahan</option>';

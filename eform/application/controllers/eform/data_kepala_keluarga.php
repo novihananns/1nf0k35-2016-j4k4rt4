@@ -923,6 +923,11 @@ $data_tabel[] = array(
                         'type' => PHPExcel_Style_Fill::FILL_SOLID,
                         'color' => array('rgb' => '92d050')
                     ),
+
+                    'alignment' => array(
+            		'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+        			),
+
                     'font' => array(
                         'color' => array('rgb' => '000000')
                     )
@@ -930,23 +935,23 @@ $data_tabel[] = array(
             );
 
             //Setting lebar cell
-            $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(35); // NAMA
-            $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(15); // ALAMAT
-            $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(10); // Kontak
-            $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(10); // NAMA
-            $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(25); // ALAMAT
-            $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(25); // Kontak
-            $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(25); // NAMA
-            $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(25); // ALAMAT
-            $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(25); // Kontak
-            $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(25); // NAMA
-            $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(25); // ALAMAT
-            $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(25); // Kontak
-            $objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth(25); // NAMA
-            $objPHPExcel->getActiveSheet()->getColumnDimension('N')->setWidth(25); // ALAMAT
-            $objPHPExcel->getActiveSheet()->getColumnDimension('O')->setWidth(25); // Kontak
-            $objPHPExcel->getActiveSheet()->getColumnDimension('P')->setWidth(25); // NAMA
-            $objPHPExcel->getActiveSheet()->getColumnDimension('Q')->setWidth(25); // ALAMAT
+            $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(35); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(15); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(10); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(10); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('N')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('O')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('P')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('Q')->setWidth(25); 
 
             $objPHPExcel->getActiveSheet()->setTitle('Excel Pertama');
             $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
@@ -965,7 +970,7 @@ $data_tabel[] = array(
 
         $config['upload_path'] = './assets/'; 
         $config['file_name'] = $fileName;
-        $config['allowed_types'] = 'xls|xlsx|csv';
+        $config['allowed_types'] = 'xls|xlsx';
         $config['max_size'] = 10000;
          
         $this->load->library('upload');
@@ -982,6 +987,8 @@ $data_tabel[] = array(
                 $objReader = IOFactory::createReader($inputFileType);
                 $objPHPExcel = $objReader->load($inputFileName);
             } catch(Exception $e) {
+            	$this->session->set_flashdata('alert_fail', 'Silahkan Tentukan File Terlebih Dahulu');
+	    		redirect(base_url()."eform/data_kepala_keluarga/import_add");
                 die('Error loading file "'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
             }
  
@@ -1030,8 +1037,8 @@ $data_tabel[] = array(
                 $insert = $this->db->insert("data_keluarga",$data);
                 delete_files($media['file_path']);
             }
-		$this->session->set_flashdata('alert', 'Import data successful...');
-	    redirect(base_url()."eform/data_kepala_keluarga/");
+		$this->session->set_flashdata('alert', 'Import data successful');
+	    redirect(base_url()."eform/data_kepala_keluarga/import_add");
     }
 
 	function import_add(){

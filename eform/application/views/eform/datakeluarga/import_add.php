@@ -33,13 +33,22 @@
 </div>
 <?php } ?>
 
-<?php if($this->session->flashdata('alert_form')!=""){ ?>
+<?php if($this->session->flashdata('alert')!=""){ ?>
 <div class="alert alert-success alert-dismissable">
   <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
   <h4>  <i class="icon fa fa-check"></i> Information!</h4>
-  <?php echo $this->session->flashdata('alert_form')?>
+  <?php echo $this->session->flashdata('alert')?>
 </div>
 <?php } ?>
+
+<?php if($this->session->flashdata('alert_fail')!=""){ ?>
+<div class="alert alert-warning alert-dismissable">
+  <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+  <h4>  <i class="icon fa fa-remove"></i> Information!</h4>
+  <?php echo $this->session->flashdata('alert_fail')?>
+</div>
+<?php } ?>
+
 <div class="row">
 <form action="<?php echo base_url()?>eform/data_kepala_keluarga/import" method="post" enctype="multipart/form-data">
   <div class="col-md-6">

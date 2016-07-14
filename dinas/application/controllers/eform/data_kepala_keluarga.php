@@ -272,18 +272,18 @@ class Data_kepala_keluarga extends CI_Controller {
 		}else{
 			$kecamatan = '-';
 		}
-		if ($this->input->post('kelurahan')!='' || $this->input->post('kelurahan')!='null') {
+		if ($this->input->post('kelurahan')!='' && $this->input->post('kelurahan')!='null' && $this->input->post('kelurahan') !='Pilih Keluarahan') {
 			$kelurahan = $this->input->post('kelurahan');
 		}else{
 			$kelurahan = '-';
 		}
-		if ($this->input->post('rukunwarga')!='' || $this->input->post('rukunwarga')!='null') {
+		if ($this->input->post('rukunwarga')!='' && $this->input->post('rukunwarga')!='null' && $this->input->post('rukunwarga')!='Pilih RW') {
 			$rukunwarga = $this->input->post('rukunwarga');
 		}else{
 			$rukunwarga = '-';
 		}
-		if ($this->input->post('rukunrumahtangga')!='' || $this->input->post('rukunrumahtangga')!='null') {
-			$rukunrumahtangga = ' / RT '.$this->input->post('rukunrumahtangga');
+		if ($this->input->post('rukunrumahtangga')!='' && $this->input->post('rukunrumahtangga')!='null' && $this->input->post('rukunrumahtangga')!='Pilih RT') {
+			$rukunrumahtangga = $this->input->post('rukunrumahtangga');
 		}else{
 			$rukunrumahtangga = '-';
 		}
@@ -329,7 +329,7 @@ class Data_kepala_keluarga extends CI_Controller {
 		$jumlahkk = $datajml['jml_kk'];
 		$jumlahperempuan = $datajml['jml_perempuan'];
 		$tanggal_export = date("d-m-Y");
-		$data_puskesmas[] = array('nama_puskesmas' => $nama,'kd_prov' => $kd_prov,'kd_kab' => $kd_kab,'tanggal_export' => $tanggal_export,'kd_kab' => $kd_kab,'rw' => $rukunwarga,'rt' => $rukunrumahtangga,'tahunfilter' => $tahunfilter,'bulanfilter' => $bulanfilter,'jumlahjiwa' => $jumlahjiwa,'jumlahlaki' => $jumlahlaki,'jumlahperempuan' => $jumlahperempuan,'jumlahkk' => $jumlahkk);
+		$data_puskesmas[] = array('nama_puskesmas' => $nama,'kecamatan' => $kecamatan,'kelurahan' => $kelurahan,'kd_prov' => $kd_prov,'kd_kab' => $kd_kab,'tanggal_export' => $tanggal_export,'kd_kab' => $kd_kab,'rw' => $rukunwarga,'rt' => $rukunrumahtangga,'tahunfilter' => $tahunfilter,'bulanfilter' => $bulanfilter,'jumlahjiwa' => $jumlahjiwa,'jumlahlaki' => $jumlahlaki,'jumlahperempuan' => $jumlahperempuan,'jumlahkk' => $jumlahkk);
 		
 		$dir = getcwd().'/';
 		$template = $dir.'public/files/template/data_kepala_keluarga.xlsx';		

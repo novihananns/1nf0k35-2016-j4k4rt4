@@ -175,7 +175,7 @@
                 },
 				{ text: 'Del', align: 'center', filtertype: 'none', sortable: false, width: '4%', cellsrenderer: function (row) {
 				    var dataRecord = $("#jqxgrid").jqxGrid('getrowdata', row);
-				    if(dataRecord.delete==1){
+				    if(dataRecord.delete==1 && "<?php echo $dataleveluser; ?>"!='ketukpintu' && "<?php echo $dataleveluser; ?>"!='administrator'){
 						return "<div style='width:100%;padding:4px;text-align:center' onclick='del(\""+dataRecord.id_data_keluarga+"\");'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_del.gif'></a></div>";
 					}else{
 						return "<div style='width:100%;padding:4px;text-align:center'><a href='javascript:void(0);'><a href='javascript:void(0);'><img border=0 src='<?php echo base_url(); ?>media/images/16_lock.gif'></a></div>";

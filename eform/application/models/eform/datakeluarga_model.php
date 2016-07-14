@@ -17,6 +17,24 @@ class Datakeluarga_model extends CI_Model {
             return $key->$kolom_sl;
         }
     }
+    function get_dataleveluser(){
+        $code       = $this->session->userdata('puskesmas');
+        $username   = $this->session->userdata('username');
+        $this->db->where('code',$code);
+        $this->db->select('level');
+        $this->db->where('username',$username);
+        $query = $this->db->get('app_users_list');
+        if ($query->num_rows() > 0) {
+            foreach ($query->result() as $key) {
+                $data = $key->level;
+            }
+        }else{
+            $data = 'administrator';
+        }
+        $query->free_result();
+        return $data;
+
+    }
     function get_data($start=0,$limit=999999,$options=array()){
         $this->db->select("$this->tabel.*,cl_village.value");
 		$this->db->join('cl_village', "data_keluarga.id_desa = cl_village.code",'inner');

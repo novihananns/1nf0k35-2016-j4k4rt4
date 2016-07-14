@@ -84,7 +84,7 @@
                 ?>>Sms</option>
         </select>
       </div> -->
-      <input type="hidden" class="form-control" name="level" value="ketukpintu">
+      <input type="hidden" class="form-control" name="level" value="petugas">
       <br>
       <div class="row">
         <div class="col-xs-6 pull-right">

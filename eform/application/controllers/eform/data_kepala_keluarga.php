@@ -18,7 +18,7 @@ class Data_kepala_keluarga extends CI_Controller {
 	    $this->load->library(array('PHPExcel','PHPExcel/IOFactory'));
 		$this->load->helper('file');
 
-		$this->load->library('tools');
+		// $this->load->library('tools');
 
 
 	}
@@ -468,23 +468,24 @@ $data_tabel[] = array(
 				$kd_kec  = 'KEC. '.$this->morganisasi_model->get_nama('nama','cl_kec','code',substr($kode, 2,7));
 				$kd_upb  = 'KEC. '.$this->morganisasi_model->get_nama('nama','cl_kec','code',substr($kode, 2,7));
 
-		if ($this->input->post('kecamatan')!='' || $this->input->post('kecamatan')!='null') {
+		if ($this->input->post('kecamatan')!='' || $this->input->post('kecamatan')!='null' ) {
 			$kecamatan = $this->input->post('kecamatan');
+
 		}else{
 			$kecamatan = '-';
 		}
-		if ($this->input->post('kelurahan')!='' || $this->input->post('kelurahan')!='null') {
+		if ($this->input->post('kelurahan')!='' && $this->input->post('kelurahan')!='null' && $this->input->post('kelurahan') !='Pilih Keluarahan') {
 			$kelurahan = $this->input->post('kelurahan');
 		}else{
 			$kelurahan = '-';
 		}
-		if ($this->input->post('rukunwarga')!='' || $this->input->post('rukunwarga')!='null') {
+		if ($this->input->post('rukunwarga')!='' && $this->input->post('rukunwarga')!='null' && $this->input->post('rukunwarga')!='Pilih RW') {
 			$rukunwarga = $this->input->post('rukunwarga');
 		}else{
 			$rukunwarga = '-';
 		}
-		if ($this->input->post('rukunrumahtangga')!='' || $this->input->post('rukunrumahtangga')!='null') {
-			$rukunrumahtangga = ' / RT '.$this->input->post('rukunrumahtangga');
+		if ($this->input->post('rukunrumahtangga')!='' && $this->input->post('rukunrumahtangga')!='null' && $this->input->post('rukunrumahtangga')!='Pilih RT') {
+			$rukunrumahtangga = $this->input->post('rukunrumahtangga');
 		}else{
 			$rukunrumahtangga = '-';
 		}
@@ -529,7 +530,7 @@ $data_tabel[] = array(
 		$jumlahlaki = $datajml['jml_laki'];
 		$jumlahkk = $datajml['jml_kk'];
 		$jumlahperempuan = $datajml['jml_perempuan'];
-		$data_puskesmas[] = array('nama_puskesmas' => $nama,'kd_prov' => $kd_prov,'kd_kab' => $kd_kab,'tanggal_export' => $tanggal_export,'kd_kab' => $kd_kab,'rw' => $rukunwarga,'rt' => $rukunrumahtangga,'tahunfilter' => $tahunfilter,'bulanfilter' => $bulanfilter,'jumlahjiwa' => $jumlahjiwa,'jumlahlaki' => $jumlahlaki,'jumlahperempuan' => $jumlahperempuan,'jumlahkk' => $jumlahkk);
+		$data_puskesmas[] = array('nama_puskesmas' => $nama,'kecamatan' => $kecamatan,'kelurahan' => $kelurahan,'kd_prov' => $kd_prov,'kd_kab' => $kd_kab,'tanggal_export' => $tanggal_export,'kd_kab' => $kd_kab,'rw' => $rukunwarga,'rt' => $rukunrumahtangga,'tahunfilter' => $tahunfilter,'bulanfilter' => $bulanfilter,'jumlahjiwa' => $jumlahjiwa,'jumlahlaki' => $jumlahlaki,'jumlahperempuan' => $jumlahperempuan,'jumlahkk' => $jumlahkk);
 		
 		$dir = getcwd().'/';
 		$template = $dir.'public/files/template/data_kepala_keluarga.xlsx';		
@@ -880,6 +881,7 @@ $data_tabel[] = array(
 		$this->authentication->verify('eform','edit');
 		$data['title_group'] = "eForm - Ketuk Pintu";
 		$data['title_form'] = "Data Kepala Keluarga";
+		$data['dataleveluser'] = $this->datakeluarga_model->get_dataleveluser();
 		$this->session->set_userdata('filter_code_kecamatan','');
 		$this->session->set_userdata('filter_code_kelurahan','');
 		$this->session->set_userdata('filter_code_rukunwarga','');
@@ -1152,6 +1154,7 @@ $data_tabel[] = array(
 			$data['title_group'] = "eForm - Ketuk Pintu";
 			$data['title_form']="Ubah Data Keluarga";
 			$data['action']="edit";
+
 			$data['id_data_keluarga'] = $id_data_keluarga;
           	$data['data_provinsi'] = $this->datakeluarga_model->get_provinsi();
           	$data['data_kotakab'] = $this->datakeluarga_model->get_kotakab();
@@ -1225,7 +1228,7 @@ $data_tabel[] = array(
 	function anggota($kode=0)
 	{
 		$this->authentication->verify('eform','edit');
-
+		$data['dataleveluser'] = $this->datakeluarga_model->get_dataleveluser();
 		$data['action']="edit";
 		$data['id_data_keluarga'] = $kode;
 

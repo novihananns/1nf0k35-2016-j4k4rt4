@@ -81,7 +81,7 @@
         if(nik.length==16){
           $.get("<?php echo base_url()?>eform/data_kepala_keluarga/bpjs_search/nik/"+nik,function(res){
               if(res.metaData.code=="200"){
-                if(confirm("Anggota keluarga terdaftar sebagai peserta BPJS "+res.response.kdProviderPst.nmProvider+". \nGunakan data?")){
+                if(confirm("Anggota keluarga terdaftar sebagai peserta BPJS "+res.response.kdProviderPst.nmProvider+". \nStatus "+res.response.ketAktif+", Tunggakan sebesar Rp. "+res.response.tunggakan+"\nGunakan data?")){
                   $("#bpjs").val(res.response.noKartu);
                   $("#nama").val(res.response.nama);
                   $("#providerPeserta").val(res.response.kdProviderPst.nmProvider);

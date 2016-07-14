@@ -14,7 +14,7 @@
                 Nama Koordinator 
             </div>
             <div class="col-md-9">
-                : <?php echo $nama_koordinator=='null' ? 'Kosong' : ucfirst($nama_koordinator) ?>
+                : <?php echo $nama_koordinator=='null' ? 'Kosong' : ucfirst(str_replace("%20", " ",$nama_koordinator)) ?>
             </div>
           </div>
           <div class="row">

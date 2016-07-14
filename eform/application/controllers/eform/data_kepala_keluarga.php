@@ -14,6 +14,13 @@ class Data_kepala_keluarga extends CI_Controller {
 		$this->load->model('eform/pembangunan_keluarga_model');
 		$this->load->model('eform/anggota_keluarga_kb_model');
 		$this->load->model('eform/dataform_model');
+
+	    $this->load->library(array('PHPExcel','PHPExcel/IOFactory'));
+		$this->load->helper('file');
+
+		$this->load->library('tools');
+
+
 	}
 
 	function urut($id_data_keluarga=0){
@@ -888,6 +895,151 @@ $data_tabel[] = array(
 		 $action = $this->dataform_model->insertdataform_profile();
 		 die("$action");
 	}
+
+    function export_template(){
+            $objPHPExcel = new PHPExcel();
+            $objPHPExcel->setActiveSheetIndex(0)
+                                        ->setCellValue('A1', 'Alamat')
+                                        ->setCellValue('B1', 'kode Pos')
+                                        ->setCellValue('C1', 'RW')
+                                        ->setCellValue('D1', 'RT')
+                                        ->setCellValue('E1', 'No. Rumah')
+                                        ->setCellValue('F1', 'Nama Kepala Keluarga')
+                                        ->setCellValue('G1', 'No. Tlp')
+                                        ->setCellValue('H1', 'Nama Desa')
+                                        ->setCellValue('I1', 'Nama Komunitas')
+                                        ->setCellValue('J1', 'ID PKK')
+                                        ->setCellValue('K1', 'Nama koordinator')
+                                        ->setCellValue('L1', 'Nama Pendata')
+                                        ->setCellValue('M1', 'Jam Selesai Mendata')
+                                        ->setCellValue('N1', 'Jml Anak Laki-laki')
+                                        ->setCellValue('O1', 'Jml Anak Perempuan')
+                                        ->setCellValue('P1', 'Ikut KB')
+                                        ->setCellValue('Q1', 'Tidak Ikut KB');
+
+            $objPHPExcel->getActiveSheet()->getStyle("A1:Q1")->applyFromArray(
+                array(
+                    'fill' => array(
+                        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                        'color' => array('rgb' => '92d050')
+                    ),
+
+                    'alignment' => array(
+            		'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+        			),
+
+                    'font' => array(
+                        'color' => array('rgb' => '000000')
+                    )
+                )
+            );
+
+            //Setting lebar cell
+            $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(35); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(15); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(10); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(10); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('N')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('O')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('P')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('Q')->setWidth(25); 
+
+            $objPHPExcel->getActiveSheet()->setTitle('Excel Pertama');
+            $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
+            header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+            header("Cache-Control: no-store, no-cache, must-revalidate");
+            header("Cache-Control: post-check=0, pre-check=0", false);
+            header("Pragma: no-cache");
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="TemplateExcel.xlsx"');
+            $objWriter->save("php://output");
+ 
+    }
+
+    function import(){
+        $fileName = time().$_FILES['file_excel']['name'];
+
+        $config['upload_path'] = './assets/'; 
+        $config['file_name'] = $fileName;
+        $config['allowed_types'] = 'xls|xlsx';
+        $config['max_size'] = 10000;
+         
+        $this->load->library('upload');
+        $this->upload->initialize($config);
+         
+        if(! $this->upload->do_upload('file_excel') )
+        $this->upload->display_errors();
+             
+        $media = $this->upload->data('file_excel');
+        $inputFileName = './assets/'.$media['file_name'];
+         
+        try {
+                $inputFileType = IOFactory::identify($inputFileName);
+                $objReader = IOFactory::createReader($inputFileType);
+                $objPHPExcel = $objReader->load($inputFileName);
+            } catch(Exception $e) {
+            	$this->session->set_flashdata('alert_fail', 'Silahkan Tentukan File Terlebih Dahulu');
+	    		redirect(base_url()."eform/data_kepala_keluarga/import_add");
+                die('Error loading file "'.pathinfo($inputFileName,PATHINFO_BASENAME).'": '.$e->getMessage());
+            }
+ 
+            $sheet = $objPHPExcel->getSheet(0);
+            $highestRow    = $sheet->getHighestDataRow();
+            $highestColumn = $sheet->getHighestDataColumn();
+
+            // print_r($highestRow);
+            // print_r($highestColumn);
+            // die();
+             
+            for ($row = 2; $row <= $highestRow; $row++){  //  Read a row of data into an array                 
+                $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,NULL,TRUE,FALSE);
+        	    
+        	    $id = $this->datakeluarga_model->getNourutkel($this->input->post('kelurahan'));
+                
+                $data = array(
+                    "alamat"             => $rowData[0][0],
+                    "id_kodepos"         => $rowData[0][1],
+                    "rw" 			     => $rowData[0][2],
+                    "rt"		         => $rowData[0][3],
+                    "norumah"            => $rowData[0][4],
+                    "namakepalakeluarga" => $rowData[0][5],
+                    "notlp"              => $rowData[0][6],
+                    "namadesawisma"      => $rowData[0][7],
+                    "nama_komunitas"     => $rowData[0][8],
+                    "id_pkk"             => $rowData[0][9],
+                    "nama_koordinator"   => $rowData[0][10],
+                    "nama_pendata"       => $rowData[0][11],
+                    "jam_selesai" 		 => $rowData[0][12],
+                    "jml_anaklaki"		 => $rowData[0][13],
+                    "jml_anakperempuan"  => $rowData[0][14],
+                    "pus_ikutkb"		 => $rowData[0][15],
+                    "pus_tidakikutkb"    => $rowData[0][16]
+                );
+			        $data['id_data_keluarga'] 	 = $id['id_data_keluarga'];
+			        $data['nourutkel'] 	 		 = $id['nourutkel'];
+			        $data['tanggal_pengisian']   = date("Y-m-d", strtotime($this->input->post('tgl_pengisian')));
+			        $data['jam_data'] 			 = $this->input->post('jam_data');
+			        $data['id_propinsi']         = $this->input->post('provinsi');
+			        $data['id_kota'] 		     = $this->input->post('kota');
+			        $data['id_kecamatan']        = $this->input->post('id_kecamatan');
+			        $data['id_desa']             = $this->input->post('kelurahan');
+
+			    //insert to database
+                $insert = $this->db->insert("data_keluarga",$data);
+                delete_files($media['file_path']);
+            }
+		$this->session->set_flashdata('alert', 'Import data successful');
+	    redirect(base_url()."eform/data_kepala_keluarga/import_add");
+    }
 
 	function import_add(){
 		$this->authentication->verify('eform','add');

@@ -20,6 +20,11 @@
         <div class="box-body">
           <div class="box-footer">
           	<div class="col-md-3" style="float:right;">
+			 	<div id="tglfilterlog" value="<?php
+		              echo ($this->session->userdata('filter_datatglfilterlog')!="") ? date("Y-m-d",strtotime($this->session->userdata('filter_datatglfilterlog'))) : "";
+		            ?>"></div>
+			</div>
+          	<div class="col-md-3" style="float:right;">
 			 	<select id="filterlog" class="form-control">
 			 		<option value="">Pilih Log</option>
 			 		<?php 
@@ -75,8 +80,10 @@
 </section>
 <script>
 	$(function () {	
+		$("#tglfilterlog").jqxDateTimeInput({ formatString: 'dd-MM-yyyy', theme: theme, height: '30px'});
 		$("#menu_logactivity").addClass("active");
 		$("#menu_admin_panel").addClass("active");
+		$("#dataTable").dataTable();
 	});
 	$("#filterlog").change(function(){
 			 var filterlog = $(this).val();
@@ -84,6 +91,19 @@
 		        url : '<?php echo base_url().'logactivity/get_filterlogactivity' ?>',
 		        type : 'POST',
 		        data : 'filterlog=' + filterlog,
+		        success : function(data) {
+		          	location.reload();
+		        }
+		      });
+
+		      return false;
+		});
+		$("#tglfilterlog").change(function(){
+			 var tglfilterlog = $(this).val();
+		      $.ajax({
+		        url : '<?php echo base_url().'logactivity/get_tglfilterlog' ?>',
+		        type : 'POST',
+		        data : 'tglfilterlog=' + tglfilterlog,
 		        success : function(data) {
 		          	location.reload();
 		        }

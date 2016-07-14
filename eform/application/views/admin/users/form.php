@@ -65,7 +65,7 @@
         <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
       </div>    
       <br>
-      <div class="input-group">
+      <!-- <div class="input-group">
         <span class="input-group-addon">
           <div style="width:80px">Level Akses</div>
         </span>
@@ -83,7 +83,8 @@
                 if(isset($level) && $level=="sms")  echo "selected";
                 ?>>Sms</option>
         </select>
-      </div>
+      </div> -->
+      <input type="hidden" class="form-control" name="level" value="ketukpintu">
       <br>
       <div class="row">
         <div class="col-xs-6 pull-right">

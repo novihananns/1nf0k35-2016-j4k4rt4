@@ -27,6 +27,19 @@ class Logactivity extends CI_Controller {
 		}else{
 			$this->db->where(array('activity' => "datakosong"));
 		}
+		if ($this->session->userdata('filter_datatglfilterlog') != '') {
+			$tglex 		= explode("-", $this->session->userdata('filter_datatglfilterlog'));
+			$besok 		= mktime(0,0,0,$tglex[1],($tglex[0]+1),$tglex[2]);
+			$kemarin 	= mktime(0,0,0,$tglex[1],($tglex[0]-1),$tglex[2]);//strtotime($tglex[2].'/'.$tglex[1].'/'.($tglex[0]-1));
+			$this->db->where('dtime > ',$kemarin);
+			$this->db->where('dtime < ',$besok);
+			
+		}else{
+			$besok 		= time() + (1 * 24 * 60 * 60);
+			$kemarin 	= time() - (1 * 24 * 60 * 60);
+			$this->db->where('dtime < ',$besok);
+			$this->db->where('dtime > ',$kemarin);
+		}
 		$data['query'] = $this->logactivity_model->get_data(); 
 
 		$data['content'] = $this->parser->parse("admin/logactivity/show",$data,true);
@@ -38,6 +51,15 @@ class Logactivity extends CI_Controller {
 			if($this->input->is_ajax_request()) {
 				$filterlog = $this->input->post('filterlog');
 				$this->session->set_userdata('filter_datafilterlog',$this->input->post('filterlog'));
+			}
+			// show_404();
+		}
+	}
+	function get_tglfilterlog(){
+		if ($this->input->post('tglfilterlog')!="null") {
+			if($this->input->is_ajax_request()) {
+				$tglfilterlog = $this->input->post('tglfilterlog');
+				$this->session->set_userdata('filter_datatglfilterlog',$this->input->post('tglfilterlog'));
 			}
 			// show_404();
 		}

@@ -13,10 +13,6 @@ class Logactivity_model extends CI_Model {
 
     function get_data($start=0,$limit=999999,$options=array())
     {
-		$besok 		= time() + (1 * 24 * 60 * 60);
-		$kemarin 	= time() - (1 * 24 * 60 * 60);
-		$this->db->where('dtime < ',$besok);
-		$this->db->where('dtime > ',$kemarin);
 		$this->db->order_by('dtime','desc');
         $query = $this->db->get($this->tabel,$limit,$start);
         return $query->result();

@@ -31,7 +31,7 @@ class Logactivity extends CI_Controller {
 		if ($this->session->userdata('filter_datatglfilterlog') != '') {
 			$tglex 		= explode("-", $this->session->userdata('filter_datatglfilterlog'));
 			$besok 		= mktime(0,0,0,$tglex[1],($tglex[0]+1),$tglex[2]);
-			$kemarin 	= mktime(0,0,0,$tglex[1],($tglex[0]-1),$tglex[2]);//strtotime($tglex[2].'/'.$tglex[1].'/'.($tglex[0]-1));
+			$kemarin 	= mktime(0,0,0,$tglex[1],($tglex[0]),$tglex[2]);//strtotime($tglex[2].'/'.$tglex[1].'/'.($tglex[0]-1));
 			$this->db->where('dtime > ',$kemarin);
 			$this->db->where('dtime < ',$besok);
 			

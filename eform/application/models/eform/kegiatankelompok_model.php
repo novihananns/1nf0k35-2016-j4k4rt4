@@ -243,14 +243,47 @@ class Kegiatankelompok_model extends CI_Model {
         }
         return $data;
     }
+    function namaanggotakegiatan($kode){
+        $this->db->where('id_data_kegiatan',$kode);
+        $query = $this->db->get('data_kegiatan_peserta');
+        $temp ='';
+        foreach ($query->result() as $key) {
+            $data = $temp.$key->no_kartu.'-'.$key->nama;
+            $temp = $data.', ';
+        }
+        return $temp;
+    }
+    function getnamapuskesmas(){
+        $code = 'P'.$this->session->userdata('puskesmas');
+        $this->db->where('code',$code);
+        $query = $this->db->get('cl_phc');
+        foreach ($query->result() as $key) {
+            $nama = $key->value;
+        }
+        return $nama;
+    }
+    function namakegiatan($kode){
+        $this->db->where('id_data_kegiatan',$kode);
+        $query = $this->db->get('data_kegiatan');
+        $temp ='';
+        foreach ($query->result() as $key) {
+            $data = $key->materi.', ';
+            $temp = $data;
+        }
+        return $temp;
+    }
+
 	function deletealldata($kode)
 	{
+        $namaanggotakegiatan = $this->namaanggotakegiatan($kode);
+        $namapuskes     = $this->getnamapuskesmas();
+        $namakegiatan = $this->namakegiatan($kode);
+        $ipuser = $this->input->ip_address();
+        $recorddelete = "$namapuskes delete: data_kegiatan $kode - $namakegiatan ($namaanggotakegiatan) : ".$ipuser;
+        $this->user->recorddeletedata($recorddelete);
+
 		$this->db->where('id_data_kegiatan',$kode);
 		$this->db->delete('data_kegiatan_peserta');
-
-        $ipuser = $this->input->ip_address();
-        $recorddelete = "delete: data_kegiatan_peserta,data_kegiatan : ".$ipuser;
-        $this->user->recorddeletedata($recorddelete);
 
         $this->db->where('id_data_kegiatan',$kode);
         return $this->db->delete('data_kegiatan');
@@ -258,10 +291,23 @@ class Kegiatankelompok_model extends CI_Model {
     function get_jenis(){
         return $this->db->get('mas_club_kelompok')->result();
     }
+    function kegitandetail($id_data_kegiatan,$no_kartu){
+        $this->db->where('id_data_kegiatan',$id_data_kegiatan);
+        $this->db->where('no_kartu',$no_kartu);
+        $query = $this->db->get('data_kegiatan_peserta');
+        $temp ='';
+        foreach ($query->result() as $key) {
+            $data = $temp.$key->no_kartu.'-'.$key->nama;
+            $temp = $data.', ';
+        }
+        return $temp;
+    }
 	function delete_entryitem($id_data_kegiatan,$no_kartu)
 	{   
+        $kegitandetail = $this->kegitandetail($id_data_kegiatan,$no_kartu);
+        $namapuskes     = $this->getnamapuskesmas();
         $ipuser = $this->input->ip_address();
-        $recorddelete = "delete data_kegiatan_peserta : ".$ipuser;
+        $recorddelete = "$namapuskes delete data_kegiatan_peserta ( $kegitandetail ) : ".$ipuser;
         $this->user->recorddeletedata($recorddelete);
 
 

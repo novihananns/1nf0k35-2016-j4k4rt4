@@ -306,6 +306,12 @@
 </div>
 <script>
 $(function () { 
+	$("[name='profile_c_1_a_jumlah']").keyup(function(){
+		var gaji = $(this).val();
+		gaji = gaji.replace(".", "");
+		gaji = gaji.replace(",", "");
+		$(this).val(gaji);
+	});
 	$("input[name^=profile]").change(function(){
 		//	alert($(this).attr('name')+' ' +$(this).val());
 			var kodedata= $(this).attr('name');

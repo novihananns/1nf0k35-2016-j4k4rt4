@@ -76,7 +76,17 @@
           <option value="ketukpintu" <?php 
                 if(isset($level) && $level=="ketukpintu")  echo "selected";
                 ?>>Ketukpintu</option>
-          <option value="guest" disabled <?php 
+        </select>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-xs-6 pull-right">
+          <button type="submit" class="btn btn-danger btn-block btn-flat">Simpan</button>
+          <button type="button" id="btn_back" class="btn btn-primary btn-block btn-flat">Kembali</button>
+        </div><!-- /.col -->
+      </div>
+  </div><!-- /.form-box -->
+          <!-- <option value="guest" disabled <?php 
                 if(isset($level) && $level=="guest")  echo "selected";
                 ?>>Guest</option>
           <option value="inventory" disabled <?php 
@@ -90,18 +100,7 @@
                 ?>>Keuangan</option>
           <option value="sms" disabled <?php 
                 if(isset($level) && $level=="sms")  echo "selected";
-                ?>>Sms</option>
-        </select>
-      </div>
-      <br>
-      <div class="row">
-        <div class="col-xs-6 pull-right">
-          <button type="submit" class="btn btn-danger btn-block btn-flat">Simpan</button>
-          <button type="button" id="btn_back" class="btn btn-primary btn-block btn-flat">Kembali</button>
-        </div><!-- /.col -->
-      </div>
-  </div><!-- /.form-box -->
-
+                ?>>Sms</option> -->
   <div class="col-md-6">
     <p class="login-box-msg">Silahkan lengkapi data profil :</p>
       <div class="input-group">

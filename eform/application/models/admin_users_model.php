@@ -18,6 +18,7 @@ class Admin_users_model extends CI_Model {
     {
 		$this->db->where('app_users_list.code',$this->session->userdata('puskesmas'));
 		$this->db->where('app_users_list.username <>','admin');
+		$this->db->where('app_users_list.username <>','puskesmas');
 		foreach($options as $x=>$y){
 			if($x=="username"){
 				$this->db->like($x,$y);

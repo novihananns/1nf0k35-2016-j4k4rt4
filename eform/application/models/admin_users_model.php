@@ -165,6 +165,7 @@ class Admin_users_model extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('app_users_list');
 		$this->db->where('username', "".$this->input->post('username'));
+		$this->db->where('code', "".$this->input->post('code'));
 		$query=$this->db->get();
 		if ($query->num_rows() > 0) {
 			$profile['email']=$this->input->post('email');

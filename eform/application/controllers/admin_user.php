@@ -63,7 +63,7 @@ class Admin_user extends CI_Controller {
 		$this->load->model('morganisasi_model');
 		$this->authentication->verify('admin','add');
 
-        $this->form_validation->set_rules('username', 'Username', 'trim|required|callback_check_username2');
+        $this->form_validation->set_rules('username', 'Username', 'trim|required|callback_check_username|callback_alpha_dash_space|alpha');
         $this->form_validation->set_rules('email', 'Email Pendaftar', 'trim|required|callback_check_email2');
         $this->form_validation->set_rules('nama', 'Nama Pendaftar', 'trim|required');
         $this->form_validation->set_rules('code', 'code', 'trim|required');
@@ -84,7 +84,7 @@ class Admin_user extends CI_Controller {
 			$this->session->set_flashdata('alert', 'Save data successful...');
 			redirect(base_url()."admin_user");
 		}else{
-			$this->session->set_flashdata('alert_form', 'Save data failed...');
+			$this->session->set_flashdata('alert_form', "Maaf, penyimpanan gagal. Username tidak boleh sama dalam satu puskesmas");
 			redirect(base_url()."admin_user/add");
 		}
 	}

@@ -58,12 +58,20 @@ class Admin_user extends CI_Controller {
 
 	}
 
+	function dataspasi($data =''){
+		if (preg_match ('/[^a-zA-Z0-9]/i', $data)==false && preg_match('/\s/',$data) ==false) {
+			return TRUE;
+		}else{
+			$this->form_validation->set_message('dataspasi', 'Username hanya boleh kombinasi dari huruf dan angka dan tidak boleh mengandung spasi dan karakter');
+			return FALSE;
+		}
+	}
 	function add()
 	{
 		$this->load->model('morganisasi_model');
 		$this->authentication->verify('admin','add');
 
-        $this->form_validation->set_rules('username', 'Username', 'trim|required|callback_check_username|callback_alpha_dash_space|alpha');
+        $this->form_validation->set_rules('username', 'Username', 'trim|required|callback_check_username2|callback_dataspasi');
         $this->form_validation->set_rules('email', 'Email Pendaftar', 'trim|required|callback_check_email2');
         $this->form_validation->set_rules('nama', 'Nama Pendaftar', 'trim|required');
         $this->form_validation->set_rules('code', 'code', 'trim|required');

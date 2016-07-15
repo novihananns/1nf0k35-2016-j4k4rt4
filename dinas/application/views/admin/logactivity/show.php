@@ -44,6 +44,7 @@
                   <table id="dataTable" class="table table-bordered table-hover">
                     <thead>
                       <tr>
+                      	<th>No</font></th>
 						<th>Username</font></th>
 						<th>Waktu</font></th>
 						<th>Keterangan</font></th>
@@ -51,9 +52,13 @@
                     </thead>
                     <tbody>
 					<?php 
-					foreach($query as $row):?>
+					$start = '000';
+					foreach($query as $row):
+						$tmp = ((int)$start)+1;
+                		$start = sprintf("%03s", $tmp);
+					?>
 						<tr>
-							
+							<td><?php echo $start; ?>&nbsp;</td>
 							<td><?php echo $row->username?>&nbsp;</td>
 							<td><?php echo date('g:i:s A D, F jS Y',$row->dtime) ?>&nbsp;</td>
 							<td><?php echo $row->activity?>&nbsp;</td>
@@ -62,6 +67,7 @@
 				</tbody>
                     <tfoot>
                       <tr>
+                      	<th>No</font></th>
 						<th>Username</font></th>
 						<th>Waktu</font></th>
 						<th>Keterangan</font></th>

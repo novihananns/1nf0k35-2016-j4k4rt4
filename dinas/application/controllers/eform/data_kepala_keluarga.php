@@ -1400,8 +1400,13 @@ $data_tabel[] = array(
 				$tahunfilter = $this->input->post('tahunfilter');
 				if ($tahunfilter=='' || empty($tahunfilter) || $tahunfilter=='all') {
 					echo '<option value="all">Bulan</option>';
+					if ($tahunfilter=='all') {
+						$this->session->set_userdata('filter_code_cl_tahundata',$tahunfilter);
+						$this->session->set_userdata('filter_code_cl_bulandata','');
+					}else{
 						$this->session->set_userdata('filter_code_cl_tahundata','');
 						$this->session->set_userdata('filter_code_cl_bulandata','');
+					}
 				}else{
 					$bln=array(1=>"Januari","Februari","Maret","April","Mei","Juni","July","Agustus","September","Oktober","November","Desember");
 					$this->session->set_userdata('filter_code_cl_tahundata',$this->input->post('tahunfilter'));

@@ -197,7 +197,7 @@
 						</tr>
 						<tr>
 							<td align='center'>3.</td>
-							<td>Penghayatan Kesehatan Lingkungan</td>
+							<td>Penghayatan Pengamalan Pancasila</td>
 							<td align='center'><input type="radio" name="profile_b_3_a_radio" id="profile_b_3_a_radio_ya" value="1"></td>
 							<td align='center'><input type="radio" name="profile_b_3_a_radio" id="profile_b_3_a_radio_tidak" value="0"></td>
 							<td colspan="2"><input type="text" name="profile_b_3_a_catatan" id="profile_b_3_a_catatan"  class="form-control" style="border:0;background:#dde4ff"></td>

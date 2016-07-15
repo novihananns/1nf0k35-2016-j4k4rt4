@@ -57,13 +57,20 @@ class Admin_user extends CI_Controller {
 		$TBS->Show(OPENTBS_DOWNLOAD, $output_file_name);
 
 	}
-
+	function dataspasi($data =''){
+		if (preg_match ('/[^a-zA-Z0-9]/i', $data)==false && preg_match('/\s/',$data) ==false) {
+			return TRUE;
+		}else{
+			$this->form_validation->set_message('dataspasi', 'Username hanya boleh kombinasi dari huruf dan angka dan tidak boleh mengandung spasi dan karakter');
+			return FALSE;
+		}
+	}
 	function add()
 	{
 		$this->load->model('morganisasi_model');
 		$this->authentication->verify('admin','add');
 
-        $this->form_validation->set_rules('username', 'Username', 'trim|required|callback_check_username2');
+        $this->form_validation->set_rules('username', 'Username', 'trim|required|callback_check_username2|callback_dataspasi');
         $this->form_validation->set_rules('email', 'Email Pendaftar', 'trim|required|callback_check_email2');
         $this->form_validation->set_rules('nama', 'Nama Pendaftar', 'trim|required');
         $this->form_validation->set_rules('code', 'code', 'trim|required');
@@ -84,7 +91,7 @@ class Admin_user extends CI_Controller {
 			$this->session->set_flashdata('alert', 'Save data successful...');
 			redirect(base_url()."admin_user");
 		}else{
-			$this->session->set_flashdata('alert_form', 'Save data failed...');
+			$this->session->set_flashdata('alert_form', 'Maaf, penyimpanan gagal. Username tidak boleh sama dalam satu puskesmas');
 			redirect(base_url()."admin_user/add");
 		}
 	}

@@ -165,13 +165,14 @@ class Admin_users_model extends CI_Model {
         $this->db->where('code', "".$this->input->post('code'));
         $query=$this->db->get();
         if ($query->num_rows() > 0) {
-            $profile['email']=$this->input->post('email');
-            $profile['nama']=$this->input->post('nama');
-            $profile['code']=$this->input->post('code');
-            $profile['phone_number']=$this->input->post('phone_number');
-            if($this->db->update('app_users_profile',  $profile, array('username' => $this->input->post('username')))){
-                return $this->input->post('username');
-            }
+            // $profile['email']=$this->input->post('email');
+            // $profile['nama']=$this->input->post('nama');
+            // $profile['code']=$this->input->post('code');
+            // $profile['phone_number']=$this->input->post('phone_number');
+            // if($this->db->update('app_users_profile',  $profile, array('username' => $this->input->post('username')))){
+            //     return $this->input->post('username');
+            // }
+            return false;
         } else {
             if($this->db->insert("app_users_list", $data)) {
             

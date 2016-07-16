@@ -104,7 +104,7 @@
         if(nik.length==16){
           $.get("<?php echo base_url()?>eform/data_kepala_keluarga/bpjs_search/nik/"+nik,function(res){
               if(res.metaData.code=="200"){
-                if(confirm("Anggota keluarga terdaftar sebagai peserta BPJS.\nGunakan data?")){
+                if(confirm("Anggota keluarga terdaftar sebagai peserta BPJS "+res.response.kdProviderPst.nmProvider+". \nStatus "+res.response.ketAktif+", Tunggakan sebesar Rp. "+res.response.tunggakan+"\nGunakan data?")){
                   $("#keluarga6_bpjs").val(res.response.noKartu).change();
                   $("#keluarga6_nama").val(res.response.nama).change();
 
@@ -132,7 +132,7 @@
         if(bpjs.length==13){
           $.get("<?php echo base_url()?>eform/data_kepala_keluarga/bpjs_search/bpjs/"+bpjs,function(res){
               if(res.metaData.code=="200"){
-                if(confirm("Nomor BPJS terdaftar.\nGunakan data?")){
+                if(confirm("Anggota keluarga terdaftar sebagai peserta BPJS "+res.response.kdProviderPst.nmProvider+". \nStatus "+res.response.ketAktif+", Tunggakan sebesar Rp. "+res.response.tunggakan+"\nGunakan data?")){
                   $("input[name='keluarga6_nik']").val(res.response.noKTP).change();
                   $("#keluarga6_nama").val(res.response.nama).change();
 

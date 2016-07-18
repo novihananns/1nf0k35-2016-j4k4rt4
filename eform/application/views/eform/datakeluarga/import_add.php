@@ -206,7 +206,7 @@ $("#btn-import").click(function(){
         processData : false,
         type : 'POST',
         mimeType:"multipart/form-data",
-        url : '<?php echo base_url()."eform/data_kepala_keluarga/proses" ?>',
+        url : '<?php echo base_url()."eform/data_kepala_keluarga/importdata" ?>',
         data: new FormData(form),
         success : function(response){
           if(response=="OK"){

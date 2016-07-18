@@ -901,25 +901,291 @@ $data_tabel[] = array(
     function export_template(){
             $objPHPExcel = new PHPExcel();
             $objPHPExcel->setActiveSheetIndex(0)
-                                        ->setCellValue('A1', 'Alamat')
-                                        ->setCellValue('B1', 'kode Pos')
-                                        ->setCellValue('C1', 'RW')
-                                        ->setCellValue('D1', 'RT')
-                                        ->setCellValue('E1', 'No. Rumah')
-                                        ->setCellValue('F1', 'Nama Kepala Keluarga')
-                                        ->setCellValue('G1', 'No. Tlp')
-                                        ->setCellValue('H1', 'Nama Desa')
-                                        ->setCellValue('I1', 'Nama Komunitas')
-                                        ->setCellValue('J1', 'ID PKK')
-                                        ->setCellValue('K1', 'Nama koordinator')
-                                        ->setCellValue('L1', 'Nama Pendata')
-                                        ->setCellValue('M1', 'Jam Selesai Mendata')
-                                        ->setCellValue('N1', 'Jml Anak Laki-laki')
-                                        ->setCellValue('O1', 'Jml Anak Perempuan')
-                                        ->setCellValue('P1', 'Ikut KB')
-                                        ->setCellValue('Q1', 'Tidak Ikut KB');
+                                        ->setCellValue('A1', 'Keluaran')
+                                        ->setCellValue('B1', 'RW')
+                                        ->setCellValue('C1', 'RT')
+                                        ->setCellValue('D1', 'URT')
+                                        ->setCellValue('E1', 'Kode Pos')
+                                        ->setCellValue('F1', 'Alamat')
+                                        ->setCellValue('G1', 'Nama Komunitas')
+                                        ->setCellValue('H1', 'Nama Kepala Rumah Tangga')
+                                        ->setCellValue('I1', 'No. HP')
+                                        ->setCellValue('J1', 'Nama Dasa Wisma')
+                                        ->setCellValue('K1', 'Jml Anak Laki-laki')
+                                        ->setCellValue('L1', 'Jml Anak Perempuan')
+                                        ->setCellValue('M1', 'Jml Peserta KB')
+                                        ->setCellValue('N1', 'Jml Bukan Peserta KB')
+                                        ->setCellValue('O1', 'Jam Selesai Mendata')
+                                        ->setCellValue('P1', 'Nama koordinator')
+                                        ->setCellValue('Q1', 'Nama Pendata')
+                                        ->setCellValue('R1', 'NIK')
+                                        ->setCellValue('S1', 'BPJS')
+                                        ->setCellValue('T1', 'Nama')
+                                        ->setCellValue('U1', 'Jenis Kelamin')
+                                        ->setCellValue('V1', 'Tempat Lahir')
+                                        ->setCellValue('W1', 'Tanggal Lahir')
+                                        ->setCellValue('X1', 'Hubungan')
+                                        ->setCellValue('Y1', 'Agama')
+                                        ->setCellValue('Z1', 'Pendidikan')
+                                        ->setCellValue('AA1', 'Pekerjaan')
+                                        ->setCellValue('AB1', 'Status Kawin')
+                                        ->setCellValue('AC1', 'JKN')
+                                        ->setCellValue('AD1', 'Suku')
+                                        ->setCellValue('AE1', 'No HP')
+                                        ->setCellValue('AF1', 'Makanan Pokok Sehari-hari ? Beras')
+                                        ->setCellValue('AG1', 'Makanan Pokok Sehari-hari ? Non Beras')
+                                        ->setCellValue('AH1', 'Makanan Pokok Sehari-hari ? Mie Instan')
+                                        ->setCellValue('AI1', 'Makanan Pokok Sehari-hari ? Makanan Cepat Saji')
+                                        ->setCellValue('AJ1', 'Makanan Pokok Sehari-hari ? Donut & Sejenisnya')
+                                        ->setCellValue('AK1', 'Makanan Pokok Sehari-hari ? Biskuit kering')
+                                        ->setCellValue('AL1', 'Makanan Pokok Sehari-hari ? Gorengan')
+                                        ->setCellValue('AM1', 'Makanan Pokok Sehari-hari ? Lainya')
+                                        ->setCellValue('AN1', 'Sumber Air Keluarga ? Pam/Ledeng/Kemasan')
+                                        ->setCellValue('AO1', 'Sumber Air Keluarga ? Sumur Terlindung')
+                                        ->setCellValue('AP1', 'Sumber Air Keluarga ? Air Hujan / Air Sungai')
+                                        ->setCellValue('AQ1', 'Sumber Air Keluarga ? Lainnya')
+                                        ->setCellValue('AR1', 'Jamban Keluarga')
+                                        ->setCellValue('AS1', 'Saluran Pembuangan Sampah')
+                                        ->setCellValue('AT1', 'Saluran Pembuangan Air Limbah')
+                                        ->setCellValue('AU1', 'Stiker P4k')
+                                        ->setCellValue('AV1', 'UP2K')
+                                        ->setCellValue('AW1', 'Usaha Kesehatan Lingkungan')
+                                        ->setCellValue('AX1', 'Pengahayatan Pengamalan Pancasila')
+                                        ->setCellValue('AY1', 'Kerja Bakti')
+                                        ->setCellValue('AZ1', 'Rukun Kematian')
+                                        ->setCellValue('BA1', 'Keagamaan')
+                                        ->setCellValue('BB1', 'Jimpitan')
+                                        ->setCellValue('BC1', 'Arisan')
+                                        ->setCellValue('BD1', 'Koperasi')
+                                        ->setCellValue('BE1', 'Lainnya')
+                                        ->setCellValue('BF1', 'Pendapatan Per Bulan')
+                                        ->setCellValue('BG1', 'Sumber Pendapatan ? Pekerjaan')
+                                        ->setCellValue('BH1', 'Sumber Pendapatan ? Sumbangan')
+                                        ->setCellValue('BI1', 'Sumber Pendapatan ? Lainya2')
+                                        ->setCellValue('BJ1', 'Usia Kawin : Suami')
+                                        ->setCellValue('BK1', 'Usia Kawin : Istri')
+                                        ->setCellValue('BL1', 'Jumlah Anak Laki-Laki')
+                                        ->setCellValue('BM1', 'Jumlah Anak Perempuan')
+                                        ->setCellValue('BN1', 'Kepersertaan KB')
+                                        ->setCellValue('BO1', 'Metode KB yg sedang/ pernah dilakukan')
+                                        ->setCellValue('BP1', 'Berapa Lama KB ? Tahun')
+                                        ->setCellValue('BQ1', 'Berapa Lama KB ? Bulan')
+                                        ->setCellValue('BR1', 'Ingin pny anak lagi ?')
+                                        ->setCellValue('BS1', 'Alasan tidak ber-KB : Sedang Hamil')
+                                        ->setCellValue('BT1', 'Alasan tidak ber-KB : fertilitas')
+                                        ->setCellValue('BU1', 'Alasan tidak ber-KB :  Tidak menyetujui KB')
+                                        ->setCellValue('BV1', 'Alasan tidak ber-KB :  Tidak tahu tentang KB')
+                                        ->setCellValue('BW1', 'Alasan tidak ber-KB :  Takut efek samping')
+                                        ->setCellValue('BX1', 'Alasan tidak ber-KB :  Pelayanan KB Jauh')
+                                        ->setCellValue('BY1', 'Alasan tidak ber-KB : Tidak mampu/mahal')
+                                        ->setCellValue('BX1', 'Alasan tidak ber-KB : Lainnya')
+                                        ->setCellValue('CA1', 'Tempat pelayanan KB')
+                                        ->setCellValue('CB1', 'Klrg beli satu stel pakaian baru u/ selruh anggota klrg 1th/x')
+                                        ->setCellValue('CC1', 'Seluruh anggota klrg makan min 2x/hr')
+                                        ->setCellValue('CD1', 'Slrh anggota klrg jika sakit berobat ke fasyankes')
+                                        ->setCellValue('CE1', 'Slrh anggota klrg punya baju beda u/ di rumah/kerja/sekolah/pergi')
+                                        ->setCellValue('CF1', 'Slrh anggota klrg mkn daging/telllur/ikan min 1mg/x')
+                                        ->setCellValue('CG1', 'Slrh anggota klrg beribadah')
+                                        ->setCellValue('CH1', 'Pasangan usia subur dgn 2 anak/> menjadi peserta KB')
+                                        ->setCellValue('CI1', 'Klrg punya tabungan emas/ tanah/hewan min senilai Rp. 1 jt')
+                                        ->setCellValue('CJ1', 'Klrg punya kebiasaan berkomunikasi dgn slrh anggota klrg')
+                                        ->setCellValue('CK1', 'Klrg ikut kegiatan sosial di link. RT')
+                                        ->setCellValue('CL1', 'Klrg punya akses informasi dr tv/koran/radio')
+                                        ->setCellValue('CM1', 'Klrg punya anggota klrg yg jd pengurus keg. Sosial')
+                                        ->setCellValue('CN1', 'Klrg punya balita yg ikut posyandu')
+                                        ->setCellValue('CO1', 'Klrg punya balita yg ikut BKB')
+                                        ->setCellValue('CP1', 'Klrg punya remaja yg ikut BKR')
+                                        ->setCellValue('CQ1', 'Klrg punya remaja yg ikut PIK')
+                                        ->setCellValue('CR1', 'Klrg punya lansia yg ikut BKL')
+                                        ->setCellValue('CS1', 'Klrg mengikuti kegiatan UPPKS')
+                                        ->setCellValue('CT1', 'Jenis atap rumah terluas ? Daun/Rumbia')
+                                        ->setCellValue('CU1', 'Jenis atap rumah terluas ? Seng/Asbes')
+                                        ->setCellValue('CV1', 'Jenis atap rumah terluas ? Genteng/Sirap')
+                                        ->setCellValue('CW1', 'Jenis atap rumah terluas ? Lainnya')
+                                        ->setCellValue('CX1', 'Jenis dinding terluas ? Tembok')
+                                        ->setCellValue('CY1', 'Jenis dinding terluas ? Kayu/Seng')
+                                        ->setCellValue('CZ1', 'Jenis dinding terluas ? Bambu')
+                                        ->setCellValue('DA1', 'Jenis dinding terluas ? Lainnya')
+                                        ->setCellValue('DB1', 'Jenis lantai rumah terluas ? Ubin/Kramik/Marmer')
+                                        ->setCellValue('DC1', 'Jenis lantai rumah terluas ? Semen/Papan')
+                                        ->setCellValue('DD1', 'Jenis lantai rumah terluas ? Tanah')
+                                        ->setCellValue('DE1', 'Jenis lantai rumah terluas ? Lainnya')
+                                        ->setCellValue('DF1', 'Sumber penerangan utama ? Listrik')
+                                        ->setCellValue('DG1', 'Sumber penerangan utama ? Genset/Diesel')
+                                        ->setCellValue('DH1', 'Sumber penerangan utama ? Lampu Minyak')
+                                        ->setCellValue('DI1', 'Sumber penerangan utama ? Lainnya')
+                                        ->setCellValue('DJ1', 'Sumber air minum utama ? Ledeng/Kemasan')
+                                        ->setCellValue('DK1', 'Sumber air minum utama ? Sumur terlindung/Pompa')
+                                        ->setCellValue('DL1', 'Sumber air minum utama ? Air hujan/sungai')
+                                        ->setCellValue('DM1', 'Sumber air minum utama ? Lainnya')
+                                        ->setCellValue('DN1', 'Bahan bakar utama untuk memasak ? Listri/Gas')
+                                        ->setCellValue('DO1', 'Bahan bakar utama untuk memasak ? Minyak Tanah')
+                                        ->setCellValue('DP1', 'Bahan bakar utama untuk memasak ? Arang/Kayu')
+                                        ->setCellValue('DQ1', 'Bahan bakar utama untuk memasak ? Lainnya')
+                                        ->setCellValue('DR1', 'Fasilitas tempat buang air besar')
+                                        ->setCellValue('DS1', 'Status kepemilikan rumah/bangunan tempat tinggal ? Milik Sendiri')
+                                        ->setCellValue('DT1', 'Status kepemilikan rumah/bangunan tempat tinggal ? Sewa/Kontrak')
+                                        ->setCellValue('DU1', 'Status kepemilikan rumah/bangunan tempat tinggal ? Menumpang')
+                                        ->setCellValue('DV1', 'Status kepemilikan rumah/bangunan tempat tinggal ? Lainnya')
+                                        ->setCellValue('DW1', 'Luas rumah / banngunan keselurahan')
+                                        ->setCellValue('DX1', 'Jumlah Org yg menetap dlm rumah')
+                                        ->setCellValue('DY1', 'Akte lahir')
+                                        ->setCellValue('DZ1', 'Tidak')
+                                        ->setCellValue('EA1', 'Putus Sekolah')
+                                        ->setCellValue('EB1', 'Ikut PAUD')
+                                        ->setCellValue('EC1', 'Ikut Kel. Belajar, paket ?')
+                                        ->setCellValue('ED1', 'Jika Ya, pilih jenis paket A, B, C atau KF')
+                                        ->setCellValue('EE1', 'Punya tabungan')
+                                        ->setCellValue('EF1', 'Ikut koperasi')
+                                        ->setCellValue('EG1', 'Jika Ya, tuliskan jenis')
+                                        ->setCellValue('EH1', 'Usia Subur')
+                                        ->setCellValue('EI1', 'Hamil')
+                                        ->setCellValue('EJ1', 'Disabilitas, sebutkan jenis')
+                                        ->setCellValue('EK1', 'Jika Ya, tuliskan jenisnya')
+                                        ->setCellValue('EL1', 'Cuci Tangan Pakai Sabun sebelum menyiapkan makanan')
+                                        ->setCellValue('EM1', 'Cuci tangan Pakai Sabun sebelum mencebok bayi')
+                                        ->setCellValue('EN1', 'Cuci tangan Pakai Sabun sebelum menyusui bayi')
+                                        ->setCellValue('EO1', 'Cuci tangan Pakai Sabun setiap kali tangan kotor')
+                                        ->setCellValue('EP1', 'Cuci tangan Pakai Sabun setelah buang air besar')
+                                        ->setCellValue('EQ1', 'Cuci tangan Pakai Sabun setelah menggunakan pestisida')
+                                        ->setCellValue('ER1', 'Lokasi BAB')
+                                        ->setCellValue('ES1', 'Sikat gigi setiap hari? (Ya atau Tidak)?')
+                                        ->setCellValue('ET1', 'Kapan menyikat gigi ? setelah mandi pagi')
+                                        ->setCellValue('EU1', 'Menyikat gigi ? setelah mandi sore')
+                                        ->setCellValue('EV1', 'Menyikat gigi ? setelah makan pagi')
+                                        ->setCellValue('EW1', 'Menyikat gigi ? setelah makan malam')
+                                        ->setCellValue('EX1', 'Menyikat gigi ? setelah makan siang')
+                                        ->setCellValue('EY1', 'Menyikat gigi ?  ? sesudah bangun pagi')
+                                        ->setCellValue('EZ1', 'Merokok selama 1 bln terakhir ?')
+                                        ->setCellValue('DA1', 'Umur brp  ? ')
+                                        ->setCellValue('FB1', 'Mulai merokok setiap hari?')
+                                        ->setCellValue('FC1', 'Pertama kali merokok ?')
+                                        ->setCellValue('FD1', 'Untuk jawaban "Ya" , Jumlah batang rokok dikonsumsi per hari ?')
+                                        ->setCellValue('FE1', 'Minuman sehari-hari : Air putih')
+                                        ->setCellValue('FF1', 'Minuman sehari-hari : Susu')
+                                        ->setCellValue('FG1', 'Minuman sehari-hari : Kopi')
+                                        ->setCellValue('FH1', 'Minuman sehari-hari : Teh Tawar')
+                                        ->setCellValue('FI1', 'Minuman sehari-hari :  Teh Manis')
+                                        ->setCellValue('FJ1', 'Minuman sehari-hari : Juice buah')
+                                        ->setCellValue('FK1', 'Minuman sehari-hari : Minuman ber-soda')
+                                        ->setCellValue('FL1', 'Minuman sehari-hari : Minuman ber-alkohol')
+                                        ->setCellValue('FM1', 'Minuman sehari-hari : Lainnya')
+                                        ->setCellValue('FN1', 'Pernah di Dx. Dgn/tanpa Rontgen')
+                                        ->setCellValue('FO1', 'Mengalami  demam, batuk, sulit nafas Dgn/tanpa nyeri dada')
+                                        ->setCellValue('FP1', 'Jika ya, kesulitan yg dialami ? Napas cepat')
+                                        ->setCellValue('FQ1', 'Jika ya, kesulitan yg dialami ? Napas cuping hidung')
+                                        ->setCellValue('FR1', 'Jika ya, kesulitan yg dialami ? Tarikan dinding dada bawah ke dalam')
+                                        ->setCellValue('FS1', 'Pernah di Dx. Ginjal Kronis (min. sakit slm 3bln berturut2)')
+                                        ->setCellValue('FT1', 'Pernah di Dx. Batu Ginjal ?')
+                                        ->setCellValue('FU1', 'Akhir2 ini batuk ?')
+                                        ->setCellValue('FV1', 'Jika ya, batuk disertai gejala ? Dahak')
+                                        ->setCellValue('FW1', 'Jika ya, batuk disertai gejala ?Darah/ Dahak campur darah')
+                                        ->setCellValue('FX1', 'Jika ya, batuk disertai gejala ? Demam')
+                                        ->setCellValue('FY1', 'Jika ya, batuk disertai gejala ? Nyeri Dada')
+                                        ->setCellValue('FX1', 'Jika ya, batuk disertai gejala ? Sesak Nafas')
+                                        ->setCellValue('GA1', 'Jika ya, batuk disertai gejala ?  Berkeringat malam hari tanpa kegiatan fisik')
+                                        ->setCellValue('GB1', 'Jika ya, batuk disertai gejala ?Nafsu Makan menurun')
+                                        ->setCellValue('GC1', 'Jika ya, batuk disertai gejala ?Berat badan menurun/ sulit bertambah')
+                                        ->setCellValue('GD1', 'Pernah di Dx. TB Paru ?Ya, dalam ≤ 1 tahun terakhir')
+                                        ->setCellValue('GE1', 'Pernah di Dx. TB Paru ? Ya, > 1 tahun')
+                                        ->setCellValue('GF1', 'Pernah di Dx. TB Paru ? Tidak')
+                                        ->setCellValue('GG1', 'Pemeriksaan yg digunakan u/ Dx. TB ? Pemeriksaan dahak')
+                                        ->setCellValue('GH1', 'Pemeriksaan yg digunakan u/ Dx. TB ? Pemeriksaan foto dada (Rontgen)')
+                                        ->setCellValue('GI1', 'Pernah di Dx. Kangker ?')
+                                        ->setCellValue('GJ1', 'Pertama kali Di Dx. tahun berapa ?')
+                                        ->setCellValue('GK1', 'Jenis Kangker ? leher rahim (cervix uteri)')
+                                        ->setCellValue('GL1', 'Jenis Kangker ?  Payudara')
+                                        ->setCellValue('GM1', 'Jenis Kangker ? Prostat')
+                                        ->setCellValue('GN1', 'Jenis Kangker ? kolorektal/ usus besar')
+                                        ->setCellValue('GO1', 'Jenis Kangker ?paru dan bronkus')
+                                        ->setCellValue('GP1', 'Jenis Kangker ? Nasofaring')
+                                        ->setCellValue('GQ1', 'Jenis Kangker ? getah bening')
+                                        ->setCellValue('GR1', 'Jenis Kangker ? Lainnya')
+                                        ->setCellValue('GS1', 'Pernah test IVA ?')
+                                        ->setCellValue('GT1', 'Pengobatan yg dijalani ? Pembedahan/ operasi')
+                                        ->setCellValue('GU1', 'Pengobatan yg dijalani ? Radiasi/ penyinaran')
+                                        ->setCellValue('GV1', 'Pengobatan yg dijalani ? Kemoterapi')
+                                        ->setCellValue('GW1', 'Pengobatan yg dijalani ? Lainnya')
+                                        ->setCellValue('GX1', 'Pernah Pap Smear ?')
+                                        ->setCellValue('GY1', 'Pernah kena gejala sesak napas ?')
+                                        ->setCellValue('GZ1', 'Gejala sesak terjadi pd kondisi ? Terpapar udara dingin')
+                                        ->setCellValue('HA1', 'Gejala sesak terjadi pd kondisi ? Debu')
+                                        ->setCellValue('HB1', 'Gejala sesak terjadi pd kondisi ? Asap rokok')
+                                        ->setCellValue('HC1', 'Gejala sesak terjadi pd kondisi ? Stress')
+                                        ->setCellValue('HD1', 'Gejala sesak terjadi pd kondisi ? Flu atau infeksi')
+                                        ->setCellValue('HE1', 'Gejala sesak terjadi pd kondisi ? Kelelahan')
+                                        ->setCellValue('HF1', 'Gejala sesak terjadi pd kondisi ? Alergi obat')
+                                        ->setCellValue('HG1', 'Gejala sesak terjadi pd kondisi ? Alergi makanan')
+                                        ->setCellValue('HH1', 'Gejala sesak disertai dgn kondisi ? Mengi')
+                                        ->setCellValue('HI1', 'Gejala sesak disertai dgn kondisi ? Sesak napas berkurang atau menghilang dengan pengobatan')
+                                        ->setCellValue('HJ1', 'Gejala sesak disertai dgn kondisi ? Sesak napas berkurang atau menghilang tanpa pengobatan')
+                                        ->setCellValue('HK1', 'Gejala sesak disertai dgn kondisi ?Sesak napas lebih berat dirasakan pada malam hari atau menjelang pagi')
+                                        ->setCellValue('HL1', 'Umur berapa sesak pertama kali ?')
+                                        ->setCellValue('HM1', 'Sesak pernah kambuh dlm 12 bln terakhir ?')
+                                        ->setCellValue('HN1', 'Pernah di Dx. DM ?')
+                                        ->setCellValue('HO1', 'Usaha pengendalian DM ? Diet ')
+                                        ->setCellValue('HP1', 'Usaha pengendalian DM ? Olah raga')
+                                        ->setCellValue('HQ1', 'Usaha pengendalian DM ? Minum obat anti diabetik')
+                                        ->setCellValue('HR1', 'Usaha pengendalian DM ? Injeksi insulin')
+                                        ->setCellValue('HS1', 'Gejala yg dialami dlm 1bln terakhir ? Sering lapar')
+                                        ->setCellValue('HT1', 'Gejala yg dialami dlm 1bln terakhir ? Sering haus')
+                                        ->setCellValue('HU1', 'Gejala yg dialami dlm 1bln terakhir ? Sering buang air kecil & jumlah banyak')
+                                        ->setCellValue('HV1', 'Gejala yg dialami dlm 1bln terakhir ? Berat badan turun')
+                                        ->setCellValue('HW1', 'Pernah di Dx. HT ?')
+                                        ->setCellValue('HX1', 'Tahun brp di Dx. Pertama kali ?')
+                                        ->setCellValue('HY1', 'Sedang minum obat HT ?')
+                                        ->setCellValue('HZ1', 'Pernah di Dx. Penyakit Jantung ?')
+                                        ->setCellValue('IA1', 'Tahun brp pertama kali di Dx. ?')
+                                        ->setCellValue('IB1', 'Gejala yg dialami ? Nyeri di dalam dada/ rasa tertekan berat/ tidak nyaman di dada')
+                                        ->setCellValue('IC1', 'Gejala yg dialami ? Nyeri/ tidak nyaman di dada bagian tengah/ dada kiri depan/ menjalar ke lengan kiri')
+                                        ->setCellValue('ID1', 'Gejala yg dialami ? Nyeri/ tidak nyaman di dada dirasakan waktu endaki/ naik tangga/ berjalan tergesa-gesa')
+                                        ->setCellValue('IE1', 'Gejala yg dialami ? Nyeri/ tidak nyaman di dada hilang ketika menghentikan aktivitas/ istirahat')
+                                        ->setCellValue('IF1', 'Pernah di Dx. Stroke ?')
+                                        ->setCellValue('IG1', 'Tahun brp di Dx. ?')
+                                        ->setCellValue('IH1', 'Pernah alami keluhan scr mendadak ? Kelumpuhan pada satu sisi tubuh')
+                                        ->setCellValue('II1', 'Pernah alami keluhan scr mendadak ? Kesemutan atau baal satu sisi tubuh')
+                                        ->setCellValue('IJ1', 'Pernah alami keluhan scr mendadak ? Mulut jadi mencong tanpa kelumpuhan otot mata')
+                                        ->setCellValue('IK1', 'Pernah alami keluhan scr mendadak ? Bicara pelo')
+                                        ->setCellValue('IL1', 'Pernah alami keluhan scr mendadak ? Sulit bicara/ komunikasi dan/atau tidak mengerti pembicaraan')
+                                        ->setCellValue('IM1', 'Sering sakit kepala')
+                                        ->setCellValue('IN1', 'Tdk nafsu makan')
+                                        ->setCellValue('IO1', 'Sulit tidur')
+                                        ->setCellValue('IP1', 'Mudah takut')
+                                        ->setCellValue('IQ1', 'Merasa tegang/ cemas/ kuatir')
+                                        ->setCellValue('IR1', 'Tangan gemetar')
+                                        ->setCellValue('IS1', 'Pencernaan terganggu /buruk')
+                                        ->setCellValue('IT1', 'Sulit berpikir jernih')
+                                        ->setCellValue('IU1', 'Merasa tidak bahagia')
+                                        ->setCellValue('IV1', 'Menangis lebih sering')
+                                        ->setCellValue('IW1', 'Merasa sulit menikmati kegiatan sehari2')
+                                        ->setCellValue('IX1', 'Sulit mengambil keputusan')
+                                        ->setCellValue('IY1', 'Pekerjaan sehari2 terganggu')
+                                        ->setCellValue('IZ1', 'Tdk mampu melakukan hal2 yg bermanfaat dlm hidup')
+                                        ->setCellValue('JA1', 'Kehilangan minat dlm berbagai hal')
+                                        ->setCellValue('JB1', 'Merasa tidak berharga')
+                                        ->setCellValue('JC1', 'Mempunyai pikiran utk mengakhiri hidup')
+                                        ->setCellValue('JD1', 'Merasa lelah sepanjang waktu')
+                                        ->setCellValue('JE1', 'Mengalami rasa tidak enak di perut')
+                                        ->setCellValue('JF1', 'Mudah lelah')
+                                        ->setCellValue('JG1', 'Keluhan tsb pernah berobat ke fasyankes ?')
+                                        ->setCellValue('JH1', 'Jika pernah, apakah dlm 2 mg terakhir ?')
+                                        ->setCellValue('JI1', 'Status Imunisasi')
+                                        ->setCellValue('JJ1', 'Aktivitas Olahraga')
+                                        ->setCellValue('JK1', 'Aktivitas Tidur')
+                                        ->setCellValue('JL1', 'TD')
+                                        ->setCellValue('JM1', 'N')
+                                        ->setCellValue('JN1', 'R')
+                                        ->setCellValue('JO1', 'S')
+                                        ->setCellValue('JP1', 'TB')
+                                        ->setCellValue('JQ1', 'BB')
+                                        ->setCellValue('JR1', 'Conjungtiva')
+                                        ->setCellValue('JS1', 'Status Gizi')
+                                        ->setCellValue('JT1', 'Riwayat Kesehatan Dulu')
+                                        ->setCellValue('JU1', 'Riwayat Kesehatan Sekarang')
+                                        ->setCellValue('JV1', 'Analisa Masalah Kesehatan');
 
-            $objPHPExcel->getActiveSheet()->getStyle("A1:Q1")->applyFromArray(
+
+            $objPHPExcel->getActiveSheet()->getStyle("A1:JX1")->applyFromArray(
                 array(
                     'fill' => array(
                         'type' => PHPExcel_Style_Fill::FILL_SOLID,
@@ -954,6 +1220,271 @@ $data_tabel[] = array(
             $objPHPExcel->getActiveSheet()->getColumnDimension('O')->setWidth(25); 
             $objPHPExcel->getActiveSheet()->getColumnDimension('P')->setWidth(25); 
             $objPHPExcel->getActiveSheet()->getColumnDimension('Q')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('R')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('S')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('T')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('U')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('V')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('X')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('W')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('Y')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('Z')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AA')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AB')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AC')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AD')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AE')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AF')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AG')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AH')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AI')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AJ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AK')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AL')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AM')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AN')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AO')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AP')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AQ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AR')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AS')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AT')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AU')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AV')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AW')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AX')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AY')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('AZ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BA')->setWidth(35); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BB')->setWidth(15); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BC')->setWidth(10); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BD')->setWidth(10); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BE')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BF')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BG')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BH')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BI')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BJ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BK')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BL')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BM')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BN')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BO')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BP')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BQ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BR')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BS')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BT')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BU')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BV')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BX')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BW')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BY')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('BZ')->setWidth(25);  
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CA')->setWidth(35); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CB')->setWidth(15); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CC')->setWidth(10); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CD')->setWidth(10); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CE')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CF')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CG')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CH')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CI')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CJ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CK')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CL')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CM')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CN')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CO')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CP')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CQ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CR')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CS')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CT')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CU')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CV')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CX')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CW')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CY')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('CZ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DA')->setWidth(35); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DB')->setWidth(15); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DC')->setWidth(10); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DD')->setWidth(10); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DE')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DF')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DG')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DH')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DI')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DJ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DK')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DL')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DM')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DN')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DO')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DP')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DQ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DR')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DS')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DT')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DU')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DV')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DX')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DW')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DY')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('DZ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('EA')->setWidth(35); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('EB')->setWidth(15); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('EC')->setWidth(10); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('ED')->setWidth(10); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('EE')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('EF')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('EG')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('EH')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('EI')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('EJ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('EK')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('EL')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('EM')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('EN')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('EO')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('EP')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('EQ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('ER')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('ES')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('ET')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('EU')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('EV')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('EX')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('EW')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('EY')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('EZ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FA')->setWidth(35); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FB')->setWidth(15); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FC')->setWidth(10); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FD')->setWidth(10); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FE')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FF')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FG')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FH')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FI')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FJ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FK')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FL')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FM')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FN')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FO')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FP')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FQ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FR')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FS')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FT')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FU')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FV')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FX')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FW')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FY')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('FZ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GA')->setWidth(35); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GB')->setWidth(15); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GC')->setWidth(10); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GD')->setWidth(10); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GE')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GF')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GG')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GH')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GI')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GJ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GK')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GL')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GM')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GN')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GO')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GP')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GQ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GR')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GS')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GT')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GU')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GV')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GX')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GW')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GY')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('GZ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HA')->setWidth(35); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HB')->setWidth(15); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HC')->setWidth(10); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HD')->setWidth(10); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HE')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HF')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HG')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HH')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HI')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HJ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HK')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HL')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HM')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HN')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HO')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HP')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HQ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HR')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HS')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HT')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HU')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HV')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HX')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HW')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HY')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('HZ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('IA')->setWidth(35); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('IB')->setWidth(15); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('IC')->setWidth(10); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('ID')->setWidth(10); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('IE')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('IF')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('IG')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('IH')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('II')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('IJ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('IK')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('IL')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('IM')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('IN')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('IO')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('IP')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('IQ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('IR')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('IS')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('IT')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('IU')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('IV')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('IX')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('IW')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('IY')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('IZ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('JA')->setWidth(35); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('JB')->setWidth(15); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('JC')->setWidth(10); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('JD')->setWidth(10); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('JE')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('JF')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('JG')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('JH')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('JI')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('JJ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('JK')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('JL')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('JM')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('JN')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('JO')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('JP')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('JQ')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('JR')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('JS')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('JT')->setWidth(25); 
+            $objPHPExcel->getActiveSheet()->getColumnDimension('JU')->setWidth(25); 
+
 
             $objPHPExcel->getActiveSheet()->setTitle('Excel Pertama');
             $objWriter = IOFactory::createWriter($objPHPExcel, 'Excel2007');
@@ -1001,43 +1532,109 @@ $data_tabel[] = array(
             // print_r($highestRow);
             // print_r($highestColumn);
             // die();
-             
+            $temp = array();
+            $data = array();
             for ($row = 2; $row <= $highestRow; $row++){  //  Read a row of data into an array                 
+            	// $temp = $rowData;
                 $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row,NULL,TRUE,FALSE);
-        	    
-        	    $id = $this->datakeluarga_model->getNourutkel($this->input->post('kelurahan'));
+        	    // print_r($rowData);
+        	    $kk [$rowData[0][3]][] = $rowData;
+       //  	    $id = $this->datakeluarga_model->getNourutkel($this->input->post('kelurahan'));
                 
-                $data = array(
-                    "alamat"             => $rowData[0][0],
-                    "id_kodepos"         => $rowData[0][1],
-                    "rw" 			     => $rowData[0][2],
-                    "rt"		         => $rowData[0][3],
-                    "norumah"            => $rowData[0][4],
-                    "namakepalakeluarga" => $rowData[0][5],
-                    "notlp"              => $rowData[0][6],
-                    "namadesawisma"      => $rowData[0][7],
-                    "nama_komunitas"     => $rowData[0][8],
-                    "id_pkk"             => $rowData[0][9],
-                    "nama_koordinator"   => $rowData[0][10],
-                    "nama_pendata"       => $rowData[0][11],
-                    "jam_selesai" 		 => $rowData[0][12],
-                    "jml_anaklaki"		 => $rowData[0][13],
-                    "jml_anakperempuan"  => $rowData[0][14],
-                    "pus_ikutkb"		 => $rowData[0][15],
-                    "pus_tidakikutkb"    => $rowData[0][16]
-                );
-			        $data['id_data_keluarga'] 	 = $id['id_data_keluarga'];
-			        $data['nourutkel'] 	 		 = $id['nourutkel'];
-			        $data['tanggal_pengisian']   = date("Y-m-d", strtotime($this->input->post('tgl_pengisian')));
-			        $data['jam_data'] 			 = $this->input->post('jam_data');
-			        $data['id_propinsi']         = $this->input->post('provinsi');
-			        $data['id_kota'] 		     = $this->input->post('kota');
-			        $data['id_kecamatan']        = $this->input->post('id_kecamatan');
-			        $data['id_desa']             = $this->input->post('kelurahan');
+       //          $data = array(
+       //              "alamat"             => $rowData[0][0],
+       //              "id_kodepos"         => $rowData[0][1],
+       //              "rw" 			     => $rowData[0][2],
+       //              "rt"		         => $rowData[0][3],
+       //              "norumah"            => $rowData[0][4],
+       //              "namakepalakeluarga" => $rowData[0][5],
+       //              "notlp"              => $rowData[0][6],
+       //              "namadesawisma"      => $rowData[0][7],
+       //              "nama_komunitas"     => $rowData[0][8],
+       //              "id_pkk"             => $rowData[0][9],
+       //              "nama_koordinator"   => $rowData[0][10],
+       //              "nama_pendata"       => $rowData[0][11],
+       //              "jam_selesai" 		 => $rowData[0][12],
+       //              "jml_anaklaki"		 => $rowData[0][13],
+       //              "jml_anakperempuan"  => $rowData[0][14],
+       //              "pus_ikutkb"		 => $rowData[0][15],
+       //              "pus_tidakikutkb"    => $rowData[0][16]
+       //          );
+			    //     $data['id_data_keluarga'] 	 = $id['id_data_keluarga'];
+			    //     $data['nourutkel'] 	 		 = $id['nourutkel'];
+			    //     $data['tanggal_pengisian']   = date("Y-m-d", strtotime($this->input->post('tgl_pengisian')));
+			    //     $data['jam_data'] 			 = $this->input->post('jam_data');
+			    //     $data['id_propinsi']         = $this->input->post('provinsi');
+			    //     $data['id_kota'] 		     = $this->input->post('kota');
+			    //     $data['id_kecamatan']        = $this->input->post('id_kecamatan');
+			    //     $data['id_desa']             = $this->input->post('kelurahan');
 
-			    //insert to database
-                $insert = $this->db->insert("data_keluarga",$data);
+			    // //insert to database
+       //          $insert = $this->db->insert("data_keluarga",$data);
                 delete_files($media['file_path']);
+            }
+            $provinsi 		= $this->input->post('provinsi');
+            $kota 			= $this->input->post('kota');
+            $id_kecamatan 	= $this->input->post('id_kecamatan');
+            $kelurahan 		= $this->input->post('kelurahan');
+            $id = $this->datakeluarga_model->getNourutkel($kelurahan);
+            $tanggal_pengisian = date("d-m-Y");
+            $jam_data = date("H:i:s");
+            foreach ($kk as $anggota) {
+            	foreach ($anggota as $act => $value) {
+            		$data_keluarga = array(
+            			'id_data_keluarga'	=> $id['id_data_keluarga'],
+            			'nourutkel' 		=> $id['nourutkel'],
+            			'tanggal_pengisian' => $tanggal_pengisian,
+            			'jam_data' 			=> $jam_data,
+            			'alamat' 			=> $value[0][6],
+            			'id_propinsi' 		=>	$provinsi,
+            			'id_kota'	 		=>	$kota,
+            			'id_kecamatan' 		=>	$id_kecamatan,
+            			'id_desa' 			=>	$kelurahan,
+            			'id_kodepos' 		=>	$value[0][5],
+            			'rw' 				=>	$value[0][1],
+            			'rt' 				=>	$value[0][2],
+            			'norumah' 			=>	$value[0][4],
+            			'namakepalakeluarga' =>	$value[0][8],
+            			'notlp' 			=>	$value[0][9],
+            			'namadesawisma' 	=>	$value[0][10],
+            			'nama_komunitas' 	=>	$value[0][7],
+            			'id_pkk' 			=>	$value[0][24],
+            			'nama_koordinator' 	=>	$value[0][16],
+            			'nama_pendata' 		=>	$value[0][17],
+            			'jam_selesai' 		=>	$jam_data,
+            			'jml_anaklaki' 		=>	$value[0][11],
+            			'jml_anakperempuan' =>	$value[0][12],
+            			'pus_ikutkb' 		=>	$value[0][13],
+            			'pus_tidakikutkb' 	=>	$value[0][14],
+            		);
+            		$noanggota = $this->datakeluarga_model->noanggota($data_keluarga['id_data_keluarga']);
+            		$data_keluarga_anggota = array(
+            			'id_data_keluarga'	=> $data_keluarga['id_data_keluarga'],
+            			'no_anggota' 		=> $noanggota,
+            			'nama' 				=> $value[0][20],
+            			'nik' 				=> $value[0][18],
+            			'tmpt_lahir' 			=> $value[0][22],
+            			'tgl_lahir' 			=>	$value[0][23],
+            			'id_pilihan_hubungan'	=>	$value[0][24],
+            			'id_pilihan_kelamin' 	=>	$value[0][21],
+            			'id_pilihan_agama' 		=>	$value[0][25],
+            			'id_pilihan_pendidikan' =>	$value[0][26],
+            			'id_pilihan_pekerjaan' 	=>	$value[0][27],
+            			'id_pilihan_kawin' 	=>	$value[0][28],
+            			'id_pilihan_jkn' 	=>	$value[0][29],
+            			'bpjs' 				=>	$value[0][19],
+            			'suku' 				=>	$value[0][30],
+            			'no_hp' 			=>	$value[0][31],
+            			);
+            		if ($value[0][24]=='KK') {
+            			$this->db->insert('data_keluarga',$data_keluarga);
+            			$this->db->insert('data_keluarga_anggota',$data_keluarga_anggota);
+            		}else{
+            			$this->db->insert('data_keluarga_anggota',$data_keluarga_anggota);
+            		}
+            	}
             }
 		$this->session->set_flashdata('alert', 'Import data successful');
 	    redirect(base_url()."eform/data_kepala_keluarga/import_add");
